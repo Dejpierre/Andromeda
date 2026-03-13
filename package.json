@@ -1,0 +1,14 @@
+{
+  "name": "andromeda-shopify",
+  "version": "1.0.0",
+  "description": "Andromeda - Thème Shopify avec intégrations API",
+  "scripts": {
+    "setup:metaobjects": "node scripts/setup-metaobjects.js",
+    "shopify:theme:push": "shopify theme push --store andromeda-paris.myshopify.com",
+    "shopify:theme:pull": "shopify theme pull --store andromeda-paris.myshopify.com",
+    "shopify:dev": "shopify theme dev --store andromeda-paris.myshopify.com"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}

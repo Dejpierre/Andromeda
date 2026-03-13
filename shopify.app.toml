@@ -2,7 +2,7 @@
 # https://shopify.dev/docs/apps/tools/cli/configuration
 
 name = "Andromeda"
-client_id = ""
+client_id = "462d2794cb7e34f3522e4f5c642f9e13"
 application_url = "https://example.com"
 embedded = false
 
