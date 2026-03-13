@@ -1,0 +1,26 @@
+{
+  "layout": "rituels",
+  "sections": {
+    "rituels": {
+      "type": "section-rituels",
+      "settings": {
+        "title": "Choisis ton rituel",
+        "subtitle": "Sélectionne un moment puis lance l'audio.",
+        "label_matin": "Matin",
+        "icon_matin": "🌅",
+        "label_journee": "Journée",
+        "icon_journee": "☀️",
+        "label_soir": "Soir",
+        "icon_soir": "🌙",
+        "api_url": "https://andromeda-rituels.dejpierre.workers.dev",
+        "show_back_link": true,
+        "back_label": "← Retour à la boutique",
+        "color_scheme": "",
+        "section_width": "page-width",
+        "padding-block-start": 40,
+        "padding-block-end": 60
+      }
+    }
+  },
+  "order": ["rituels"]
+}
