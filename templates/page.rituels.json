@@ -4,15 +4,9 @@
     "rituels": {
       "type": "section-rituels",
       "settings": {
-        "title": "Choisis ton rituel",
+        "title": "Choisis ton ambiance pour t'endormir",
         "subtitle": "Sélectionne un moment puis lance l'audio.",
-        "label_matin": "Matin",
-        "icon_matin": "🌅",
-        "label_journee": "Journée",
-        "icon_journee": "☀️",
-        "label_soir": "Soir",
-        "icon_soir": "🌙",
-        "api_url": "https://moona-rituels.dejpierre.workers.dev",
+        "audio_url_sommeil": "",
         "show_back_link": true,
         "back_label": "← Retour à la boutique",
         "color_scheme": "",

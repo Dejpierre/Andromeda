@@ -12,7 +12,7 @@
  *   ALLOWED_ORIGIN           ex: https://moona-9413.myshopify.com
  */
 
-const VALID_CATEGORIES = ['matin', 'journee', 'soir'];
+const VALID_CATEGORIES = ['sommeil'];
 
 // ─── GraphQL query ─────────────────────────────────────────────────────────────
 
@@ -73,7 +73,8 @@ function getFieldValue(fields, key) {
 
 function getAudioUrl(fields, category) {
   const fieldKey = `audio_${category}`;
-  const field = fields.find(f => f.key === fieldKey);
+  const fallbackKey = 'audio_matin';
+  const field = fields.find(f => f.key === fieldKey) || fields.find(f => f.key === fallbackKey);
   if (!field) return null;
 
   // Fichier générique (mp3, wav, etc.)
@@ -125,7 +126,10 @@ async function fetchRituel(token, env) {
 
 export default {
   async fetch(request, env) {
-    const origin = env.ALLOWED_ORIGIN || '*';
+    const requestOrigin = request.headers.get('Origin') || '';
+    const allowedOrigin = env.ALLOWED_ORIGIN || '*';
+    const isLocalhost = requestOrigin.startsWith('http://127.0.0.1') || requestOrigin.startsWith('http://localhost');
+    const origin = isLocalhost ? requestOrigin : allowedOrigin;
     const url = new URL(request.url);
 
     // Preflight CORS
@@ -185,8 +189,8 @@ export default {
       return json({ url: audioUrl }, 200, origin);
 
     } catch (err) {
-      console.error('[Worker]', err.message);
-      return json({ error: 'Erreur serveur' }, 500, origin);
+      console.error('[Worker]', err.message, err.stack);
+      return json({ error: 'Erreur serveur', detail: err.message }, 500, origin);
     }
   },
 };
