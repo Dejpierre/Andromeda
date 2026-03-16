@@ -30,33 +30,20 @@
       <p>{{ section.settings.invalid_msg | default: "Ce lien n'est pas valide ou a expiré. Contacte-nous si tu as besoin d'aide." }}</p>
     </div>
 
-    <!-- Sélecteur de catégorie -->
-    <div class="moona-rituel__moments" id="moona-moments" hidden>
+    <!-- Dossiers -->
+    <div class="moona-rituel__moments" id="moona-folders"></div>
 
-      <button class="moona-rituel__moment moona-anim-3" data-category="sommeil" type="button">
-        <div class="moona-rituel__moment-bg moona-rituel__moment-bg--sommeil"></div>
-        <div class="moona-rituel__moment-inner">
-          <span class="moona-rituel__moment-label">{{ section.settings.label_sommeil | default: "Ambiance pour s'endormir" }}</span>
-          <span class="moona-rituel__moment-desc">{{ section.settings.desc_sommeil | default: "Sons apaisants pour glisser vers le sommeil" }}</span>
-        </div>
-      </button>
-
-      <button class="moona-rituel__moment moona-anim-4" data-category="meditation" type="button">
-        <div class="moona-rituel__moment-bg moona-rituel__moment-bg--sommeil"></div>
-        <div class="moona-rituel__moment-inner">
-          <span class="moona-rituel__moment-label">{{ section.settings.label_meditation | default: "Méditation guidée" }}</span>
-          <span class="moona-rituel__moment-desc">{{ section.settings.desc_meditation | default: "Une voix douce pour te recentrer" }}</span>
-        </div>
-      </button>
-
-      <button class="moona-rituel__moment moona-anim-5" data-category="nature" type="button">
-        <div class="moona-rituel__moment-bg moona-rituel__moment-bg--sommeil"></div>
-        <div class="moona-rituel__moment-inner">
-          <span class="moona-rituel__moment-label">{{ section.settings.label_nature | default: "Sons de la nature" }}</span>
-          <span class="moona-rituel__moment-desc">{{ section.settings.desc_nature | default: "Pluie, forêt, océan…" }}</span>
-        </div>
-      </button>
-
+    <!-- Pistes d'un dossier -->
+    <div class="moona-rituel__tracks-view" id="moona-tracks-view" hidden>
+      <div class="moona-rituel__tracks-header moona-anim-1">
+        <button class="moona-rituel__back-btn" id="moona-back-to-folders" type="button">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span id="moona-folder-name">Retour</span>
+        </button>
+      </div>
+      <div class="moona-rituel__moments" id="moona-tracks"></div>
     </div>
 
     <!-- Player immersif -->
@@ -141,7 +128,7 @@
         </div>
       </div>
 
-      <audio id="moona-audio" preload="metadata"></audio>
+      <audio id="moona-audio" preload="metadata" crossorigin="anonymous"></audio>
     </div>
 
     {%- if section.settings.show_back_link -%}
@@ -434,7 +421,7 @@
     align-items: center;
     padding: 0;
     border: none;
-    border-radius: 20px;
+    border-radius: 16px;
     overflow: hidden;
     cursor: pointer;
     background: transparent;
@@ -468,6 +455,7 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
   }
 
   .moona-rituel__moment-inner {
@@ -525,6 +513,19 @@
 
   .moona-rituel__moment:hover .moona-rituel__moment-inner::after {
     transform: translateX(4px);
+  }
+
+  /* ── Tracks view ────────────────────────────────────── */
+  .moona-rituel__tracks-view {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .moona-rituel__tracks-header {
+    display: flex;
+    align-items: center;
   }
 
   /* ── Player wrap ────────────────────────────────────── */
@@ -913,19 +914,24 @@
     el.addEventListener('animationend', doHide, { once: true });
   }
 
-  /* ── Audio URLs depuis les settings ─────────────────── */
-  const audioUrls = {
-    sommeil:    {{ section.settings.audio_url_sommeil   | default: '' | json }},
-    meditation: {{ section.settings.audio_url_meditation | default: '' | json }},
-    nature:     {{ section.settings.audio_url_nature     | default: '' | json }},
-  };
+  /* ── Données des pistes (Shopify blocks) ────────────── */
+  const tracksData = [
+    {% for block in section.blocks %}
+    {
+      folder: {{ block.settings.folder     | default: 'Général'   | json }},
+      label:  {{ block.settings.label      | default: 'Audio'     | json }},
+      desc:   {{ block.settings.desc       | default: ''          | json }},
+      url:    {{ block.settings.audio_url  | default: ''          | json }},
+    },
+    {% endfor %}
+  ];
 
-  /* ── Moment labels ───────────────────────────────────── */
-  const momentLabels = {
-    sommeil:    {{ section.settings.label_sommeil    | default: "Ambiance pour s'endormir" | json }},
-    meditation: {{ section.settings.label_meditation | default: "Méditation guidée"        | json }},
-    nature:     {{ section.settings.label_nature     | default: "Sons de la nature"        | json }},
-  };
+  // Grouper par dossier (ordre de premier apparition préservé)
+  const folders = {};
+  tracksData.forEach(t => {
+    if (!folders[t.folder]) folders[t.folder] = [];
+    folders[t.folder].push(t);
+  });
 
   /* ── Helpers temps ───────────────────────────────────── */
   function fmtTime(sec) {
@@ -990,6 +996,7 @@
   /* ── Boutons lecture ─────────────────────────────────── */
   playBtn.addEventListener('click', () => {
     initOrbAudio();
+    if (orbCtx) orbCtx.resume();
     if (audioEl.paused) audioEl.play().catch(() => {});
     else audioEl.pause();
   });
@@ -997,6 +1004,76 @@
   rewindBtn.addEventListener('click',  () => { audioEl.currentTime = Math.max(0, audioEl.currentTime - 15); });
   forwardBtn.addEventListener('click', () => { audioEl.currentTime = Math.min(audioEl.duration || 0, audioEl.currentTime + 15); });
 
+  /* ── Éléments navigation ─────────────────────────────── */
+  const foldersEl       = document.getElementById('moona-folders');
+  const tracksViewEl    = document.getElementById('moona-tracks-view');
+  const tracksEl        = document.getElementById('moona-tracks');
+  const folderNameEl    = document.getElementById('moona-folder-name');
+  const backToFoldersBtn = document.getElementById('moona-back-to-folders');
+
+  let currentFolder = null;
+  let currentTrack  = null;
+
+  /* ── Afficher les dossiers ───────────────────────────── */
+  function showFolders() {
+    currentFolder            = null;
+    greetingEl.style.display = '';
+    foldersEl.hidden         = false;
+    tracksViewEl.hidden      = true;
+    playerWrap.hidden        = true;
+    playerWrap.style.display = 'none';
+  }
+
+  function buildFolders() {
+    foldersEl.innerHTML = '';
+    let delay = 3;
+    Object.entries(folders).forEach(([name, tracks]) => {
+      const btn = document.createElement('button');
+      btn.className = `moona-rituel__moment moona-anim-${delay}`;
+      btn.type = 'button';
+      btn.innerHTML = `
+        <div class="moona-rituel__moment-bg moona-rituel__moment-bg--sommeil"></div>
+        <div class="moona-rituel__moment-inner">
+          <div>
+            <span class="moona-rituel__moment-label">${name}</span>
+            <span class="moona-rituel__moment-desc">${tracks.length} son${tracks.length > 1 ? 's' : ''}</span>
+          </div>
+        </div>`;
+      btn.addEventListener('click', () => showTracks(name));
+      foldersEl.appendChild(btn);
+      delay = Math.min(delay + 1, 6);
+    });
+  }
+
+  /* ── Afficher les pistes d'un dossier ───────────────── */
+  function showTracks(folderName) {
+    currentFolder            = folderName;
+    greetingEl.style.display = 'none';
+    foldersEl.hidden         = true;
+    tracksViewEl.hidden      = false;
+    playerWrap.hidden        = true;
+    playerWrap.style.display = 'none';
+    folderNameEl.textContent = folderName;
+
+    tracksEl.innerHTML = '';
+    (folders[folderName] || []).forEach((track, i) => {
+      const btn = document.createElement('button');
+      btn.className = `moona-rituel__moment moona-anim-${Math.min(i + 2, 6)}`;
+      btn.type = 'button';
+      btn.innerHTML = `
+        <div class="moona-rituel__moment-bg moona-rituel__moment-bg--sommeil"></div>
+        <div class="moona-rituel__moment-inner">
+          <div>
+            <span class="moona-rituel__moment-label">${track.label}</span>
+            ${track.desc ? `<span class="moona-rituel__moment-desc">${track.desc}</span>` : ''}
+          </div>
+        </div>`;
+      btn.addEventListener('click', () => { initOrbAudio(); loadRituel(track); });
+      tracksEl.appendChild(btn);
+    });
+  }
+
+  /* ── Retour depuis le player ─────────────────────────── */
   backBtn.addEventListener('click', () => {
     audioEl.pause();
     audioEl.src = '';
@@ -1008,9 +1085,13 @@
     playerWrap.style.display = 'none';
     playerEl.hidden          = true;
     loaderEl.hidden          = true;
-    greetingEl.style.display = '';
-    momentsEl.hidden         = false;
-    momentsEl.style.display  = '';
+    if (currentFolder) showTracks(currentFolder);
+    else showFolders();
+  });
+
+  /* ── Retour depuis les pistes vers les dossiers ──────── */
+  backToFoldersBtn.addEventListener('click', () => {
+    showFolders();
   });
 
   /* ── IndexedDB (cache hors-ligne) ────────────────────── */
@@ -1123,17 +1204,18 @@
     opt.addEventListener('click', () => startSleepTimer(parseInt(opt.dataset.min, 10)));
   });
 
-  /* ── Charger un rituel ───────────────────────────────── */
-  function loadRituel(category) {
-    momentsEl.style.display  = 'none';
+  /* ── Charger un rituel (track object) ───────────────── */
+  function loadRituel(track) {
+    currentTrack             = track;
+    tracksViewEl.hidden      = true;
     greetingEl.style.display = 'none';
     cancelSleepTimer();
     sleepOpts.hidden  = true;
-    currentCacheKey   = category;
-    currentRemoteUrl  = audioUrls[category] || null;
+    currentCacheKey   = track.label;
+    currentRemoteUrl  = track.url || null;
     if (currentBlobUrl) { URL.revokeObjectURL(currentBlobUrl); currentBlobUrl = null; }
 
-    momentLabel.textContent = momentLabels[category] || category;
+    momentLabel.textContent = track.label;
     fillEl.style.width      = '0%';
     thumbEl.style.left      = '0%';
     currentEl.textContent   = '0:00';
@@ -1156,19 +1238,14 @@
     if (currentRemoteUrl) { audioEl.play().catch(() => {}); }
   }
 
-  /* ── Bind sur les cards ──────────────────────────────── */
-  document.querySelectorAll('.moona-rituel__moment').forEach(btn => {
-    btn.addEventListener('click', () => {
-      initOrbAudio();
-      loadRituel(btn.dataset.category);
-    });
-  });
-
   /* ── Orbe WebAudio ───────────────────────────────────── */
   let orbCtx, orbAnalyser;
 
   function initOrbAudio() {
-    if (orbCtx) return;
+    if (orbCtx) {
+      orbCtx.resume();
+      return;
+    }
     try {
       orbCtx = new (window.AudioContext || window.webkitAudioContext)();
       orbAnalyser = orbCtx.createAnalyser();
@@ -1177,6 +1254,7 @@
       const src = orbCtx.createMediaElementSource(audioEl);
       src.connect(orbAnalyser);
       orbAnalyser.connect(orbCtx.destination);
+      orbCtx.resume();
     } catch(e) {}
   }
 
@@ -1291,9 +1369,9 @@
     orbCx.stroke();
   }
 
-  /* ── Afficher le sélecteur au lancement ─────────────── */
-  momentsEl.hidden        = false;
-  momentsEl.style.display = '';
+  /* ── Init ────────────────────────────────────────────── */
+  buildFolders();
+  showFolders();
   drawOrb();
 })();
 </script>
@@ -1324,35 +1402,9 @@
       "label": "Logo (optionnel)"
     },
     {
-      "type": "header",
-      "content": "Catégorie"
-    },
-    {
-      "type": "text",
-      "id": "label_sommeil",
-      "label": "Label",
-      "default": "Ambiance pour s'endormir"
-    },
-    {
-      "type": "text",
-      "id": "desc_sommeil",
-      "label": "Description",
-      "default": "Sons apaisants pour glisser vers le sommeil"
-    },
-    {
-      "type": "header",
-      "content": "Audio"
-    },
-    {
-      "type": "text",
-      "id": "audio_url_sommeil",
-      "label": "URL audio — Sommeil",
-      "info": "Colle ici l'URL CDN du fichier audio (mp3, wav…)"
-    },
-    {
       "type": "text",
       "id": "back_to_moments",
-      "label": "Texte retour aux moments",
+      "label": "Texte retour (player → pistes)",
       "default": "Choisir un autre rituel"
     },
     {
@@ -1375,6 +1427,38 @@
       "id": "back_label",
       "label": "Texte du lien",
       "default": "← Retour à la boutique"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Piste audio",
+      "type": "audio_track",
+      "settings": [
+        {
+          "type": "text",
+          "id": "folder",
+          "label": "Dossier",
+          "info": "Nom du dossier/catégorie (ex: Ambiance situationnelle)",
+          "default": "Ambiance situationnelle"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Nom de la piste",
+          "default": "Pluie sur Paris"
+        },
+        {
+          "type": "text",
+          "id": "desc",
+          "label": "Description (optionnel)"
+        },
+        {
+          "type": "text",
+          "id": "audio_url",
+          "label": "URL audio",
+          "info": "URL CDN du fichier mp3/wav"
+        }
+      ]
     }
   ],
   "presets": [

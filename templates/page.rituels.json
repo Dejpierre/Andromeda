@@ -3,16 +3,51 @@
   "sections": {
     "rituels": {
       "type": "section-rituels",
+      "blocks": {
+        "track_1": {
+          "type": "audio_track",
+          "settings": {
+            "folder": "Ambiance situationnelle",
+            "label": "Pluie sur Paris",
+            "desc": "Pluie douce sur les toits",
+            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/Pluie_Nocturne_Ambiance_2026-03-16T133443.mp3?v=1773674551"
+          }
+        },
+        "track_2": {
+          "type": "audio_track",
+          "settings": {
+            "folder": "Ambiance situationnelle",
+            "label": "Forêt la nuit",
+            "desc": "Grillons et vent dans les feuilles",
+            "audio_url": ""
+          }
+        },
+        "track_3": {
+          "type": "audio_track",
+          "settings": {
+            "folder": "Ambiance situationnelle",
+            "label": "Vagues de l'océan",
+            "desc": "Ressac lent et apaisant",
+            "audio_url": ""
+          }
+        },
+        "track_4": {
+          "type": "audio_track",
+          "settings": {
+            "folder": "Accompagnement vocal",
+            "label": "Endormissement guidé",
+            "desc": "Une voix douce pour glisser vers le sommeil",
+            "audio_url": ""
+          }
+        }
+      },
+      "block_order": ["track_1", "track_2", "track_3", "track_4"],
       "settings": {
         "title": "Choisis ton ambiance pour t'endormir",
-        "subtitle": "Sélectionne un moment puis lance l'audio.",
-        "audio_url_sommeil": "",
+        "subtitle": "Sélectionne un univers sonore.",
         "show_back_link": true,
         "back_label": "← Retour à la boutique",
-        "color_scheme": "",
-        "section_width": "page-width",
-        "padding-block-start": 40,
-        "padding-block-end": 60
+        "back_to_moments": "Choisir un autre son"
       }
     }
   },
