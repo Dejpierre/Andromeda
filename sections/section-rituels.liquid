@@ -31,7 +31,7 @@
     </div>
 
     <!-- Dossiers -->
-    <div class="moona-rituel__moments" id="moona-folders"></div>
+    <div class="moona-rituel__folders-list" id="moona-folders"></div>
 
     <!-- Pistes d'un dossier -->
     <div class="moona-rituel__tracks-view" id="moona-tracks-view" hidden>
@@ -90,7 +90,7 @@
             <svg class="moona-rituel__icon-play" width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
               <path d="M8 5v14l11-7z"/>
             </svg>
-            <svg class="moona-rituel__icon-pause" width="26" height="26" viewBox="0 0 24 24" fill="currentColor" hidden>
+            <svg class="moona-rituel__icon-pause" width="26" height="26" viewBox="0 0 24 24" fill="currentColor" style="display:none">
               <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
             </svg>
           </button>
@@ -515,6 +515,103 @@
     transform: translateX(4px);
   }
 
+  /* ── Folders list ────────────────────────────────────── */
+  .moona-rituel__folders-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* ── Folder image cards ─────────────────────────────── */
+  .moona-rituel__folder-card {
+    position: relative;
+    width: 100%;
+    height: 160px;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.22s ease;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.35);
+    -webkit-tap-highlight-color: transparent;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .moona-rituel__folder-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .moona-rituel__folder-card:active {
+    transform: scale(0.98);
+  }
+
+  .moona-rituel__folder-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .moona-rituel__folder-card:hover .moona-rituel__folder-img {
+    transform: scale(1.04);
+  }
+
+  .moona-rituel__folder-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,8,25,0.85) 0%, rgba(10,8,25,0.25) 55%, rgba(10,8,25,0.1) 100%);
+  }
+
+  .moona-rituel__folder-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .moona-rituel__folder-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #FFFFFF;
+    letter-spacing: 0.01em;
+  }
+
+  .moona-rituel__folder-count {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+
+  /* Sans image : fallback glassmorphism */
+  .moona-rituel__folder-card--no-img {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+  }
+
+  .moona-rituel__folder-card--no-img .moona-rituel__folder-info {
+    position: static;
+    padding: 0;
+    width: 100%;
+  }
+
+  .moona-rituel__folder-card--no-img .moona-rituel__folder-name {
+    font-size: 17px;
+  }
+
   /* ── Tracks view ────────────────────────────────────── */
   .moona-rituel__tracks-view {
     width: 100%;
@@ -914,15 +1011,28 @@
     el.addEventListener('animationend', doHide, { once: true });
   }
 
-  /* ── Données des pistes (Shopify blocks) ────────────── */
+  /* ── Métadonnées des dossiers (blocks audio_folder) ─── */
+  const folderMeta = {};
+  {% for block in section.blocks %}
+    {% if block.type == 'audio_folder' %}
+    folderMeta[{{ block.settings.folder_name | default: '' | json }}] = {
+      image: {% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 800 | json }}{% else %}null{% endif %},
+      imageAlt: {{ block.settings.image.alt | default: '' | json }},
+    };
+    {% endif %}
+  {% endfor %}
+
+  /* ── Données des pistes (blocks audio_track) ─────────── */
   const tracksData = [
     {% for block in section.blocks %}
+    {% if block.type == 'audio_track' %}
     {
       folder: {{ block.settings.folder     | default: 'Général'   | json }},
       label:  {{ block.settings.label      | default: 'Audio'     | json }},
       desc:   {{ block.settings.desc       | default: ''          | json }},
       url:    {{ block.settings.audio_url  | default: ''          | json }},
     },
+    {% endif %}
     {% endfor %}
   ];
 
@@ -955,20 +1065,20 @@
   });
 
   audioEl.addEventListener('play', () => {
-    iconPlay.hidden  = true;
-    iconPause.hidden = false;
+    iconPlay.style.display  = 'none';
+    iconPause.style.display = 'block';
     playerEl.classList.add('is-playing');
   });
 
   audioEl.addEventListener('pause', () => {
-    iconPlay.hidden  = false;
-    iconPause.hidden = true;
+    iconPlay.style.display  = 'block';
+    iconPause.style.display = 'none';
     playerEl.classList.remove('is-playing');
   });
 
   audioEl.addEventListener('ended', () => {
-    iconPlay.hidden  = false;
-    iconPause.hidden = true;
+    iconPlay.style.display  = 'block';
+    iconPause.style.display = 'none';
     playerEl.classList.remove('is-playing');
     cancelSleepTimer();
   });
@@ -1028,17 +1138,29 @@
     foldersEl.innerHTML = '';
     let delay = 3;
     Object.entries(folders).forEach(([name, tracks]) => {
-      const btn = document.createElement('button');
-      btn.className = `moona-rituel__moment moona-anim-${delay}`;
-      btn.type = 'button';
-      btn.innerHTML = `
-        <div class="moona-rituel__moment-bg moona-rituel__moment-bg--sommeil"></div>
-        <div class="moona-rituel__moment-inner">
-          <div>
-            <span class="moona-rituel__moment-label">${name}</span>
-            <span class="moona-rituel__moment-desc">${tracks.length} son${tracks.length > 1 ? 's' : ''}</span>
-          </div>
-        </div>`;
+      const meta  = folderMeta[name] || {};
+      const count = `${tracks.length} son${tracks.length > 1 ? 's' : ''}`;
+      const btn   = document.createElement('button');
+      btn.type    = 'button';
+
+      if (meta.image) {
+        btn.className = `moona-rituel__folder-card moona-anim-${delay}`;
+        btn.innerHTML = `
+          <img class="moona-rituel__folder-img" src="${meta.image}" alt="${meta.imageAlt || name}" loading="lazy">
+          <div class="moona-rituel__folder-overlay"></div>
+          <div class="moona-rituel__folder-info">
+            <span class="moona-rituel__folder-name">${name}</span>
+            <span class="moona-rituel__folder-count">${count}</span>
+          </div>`;
+      } else {
+        btn.className = `moona-rituel__folder-card moona-rituel__folder-card--no-img moona-anim-${delay}`;
+        btn.innerHTML = `
+          <div class="moona-rituel__folder-info">
+            <span class="moona-rituel__folder-name">${name}</span>
+            <span class="moona-rituel__folder-count">${count}</span>
+          </div>`;
+      }
+
       btn.addEventListener('click', () => showTracks(name));
       foldersEl.appendChild(btn);
       delay = Math.min(delay + 1, 6);
@@ -1430,6 +1552,24 @@
     }
   ],
   "blocks": [
+    {
+      "name": "Dossier",
+      "type": "audio_folder",
+      "settings": [
+        {
+          "type": "text",
+          "id": "folder_name",
+          "label": "Nom du dossier",
+          "info": "Doit correspondre exactement au champ Dossier des pistes",
+          "default": "Ambiance situationnelle"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image de couverture"
+        }
+      ]
+    },
     {
       "name": "Piste audio",
       "type": "audio_track",
