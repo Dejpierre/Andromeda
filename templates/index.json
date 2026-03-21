@@ -60,13 +60,85 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "custom_liquid_WAFYYf": {
-              "type": "custom-liquid",
-              "name": "t:names.custom_liquid",
+            "group_3wCzmd": {
+              "type": "group",
+              "name": "t:names.group",
               "settings": {
-                "custom_liquid": "<h1 class=\"hero-title\">\n  Dormez dans l’obscurité <span class=\"title-accent\">parfaite.</span> <br>Réveillez-vous\n  <span class=\"title-accent\">transformé</span>\n</h1>\n\n<style>\n\n@font-face {\n    font-family: 'Stellar';\n    src: url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/MirageStellar.ttf?v=1772405200') format('opentype');\n  }\n\n  .hero-title {\n    font-size: 3rem;\n    font-weight: 400 !important;\n  }\n  .title-accent {\n    font-family: 'Stellar', serif;\nfont-weight: 400;\n    font-style: normal;\n    font-display: swap;\n  }\n</style>"
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 0,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
               },
-              "blocks": {}
+              "blocks": {
+                "custom_liquid_mV7GzM": {
+                  "type": "custom-liquid",
+                  "name": "t:names.custom_liquid",
+                  "settings": {
+                    "custom_liquid": "<h1 class=\"hero-title\">\n  Dormez dans l’obscurité <span class=\"title-accent\">parfaite.</span> <br>Réveillez-vous\n  <span class=\"title-accent\">transformé</span>\n</h1>\n\n<style>\n\n@font-face {\n    font-family: 'Stellar';\n    src: url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/MirageStellar.ttf?v=1772405200') format('opentype');\n  }\n\n  .hero-title {\n    font-size: 3rem;\n    font-weight: 400 !important;\nmargin-bottom: 1rem;\n  }\n  .title-accent {\n    font-family: 'Stellar', serif;\nfont-weight: 400;\n    font-style: normal;\n    font-display: swap;\n    margin-bottom: 0px;\n  }\n</style>"
+                  },
+                  "blocks": {}
+                },
+                "text_7ipHex": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Nous fabriquons des articles plus performants et plus durables. Nos produits résolvent de vrais problèmes avec un design épuré et des matériaux honnêtes.</p>",
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "custom_liquid_mV7GzM",
+                "text_7ipHex"
+              ]
             },
             "button_KCWUCG": {
               "type": "button",
@@ -85,7 +157,7 @@
             }
           },
           "block_order": [
-            "custom_liquid_WAFYYf",
+            "group_3wCzmd",
             "button_KCWUCG"
           ]
         }
@@ -130,6 +202,47 @@
         "padding-block-end": 24
       }
     },
+    "marquee_BX4UPp": {
+      "type": "marquee",
+      "blocks": {
+        "text_C43n4y": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Nous fabriquons des articles plus performants et plus durables.</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "tight",
+            "letter_spacing": "tight",
+            "case": "none",
+            "wrap": "nowrap",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_C43n4y"
+      ],
+      "name": "t:names.marquee_section",
+      "settings": {
+        "movement_direction": "normal",
+        "color_scheme": "",
+        "padding-block-start": 24,
+        "padding-block-end": 24,
+        "gap_between_elements": 24
+      }
+    },
     "section_HnPz3f": {
       "type": "section",
       "blocks": {
@@ -149,7 +262,7 @@
             "link": "",
             "image_ratio": "adapt",
             "width": "custom",
-            "custom_width": 80,
+            "custom_width": 60,
             "width_mobile": "fill",
             "custom_width_mobile": 100,
             "height": "fit",
@@ -248,7 +361,7 @@
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
                   "settings": {
-                    "custom_liquid": "<div class=\"icon-mask title-accent\">\n1\n</div>\n\n<style>\n.icon-mask{\ndisplay: flex;\njustify-content: center;\nalign-items: center;\nwidth: 3rem;\naspect-ratio: 1/1;\nborder-radius: 4px;\nfont-size: 2rem;\nbackground-color: #191A2E;\ncolor: white;\n}\n</style>"
+                    "custom_liquid": "<div class=\"icon-mask title-accent\">\n1\n</div>\n\n<style>\n.icon-mask{\ndisplay: flex;\njustify-content: center;\nalign-items: center;\nwidth: 3rem;\naspect-ratio: 1/1;\nborder-radius: 4px;\nfont-size: 1.5rem;\nbackground-color: #191A2E;\ncolor: white;\n}\n</style>"
                   },
                   "blocks": {}
                 },
@@ -256,7 +369,7 @@
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
                   "settings": {
-                    "custom_liquid": "<h3 class=\"title-accent\">Bloque 100 % de la lumière</h3>\n<p>La densité la plus haut de gamme pour une douceur durable et une opacité totale.</p>"
+                    "custom_liquid": "<h3 class=\"title-accent\">22 mommes — l'équilibre parfait</h3>\n<p>Assez fin pour être léger, assez dense pour bloquer 100% de la lumière.</p>"
                   },
                   "blocks": {}
                 }
@@ -318,7 +431,7 @@
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
                   "settings": {
-                    "custom_liquid": "<h3 class=\"title-accent\">Respecte la peau et les cheveux</h3>\n<p>La densité la plus haut de gamme pour une douceur durable et une opacité totale.</p>"
+                    "custom_liquid": "<h3 class=\"title-accent\">Soie pure, rien d'autre</h3>\n<p>Sans traitement chimique, hypoallergénique. Ce que vous mettez sur vos yeux doit être irréprochable.</p>"
                   },
                   "blocks": {}
                 }
@@ -380,7 +493,7 @@
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
                   "settings": {
-                    "custom_liquid": "<h3 class=\"title-accent\">Respecte la peau et les cheveux</h3>\n<p>La densité la plus haut de gamme pour une douceur durable et une opacité totale.</p>"
+                    "custom_liquid": "<h3 class=\"title-accent\">Grade 6A — le plus haut grade existant</h3>\n<p>La crème de la crème. Seuls 5% de la production mondiale atteint ce grade. Fibres longues, toucher velours, durabilité exceptionnelle.</p>"
                   },
                   "blocks": {}
                 }
@@ -489,7 +602,7 @@
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
                   "settings": {
-                    "custom_liquid": "<h3 class=\"title-accent\">Respecte la peau et les cheveux</h3>\n<p>La densité la plus haut de gamme pour une douceur durable et une opacité totale.</p>"
+                    "custom_liquid": "<h3 class=\"title-accent\">Expérience sonore exclusive — QR code inclus</h3>\n<p>Scannez le QR code fourni avec votre masque pour accéder à nos sons ambiants exclusifs. Pluie, vagues, forêt... Votre rituel du soir ultime.</p>"
                   },
                   "blocks": {}
                 }
@@ -551,7 +664,7 @@
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
                   "settings": {
-                    "custom_liquid": "<h3 class=\"title-accent\">Respecte la peau et les cheveux</h3>\n<p>La densité la plus haut de gamme pour une douceur durable et une opacité totale.</p>"
+                    "custom_liquid": "<h3 class=\"title-accent\">Certification OEKO-TEX Standard 100</h3>\n<p>Sans substances nocives. Sûr pour les peaux sensibles, hypoallergénique.\"</p>"
                   },
                   "blocks": {}
                 }
@@ -675,6 +788,108 @@
         "padding-block-end": 40
       }
     },
+    "featured_product_T8zL9W": {
+      "type": "featured-product",
+      "blocks": {
+        "media": {
+          "type": "_media-without-appearance",
+          "name": "t:names.product_media",
+          "static": true,
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/Image_1.png",
+            "link": "",
+            "video_loop": true,
+            "video_autoplay": false,
+            "image_position": "cover",
+            "video_position": "cover"
+          },
+          "blocks": {}
+        },
+        "featured-product": {
+          "type": "_featured-product",
+          "name": "t:names.product",
+          "static": true,
+          "settings": {},
+          "blocks": {
+            "featured-product-title": {
+              "type": "product-title",
+              "name": "t:names.title",
+              "static": true,
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h4",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "featured-product-price": {
+              "type": "_featured-product-price",
+              "name": "t:names.price",
+              "static": true,
+              "settings": {
+                "show_sale_price_first": true,
+                "type_preset": "h5"
+              },
+              "blocks": {}
+            },
+            "featured-product-gallery": {
+              "type": "_featured-product-gallery",
+              "name": "t:names.image",
+              "static": true,
+              "settings": {
+                "image_ratio": "adapt",
+                "constrain_to_viewport": "contain"
+              },
+              "blocks": {}
+            },
+            "featured-product-swatches": {
+              "type": "swatches",
+              "name": "t:names.swatches",
+              "static": true,
+              "settings": {
+                "product_swatches_alignment": "flex-start",
+                "product_swatches_alignment_mobile": "flex-start",
+                "hide_padding": true,
+                "product_swatches_padding_top": 4,
+                "product_swatches_padding_bottom": 0,
+                "product_swatches_padding_left": 0,
+                "product_swatches_padding_right": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        }
+      },
+      "custom_css": [
+        ".media-block__media {border-radius: 0 2rem 2rem 0;}",
+        ".product-media-container.media-fit img {border-radius: 1rem;}"
+      ],
+      "name": "t:names.featured_product",
+      "settings": {
+        "product": "masque-pure-soie-de-murier-22-mommes",
+        "layout": "media-left",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 64,
+        "padding-block-end": 64
+      }
+    },
     "section_R7Vhzp": {
       "type": "section",
       "blocks": {
@@ -711,11 +926,27 @@
             "padding-inline-end": 0
           },
           "blocks": {}
+        },
+        "button_P4zjrH": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Acheter maintenant",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
         }
       },
       "block_order": [
         "custom_liquid_pcANne",
-        "text_gnqTEY"
+        "text_gnqTEY",
+        "button_P4zjrH"
       ],
       "name": "t:names.custom_section",
       "settings": {
@@ -742,7 +973,7 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 32,
+        "padding-block-start": 64,
         "padding-block-end": 0
       }
     },
@@ -875,7 +1106,7 @@
         "text_PQL3UG": {
           "type": "text",
           "settings": {
-            "text": "<p>Siéste</p>",
+            "text": "<p>Sieste</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -916,16 +1147,211 @@
         "movement_direction": "reverse",
         "color_scheme": "",
         "padding-block-start": 24,
-        "padding-block-end": 24,
+        "padding-block-end": 64,
         "gap_between_elements": 24
+      }
+    },
+    "featured_blog_posts_F8LihH": {
+      "type": "featured-blog-posts",
+      "blocks": {
+        "static-blog-title": {
+          "type": "_featured-blog-posts-title",
+          "name": "t:names.title",
+          "static": true,
+          "settings": {
+            "text": "<h3>Vous le saviez ?</h3>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "static-blog-post-card": {
+          "type": "_featured-blog-posts-card",
+          "name": "t:names.blog_card",
+          "static": true,
+          "settings": {
+            "alignment": "left",
+            "gap": 8,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "solid",
+            "border_width": 1,
+            "border_opacity": 10,
+            "border_radius": 12,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "image": {
+              "type": "_featured-blog-posts-image",
+              "static": true,
+              "settings": {
+                "image_ratio": "square",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0
+              },
+              "blocks": {}
+            },
+            "title": {
+              "type": "_heading",
+              "name": "t:names.title",
+              "static": true,
+              "settings": {
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "text": "<h4>{{ closest.article.title }}</h4>",
+                "read_only": false,
+                "alignment": "left",
+                "show_alignment": false,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 8,
+                "padding-inline-end": 8
+              },
+              "blocks": {}
+            },
+            "blog-post-info-text": {
+              "type": "_blog-post-info-text",
+              "name": "t:names.details",
+              "static": true,
+              "settings": {
+                "show_date": false,
+                "show_author": false,
+                "type_preset": "",
+                "alignment": "left",
+                "show_alignment": false,
+                "padding-block-start": 0,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
+            "blog-post-description": {
+              "type": "_blog-post-description",
+              "name": "t:names.excerpt",
+              "static": true,
+              "settings": {
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 8,
+                "padding-block-end": 16
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        }
+      },
+      "name": "t:names.blog_posts_carousel",
+      "settings": {
+        "blog": "actualites",
+        "layout_type": "carousel",
+        "carousel_on_mobile": true,
+        "post_limit": 5,
+        "columns": 3,
+        "mobile_columns": "2",
+        "mobile_card_size": "60cqw",
+        "columns_gap": 8,
+        "rows_gap": 16,
+        "icons_style": "arrow",
+        "icons_shape": "circle",
+        "section_width": "page-width",
+        "gap": 12,
+        "color_scheme": "",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "section_why_masque_YfVJ3C": {
+      "type": "section-why-masque",
+      "blocks": {
+        "avantage_JDGj3Y": {
+          "type": "avantage",
+          "settings": {
+            "title": "Soie Grade 6A",
+            "text": "Moins de 5% de la production mondiale. Filaments extra-longs pour une douceur incomparable."
+          }
+        },
+        "avantage_jfe6Xr": {
+          "type": "avantage",
+          "settings": {
+            "title": "22 mommes",
+            "text": "Le grammage optimal : opacité totale et légèreté pour une nuit sans compromis."
+          }
+        },
+        "avantage_jY7gDb": {
+          "type": "avantage",
+          "settings": {
+            "title": "Obscurité totale",
+            "text": "Conçu pour bloquer 100% de la lumière et maximiser la production de mélatonine."
+          }
+        },
+        "avantage_MEkhef": {
+          "type": "avantage",
+          "settings": {
+            "title": "Peau & cheveux",
+            "text": "Anti-friction, hydratant naturel. La soie préserve là où le coton absorbe."
+          }
+        }
+      },
+      "block_order": [
+        "avantage_JDGj3Y",
+        "avantage_jfe6Xr",
+        "avantage_jY7gDb",
+        "avantage_MEkhef"
+      ],
+      "name": "Pourquoi nos masques",
+      "settings": {
+        "image": "shopify://shop_images/masque-soie.png",
+        "image_radius": 16,
+        "heading": "",
+        "background_color": "#ffffff",
+        "text_color": "#1C1A18",
+        "padding_top": 64,
+        "padding_bottom": 64
       }
     }
   },
   "order": [
     "hero_jVaWmY",
+    "marquee_BX4UPp",
     "section_HnPz3f",
     "product_hotspots_xEjQT9",
+    "featured_product_T8zL9W",
     "section_R7Vhzp",
-    "marquee_EYMzLt"
+    "marquee_EYMzLt",
+    "featured_blog_posts_F8LihH",
+    "section_why_masque_YfVJ3C"
   ]
 }

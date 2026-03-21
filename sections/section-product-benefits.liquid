@@ -1,0 +1,180 @@
+{% if section.blocks.size > 0 %}
+<div class="spb" style="background: {{ section.settings.bg_color }}; padding: {{ section.settings.padding_top }}px 24px {{ section.settings.padding_bottom }}px;">
+  <div class="spb__grid">
+    {% for block in section.blocks %}
+      {% if block.type == 'avantage' %}
+        <div class="spb__item" {{ block.shopify_attributes }}>
+          <div class="spb__icon">
+            {% if block.settings.icon != blank %}
+              <img src="{{ block.settings.icon | image_url: width: 40 }}" alt="{{ block.settings.label }}" width="20" height="20">
+            {% else %}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            {% endif %}
+          </div>
+          <div class="spb__text">
+            {% if block.settings.label != blank %}
+              <span class="spb__label">{{ block.settings.label }}</span>
+            {% endif %}
+            {% if block.settings.desc != blank %}
+              <span class="spb__desc">{{ block.settings.desc }}</span>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<style>
+.spb {
+  width: 100%;
+}
+.spb__grid {
+  max-width: 560px;
+  margin: 0 auto 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 28px;
+}
+.spb__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.spb__icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #B8975A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #B8975A;
+  margin-top: 2px;
+}
+.spb__icon img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+.spb__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.spb__label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #1C1A18;
+}
+.spb__desc {
+  font-size: 0.75rem;
+  color: #1C1A18;
+  opacity: 0.6;
+  line-height: 1.4;
+}
+@media (max-width: 749px) {
+  .spb__grid {
+    max-width: 100%;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Avantages produit",
+  "tag": "div",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Couleur de fond",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacement haut",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacement bas",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    }
+  ],
+  "blocks": [
+    {
+      "type": "avantage",
+      "name": "Avantage",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icône (optionnel)"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Titre",
+          "default": "Avantage"
+        },
+        {
+          "type": "textarea",
+          "id": "desc",
+          "label": "Description",
+          "default": "Description de l'avantage"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Avantages produit",
+      "blocks": [
+        {
+          "type": "avantage",
+          "settings": {
+            "label": "Soie Grade 6A",
+            "desc": "Moins de 5 % de la production mondiale"
+          }
+        },
+        {
+          "type": "avantage",
+          "settings": {
+            "label": "Obscurité totale",
+            "desc": "Blocage 100 % de la lumière"
+          }
+        },
+        {
+          "type": "avantage",
+          "settings": {
+            "label": "22 mommes",
+            "desc": "Grammage optimal pour la peau"
+          }
+        },
+        {
+          "type": "avantage",
+          "settings": {
+            "label": "Peau & cheveux",
+            "desc": "Anti-friction, hydratation naturelle"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -35,6 +35,9 @@
       {%- render 'theme-editor' -%}
     {% endif %}
 
+    {% if template == 'blog' or template == 'article' %}
+      <meta name="robots" content="noindex, nofollow">
+    {% endif %}
     {{ content_for_header }}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

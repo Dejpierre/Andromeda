@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "section-article-guide-masque",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

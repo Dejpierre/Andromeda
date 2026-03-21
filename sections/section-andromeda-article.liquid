@@ -1,50 +1,50 @@
-{% comment %} Article — Andromeda style {% endcomment %}
+{% comment %} Article — Andromeda style — dark hero / light body / dark CTA {% endcomment %}
 
-<div class="andro-article" id="andro-article">
+<div class="aa" id="aa">
 
-  <!-- Background -->
-  <div class="andro-article__bg" aria-hidden="true">
-    <div class="andro-article__stars andro-article__stars--1"></div>
-    <div class="andro-article__stars andro-article__stars--2"></div>
-  </div>
+  <!-- ── HERO (dark) ──────────────────────────────────────────────────── -->
+  <header class="aa__hero">
+    <div class="aa__hero-bg" aria-hidden="true">
+      <div class="aa__stars aa__stars--1"></div>
+      <div class="aa__stars aa__stars--2"></div>
+    </div>
 
-  <!-- Back link -->
-  <div class="andro-article__back-wrap">
-    <a href="{{ blog.url }}" class="andro-article__back">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      {{ blog.title }}
-    </a>
-  </div>
+    <div class="aa__hero-inner">
+      <a href="{{ blog.url }}" class="aa__back">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M9 3L4 7L9 11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {{ blog.title }}
+      </a>
 
-  <article class="andro-article__inner">
-
-    <!-- Meta -->
-    <header class="andro-article__header">
-      <div class="andro-article__meta">
+      <div class="aa__meta">
         <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
           {{ article.published_at | date: '%d %B %Y' }}
         </time>
         {% if article.tags.size > 0 %}
           {% for tag in article.tags %}
-            <span class="andro-article__tag">{{ tag }}</span>
+            <span class="aa__tag">{{ tag }}</span>
           {% endfor %}
         {% endif %}
       </div>
-      <h1 class="andro-article__title">{{ article.title }}</h1>
-      {% if article.excerpt != blank %}
-        <p class="andro-article__excerpt">{{ article.excerpt | strip_html }}</p>
-      {% endif %}
-    </header>
 
-    <!-- Featured image -->
+      <h1 class="aa__title">{{ article.title }}</h1>
+
+      {% if article.excerpt != blank %}
+        <p class="aa__excerpt">{{ article.excerpt | strip_html }}</p>
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- ── BODY (light) ─────────────────────────────────────────────────── -->
+  <div class="aa__body">
+
     {% if article.image %}
-      <div class="andro-article__img-wrap">
+      <div class="aa__img-wrap">
         <img
           src="{{ article.image | image_url: width: 1400 }}"
           alt="{{ article.image.alt | default: article.title | escape }}"
-          class="andro-article__img"
+          class="aa__img"
           loading="eager"
           width="{{ article.image.width }}"
           height="{{ article.image.height }}"
@@ -52,68 +52,52 @@
       </div>
     {% endif %}
 
-    <!-- Content -->
-    <div class="andro-article__content rte">
+    <div class="aa__content rte">
       {{ article.content }}
     </div>
 
-    <!-- Tags footer -->
     {% if article.tags.size > 0 %}
-      <footer class="andro-article__footer">
-        <span class="andro-article__footer-label">Tags</span>
-        <div class="andro-article__tags">
+      <div class="aa__tags-footer">
+        <span class="aa__tags-label">Tags</span>
+        <div class="aa__tags-list">
           {% for tag in article.tags %}
-            <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="andro-article__tag-link">{{ tag }}</a>
+            <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="aa__tag-link">{{ tag }}</a>
           {% endfor %}
         </div>
-      </footer>
+      </div>
     {% endif %}
 
-    <!-- Back bottom -->
-    <div class="andro-article__back-bottom">
-      <a href="{{ blog.url }}" class="andro-article__back-btn">
+  </div>
+
+  <!-- ── CTA (dark) ───────────────────────────────────────────────────── -->
+  <div class="aa__cta">
+    <div class="aa__cta-bg" aria-hidden="true">
+      <div class="aa__stars aa__stars--1"></div>
+      <div class="aa__stars aa__stars--2"></div>
+    </div>
+    <div class="aa__cta-inner">
+      <p class="aa__cta-label">Journal Andromeda</p>
+      <a href="{{ blog.url }}" class="aa__cta-btn">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <path d="M10 3L5 7L10 11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9 3L4 7L9 11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         Retour au journal
       </a>
     </div>
+  </div>
 
-  </article>
 </div>
 
 <style>
   @font-face {
     font-family: 'Stellar';
     src: url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/MirageStellar.ttf?v=1772405200') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+    font-weight: normal; font-style: normal; font-display: swap;
   }
 
-  /* ── Base ─────────────────────────────────────────────── */
-  .andro-article {
-    position: relative;
-    min-height: 100vh;
-    background: #191A2E;
-    color: #FFFFFF;
-    overflow: hidden;
-  }
-
-  /* ── Background ──────────────────────────────────────── */
-  .andro-article__bg {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  .andro-article__stars {
-    position: absolute;
-    inset: 0;
-  }
-
-  .andro-article__stars--1 {
+  /* ── Stars ─────────────────────────────────────────────── */
+  .aa__stars { position: absolute; inset: 0; }
+  .aa__stars--1 {
     background-image:
       radial-gradient(1.2px 1.2px at 8% 15%, rgba(255,255,255,0.65) 0%, transparent 100%),
       radial-gradient(1px 1px at 22% 72%, rgba(255,255,255,0.5) 0%, transparent 100%),
@@ -124,283 +108,150 @@
       radial-gradient(1.4px 1.4px at 91% 38%, rgba(255,255,255,0.7) 0%, transparent 100%),
       radial-gradient(1px 1px at 14% 90%, rgba(255,255,255,0.4) 0%, transparent 100%),
       radial-gradient(1.2px 1.2px at 45% 50%, rgba(255,255,255,0.55) 0%, transparent 100%),
-      radial-gradient(0.8px 0.8px at 60% 30%, rgba(255,255,255,0.45) 0%, transparent 100%),
       radial-gradient(1.1px 1.1px at 85% 80%, rgba(255,255,255,0.6) 0%, transparent 100%),
-      radial-gradient(1.3px 1.3px at 30% 42%, rgba(255,255,255,0.5) 0%, transparent 100%),
-      radial-gradient(0.9px 0.9px at 72% 68%, rgba(255,255,255,0.4) 0%, transparent 100%),
-      radial-gradient(1px 1px at 5% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.4px 1.4px at 55% 5%, rgba(255,255,255,0.65) 0%, transparent 100%),
       radial-gradient(1.2px 1.2px at 95% 20%, rgba(255,255,255,0.6) 0%, transparent 100%);
-    animation: andro-art-drift-1 35s ease-in-out infinite;
+    animation: aa-drift-1 35s ease-in-out infinite;
   }
-
-  .andro-article__stars--2 {
+  .aa__stars--2 {
     background-image:
       radial-gradient(1px 1px at 12% 25%, rgba(255,255,255,0.4) 0%, transparent 100%),
       radial-gradient(1.3px 1.3px at 35% 60%, rgba(255,255,255,0.55) 0%, transparent 100%),
       radial-gradient(0.9px 0.9px at 58% 18%, rgba(255,255,255,0.45) 0%, transparent 100%),
       radial-gradient(1.2px 1.2px at 74% 42%, rgba(255,255,255,0.6) 0%, transparent 100%),
-      radial-gradient(1px 1px at 90% 75%, rgba(255,255,255,0.5) 0%, transparent 100%),
-      radial-gradient(1.4px 1.4px at 3% 88%, rgba(255,255,255,0.65) 0%, transparent 100%),
-      radial-gradient(0.8px 0.8px at 48% 75%, rgba(255,255,255,0.4) 0%, transparent 100%),
-      radial-gradient(1.1px 1.1px at 65% 92%, rgba(255,255,255,0.5) 0%, transparent 100%);
-    animation: andro-art-drift-2 50s ease-in-out infinite;
-    opacity: 0.7;
+      radial-gradient(0.8px 0.8px at 48% 75%, rgba(255,255,255,0.4) 0%, transparent 100%);
+    animation: aa-drift-2 50s ease-in-out infinite; opacity: 0.7;
+  }
+  @keyframes aa-drift-1 {
+    0%, 100% { transform: translate(0,0); } 33% { transform: translate(-10px,-7px); } 66% { transform: translate(7px,-12px); }
+  }
+  @keyframes aa-drift-2 {
+    0%, 100% { transform: translate(0,0); } 40% { transform: translate(9px,-5px); } 70% { transform: translate(-7px,9px); }
   }
 
-  @keyframes andro-art-drift-1 {
-    0%, 100% { transform: translate(0, 0); }
-    33%       { transform: translate(-10px, -7px); }
-    66%       { transform: translate(7px, -12px); }
+  /* ── Hero ──────────────────────────────────────────────── */
+  .aa__hero {
+    position: relative; background: #191A2E; overflow: hidden;
+    padding-bottom: 80px;
+  }
+  .aa__hero-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .aa__hero > *:not(.aa__hero-bg) { position: relative; z-index: 1; }
+  .aa__hero-inner { max-width: 700px; margin: 0 auto; padding: 48px 24px 0; text-align: center; }
+
+  .aa__back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s;
+    margin-bottom: 40px;
+  }
+  .aa__back:hover { color: #C8B89A; }
+
+  .aa__meta {
+    display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px;
+    font-size: 10px; font-weight: 300; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35); margin-bottom: 20px;
+  }
+  .aa__tag {
+    color: #C8B89A; border: 1px solid rgba(200,184,154,0.3);
+    border-radius: 20px; padding: 2px 10px; font-size: 9px;
   }
 
-  @keyframes andro-art-drift-2 {
-    0%, 100% { transform: translate(0, 0); }
-    40%       { transform: translate(9px, -5px); }
-    70%       { transform: translate(-7px, 9px); }
-  }
-
-  /* ── Back link ────────────────────────────────────────── */
-  .andro-article__back-wrap {
-    position: relative;
-    z-index: 1;
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 40px 24px 0;
-  }
-
-  .andro-article__back {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .andro-article__back:hover {
-    color: #C8B89A;
-  }
-
-  /* ── Article inner ───────────────────────────────────── */
-  .andro-article__inner {
-    position: relative;
-    z-index: 1;
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 40px 24px 100px;
-  }
-
-  /* ── Header ──────────────────────────────────────────── */
-  .andro-article__header {
-    text-align: center;
-    margin-bottom: 48px;
-  }
-
-  .andro-article__meta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    font-size: 10px;
-    font-weight: 300;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.35);
-    margin-bottom: 20px;
-  }
-
-  .andro-article__tag {
-    color: #C8B89A;
-    border: 1px solid rgba(200,184,154,0.3);
-    border-radius: 20px;
-    padding: 2px 10px;
-    font-size: 9px;
-  }
-
-  .andro-article__title {
+  #aa .aa__title, .aa__title {
     font-family: 'Stellar', serif !important;
-    font-size: clamp(32px, 5vw, 52px);
-    font-weight: normal;
-    color: #FFFFFF;
-    word-spacing: -0.22em;
-    letter-spacing: 0;
-    line-height: 1.1;
-    margin-bottom: 20px;
+    font-size: clamp(32px, 5vw, 56px) !important;
+    font-weight: normal !important; color: #FFFFFF !important;
+    word-spacing: -0.22em !important; letter-spacing: 0 !important;
+    line-height: 1.1 !important; margin-bottom: 20px;
+  }
+  .aa__excerpt {
+    font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.5);
+    line-height: 1.75; max-width: 500px; margin: 0 auto;
   }
 
-  .andro-article__excerpt {
-    font-size: 15px;
-    font-weight: 300;
-    color: rgba(255,255,255,0.55);
-    line-height: 1.7;
-    max-width: 540px;
-    margin: 0 auto;
+  /* ── Body ──────────────────────────────────────────────── */
+  .aa__body {
+    background: #FAF7F2; color: #3A3733;
+    max-width: 720px; margin: 0 auto;
+    padding: 56px 24px 72px;
   }
 
-  /* ── Featured image ──────────────────────────────────── */
-  .andro-article__img-wrap {
-    border-radius: 16px;
-    overflow: hidden;
-    margin-bottom: 56px;
-    aspect-ratio: 16 / 9;
+  .aa__img-wrap {
+    border-radius: 16px; overflow: hidden; margin-bottom: 48px; aspect-ratio: 16/9;
+  }
+  .aa__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* RTE content */
+  .aa__content.rte {
+    font-size: 15px; font-weight: 300; line-height: 1.85; color: #3A3733;
+  }
+  .aa__content.rte h2,
+  .aa__content.rte h3,
+  .aa__content.rte h4 {
+    color: #1C1A18; font-weight: 500; margin-top: 48px; margin-bottom: 16px; line-height: 1.3;
+  }
+  .aa__content.rte h2 { font-size: 22px; }
+  .aa__content.rte h3 { font-size: 18px; }
+  .aa__content.rte h4 { font-size: 15px; }
+  .aa__content.rte p { margin-bottom: 22px; }
+  .aa__content.rte a { color: #B8975A; text-decoration: underline; text-underline-offset: 3px; }
+  .aa__content.rte a:hover { color: #1C1A18; }
+  .aa__content.rte img { width: 100%; border-radius: 12px; margin: 32px 0; display: block; }
+  .aa__content.rte blockquote {
+    border-left: 2px solid #B8975A; padding-left: 20px; margin: 32px 0;
+    font-style: italic; color: #8A837A;
+  }
+  .aa__content.rte ul,
+  .aa__content.rte ol { padding-left: 20px; margin-bottom: 22px; }
+  .aa__content.rte li { margin-bottom: 8px; }
+  .aa__content.rte hr {
+    border: none; border-top: 1px solid rgba(184,151,90,0.2); margin: 40px 0;
   }
 
-  .andro-article__img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+  /* Tags footer */
+  .aa__tags-footer {
+    margin-top: 56px; padding-top: 28px;
+    border-top: 1px solid rgba(184,151,90,0.15);
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
   }
-
-  /* ── Content (rte) ───────────────────────────────────── */
-  .andro-article__content.rte {
-    font-size: 15px;
-    font-weight: 300;
-    line-height: 1.85;
-    color: rgba(255,255,255,0.8);
+  .aa__tags-label {
+    font-size: 10px; font-weight: 400; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #AAA49E;
   }
-
-  .andro-article__content.rte h2,
-  .andro-article__content.rte h3,
-  .andro-article__content.rte h4 {
-    color: #FFFFFF;
-    font-weight: 500;
-    margin-top: 48px;
-    margin-bottom: 16px;
-    line-height: 1.3;
-  }
-
-  .andro-article__content.rte h2 { font-size: 24px; }
-  .andro-article__content.rte h3 { font-size: 20px; }
-  .andro-article__content.rte h4 { font-size: 16px; }
-
-  .andro-article__content.rte p {
-    margin-bottom: 24px;
-  }
-
-  .andro-article__content.rte a {
-    color: #C8B89A;
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-  }
-
-  .andro-article__content.rte a:hover {
-    color: #FFFFFF;
-  }
-
-  .andro-article__content.rte img {
-    width: 100%;
-    border-radius: 12px;
-    margin: 32px 0;
-    display: block;
-  }
-
-  .andro-article__content.rte blockquote {
-    border-left: 2px solid #C8B89A;
-    padding-left: 20px;
-    margin: 32px 0;
-    font-style: italic;
-    color: rgba(255,255,255,0.6);
-  }
-
-  .andro-article__content.rte ul,
-  .andro-article__content.rte ol {
-    padding-left: 20px;
-    margin-bottom: 24px;
-  }
-
-  .andro-article__content.rte li {
-    margin-bottom: 8px;
-  }
-
-  /* ── Footer tags ─────────────────────────────────────── */
-  .andro-article__footer {
-    margin-top: 64px;
-    padding-top: 32px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .andro-article__footer-label {
-    font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-  }
-
-  .andro-article__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .andro-article__tag-link {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    text-decoration: none;
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 20px;
-    padding: 4px 12px;
+  .aa__tags-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .aa__tag-link {
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: #AAA49E; text-decoration: none;
+    border: 1px solid rgba(184,151,90,0.2); border-radius: 20px; padding: 4px 12px;
     transition: color 0.2s, border-color 0.2s;
   }
+  .aa__tag-link:hover { color: #B8975A; border-color: rgba(184,151,90,0.5); }
 
-  .andro-article__tag-link:hover {
-    color: #C8B89A;
-    border-color: rgba(200,184,154,0.4);
+  /* ── CTA ───────────────────────────────────────────────── */
+  .aa__cta {
+    position: relative; background: #191A2E; overflow: hidden;
+    text-align: center; padding: 80px 24px;
   }
+  .aa__cta-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .aa__cta > *:not(.aa__cta-bg) { position: relative; z-index: 1; }
+  .aa__cta-inner { max-width: 480px; margin: 0 auto; }
 
-  /* ── Back bottom ─────────────────────────────────────── */
-  .andro-article__back-bottom {
-    margin-top: 56px;
-    text-align: center;
+  .aa__cta-label {
+    font-size: 10px; font-weight: 400; letter-spacing: 0.4em; text-transform: uppercase;
+    color: #C8B89A; margin-bottom: 24px;
   }
-
-  .andro-article__back-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #C8B89A;
-    text-decoration: none;
-    border: 1px solid rgba(200,184,154,0.3);
-    padding: 12px 24px;
-    border-radius: 40px;
+  .aa__cta-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase;
+    color: #C8B89A; text-decoration: none;
+    border: 1px solid rgba(200,184,154,0.3); padding: 14px 28px; border-radius: 40px;
     transition: background 0.2s, gap 0.2s;
   }
+  .aa__cta-btn:hover { background: rgba(200,184,154,0.08); gap: 12px; }
 
-  .andro-article__back-btn:hover {
-    background: rgba(200,184,154,0.08);
-    gap: 12px;
-  }
-
-  /* ── Responsive ──────────────────────────────────────── */
+  /* ── Responsive ────────────────────────────────────────── */
   @media (max-width: 640px) {
-    .andro-article__inner {
-      padding: 32px 20px 80px;
-    }
-
-    .andro-article__back-wrap {
-      padding: 32px 20px 0;
-    }
-
-    .andro-article__img-wrap {
-      border-radius: 12px;
-    }
+    .aa__hero-inner { padding-top: 36px; }
+    .aa__body { padding: 40px 20px 56px; }
   }
 </style>
 
@@ -408,10 +259,6 @@
 {
   "name": "Article Andromeda",
   "settings": [],
-  "presets": [
-    {
-      "name": "Article Andromeda"
-    }
-  ]
+  "presets": [{ "name": "Article Andromeda" }]
 }
 {% endschema %}
