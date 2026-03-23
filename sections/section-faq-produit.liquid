@@ -1,0 +1,170 @@
+{% if section.blocks.size > 0 %}
+<div class="sfaq" style="background: {{ section.settings.bg_color }}; padding: {{ section.settings.padding_top }}px 24px {{ section.settings.padding_bottom }}px;">
+  {% if section.settings.title != blank %}
+    <h2 class="sfaq__title">{{ section.settings.title }}</h2>
+  {% endif %}
+  <div class="sfaq__list">
+    {% for block in section.blocks %}
+      {% if block.type == "faq_item" %}
+        <details class="sfaq__item" {{ block.shopify_attributes }}>
+          <summary class="sfaq__question">
+            {{ block.settings.question }}
+            <span class="sfaq__icon">+</span>
+          </summary>
+          <div class="sfaq__answer">{{ block.settings.answer }}</div>
+        </details>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<style>
+.sfaq { width: 100%; }
+.sfaq__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1C1A18;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.sfaq__list { max-width: 580px; margin: 0 auto; }
+.sfaq__item {
+  border-bottom: 1px solid rgba(28,26,24,0.12);
+  padding: 0;
+}
+.sfaq__item:first-child { border-top: 1px solid rgba(28,26,24,0.12); }
+.sfaq__question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1C1A18;
+  list-style: none;
+  gap: 12px;
+}
+.sfaq__question::-webkit-details-marker { display: none; }
+.sfaq__icon {
+  flex-shrink: 0;
+  font-size: 1.2rem;
+  color: #B8975A;
+  transition: transform 0.2s ease;
+  line-height: 1;
+}
+details[open] .sfaq__icon { transform: rotate(45deg); }
+.sfaq__answer {
+  font-size: 0.8rem;
+  color: #1C1A18;
+  opacity: 0.7;
+  line-height: 1.7;
+  padding: 0 0 16px 0;
+}
+</style>
+
+{% schema %}
+{
+  "name": "FAQ Produit",
+  "tag": "div",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Questions fréquentes"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Couleur de fond",
+      "default": "#FAFAF8"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacement haut",
+      "min": 0, "max": 80, "step": 4, "unit": "px", "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacement bas",
+      "min": 0, "max": 80, "step": 4, "unit": "px", "default": 32
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Votre question ici"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Réponse",
+          "default": "Votre réponse ici"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Produit",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Quelle est la différence entre soie 22 mommes et 19 mommes ?",
+            "answer": "Les mommes désignent le poids du tissu. À 22 mommes, notre soie est plus dense, plus opaque et plus durable qu'une soie 19 mommes. Elle bloque 100% de la lumière et conserve sa douceur lavage après lavage — là où un tissu moins épais se dégrade plus vite."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Qu'est-ce que le grade 6A de la soie ?",
+            "answer": "Le grade 6A est la classification la plus haute de la soie de mûrier. Moins de 5% de la production mondiale l'atteint. Les filaments sont extra-longs, sans nœuds ni irrégularités — ce qui donne une surface parfaitement lisse, douce et homogène au contact de votre peau."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Comment laver mon masque Andromeda ?",
+            "answer": "Lavage à la main à l'eau froide avec un savon doux, ou en machine sur cycle délicat (30°C max, filet de lavage recommandé). Séchage à plat, loin de toute source de chaleur. La soie est naturellement antibactérienne — un lavage tous les 7 à 10 jours est suffisant."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "C'est quoi le QR code inclus dans ma commande ?",
+            "answer": "Chaque masque Andromeda est livré avec un QR code donnant accès à notre espace rituel exclusif — une sélection de sons d'ambiance conçus pour accompagner l'endormissement : pluie, forêt, océan, sons binauraux. Une expérience sensorielle unique, réservée à nos clients."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Le masque est-il adapté aux dormeurs sur le côté ?",
+            "answer": "Oui. L'élastique réglable est conçu pour ne pas exercer de pression sur la tête ni marquer la peau. Le masque reste en place toute la nuit quelle que soit votre position de sommeil."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Sous combien de temps suis-je livré(e) ?",
+            "answer": "Livraison en France sous 2 à 4 jours ouvrés. Livraison internationale sous 5 à 10 jours. Chaque commande est expédiée dans un emballage soigné, prête à offrir."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
