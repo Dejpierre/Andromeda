@@ -35,7 +35,7 @@
       {%- render 'theme-editor' -%}
     {% endif %}
 
-    {% if template == 'blog' or template == 'article' %}
+    {% if request.page_type == 'password' %}
       <meta name="robots" content="noindex, nofollow">
     {% endif %}
     {{ content_for_header }}
