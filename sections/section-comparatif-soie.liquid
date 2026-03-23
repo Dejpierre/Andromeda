@@ -1,0 +1,154 @@
+<div class="scomp" style="background: {{ section.settings.bg_color }}; padding: {{ section.settings.padding_top }}px 24px {{ section.settings.padding_bottom }}px;">
+  {% if section.settings.title != blank %}
+    <h2 class="scomp__title">{{ section.settings.title }}</h2>
+  {% endif %}
+  <div class="scomp__table">
+    <div class="scomp__header">
+      <div class="scomp__col scomp__col--label"></div>
+      <div class="scomp__col scomp__col--andromeda">
+        <span class="scomp__brand">Andromeda</span>
+        <span class="scomp__sub">Soie 22mm grade 6A</span>
+      </div>
+      <div class="scomp__col scomp__col--other">
+        <span class="scomp__brand">Coton / synthétique</span>
+        <span class="scomp__sub">Masques standard</span>
+      </div>
+    </div>
+    {% for block in section.blocks %}
+      {% if block.type == "row" %}
+        <div class="scomp__row" {{ block.shopify_attributes }}>
+          <div class="scomp__col scomp__col--label">{{ block.settings.label }}</div>
+          <div class="scomp__col scomp__col--andromeda scomp__val scomp__val--yes">
+            <span class="scomp__check">✓</span> {{ block.settings.val_andromeda }}
+          </div>
+          <div class="scomp__col scomp__col--other scomp__val scomp__val--no">
+            <span class="scomp__cross">✗</span> {{ block.settings.val_other }}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.scomp { width: 100%; }
+.scomp__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1C1A18;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.scomp__table { max-width: 580px; margin: 0 auto; }
+.scomp__header, .scomp__row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 0;
+}
+.scomp__header {
+  border-bottom: 2px solid #B8975A;
+  padding-bottom: 10px;
+  margin-bottom: 4px;
+}
+.scomp__row {
+  border-bottom: 1px solid rgba(28,26,24,0.1);
+  padding: 10px 0;
+}
+.scomp__col { padding: 4px 8px; }
+.scomp__col--label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #1C1A18;
+  opacity: 0.7;
+  display: flex;
+  align-items: center;
+}
+.scomp__brand {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1C1A18;
+  letter-spacing: 0.04em;
+}
+.scomp__sub {
+  display: block;
+  font-size: 0.68rem;
+  color: #1C1A18;
+  opacity: 0.5;
+  margin-top: 2px;
+}
+.scomp__val {
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.scomp__check { color: #B8975A; font-weight: 700; }
+.scomp__cross { color: #C0B098; font-weight: 700; }
+.scomp__val--yes { color: #1C1A18; font-weight: 500; }
+.scomp__val--no { color: #1C1A18; opacity: 0.45; }
+@media (max-width: 480px) {
+  .scomp__header, .scomp__row { grid-template-columns: 1fr 1fr 1fr; }
+  .scomp__brand { font-size: 0.72rem; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Comparatif Soie vs Coton",
+  "tag": "div",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Pourquoi la soie ?"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Couleur de fond",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacement haut",
+      "min": 0, "max": 80, "step": 4, "unit": "px", "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacement bas",
+      "min": 0, "max": 80, "step": 4, "unit": "px", "default": 32
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Ligne",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Critère", "default": "Critère" },
+        { "type": "text", "id": "val_andromeda", "label": "Valeur Andromeda", "default": "✓" },
+        { "type": "text", "id": "val_other", "label": "Valeur autre", "default": "✗" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparatif Soie vs Coton",
+      "blocks": [
+        { "type": "row", "settings": { "label": "Douceur", "val_andromeda": "Soyeuse, zéro friction", "val_other": "Rugeux, accroche la peau" } },
+        { "type": "row", "settings": { "label": "Crèmes de nuit", "val_andromeda": "Non absorbées, restent sur vous", "val_other": "Absorbées par le tissu" } },
+        { "type": "row", "settings": { "label": "Température", "val_andromeda": "Thermorégulée naturellement", "val_other": "Retient la chaleur" } },
+        { "type": "row", "settings": { "label": "Peau au réveil", "val_andromeda": "Aucune marque, aucun pli", "val_other": "Marques et irritations" } },
+        { "type": "row", "settings": { "label": "Cheveux", "val_andromeda": "Glisse, préserve la fibre", "val_other": "Friction, casse, frisottis" } },
+        { "type": "row", "settings": { "label": "Durabilité", "val_andromeda": "Plusieurs années avec soin", "val_other": "Se dégrade rapidement" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
