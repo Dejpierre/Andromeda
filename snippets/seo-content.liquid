@@ -1,0 +1,59 @@
+{%- comment -%}
+  Andromeda — SEO Content
+  Centralize all meta titles and descriptions by page type
+{%- endcomment -%}
+
+{%- liquid
+  assign seo_title = ''
+  assign seo_description = ''
+
+  if request.page_type == 'index'
+    assign seo_title = 'Andromeda — Masque de Sommeil en Soie de Mûrier Premium'
+    assign seo_description = 'Découvrez Andromeda, le masque de sommeil en pure soie de mûrier 22 mommes grade 6A. Un rituel du soir raffiné, doux et sensoriel. Offrez-vous un sommeil d'exception.'
+
+  elsif request.page_type == 'product'
+    if product.handle == 'masque-de-sommeil-en-soie'
+      assign seo_title = 'Masque de Sommeil en Soie de Mûrier 22 Mommes — Andromeda'
+      assign seo_description = 'Le masque de sommeil Andromeda en pure soie de mûrier 22 mommes, grade 6A. Douceur absolue, obscurité parfaite et sons d'ambiance exclusifs pour un endormissement en tout élégance.'
+    else
+      assign seo_title = product.title | append: ' — Andromeda'
+      assign seo_description = product.description | strip_html | truncate: 155
+    endif
+
+  elsif request.page_type == 'collection'
+    assign seo_title = collection.title | append: ' — Andromeda'
+    assign seo_description = 'Explorez la collection ' | append: collection.title | append: ' d'Andromeda. Accessoires de sommeil haut de gamme, pensés pour un rituel du soir élégant et apaisant.'
+
+  elsif request.page_type == 'article'
+    assign seo_title = article.title | append: ' — Andromeda'
+    assign seo_description = article.excerpt_or_content | strip_html | truncate: 155
+
+  elsif request.page_type == 'blog'
+    assign seo_title = blog.title | append: ' — Andromeda'
+    assign seo_description = 'Conseils, rituels et inspirations autour du sommeil et du bien-être par Andromeda. Plongez dans un univers de douceur et d'élégance.'
+
+  elsif request.page_type == 'page'
+    if page.handle == 'contact'
+      assign seo_title = 'Contact — Andromeda'
+      assign seo_description = 'Une question sur votre commande ou nos produits ? L'équipe Andromeda est à votre écoute. Contactez-nous pour toute demande.'
+    elsif page.handle == 'rituels'
+      assign seo_title = 'Rituels du Soir — Andromeda'
+      assign seo_description = 'Découvrez les rituels du soir Andromeda : sons d'ambiance exclusifs, gestes apaisants et accessoires premium pour un endormissement en douceur.'
+    else
+      assign seo_title = page.title | append: ' — Andromeda'
+      assign seo_description = page.content | strip_html | truncate: 155
+    endif
+
+  elsif request.page_type == 'search'
+    assign seo_title = 'Recherche — Andromeda'
+    assign seo_description = 'Trouvez l'accessoire de sommeil idéal parmi la sélection premium Andromeda.'
+
+  elsif request.page_type == 'cart'
+    assign seo_title = 'Votre Panier — Andromeda'
+    assign seo_description = 'Finalisez votre commande et offrez-vous un rituel de sommeil d'exception avec Andromeda.'
+
+  else
+    assign seo_title = page_title | default: shop.name
+    assign seo_description = page_description | default: shop.description | default: 'Andromeda — Accessoires de sommeil premium en soie de mûrier. Un rituel du soir élégant, doux et sensoriel.'
+  endif
+%}
