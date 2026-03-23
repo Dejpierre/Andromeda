@@ -38,7 +38,8 @@
       assign seo_description = 'Une question sur votre commande ou nos produits ? L'équipe Andromeda est à votre écoute. Contactez-nous pour toute demande.'
     elsif page.handle == 'rituels'
       assign seo_title = 'Rituels du Soir — Andromeda'
-      assign seo_description = 'Découvrez les rituels du soir Andromeda : sons d'ambiance exclusifs, gestes apaisants et accessoires premium pour un endormissement en douceur.'
+      assign seo_description = ''
+      assign seo_noindex = true
     else
       assign seo_title = page.title | append: ' — Andromeda'
       assign seo_description = page.content | strip_html | truncate: 155
