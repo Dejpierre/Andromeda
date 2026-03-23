@@ -113,6 +113,10 @@
   href="{{ canonical_url }}"
 >
 
+{%- if seo_noindex -%}
+  <meta name="robots" content="noindex, nofollow">
+{%- endif -%}
+
 <meta
   name="description"
   content="{{ seo_description | default: page_description | default: shop.description | default: shop.name | escape }}"
