@@ -19,10 +19,10 @@
     </div>
     <div class="ag__hero-inner">
     <p class="ag__eyebrow">Andromeda Paris — Guide</p>
-    <h1 class="ag__title">Comment choisir son masque de sommeil <em>en soie</em></h1>
-    <p class="ag__subtitle">Du grade de la soie aux mommes, tout ce que vous devez savoir pour un sommeil véritablement réparateur.</p>
+    <h1 class="ag__title">3 étapes pour choisir son masque de sommeil <em>en soie</em></h1>
+    <p class="ag__subtitle">Matière, grammage, grade : le guide complet pour un sommeil réellement réparateur.</p>
     <div class="ag__meta">
-      <span>Lecture : 6 min</span>
+      <span>Lecture : 5 min</span>
       <span>Guide expert</span>
       <span>Mis à jour 2025</span>
     </div>
@@ -37,9 +37,21 @@
       <p>Chaque nuit, la qualité de votre repos dépend d'un paramètre que la plupart ignorent : la lumière. Même imperceptible, même à travers des paupières closes, elle suffit à inhiber la production de mélatonine et à perturber vos cycles. Le masque de sommeil n'est pas un accessoire de voyage — c'est un outil de performance, à condition de bien le choisir.</p>
     </div>
 
+    {% if section.settings.image_hero != blank %}
+    <div class="ag__img-wrap">
+      <img
+        src="{{ section.settings.image_hero | image_url: width: 1200 }}"
+        alt="{{ section.settings.image_hero.alt | default: 'Masque de sommeil Andromeda' }}"
+        class="ag__img"
+        loading="lazy"
+        width="{{ section.settings.image_hero.width }}"
+        height="{{ section.settings.image_hero.height }}"
+      >
+    </div>
+    {% endif %}
+
     <section class="ag__section">
-      <p class="ag__section-label">01 — Les fondements</p>
-      <h2 class="ag__h2">Pourquoi l'obscurité totale change tout</h2>
+      <h2 class="ag__h2 ag__h2--intro">Pourquoi l'obscurité totale change tout</h2>
       <p>Votre cerveau produit de la mélatonine — l'hormone du sommeil — uniquement en l'absence de lumière. Le moindre stimulus lumineux, même à travers vos paupières, active des photorécepteurs spécialisés qui signalent à votre hypothalamus de freiner la sécrétion. Résultat : vous vous endormez moins vite, votre sommeil profond est écourté, et vous vous réveillez moins reposé.</p>
       <p>Un masque bien ajusté crée un environnement d'obscurité totale, indépendamment de votre chambre, de la saison ou de votre situation géographique.</p>
       <div class="ag__benefits">
@@ -73,8 +85,8 @@
     </section>
 
     <section class="ag__section">
-      <p class="ag__section-label">02 — La matière</p>
-      <h2 class="ag__h2">Soie, coton, synthétique : le comparatif sans concession</h2>
+      <p class="ag__section-label">01 — La matière</p>
+      <h2 class="ag__h2">Soie, coton, synthétique : misez sur les bienfaits d'un masque de sommeil en soie</h2>
       <p>Tous les masques ne se valent pas. Le choix de la matière conditionne non seulement votre confort immédiat, mais aussi la santé de votre peau et de vos cheveux sur le long terme.</p>
       <div class="ag__table-wrap">
         <table class="ag__table">
@@ -90,34 +102,26 @@
         </table>
       </div>
       <p>La soie de mûrier (mulberry silk) est tissée à partir des cocons du ver à soie <em>Bombyx mori</em>. Sa structure en fibroïne lui confère des propriétés hydratantes naturelles — contrairement au coton, elle ne déshydrate pas votre peau, elle la préserve.</p>
+      {% if section.settings.image_matiere != blank %}
+      <div class="ag__img-wrap ag__img-wrap--matiere">
+        <img
+          src="{{ section.settings.image_matiere | image_url: width: 1200 }}"
+          alt="{{ section.settings.image_matiere.alt | default: 'Soie de mûrier' }}"
+          class="ag__img"
+          loading="lazy"
+          width="{{ section.settings.image_matiere.width }}"
+          height="{{ section.settings.image_matiere.height }}"
+        >
+      </div>
+      {% endif %}
       <blockquote class="ag__quote">
         <p>"La soie de mûrier ne glisse pas sur la peau — elle l'accompagne, sans friction, sans pression. C'est une différence que vous ressentez dès la première nuit."</p>
       </blockquote>
     </section>
 
     <section class="ag__section">
-      <p class="ag__section-label">03 — Les grades</p>
-      <h2 class="ag__h2">Grade A, AAA, 6A : pourquoi cela change tout</h2>
-      <p>Le grade de la soie évalue la longueur, la continuité et la blancheur naturelle des filaments. Voici ce qu'il signifie vraiment.</p>
-      <div class="ag__table-wrap">
-        <table class="ag__table">
-          <thead>
-            <tr><th>Grade</th><th>Filament</th><th>Blancheur</th><th>% Production</th></tr>
-          </thead>
-          <tbody>
-            <tr><td class="ag__table-name">Grade A</td><td>Court, irrégulier</td><td>Jaunâtre</td><td>~60 %</td></tr>
-            <tr><td class="ag__table-name">Grade AAA</td><td>Long, homogène</td><td>Crème</td><td>~25 %</td></tr>
-            <tr><td class="ag__table-name">Grade 5A</td><td>Très long, fin</td><td>Blanc naturel</td><td>~10 %</td></tr>
-            <tr class="ag__table-row--highlight"><td class="ag__table-name">Grade 6A <span class="ag__badge">Andromeda</span></td><td>Extra-long, continu</td><td>Blanc pur, lustré</td><td>&lt; 5 %</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>Moins de 5 % de la production mondiale de soie de mûrier atteint le Grade 6A. Ce classement est attribué aux filaments les plus longs, prélevés depuis le cœur du cocon. La différence avec un grade inférieur est immédiatement perceptible au toucher : là où un grade inférieur présente de légères rugosités créant des micro-frictions nocturnes, le Grade 6A glisse sans résistance.</p>
-    </section>
-
-    <section class="ag__section">
-      <p class="ag__section-label">04 — Le grammage</p>
-      <h2 class="ag__h2">Les mommes : trouver le juste équilibre</h2>
+      <p class="ag__section-label">02 — Le grammage</p>
+      <h2 class="ag__h2">Les mommes de soie : trouver le juste équilibre</h2>
       <p>Le « momme » (mm) est l'unité de mesure du poids des tissus de soie. Plus le nombre est élevé, plus le tissu est dense et opaque. Mais au-delà d'un certain seuil, il devient trop lourd pour être confortable au visage durant plusieurs heures.</p>
       <div class="ag__scale">
         <div class="ag__scale-track">
@@ -148,61 +152,25 @@
     </section>
 
     <section class="ag__section">
-      <p class="ag__section-label">05 — Entretien & durabilité</p>
-      <h2 class="ag__h2">Prendre soin de sa soie pour qu'elle dure</h2>
-      <p>La soie Grade 6A est un investissement qui se mesure en années — à condition de respecter quelques règles d'entretien simples mais impératives.</p>
-      <div class="ag__steps">
-        <div class="ag__step">
-          <div class="ag__step-num">01</div>
-          <div class="ag__step-body">
-            <h4>Lavage à la main — eau froide</h4>
-            <p>Eau froide à tiède (max 30°C) avec un détergent spécial soie ou shampoing doux sans sulfates. Immergez délicatement, ne frottez pas. Rincez à l'eau froide.</p>
-          </div>
-        </div>
-        <div class="ag__step">
-          <div class="ag__step-num">02</div>
-          <div class="ag__step-body">
-            <h4>Séchage à plat, à l'ombre</h4>
-            <p>Ne tordez jamais la soie. Tamponnez avec une serviette propre, puis laissez sécher à plat à l'abri de la lumière directe qui décolore les fibres.</p>
-          </div>
-        </div>
-        <div class="ag__step">
-          <div class="ag__step-num">03</div>
-          <div class="ag__step-body">
-            <h4>Repassage si nécessaire — basse température</h4>
-            <p>Température soie (~110°C), sans vapeur directe. Repassez sur l'envers avec un tissu de protection intercalé.</p>
-          </div>
-        </div>
-        <div class="ag__step">
-          <div class="ag__step-num">04</div>
-          <div class="ag__step-body">
-            <h4>Conservation</h4>
-            <p>Conservez à l'abri de la lumière, dans sa pochette protectrice. Évitez le contact prolongé avec des agrafes ou bijoux qui peuvent accrocher les filaments.</p>
-          </div>
-        </div>
+      <p class="ag__section-label">03 — Les grades</p>
+      <h2 class="ag__h2">Grade A, AAA, 6A : pourquoi cela change tout</h2>
+      <p>Le grade de la soie évalue la longueur, la continuité et la blancheur naturelle des filaments. Voici ce qu'il signifie vraiment.</p>
+      <div class="ag__table-wrap">
+        <table class="ag__table">
+          <thead>
+            <tr><th>Grade</th><th>Filament</th><th>Blancheur</th><th>% Production</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="ag__table-name">Grade A</td><td>Court, irrégulier</td><td>Jaunâtre</td><td>~60 %</td></tr>
+            <tr><td class="ag__table-name">Grade AAA</td><td>Long, homogène</td><td>Crème</td><td>~25 %</td></tr>
+            <tr><td class="ag__table-name">Grade 5A</td><td>Très long, fin</td><td>Blanc naturel</td><td>~10 %</td></tr>
+            <tr class="ag__table-row--highlight"><td class="ag__table-name">Grade 6A <span class="ag__badge">Andromeda</span></td><td>Extra-long, continu</td><td>Blanc pur, lustré</td><td>&lt; 5 %</td></tr>
+          </tbody>
+        </table>
       </div>
-    </section>
-
-    <section class="ag__section">
-      <p class="ag__section-label">06 — Questions fréquentes</p>
-      <h2 class="ag__h2">Ce que vous nous posez le plus souvent</h2>
-      <div class="ag__faq">
-        <div class="ag__faq-item">
-          <p class="ag__faq-q">Quelle est la différence entre soie de mûrier et soie « naturelle » ?</p>
-          <p class="ag__faq-a">La soie de mûrier désigne spécifiquement la soie produite par le <em>Bombyx mori</em> nourri de feuilles de mûrier blanc — la variété la plus fine et la plus homogène. D'autres types (tussah, eri, muga) sont également naturels mais présentent des filaments plus grossiers.</p>
-        </div>
-        <div class="ag__faq-item">
-          <p class="ag__faq-q">Un masque à 22 mommes Grade 6A convient-il aux dormeurs côté ?</p>
-          <p class="ag__faq-a">Oui. À 22 mommes, le masque reste suffisamment souple pour ne pas créer de pression inconfortable en position latérale. L'élastique réglable permet d'ajuster le maintien sans serrer.</p>
-        </div>
-        <div class="ag__faq-item">
-          <p class="ag__faq-q">Comment vérifier l'authenticité d'une soie Grade 6A ?</p>
-          <p class="ag__faq-a">Chaque masque Andromeda est accompagné d'un QR code d'authenticité traçable jusqu'au lot de fabrication. Test de combustion : la vraie soie brûle lentement, dégage une légère odeur de kératine et laisse une cendre friable.</p>
-        </div>
-        <div class="ag__faq-item">
-          <p class="ag__faq-q">La soie est-elle adaptée aux peaux sensibles ou sujettes à l'acné ?</p>
-          <p class="ag__faq-a">Oui, c'est même souvent recommandé. La soie est naturellement hypoallergénique et résistante aux acariens. Sa structure en fibroïne évite l'absorption des sébums et hydratants nocturnes, contrairement au coton.</p>
-        </div>
+      <div class="ag__plus">
+        <p class="ag__plus-label">Le + Andromeda</p>
+        <p>Moins de 5 % de la production mondiale de soie de mûrier atteint le Grade 6A. Ce classement est attribué aux filaments les plus longs, prélevés depuis le cœur du cocon. La différence avec un grade inférieur est immédiatement perceptible au toucher : là où un grade inférieur présente de légères rugosités créant des micro-frictions nocturnes, le Grade 6A glisse sans résistance.</p>
       </div>
     </section>
 
@@ -366,6 +334,21 @@
   }
   .ag__intro p { font-size: 15px; font-weight: 300; color: #5A5450; line-height: 1.85; }
 
+  /* ── Images ─────────────────────────────────────────── */
+  .ag__img-wrap {
+    margin: 40px 0;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .ag__img-wrap--matiere {
+    margin: 36px 0;
+  }
+  .ag__img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
   /* ── Sections (fond clair) ───────────────────────────── */
   .ag__section { padding: 52px 0 0; }
   .ag__section-label {
@@ -375,6 +358,9 @@
   .ag__h2 {
     font-size: clamp(24px, 3.5vw, 34px); font-weight: 400;
     color: #1C1A18; line-height: 1.2; margin-bottom: 20px; letter-spacing: -0.01em;
+  }
+  .ag__h2--intro {
+    font-size: clamp(20px, 2.8vw, 28px);
   }
   .ag__section p { font-size: 15px; font-weight: 300; color: #5A5450; line-height: 1.85; margin-bottom: 16px; }
   .ag__section em { color: #B8975A; font-style: italic; }
@@ -416,7 +402,7 @@
   }
 
   /* ── Quote ───────────────────────────────────────────── */
-  .ag__quote { border-left: 2px solid #B8975A; padding: 16px 0 16px 28px; margin: 32px 0 36px; }
+  .ag__quote { border-left: 2px solid #B8975A; padding: 16px 0 16px 28px; margin: 32px 0 52px; }
   .ag__quote p {
     font-size: 19px !important; font-weight: 300 !important; font-style: italic;
     color: #3A3733 !important; line-height: 1.6 !important; margin: 0 !important; font-family: Georgia, serif;
@@ -443,24 +429,21 @@
   .ag__scale-marker--active .ag__scale-val { color: #B8975A; }
   .ag__scale-lbl { font-size: 10px; color: #AAA49E; letter-spacing: 0.05em; white-space: nowrap; margin-top: 3px; }
 
-  /* ── Steps entretien ─────────────────────────────────── */
-  .ag__steps {
-    margin: 28px 0 40px; display: grid; gap: 1px;
-    background: rgba(184,151,90,0.15); border: 1px solid rgba(184,151,90,0.2);
-    border-radius: 8px; overflow: hidden;
+  /* ── Le + Andromeda ──────────────────────────────────── */
+  .ag__plus {
+    background: rgba(184,151,90,0.06);
+    border: 1px solid rgba(184,151,90,0.2);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin: 0 0 52px;
   }
-  .ag__step { background: #FAF7F2; padding: 22px 24px; display: grid; grid-template-columns: 48px 1fr; gap: 16px; align-items: start; }
-  .ag__step-num { font-size: 28px; font-weight: 300; color: #B8975A; line-height: 1; padding-top: 2px; font-family: Georgia, serif; }
-  .ag__step-body h4 { font-size: 15px; font-weight: 500; color: #1C1A18; margin-bottom: 6px; }
-  .ag__step-body p {
-    font-size: 13px !important; color: #8A837A !important; line-height: 1.65 !important; margin: 0 !important;
+  .ag__plus-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase;
+    color: #B8975A; margin-bottom: 12px;
   }
-
-  /* ── FAQ ─────────────────────────────────────────────── */
-  .ag__faq { margin: 28px 0 60px; border-top: 1px solid rgba(184,151,90,0.18); }
-  .ag__faq-item { border-bottom: 1px solid rgba(184,151,90,0.18); padding: 24px 0; }
-  .ag__faq-q { font-size: 17px; font-weight: 400; color: #1C1A18; margin-bottom: 10px; }
-  .ag__faq-a { font-size: 14px; color: #8A837A; line-height: 1.75; margin: 0; }
+  .ag__plus p {
+    font-size: 14px !important; color: #5A5450 !important; line-height: 1.8 !important; margin: 0 !important;
+  }
 
   /* ── CTA (dark) ──────────────────────────────────────── */
   .ag__cta {
@@ -513,7 +496,18 @@
 {% schema %}
 {
   "name": "Article Guide Masque",
-  "settings": [],
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_hero",
+      "label": "Image hero (masque + packaging)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_matiere",
+      "label": "Image matière (cocons de soie)"
+    }
+  ],
   "presets": [{ "name": "Article Guide Masque" }]
 }
 {% endschema %}

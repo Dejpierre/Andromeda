@@ -2464,7 +2464,43 @@ deferred-media[class] :is(.deferred-media__poster-button img, .deferred-media__p
 
 /* Override global label:has(input) display rule with higher specificity */
 .variant-option__button-label--has-swatch:has(input) {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  border: none !important;
+  background: none !important;
+  padding: 0 !important;
+}
+
+.variant-option__button-label {
+  position: relative;
+  overflow: inherit;
+  display: flex !important;
+}
+
+.swatch-label {
+  position: absolute;
+  bottom: -20px;
+  left: auto;
+  right: auto;
+  text-align: center;
+  font-size: 0.6rem;
+  color: var(--color-foreground);
+  opacity: 0.6;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Cacher le nom de la variante sélectionnée dans le titre */
+.variant-option--swatches legend .variant-option__swatch-value {
+  display: none;
+}
+
+.variant-picker, .variant-picker__form {
+  width: 100%;
+  margin-bottom: 0.5rem;
 }
 
 .variant-option__button-label:has(:checked) {

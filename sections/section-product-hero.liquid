@@ -1,0 +1,371 @@
+{% liquid
+  assign product_ref = all_products[section.settings.product]
+  assign first_variant = product_ref.selected_or_first_available_variant
+%}
+
+{% if product_ref != blank %}
+<div class="sph__outer">
+<div
+  class="sph"
+  id="sph-{{ section.id }}"
+  style="border-radius: {{ section.settings.radius }}px;"
+>
+  <div class="sph__bg" id="sph-bg-{{ section.id }}">
+    {% for variant in product_ref.variants %}
+      {% liquid
+        assign block_image = blank
+        for block in section.blocks
+          if block.settings.variant_title == variant.title and block.settings.image != blank
+            assign block_image = block.settings.image
+          endif
+        endfor
+        if block_image != blank
+          assign bg_url = block_image | image_url: width: 1600
+        else
+          assign fallback = variant.featured_media | default: product_ref.featured_image
+          assign bg_url = fallback | image_url: width: 1600
+        endif
+      %}
+      <div
+        class="sph__bg-img{% if forloop.first %} is-active{% endif %}"
+        data-variant-id="{{ variant.id }}"
+        style="background-image: url('{{ bg_url }}');"
+      ></div>
+    {% endfor %}
+  </div>
+
+  <div class="sph__overlay"></div>
+
+  <div class="sph__content">
+    <div class="sph__text">
+      <h2 class="sph__title">Masque de sommeil<br><em class="sph__title-em">pure soie de mûrier</em></h2>
+      {% if section.settings.subtitle != blank %}
+        <p class="sph__subtitle" id="sph-subtitle-{{ section.id }}">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+
+    <div class="sph__bottom">
+      <div class="sph__swatches" id="sph-swatches-{{ section.id }}">
+        {% for variant in product_ref.variants %}
+          {% liquid
+            assign block_image = blank
+            for block in section.blocks
+              if block.settings.variant_title == variant.title and block.settings.image != blank
+                assign block_image = block.settings.image
+              endif
+            endfor
+            if block_image != blank
+              assign swatch_bg = block_image | image_url: width: 1600
+              assign swatch_thumb = block_image | image_url: width: 80
+            else
+              assign fallback = variant.featured_media | default: product_ref.featured_image
+              assign swatch_bg = fallback | image_url: width: 1600
+              assign swatch_thumb = fallback | image_url: width: 80
+            endif
+          %}
+          <button
+            class="sph__swatch{% if forloop.first %} is-active{% endif %}"
+            data-variant-id="{{ variant.id }}"
+            data-variant-title="{{ variant.title }}"
+            data-bg="{{ swatch_bg }}"
+            data-url="{{ product_ref.url }}?variant={{ variant.id }}"
+            style="background-image: url('{{ swatch_thumb }}');"
+            aria-label="{{ variant.title }}"
+          ></button>
+        {% endfor %}
+      </div>
+
+      {% if section.settings.button_label != blank %}
+        {% assign first_variant = product_ref.first_available_variant | default: product_ref.variants.first %}
+        <a href="{{ product_ref.url }}?variant={{ first_variant.id }}" class="sph__btn">
+          {{ section.settings.button_label }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+</div>
+
+<style>
+@font-face {
+  font-family: 'Stellar';
+  src: url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/MirageStellar.ttf?v=1772405200') format('opentype');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+.sph__outer {
+  padding-left: var(--page-margin, 16px);
+  padding-right: var(--page-margin, 16px);
+}
+.sph {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  height: {{ section.settings.height }}px;
+  margin-top: {{ section.settings.padding_top }}px;
+  margin-bottom: {{ section.settings.padding_bottom }}px;
+}
+.sph__bg {
+  position: absolute;
+  inset: 0;
+}
+.sph__bg-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.sph__bg-img.is-active {
+  opacity: 1;
+}
+.sph__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
+}
+.sph__content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 32px;
+  gap: 20px;
+}
+.sph__text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sph__title {
+  font-family: var(--font-primary--family, serif);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 300;
+  color: #fff;
+  margin: 0;
+  line-height: 1.15;
+}
+.sph__title-em {
+  font-family: 'Stellar', serif;
+  font-style: italic;
+  font-weight: normal;
+  color: #fff;
+  display: block;
+}
+.sph__subtitle {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.8);
+  margin: 0;
+}
+.sph__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.sph__swatches {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.sph__swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+  transition: border-color 0.2s, transform 0.2s;
+  outline: none;
+  padding: 0;
+}
+.sph__swatch.is-active {
+  border-color: #fff;
+  transform: scale(1.15);
+}
+.sph__swatch:hover {
+  transform: scale(1.1);
+}
+.sph__btn {
+  background: #fff;
+  color: #1C1A18;
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+.sph__btn:hover {
+  opacity: 0.85;
+}
+@media (max-width: 749px) {
+  .sph {
+    height: {{ section.settings.height_mobile }}px;
+  }
+  .sph__content {
+    padding: 20px;
+  }
+  .sph__title {
+    font-size: 1.5rem;
+  }
+}
+</style>
+
+<script>
+(function() {
+  var section = document.getElementById('sph-{{ section.id }}');
+  if (!section) return;
+
+  var swatches = section.querySelectorAll('.sph__swatch');
+  var bgImgs = section.querySelectorAll('.sph__bg-img');
+  var subtitle = document.getElementById('sph-subtitle-{{ section.id }}');
+
+  swatches.forEach(function(swatch) {
+    swatch.addEventListener('click', function() {
+      var variantId = this.dataset.variantId;
+      var variantTitle = this.dataset.variantTitle;
+
+      // Update active swatch
+      swatches.forEach(function(s) { s.classList.remove('is-active'); });
+      this.classList.add('is-active');
+
+      // Update background image
+      bgImgs.forEach(function(img) {
+        img.classList.remove('is-active');
+        if (img.dataset.variantId === variantId) {
+          img.classList.add('is-active');
+        }
+      });
+
+      // Update button URL
+      var btn = section.querySelector('.sph__btn');
+      if (btn && this.dataset.url) {
+        btn.href = this.dataset.url;
+      }
+
+      // Update subtitle
+      if (subtitle) {
+        subtitle.textContent = variantTitle;
+      }
+    });
+  });
+})();
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Hero produit",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Produit"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre (optionnel, remplace le titre produit)"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sous-titre",
+      "default": "22 momme"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texte du bouton",
+      "default": "J'achète un masque"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Lien du bouton (optionnel)"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Hauteur desktop",
+      "min": 300,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "label": "Hauteur mobile",
+      "min": 200,
+      "max": 600,
+      "step": 20,
+      "unit": "px",
+      "default": 380
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "label": "Arrondi",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacement haut",
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacement bas",
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "variante",
+      "name": "Image par variante",
+      "settings": [
+        {
+          "type": "text",
+          "id": "variant_title",
+          "label": "Nom exact de la variante",
+          "info": "Doit correspondre exactement au nom de la variante (ex: Argent, Rose)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image de fond"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero produit"
+    }
+  ]
+}
+{% endschema %}

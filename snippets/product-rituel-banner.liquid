@@ -1,0 +1,81 @@
+<div class="prb">
+  <div class="prb__content">
+    <div class="prb__text">
+      <p class="prb__title">Qr code espace rituel<br><em>inclus dans chaque commande</em></p>
+      <p class="prb__subtitle">Sons exclusifs pour trouver le sommeil en toute sérénité.</p>
+    </div>
+    <div class="prb__image">
+      <img src="https://cdn.shopify.com/s/files/1/1000/9375/5727/files/carde-rituels-andromeda.png?v=1774135341" alt="Carte rituels Andromeda" width="120" height="120">
+    </div>
+  </div>
+</div>
+
+<style>
+.prb {
+  background: #111827;
+  border-radius: 16px;
+  padding: 16px 16px 16px 16px;
+  margin: 16px 0 8px 0;
+  overflow: visible;
+  position: relative;
+  max-width: 484px;
+}
+.prb__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.prb__text {
+  flex: 1;
+}
+.prb__title {
+  font-family: var(--font-primary--family, serif);
+  font-size: 1.25rem;
+  line-height: 110%;
+  color: #FFFFFF;
+  margin: 0 0 12px 0;
+}
+.prb__title em {
+  font-style: italic;
+  font-weight: 300;
+  opacity: 0.75;
+}
+.prb__subtitle {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.5;
+  margin: 0;
+}
+.prb__image {
+  flex-shrink: 0;
+  position: relative;
+  width: 120px;
+  height: 72px;
+}
+.prb__image img {
+  position: absolute;
+  top: -20px;
+  right: 0;
+  width: 100px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  transform: rotate(6deg);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+}
+@media (max-width: 640px) {
+  .prb {
+    padding: 16px;
+  }
+  .prb__image {
+    width: 90px;
+    height: 80px;
+  }
+  .prb__image img {
+    width: 90px;
+    height: 110px;
+    top: -16px;
+  }
+}
+</style>

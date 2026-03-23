@@ -243,6 +243,60 @@
         "gap_between_elements": 24
       }
     },
+    "section_why_masque_YfVJ3C": {
+      "type": "section-why-masque",
+      "blocks": {
+        "avantage_JDGj3Y": {
+          "type": "avantage",
+          "settings": {
+            "title": "Soie Grade 6A",
+            "text": "Moins de 5% de la production mondiale. Filaments extra-longs pour une douceur incomparable."
+          }
+        },
+        "avantage_jfe6Xr": {
+          "type": "avantage",
+          "settings": {
+            "title": "22 mommes",
+            "text": "Le grammage optimal : opacité totale et légèreté pour une nuit sans compromis."
+          }
+        },
+        "avantage_jY7gDb": {
+          "type": "avantage",
+          "settings": {
+            "title": "Obscurité totale",
+            "text": "Conçu pour bloquer 100% de la lumière et maximiser la production de mélatonine."
+          }
+        },
+        "avantage_MEkhef": {
+          "type": "avantage",
+          "settings": {
+            "title": "Peau & cheveux",
+            "text": "Anti-friction, hydratant naturel. La soie préserve là où le coton absorbe."
+          }
+        }
+      },
+      "block_order": [
+        "avantage_JDGj3Y",
+        "avantage_jfe6Xr",
+        "avantage_jY7gDb",
+        "avantage_MEkhef"
+      ],
+      "name": "Pourquoi nos masques",
+      "settings": {
+        "title": "Pourquoi choisir",
+        "title_accent": "nos masques ?",
+        "subtitle": "",
+        "image": "shopify://shop_images/Image_15.png",
+        "image_width": 50,
+        "image_ratio": "1/1",
+        "image_radius": 16,
+        "heading": "",
+        "background_color": "#ffffff",
+        "text_color": "#1c1a18",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
     "section_HnPz3f": {
       "type": "section",
       "blocks": {
@@ -687,6 +741,7 @@
         "group_NnT3UM",
         "group_BdmGCV"
       ],
+      "disabled": true,
       "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
@@ -877,6 +932,7 @@
           "block_order": []
         }
       },
+      "disabled": true,
       "custom_css": [
         ".media-block__media {border-radius: 0 2rem 2rem 0;}",
         ".product-media-container.media-fit img {border-radius: 1rem;}"
@@ -1147,8 +1203,89 @@
         "movement_direction": "reverse",
         "color_scheme": "",
         "padding-block-start": 24,
+        "padding-block-end": 24,
+        "gap_between_elements": 24
+      }
+    },
+    "marquee_xLEVQF": {
+      "type": "marquee",
+      "blocks": {
+        "icon_yLtxL4": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/61DFEC1B-9AD6-46C2-AA95-F8ACCBA6C225.png",
+            "width": 200,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
+        },
+        "icon_YjUd7G": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/Image_24.png",
+            "width": 200,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "icon_yLtxL4",
+        "icon_YjUd7G"
+      ],
+      "custom_css": [
+        ".marquee__repeated-items p {font-family: \"Stellar\", serif !important; font-weight: 400; font-style: normal;}",
+        ".marquee__repeated-items img {width: 200px !important; height: 200px !important; object-fit: cover; border-radius: 16px; display: block;}"
+      ],
+      "name": "t:names.marquee_section",
+      "settings": {
+        "movement_direction": "normal",
+        "color_scheme": "",
+        "padding-block-start": 24,
         "padding-block-end": 64,
         "gap_between_elements": 24
+      }
+    },
+    "section_product_hero_mANhnJ": {
+      "type": "section-product-hero",
+      "blocks": {
+        "variante_gaYabP": {
+          "type": "variante",
+          "settings": {
+            "variant_title": "Beige",
+            "image": "shopify://shop_images/Image_27.png"
+          }
+        },
+        "variante_Eetk6T": {
+          "type": "variante",
+          "settings": {
+            "variant_title": "Rose",
+            "image": "shopify://shop_images/Image_26.png"
+          }
+        }
+      },
+      "block_order": [
+        "variante_gaYabP",
+        "variante_Eetk6T"
+      ],
+      "name": "Hero produit",
+      "settings": {
+        "product": "masque-pure-soie-de-murier-22-mommes",
+        "title": "",
+        "subtitle": "22 momme",
+        "button_label": "J'achète un masque",
+        "button_url": "",
+        "height": 500,
+        "height_mobile": 380,
+        "radius": 16,
+        "padding_top": 64,
+        "padding_bottom": 64
       }
     },
     "featured_blog_posts_F8LihH": {
@@ -1292,66 +1429,19 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
-    },
-    "section_why_masque_YfVJ3C": {
-      "type": "section-why-masque",
-      "blocks": {
-        "avantage_JDGj3Y": {
-          "type": "avantage",
-          "settings": {
-            "title": "Soie Grade 6A",
-            "text": "Moins de 5% de la production mondiale. Filaments extra-longs pour une douceur incomparable."
-          }
-        },
-        "avantage_jfe6Xr": {
-          "type": "avantage",
-          "settings": {
-            "title": "22 mommes",
-            "text": "Le grammage optimal : opacité totale et légèreté pour une nuit sans compromis."
-          }
-        },
-        "avantage_jY7gDb": {
-          "type": "avantage",
-          "settings": {
-            "title": "Obscurité totale",
-            "text": "Conçu pour bloquer 100% de la lumière et maximiser la production de mélatonine."
-          }
-        },
-        "avantage_MEkhef": {
-          "type": "avantage",
-          "settings": {
-            "title": "Peau & cheveux",
-            "text": "Anti-friction, hydratant naturel. La soie préserve là où le coton absorbe."
-          }
-        }
-      },
-      "block_order": [
-        "avantage_JDGj3Y",
-        "avantage_jfe6Xr",
-        "avantage_jY7gDb",
-        "avantage_MEkhef"
-      ],
-      "name": "Pourquoi nos masques",
-      "settings": {
-        "image": "shopify://shop_images/masque-soie.png",
-        "image_radius": 16,
-        "heading": "",
-        "background_color": "#ffffff",
-        "text_color": "#1C1A18",
-        "padding_top": 64,
-        "padding_bottom": 64
-      }
     }
   },
   "order": [
     "hero_jVaWmY",
     "marquee_BX4UPp",
+    "section_why_masque_YfVJ3C",
     "section_HnPz3f",
     "product_hotspots_xEjQT9",
     "featured_product_T8zL9W",
+    "section_product_hero_mANhnJ",
     "section_R7Vhzp",
     "marquee_EYMzLt",
-    "featured_blog_posts_F8LihH",
-    "section_why_masque_YfVJ3C"
+    "marquee_xLEVQF",
+    "featured_blog_posts_F8LihH"
   ]
 }

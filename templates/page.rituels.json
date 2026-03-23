@@ -1,9 +1,25 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "layout": "rituels",
   "sections": {
     "rituels": {
       "type": "section-rituels",
       "blocks": {
+        "audio_folder_XX3fzq": {
+          "type": "audio_folder",
+          "settings": {
+            "folder_name": "Ambiance situationnelle",
+            "image": "shopify://shop_images/Couverture_dossier_ambiance.png"
+          }
+        },
         "track_1": {
           "type": "audio_track",
           "settings": {
@@ -41,15 +57,24 @@
           }
         }
       },
-      "block_order": ["track_1", "track_2", "track_3", "track_4"],
+      "block_order": [
+        "audio_folder_XX3fzq",
+        "track_1",
+        "track_2",
+        "track_3",
+        "track_4"
+      ],
       "settings": {
         "title": "Choisis ton ambiance pour t'endormir",
         "subtitle": "Sélectionne un univers sonore.",
+        "back_to_moments": "Choisir un autre son",
         "show_back_link": true,
-        "back_label": "← Retour à la boutique",
-        "back_to_moments": "Choisir un autre son"
+        "back_url": "",
+        "back_label": "← Retour à la boutique"
       }
     }
   },
-  "order": ["rituels"]
+  "order": [
+    "rituels"
+  ]
 }
