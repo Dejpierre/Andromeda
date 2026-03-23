@@ -1,3 +1,4 @@
+{%- render 'seo-content' -%}
 <meta charset="utf-8">
 <meta
   http-equiv="X-UA-Compatible"
@@ -17,10 +18,10 @@
 >
 
 {%- liquid
-  assign og_title = page_title | default: shop.name
+  assign og_title = seo_title | default: page_title | default: shop.name
   assign og_url = canonical_url | default: request.origin
   assign og_type = 'website'
-  assign og_description = page_description | default: shop.description | default: shop.name
+  assign og_description = seo_description | default: page_description | default: shop.description | default: shop.name
 
   if request.page_type == 'product'
     assign og_type = 'product'
@@ -102,10 +103,9 @@
 >
 
 <title>
-  {{ page_title }}
+  {{ seo_title | default: page_title }}
   {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
   {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-  {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
 </title>
 
 <link
@@ -115,5 +115,5 @@
 
 <meta
   name="description"
-  content="{{ page_description | default: shop.description | default: shop.name | escape }}"
+  content="{{ seo_description | default: page_description | default: shop.description | default: shop.name | escape }}"
 >
