@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
@@ -926,10 +917,140 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "section_comparatif": {
+      "type": "section-comparatif-soie",
+      "settings": {
+        "title": "Pourquoi la soie ?",
+        "bg_color": "#FFFFFF",
+        "padding_top": 32,
+        "padding_bottom": 32
+      },
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "label": "Douceur",
+            "val_andromeda": "Soyeuse, zéro friction",
+            "val_other": "Rugeux, accroche la peau"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "label": "Crèmes de nuit",
+            "val_andromeda": "Restent sur vous",
+            "val_other": "Absorbées par le tissu"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "label": "Température",
+            "val_andromeda": "Thermorégulée naturellement",
+            "val_other": "Retient la chaleur"
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "label": "Peau au réveil",
+            "val_andromeda": "Aucune marque, aucun pli",
+            "val_other": "Marques et irritations"
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "label": "Cheveux",
+            "val_andromeda": "Glisse, préserve la fibre",
+            "val_other": "Friction, casse, frisottis"
+          }
+        },
+        "row_6": {
+          "type": "row",
+          "settings": {
+            "label": "Durabilité",
+            "val_andromeda": "Plusieurs années avec soin",
+            "val_other": "Se dégrade rapidement"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6"
+      ]
+    },
+    "section_faq": {
+      "type": "section-faq-produit",
+      "settings": {
+        "title": "Questions fréquentes",
+        "bg_color": "#FAFAF8",
+        "padding_top": 32,
+        "padding_bottom": 32
+      },
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Quelle est la différence entre soie 22 mommes et 19 mommes ?",
+            "answer": "Les mommes désignent le poids du tissu. À 22 mommes, notre soie est plus dense, plus opaque et plus durable. Elle bloque 100% de la lumière et conserve sa douceur lavage après lavage."
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Qu'est-ce que le grade 6A de la soie ?",
+            "answer": "Le grade 6A est la classification la plus haute de la soie de mûrier. Moins de 5% de la production mondiale l'atteint. Les filaments extra-longs donnent une surface parfaitement lisse et douce."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Comment laver mon masque Andromeda ?",
+            "answer": "Lavage à la main à l'eau froide avec un savon doux, ou en machine cycle délicat 30°C (filet de lavage recommandé). Séchage à plat, loin de toute chaleur."
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "C'est quoi le QR code inclus dans ma commande ?",
+            "answer": "Chaque masque est livré avec un QR code donnant accès à notre espace rituel exclusif — une sélection de sons d'ambiance conçus pour accompagner l'endormissement."
+          }
+        },
+        "faq_5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Le masque est-il adapté aux dormeurs sur le côté ?",
+            "answer": "Oui. L'élastique réglable ne laisse aucune pression sur la tête ni marque sur la peau. Le masque reste en place toute la nuit quelle que soit votre position."
+          }
+        },
+        "faq_6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Sous combien de temps suis-je livré(e) ?",
+            "answer": "Livraison en France sous 2 à 4 jours ouvrés. Livraison internationale sous 5 à 10 jours. Chaque commande est expédiée dans un emballage soigné, prête à offrir."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6"
+      ]
     }
   },
   "order": [
     "main",
+    "section_comparatif",
+    "section_faq",
     "product_recommendations_qggXJq"
   ]
 }
