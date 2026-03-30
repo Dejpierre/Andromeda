@@ -80,9 +80,7 @@
           "blocks": {}
         }
       },
-      "custom_css": [
-        ".header__row{box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);}"
-      ],
+      "custom_css": [],
       "settings": {
         "logo_position": "center",
         "menu_position": "left",

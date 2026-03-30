@@ -70,7 +70,7 @@
                 "vertical_alignment": "center",
                 "align_baseline": false,
                 "horizontal_alignment_flex_direction_column": "flex-start",
-                "vertical_alignment_flex_direction_column": "center",
+                "vertical_alignment_flex_direction_column": "flex-end",
                 "gap": 0,
                 "width": "fill",
                 "custom_width": 100,
@@ -104,7 +104,7 @@
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
                   "settings": {
-                    "custom_liquid": "<h1 class=\"hero-title\">\n  Dormez dans l’obscurité <span class=\"title-accent\">parfaite.</span> <br>Réveillez-vous\n  <span class=\"title-accent\">transformé</span>\n</h1>\n\n<style>\n\n@font-face {\n    font-family: 'Stellar';\n    src: url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/MirageStellar.ttf?v=1772405200') format('opentype');\n  }\n\n  .hero-title {\n    font-size: 3rem;\n    font-weight: 400 !important;\nmargin-bottom: 1rem;\n  }\n  .title-accent {\n    font-family: 'Stellar', serif;\nfont-weight: 400;\n    font-style: normal;\n    font-display: swap;\n    margin-bottom: 0px;\n  }\n</style>"
+                    "custom_liquid": "<h1 class=\"hero-title hero-title--seo\">\n  Masque de Sommeil en <span class=\"title-accent\">Soie de Mûrier</span> 22 Mommes\n</h1>\n<h2 class=\"hero-title hero-title--tagline\">\n  Dormez dans l'obscurité <span class=\"title-accent\">parfaite.</span> <br>Réveillez-vous\n  <span class=\"title-accent\">transformé</span>\n</h2>\n\n<style>\n\n@font-face {\n    font-family: 'Stellar';\n    src: url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/MirageStellar.ttf?v=1772405200') format('opentype');\n  }\n\n  .hero-title {\n    font-weight: 400 !important;\n    margin-bottom: 0.4rem;\n  }\n  .hero-title--seo {\n    font-size: 1.1rem;\n    letter-spacing: 0.12em;\n    text-transform: uppercase;\n    opacity: 0.75;\n  }\n  .hero-title--tagline {\n    font-size: 3rem;\n    margin-bottom: 1rem;\n  }\n  @media (max-width: 749px) {\n    .hero-title--tagline {\n      font-size: 2rem;\n    }\n  }\n  .title-accent {\n    font-family: 'Stellar', serif;\n    font-weight: 400;\n    font-style: normal;\n    font-display: swap;\n    margin-bottom: 0px;\n  }\n</style>"
                   },
                   "blocks": {}
                 },
@@ -112,7 +112,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Nous fabriquons des articles plus performants et plus durables. Nos produits résolvent de vrais problèmes avec un design épuré et des matériaux honnêtes.</p>",
+                    "text": "<p>Masque de sommeil en pure soie de mûrier 22 mommes, grade 6A. Douceur absolue, obscurité totale, thermorégulation naturelle — pour un réveil transformé.</p>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
@@ -172,7 +172,7 @@
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/Hero_Banner_Navy_Blue_16-9.png",
+        "image_1": "shopify://shop_images/Image_2_2_1.png",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
@@ -208,7 +208,7 @@
         "text_C43n4y": {
           "type": "text",
           "settings": {
-            "text": "<p>Nous fabriquons des articles plus performants et plus durables.</p>",
+            "text": "<p>Masque sommeil soie de mûrier — Andromeda</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -249,6 +249,7 @@
         "avantage_JDGj3Y": {
           "type": "avantage",
           "settings": {
+            "icon": "shopify://shop_images/pictogramme-soie-c.svg",
             "title": "Soie Grade 6A",
             "text": "Moins de 5% de la production mondiale. Filaments extra-longs pour une douceur incomparable."
           }
@@ -256,6 +257,7 @@
         "avantage_jfe6Xr": {
           "type": "avantage",
           "settings": {
+            "icon": "shopify://shop_images/pictogramme-22-c.svg",
             "title": "22 mommes",
             "text": "Le grammage optimal : opacité totale et légèreté pour une nuit sans compromis."
           }
@@ -263,6 +265,7 @@
         "avantage_jY7gDb": {
           "type": "avantage",
           "settings": {
+            "icon": "shopify://shop_images/pictogramme-nuit-c.svg",
             "title": "Obscurité totale",
             "text": "Conçu pour bloquer 100% de la lumière et maximiser la production de mélatonine."
           }
@@ -270,6 +273,7 @@
         "avantage_MEkhef": {
           "type": "avantage",
           "settings": {
+            "icon": "shopify://shop_images/pictogramme-cheveux-c.svg",
             "title": "Peau & cheveux",
             "text": "Anti-friction, hydratant naturel. La soie préserve là où le coton absorbe."
           }
@@ -288,7 +292,7 @@
         "subtitle": "",
         "image": "shopify://shop_images/Image_15.png",
         "image_width": 50,
-        "image_ratio": "1/1",
+        "image_ratio": "4/3",
         "image_radius": 16,
         "heading": "",
         "background_color": "#ffffff",
@@ -304,7 +308,7 @@
           "type": "custom-liquid",
           "name": "t:names.custom_liquid",
           "settings": {
-            "custom_liquid": "<h2 class=\"hero-title\">Pourquoi choisir <span class=\"title-accent\">nos masques ?</span></h2>"
+            "custom_liquid": "<h2 class=\"hero-title\">Pourquoi choisir un <span class=\"title-accent\">masque de sommeil en soie ?</span></h2>"
           },
           "blocks": {}
         },
@@ -946,6 +950,42 @@
         "padding-block-end": 64
       }
     },
+    "section_product_hero_mANhnJ": {
+      "type": "section-product-hero",
+      "blocks": {
+        "variante_gaYabP": {
+          "type": "variante",
+          "settings": {
+            "variant_title": "Beige",
+            "image": "shopify://shop_images/Image_27.png"
+          }
+        },
+        "variante_Eetk6T": {
+          "type": "variante",
+          "settings": {
+            "variant_title": "Rose",
+            "image": "shopify://shop_images/Image_26.png"
+          }
+        }
+      },
+      "block_order": [
+        "variante_gaYabP",
+        "variante_Eetk6T"
+      ],
+      "name": "Hero produit",
+      "settings": {
+        "product": "masque-pure-soie-de-murier-22-mommes",
+        "title": "",
+        "subtitle": "22 momme",
+        "button_label": "J'achète un masque",
+        "button_url": "",
+        "height": 500,
+        "height_mobile": 380,
+        "radius": 16,
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
     "section_R7Vhzp": {
       "type": "section",
       "blocks": {
@@ -1210,13 +1250,37 @@
     "marquee_xLEVQF": {
       "type": "marquee",
       "blocks": {
-        "icon_yLtxL4": {
+        "icon_meeXJX": {
           "type": "icon",
           "name": "t:names.icon",
           "settings": {
             "icon": "price_tag",
-            "image_upload": "shopify://shop_images/61DFEC1B-9AD6-46C2-AA95-F8ACCBA6C225.png",
-            "width": 200,
+            "image_upload": "shopify://shop_images/Andromeda_Overhead_Dramatic.png",
+            "width": 24,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
+        },
+        "icon_YHDHn8": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/Image_1_1.png",
+            "width": 24,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
+        },
+        "icon_YWJkfD": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/Andromeda_Bedroom_Serene.png",
+            "width": 24,
             "link": "",
             "open_in_new_tab": false
           },
@@ -1233,11 +1297,26 @@
             "open_in_new_tab": false
           },
           "blocks": {}
+        },
+        "icon_yLtxL4": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/61DFEC1B-9AD6-46C2-AA95-F8ACCBA6C225.png",
+            "width": 200,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "icon_yLtxL4",
-        "icon_YjUd7G"
+        "icon_meeXJX",
+        "icon_YHDHn8",
+        "icon_YWJkfD",
+        "icon_YjUd7G",
+        "icon_yLtxL4"
       ],
       "custom_css": [
         ".marquee__repeated-items p {font-family: \"Stellar\", serif !important; font-weight: 400; font-style: normal;}",
@@ -1252,41 +1331,51 @@
         "gap_between_elements": 24
       }
     },
-    "section_product_hero_mANhnJ": {
-      "type": "section-product-hero",
+    "section_qr_rituel_VP768A": {
+      "type": "section-qr-rituel",
       "blocks": {
-        "variante_gaYabP": {
-          "type": "variante",
+        "feature_yHwJf3": {
+          "type": "feature",
           "settings": {
-            "variant_title": "Beige",
-            "image": "shopify://shop_images/Image_27.png"
+            "label": "Sons exclusifs",
+            "icon_image": "shopify://shop_images/Vector-stars.svg"
           }
         },
-        "variante_Eetk6T": {
-          "type": "variante",
+        "feature_KimaPD": {
+          "type": "feature",
           "settings": {
-            "variant_title": "Rose",
-            "image": "shopify://shop_images/Image_26.png"
+            "label": "Ambiances relaxantes",
+            "icon_image": "shopify://shop_images/Vector-stars.svg"
+          }
+        },
+        "feature_Q7yFUM": {
+          "type": "feature",
+          "settings": {
+            "label": "Accompagnement vers le sommeil",
+            "icon_image": "shopify://shop_images/Vector-stars.svg"
           }
         }
       },
       "block_order": [
-        "variante_gaYabP",
-        "variante_Eetk6T"
+        "feature_yHwJf3",
+        "feature_KimaPD",
+        "feature_Q7yFUM"
       ],
-      "name": "Hero produit",
+      "name": "QR Code Rituel",
       "settings": {
-        "product": "masque-pure-soie-de-murier-22-mommes",
-        "title": "",
-        "subtitle": "22 momme",
-        "button_label": "J'achète un masque",
-        "button_url": "",
-        "height": 500,
-        "height_mobile": 380,
-        "radius": 16,
-        "padding_top": 64,
-        "padding_bottom": 64
+        "title_line1": "Qr code espace rituel",
+        "title_line2": "inclus dans chaque commande",
+        "description": "Sons exclusifs pour trouver le sommeil en toute sérénité.",
+        "cta_label": "Découvrir les sons et ambiances",
+        "cta_url": "",
+        "qr_image": "shopify://shop_images/carde-rituels-andromeda.png",
+        "card_bg": "#000f2f"
       }
+    },
+    "section_rituel_teaser": {
+      "type": "section-rituel-teaser",
+      "disabled": true,
+      "settings": {}
     },
     "featured_blog_posts_F8LihH": {
       "type": "featured-blog-posts",
@@ -1429,6 +1518,25 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "section_seo_footer": {
+      "type": "section-seo-text",
+      "blocks": {
+        "seo_text": {
+          "type": "text",
+          "settings": {
+            "text": "<p style=\"max-width:720px;margin:0 auto;text-align:center;font-size:0.95rem;line-height:1.8;color:#444;\">Andromeda crée des <strong>masques de sommeil en soie de mûrier</strong> grade 6A, 22 mommes — le standard le plus exigeant du marché. Notre masque bloque 100% de la lumière, respecte la peau et les cheveux, et s'adapte à toutes les morphologies grâce à son élastique réglable. Conçu pour les dormeurs exigeants, il transforme chaque nuit en véritable <strong>rituel de sommeil de luxe</strong>. Livraison soignée en France et à l'international.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "seo_text"
+      ],
+      "settings": {
+        "bg_color": "#fafaf8",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
@@ -1442,6 +1550,9 @@
     "section_R7Vhzp",
     "marquee_EYMzLt",
     "marquee_xLEVQF",
-    "featured_blog_posts_F8LihH"
+    "section_qr_rituel_VP768A",
+    "section_rituel_teaser",
+    "featured_blog_posts_F8LihH",
+    "section_seo_footer"
   ]
 }

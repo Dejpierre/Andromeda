@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -13,14 +22,14 @@
             "large_first_image": false,
             "icons_style": "none",
             "slideshow_controls_style": "counter",
-            "slideshow_mobile_controls_style": "dots",
+            "slideshow_mobile_controls_style": "hint",
             "thumbnail_position": "right",
             "thumbnail_width": 44,
             "thumbnail_radius": 0,
             "aspect_ratio": "adapt",
             "constrain_to_viewport": true,
             "media_fit": "contain",
-            "media_radius": 0,
+            "media_radius": 16,
             "extend_media": false,
             "zoom": true,
             "video_loop": false,
@@ -157,7 +166,7 @@
               "type": "group",
               "name": "Avantages produit",
               "settings": {
-                "content_direction": "row",
+                "content_direction": "column",
                 "vertical_on_mobile": true,
                 "horizontal_alignment": "flex-start",
                 "vertical_alignment": "flex-start",
@@ -197,8 +206,8 @@
                   "type": "group",
                   "name": "Colonne gauche",
                   "settings": {
-                    "content_direction": "column",
-                    "vertical_on_mobile": true,
+                    "content_direction": "row",
+                    "vertical_on_mobile": false,
                     "horizontal_alignment": "flex-start",
                     "vertical_alignment": "flex-start",
                     "align_baseline": false,
@@ -238,13 +247,13 @@
                       "name": "Soie Grade 6A",
                       "settings": {
                         "content_direction": "row",
-                        "vertical_on_mobile": false,
+                        "vertical_on_mobile": true,
                         "horizontal_alignment": "flex-start",
                         "vertical_alignment": "center",
                         "align_baseline": false,
                         "horizontal_alignment_flex_direction_column": "flex-start",
                         "vertical_alignment_flex_direction_column": "center",
-                        "gap": 8,
+                        "gap": 12,
                         "width": "fill",
                         "custom_width": 100,
                         "width_mobile": "fill",
@@ -276,12 +285,13 @@
                         "icon_1": {
                           "type": "image",
                           "settings": {
+                            "image": "shopify://shop_images/pictogramme-soie-c.svg",
                             "link": "",
                             "image_ratio": "adapt",
                             "width": "custom",
-                            "custom_width": 24,
-                            "width_mobile": "fill",
-                            "custom_width_mobile": 100,
+                            "custom_width": 15,
+                            "width_mobile": "custom",
+                            "custom_width_mobile": 20,
                             "height": "fit",
                             "border": "none",
                             "border_width": 1,
@@ -297,7 +307,7 @@
                         "text_1": {
                           "type": "text",
                           "settings": {
-                            "text": "<p><strong>Soie Grade 6A</strong><br>Moins de 5 % de la production mondiale</p>",
+                            "text": "<p><strong>Soie Grade 6A</strong><br/>Moins de 5 % de la production mondiale.</p>",
                             "width": "fill",
                             "max_width": "normal",
                             "alignment": "left",
@@ -330,13 +340,13 @@
                       "name": "22 mommes",
                       "settings": {
                         "content_direction": "row",
-                        "vertical_on_mobile": false,
+                        "vertical_on_mobile": true,
                         "horizontal_alignment": "flex-start",
                         "vertical_alignment": "center",
                         "align_baseline": false,
                         "horizontal_alignment_flex_direction_column": "flex-start",
                         "vertical_alignment_flex_direction_column": "center",
-                        "gap": 8,
+                        "gap": 12,
                         "width": "fill",
                         "custom_width": 100,
                         "width_mobile": "fill",
@@ -368,17 +378,18 @@
                         "icon_3": {
                           "type": "image",
                           "settings": {
+                            "image": "shopify://shop_images/pictogramme-22-c.svg",
                             "link": "",
                             "image_ratio": "adapt",
                             "width": "custom",
-                            "custom_width": 24,
-                            "width_mobile": "fill",
-                            "custom_width_mobile": 100,
+                            "custom_width": 15,
+                            "width_mobile": "custom",
+                            "custom_width_mobile": 20,
                             "height": "fit",
                             "border": "none",
                             "border_width": 1,
                             "border_opacity": 100,
-                            "border_radius": 100,
+                            "border_radius": 0,
                             "padding-block-start": 0,
                             "padding-block-end": 0,
                             "padding-inline-start": 0,
@@ -389,7 +400,7 @@
                         "text_3": {
                           "type": "text",
                           "settings": {
-                            "text": "<p><strong>22 mommes</strong><br>Grammage optimal pour la peau</p>",
+                            "text": "<p><strong>22 mommes</strong><br/>Grammage optimal pour la peau.</p>",
                             "width": "fill",
                             "max_width": "normal",
                             "alignment": "left",
@@ -427,8 +438,8 @@
                   "type": "group",
                   "name": "Colonne droite",
                   "settings": {
-                    "content_direction": "column",
-                    "vertical_on_mobile": true,
+                    "content_direction": "row",
+                    "vertical_on_mobile": false,
                     "horizontal_alignment": "flex-start",
                     "vertical_alignment": "flex-start",
                     "align_baseline": false,
@@ -468,13 +479,13 @@
                       "name": "Obscurité totale",
                       "settings": {
                         "content_direction": "row",
-                        "vertical_on_mobile": false,
+                        "vertical_on_mobile": true,
                         "horizontal_alignment": "flex-start",
                         "vertical_alignment": "center",
                         "align_baseline": false,
                         "horizontal_alignment_flex_direction_column": "flex-start",
                         "vertical_alignment_flex_direction_column": "center",
-                        "gap": 8,
+                        "gap": 12,
                         "width": "fill",
                         "custom_width": 100,
                         "width_mobile": "fill",
@@ -506,12 +517,13 @@
                         "icon_2": {
                           "type": "image",
                           "settings": {
+                            "image": "shopify://shop_images/pictogramme-nuit-c.svg",
                             "link": "",
                             "image_ratio": "adapt",
                             "width": "custom",
-                            "custom_width": 24,
-                            "width_mobile": "fill",
-                            "custom_width_mobile": 100,
+                            "custom_width": 15,
+                            "width_mobile": "custom",
+                            "custom_width_mobile": 20,
                             "height": "fit",
                             "border": "none",
                             "border_width": 1,
@@ -527,7 +539,7 @@
                         "text_2": {
                           "type": "text",
                           "settings": {
-                            "text": "<p><strong>Obscurité totale</strong><br>Blocage 100 % de la lumière</p>",
+                            "text": "<p><strong>Obscurité totale</strong><br/>Blocage de 100 % de la lumière.</p>",
                             "width": "fill",
                             "max_width": "normal",
                             "alignment": "left",
@@ -560,13 +572,13 @@
                       "name": "Peau & cheveux",
                       "settings": {
                         "content_direction": "row",
-                        "vertical_on_mobile": false,
+                        "vertical_on_mobile": true,
                         "horizontal_alignment": "flex-start",
                         "vertical_alignment": "center",
                         "align_baseline": false,
                         "horizontal_alignment_flex_direction_column": "flex-start",
                         "vertical_alignment_flex_direction_column": "center",
-                        "gap": 8,
+                        "gap": 12,
                         "width": "fill",
                         "custom_width": 100,
                         "width_mobile": "fill",
@@ -598,12 +610,13 @@
                         "icon_4": {
                           "type": "image",
                           "settings": {
+                            "image": "shopify://shop_images/pictogramme-cheveux-c.svg",
                             "link": "",
                             "image_ratio": "adapt",
                             "width": "custom",
-                            "custom_width": 24,
-                            "width_mobile": "fill",
-                            "custom_width_mobile": 100,
+                            "custom_width": 15,
+                            "width_mobile": "custom",
+                            "custom_width_mobile": 20,
                             "height": "fit",
                             "border": "none",
                             "border_width": 1,
@@ -619,7 +632,7 @@
                         "text_4": {
                           "type": "text",
                           "settings": {
-                            "text": "<p><strong>Peau & cheveux</strong><br>Anti-friction, hydratation naturelle</p>",
+                            "text": "<p><strong>Peau & cheveux</strong><br/>Anti-friction, hydratation naturelle.</p>",
                             "width": "fill",
                             "max_width": "normal",
                             "alignment": "left",
@@ -738,6 +751,7 @@
                 },
                 "accelerated-checkout": {
                   "type": "accelerated-checkout",
+                  "disabled": true,
                   "static": true,
                   "settings": {},
                   "blocks": {}
@@ -773,8 +787,147 @@
         "gap": 48,
         "enable_sticky_add_to_cart": true,
         "color_scheme": "scheme-1",
-        "padding-block-start": 0,
+        "padding-block-start": 16,
         "padding-block-end": 0
+      }
+    },
+    "accordeon_produit": {
+      "type": "section-accordeon-seo",
+      "blocks": {
+        "desc": {
+          "type": "item",
+          "settings": {
+            "titre": "Description",
+            "contenu": "<h2>Un masque de sommeil hors du commun</h2><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux masques synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h2>Obscurité totale pour un sommeil profond</h2><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre masque de sommeil bloque 100% de la lumière et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h2>Confort &amp; élégance</h2><ul>\n<li>Élastique réglable pour s'adapter à toutes les morphologies</li>\n<li>Thermorégulation naturelle — fraîche en été, douce en hiver</li>\n<li>Hypoallergénique, idéal pour les peaux sensibles</li>\n<li>Disponible en Rose et Beige — deux teintes intemporelles</li>\n</ul><h2>Le rituel Andromeda</h2><p>Chaque masque est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement. Méditation, nature, ondes delta — une expérience sensorielle complète pour transformer chaque nuit en véritable <strong>rituel de sommeil de luxe</strong>.</p>"
+          }
+        },
+        "livraison": {
+          "type": "item",
+          "settings": {
+            "titre": "Livraison & Retours",
+            "contenu": "<p><strong>Livraison France</strong> — 3 à 6 jours ouvrés. Livraison offerte dès 50€ d'achat.</p><p><strong>Livraison internationale</strong> — disponible dans la plupart des pays. Délai : 5 à 10 jours ouvrés.</p><p><strong>Retours</strong> — satisfait ou remboursé sous 14 jours. Le produit doit être retourné dans son emballage d'origine, non utilisé. Contactez-nous à contact@andromeda-paris.com pour initier un retour.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "desc",
+        "livraison"
+      ],
+      "settings": {
+        "color_scheme": ""
+      }
+    },
+    "marquee_HYpWxg": {
+      "type": "marquee",
+      "blocks": {
+        "icon_xi4JUw": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/Image_1_1.png",
+            "width": 24,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
+        },
+        "icon_XqV9Pz": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/Vector-stars.svg",
+            "width": 24,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "icon_xi4JUw",
+        "icon_XqV9Pz"
+      ],
+      "custom_css": [
+        ".marquee__repeated-items p {font-family: \"Stellar\", serif !important; font-weight: 400; font-style: normal;}",
+        ".marquee__repeated-items img {width: 200px !important; height: 200px !important; object-fit: cover; border-radius: 16px; display: block;}"
+      ],
+      "name": "t:names.marquee_section",
+      "settings": {
+        "movement_direction": "normal",
+        "color_scheme": "",
+        "padding-block-start": 24,
+        "padding-block-end": 24,
+        "gap_between_elements": 24
+      }
+    },
+    "section_comparatif": {
+      "type": "section-comparatif-soie",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "label": "Douceur",
+            "val_andromeda": "Soyeuse, zéro friction",
+            "val_other": "Rugeux, accroche la peau"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "label": "Crèmes de nuit",
+            "val_andromeda": "Restent sur vous",
+            "val_other": "Absorbées par le tissu"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "label": "Température",
+            "val_andromeda": "Thermorégulée naturellement",
+            "val_other": "Retient la chaleur"
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "label": "Peau au réveil",
+            "val_andromeda": "Aucune marque, aucun pli",
+            "val_other": "Marques et irritations"
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "label": "Cheveux",
+            "val_andromeda": "Glisse, préserve la fibre",
+            "val_other": "Friction, casse, frisottis"
+          }
+        },
+        "row_6": {
+          "type": "row",
+          "settings": {
+            "label": "Durabilité",
+            "val_andromeda": "Plusieurs années avec soin",
+            "val_other": "Se dégrade rapidement"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Pourquoi la soie ?",
+        "bg_color": "#ffffff",
+        "padding_top": 32,
+        "padding_bottom": 32
       }
     },
     "product_recommendations_qggXJq": {
@@ -918,139 +1071,346 @@
         "padding-block-end": 48
       }
     },
-    "section_comparatif": {
-      "type": "section-comparatif-soie",
+    "avis_clients": {
+      "type": "section-avis",
       "settings": {
-        "title": "Pourquoi la soie ?",
-        "bg_color": "#FFFFFF",
-        "padding_top": 32,
-        "padding_bottom": 32
-      },
-      "blocks": {
-        "row_1": {
-          "type": "row",
-          "settings": {
-            "label": "Douceur",
-            "val_andromeda": "Soyeuse, zéro friction",
-            "val_other": "Rugeux, accroche la peau"
-          }
-        },
-        "row_2": {
-          "type": "row",
-          "settings": {
-            "label": "Crèmes de nuit",
-            "val_andromeda": "Restent sur vous",
-            "val_other": "Absorbées par le tissu"
-          }
-        },
-        "row_3": {
-          "type": "row",
-          "settings": {
-            "label": "Température",
-            "val_andromeda": "Thermorégulée naturellement",
-            "val_other": "Retient la chaleur"
-          }
-        },
-        "row_4": {
-          "type": "row",
-          "settings": {
-            "label": "Peau au réveil",
-            "val_andromeda": "Aucune marque, aucun pli",
-            "val_other": "Marques et irritations"
-          }
-        },
-        "row_5": {
-          "type": "row",
-          "settings": {
-            "label": "Cheveux",
-            "val_andromeda": "Glisse, préserve la fibre",
-            "val_other": "Friction, casse, frisottis"
-          }
-        },
-        "row_6": {
-          "type": "row",
-          "settings": {
-            "label": "Durabilité",
-            "val_andromeda": "Plusieurs années avec soin",
-            "val_other": "Se dégrade rapidement"
-          }
-        }
-      },
-      "block_order": [
-        "row_1",
-        "row_2",
-        "row_3",
-        "row_4",
-        "row_5",
-        "row_6"
-      ]
+        "color_scheme": ""
+      }
     },
-    "section_faq": {
-      "type": "section-faq-produit",
-      "settings": {
-        "title": "Questions fréquentes",
-        "bg_color": "#FAFAF8",
-        "padding_top": 32,
-        "padding_bottom": 32
-      },
+    "section_pX6aLk": {
+      "type": "section",
       "blocks": {
-        "faq_1": {
-          "type": "faq_item",
+        "text_kPXt6y": {
+          "type": "text",
+          "name": "t:names.heading",
           "settings": {
-            "question": "Quelle est la différence entre soie 22 mommes et 19 mommes ?",
-            "answer": "Les mommes désignent le poids du tissu. À 22 mommes, notre soie est plus dense, plus opaque et plus durable. Elle bloque 100% de la lumière et conserve sa douceur lavage après lavage."
-          }
+            "text": "<h3>Foire aux questions</h3>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
-        "faq_2": {
-          "type": "faq_item",
+        "accordion_RLpVzU": {
+          "type": "accordion",
+          "name": "t:names.accordion",
           "settings": {
-            "question": "Qu'est-ce que le grade 6A de la soie ?",
-            "answer": "Le grade 6A est la classification la plus haute de la soie de mûrier. Moins de 5% de la production mondiale l'atteint. Les filaments extra-longs donnent une surface parfaitement lisse et douce."
-          }
-        },
-        "faq_3": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Comment laver mon masque Andromeda ?",
-            "answer": "Lavage à la main à l'eau froide avec un savon doux, ou en machine cycle délicat 30°C (filet de lavage recommandé). Séchage à plat, loin de toute chaleur."
-          }
-        },
-        "faq_4": {
-          "type": "faq_item",
-          "settings": {
-            "question": "C'est quoi le QR code inclus dans ma commande ?",
-            "answer": "Chaque masque est livré avec un QR code donnant accès à notre espace rituel exclusif — une sélection de sons d'ambiance conçus pour accompagner l'endormissement."
-          }
-        },
-        "faq_5": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Le masque est-il adapté aux dormeurs sur le côté ?",
-            "answer": "Oui. L'élastique réglable ne laisse aucune pression sur la tête ni marque sur la peau. Le masque reste en place toute la nuit quelle que soit votre position."
-          }
-        },
-        "faq_6": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Sous combien de temps suis-je livré(e) ?",
-            "answer": "Livraison en France sous 2 à 4 jours ouvrés. Livraison internationale sous 5 à 10 jours. Chaque commande est expédiée dans un emballage soigné, prête à offrir."
-          }
+            "icon": "caret",
+            "dividers": true,
+            "type_preset": "h5",
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "accordion_row_andromeda_1": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Quelle est la différence entre soie 22 mommes et 19 mommes ?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_andromeda_1": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Les mommes désignent le poids du tissu. À 22 mommes, notre soie est plus dense, plus opaque et plus durable. Elle bloque 100% de la lumière et conserve sa douceur lavage après lavage.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_andromeda_1"
+              ]
+            },
+            "accordion_row_andromeda_2": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Qu'est-ce que le grade 6A de la soie ?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_andromeda_2": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Le grade 6A est la classification la plus haute de la soie de mûrier. Moins de 5% de la production mondiale l'atteint. Les filaments extra-longs donnent une surface parfaitement lisse et douce.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_andromeda_2"
+              ]
+            },
+            "accordion_row_andromeda_3": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Comment laver mon masque Andromeda ?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_andromeda_3": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Lavage à la main à l'eau froide avec un savon doux, ou en machine cycle délicat 30°C (filet de lavage recommandé). Séchage à plat, loin de toute chaleur.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_andromeda_3"
+              ]
+            },
+            "accordion_row_andromeda_4": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "C'est quoi le QR code inclus dans ma commande ?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_andromeda_4": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Chaque masque est livré avec un QR code donnant accès à notre espace rituel exclusif — une sélection de sons d'ambiance conçus pour accompagner l'endormissement.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_andromeda_4"
+              ]
+            },
+            "accordion_row_andromeda_5": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Le masque est-il adapté aux dormeurs sur le côté ?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_andromeda_5": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Oui. L'élastique réglable ne laisse aucune pression sur la tête ni marque sur la peau. Le masque reste en place toute la nuit quelle que soit votre position.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_andromeda_5"
+              ]
+            },
+            "accordion_row_andromeda_6": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Sous combien de temps suis-je livré(e) ?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_andromeda_6": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Livraison en France sous 2 à 4 jours ouvrés. Livraison internationale sous 5 à 10 jours. Chaque commande est expédiée dans un emballage soigné, prête à offrir.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_andromeda_6"
+              ]
+            }
+          },
+          "block_order": [
+            "accordion_row_andromeda_1",
+            "accordion_row_andromeda_2",
+            "accordion_row_andromeda_3",
+            "accordion_row_andromeda_4",
+            "accordion_row_andromeda_5",
+            "accordion_row_andromeda_6"
+          ]
         }
       },
       "block_order": [
-        "faq_1",
-        "faq_2",
-        "faq_3",
-        "faq_4",
-        "faq_5",
-        "faq_6"
-      ]
+        "text_kPXt6y",
+        "accordion_RLpVzU"
+      ],
+      "name": "t:names.faq_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
   "order": [
     "main",
+    "accordeon_produit",
+    "marquee_HYpWxg",
     "section_comparatif",
-    "section_faq",
-    "product_recommendations_qggXJq"
+    "product_recommendations_qggXJq",
+    "avis_clients",
+    "section_pX6aLk"
   ]
 }

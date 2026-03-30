@@ -1,0 +1,60 @@
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div class="section page-width color-{{ section.settings.color_scheme }}" style="padding-block-start: 48px; padding-block-end: 48px;">
+
+  {% for block in section.blocks %}
+    <details class="accordeon-item" style="border-top:1px solid rgba(var(--color-foreground-rgb, 0,0,0), 0.12); padding:0;">
+      <summary class="accordeon-summary" style="cursor:pointer; padding:18px 0; list-style:none; display:flex; justify-content:space-between; align-items:center; font-size:0.95rem; letter-spacing:0.05em; text-transform:uppercase;">
+        {{ block.settings.titre }}
+        <span class="accordeon-icon" style="font-size:1.2rem; transition:transform 0.3s;">+</span>
+      </summary>
+      <div class="accordeon-content" style="padding:0 0 24px 0; font-size:0.92rem; line-height:1.8; opacity:0.85;">
+        {{ block.settings.contenu }}
+      </div>
+    </details>
+  {% endfor %}
+  <div style="border-top:1px solid rgba(var(--color-foreground-rgb, 0,0,0), 0.12);"></div>
+
+</div>
+
+<style>
+details.accordeon-item[open] .accordeon-icon { transform: rotate(45deg); }
+details.accordeon-item summary::-webkit-details-marker { display: none; }
+.accordeon-content h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 16px 0 8px 0;
+  letter-spacing: 0.03em;
+}
+.accordeon-content ul {
+  padding-left: 1.2rem;
+  margin: 8px 0;
+}
+.accordeon-content ul li {
+  margin-bottom: 6px;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Accordéon produit",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Couleur de fond",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Accordéon",
+      "settings": [
+        {"type": "text", "id": "titre", "label": "Titre"},
+        {"type": "html", "id": "contenu", "label": "Contenu"}
+      ]
+    }
+  ],
+  "presets": [{"name": "Accordéon produit"}]
+}
+{% endschema %}
