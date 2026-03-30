@@ -29,13 +29,16 @@
     assign seo_description = article.excerpt_or_content | strip_html | truncate: 155
 
   elsif request.page_type == 'blog'
-    assign seo_title = blog.title | append: ' — Andromeda'
+    assign seo_title = 'Blog Sommeil & Bien-être — Andromeda'
     assign seo_description = 'Conseils, rituels et inspirations autour du sommeil et du bien-être par Andromeda. Plongez dans un univers de douceur et d'élégance.'
 
   elsif request.page_type == 'page'
     if page.handle == 'contact'
       assign seo_title = 'Contact — Andromeda'
       assign seo_description = 'Une question sur votre commande ou nos produits ? L'équipe Andromeda est à votre écoute. Contactez-nous pour toute demande.'
+    elsif page.handle == 'faq'
+      assign seo_title = 'FAQ — Masque de Sommeil en Soie | Andromeda'
+      assign seo_description = 'Toutes vos questions sur le masque de sommeil Andromeda : matière, entretien, livraison, retours. La soie de mûrier grade 6A expliquée simplement.'
     elsif page.handle == 'rituels'
       assign seo_title = 'Rituels du Soir — Andromeda'
       assign seo_description = ''
