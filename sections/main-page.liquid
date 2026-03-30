@@ -1,5 +1,14 @@
 
 
+{%- if request.page_type == 'page' -%}
+  {%- if page.handle == 'faq' -%}
+    <h1 class="visually-hidden">FAQ — Questions fréquentes sur le masque de sommeil en soie Andromeda</h1>
+  {%- elsif page.handle == 'contact' -%}
+    <h1 class="visually-hidden">Contactez Andromeda — Service client & commandes</h1>
+  {%- else -%}
+    <h1 class="visually-hidden">{{ page.title }}</h1>
+  {%- endif -%}
+{%- endif -%}
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div class="section page-width-content color-{{ section.settings.color_scheme }}">
   <div
