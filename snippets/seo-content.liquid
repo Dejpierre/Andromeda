@@ -8,13 +8,13 @@
   assign seo_description = ''
 
   if request.page_type == 'index'
-    assign seo_title = 'Andromeda — Masque de Sommeil en Soie de Mûrier Premium'
-    assign seo_description = 'Découvrez Andromeda, le masque de sommeil en pure soie de mûrier 22 mommes grade 6A. Un rituel du soir raffiné, doux et sensoriel. Offrez-vous un sommeil d'exception.'
+    assign seo_title = 'Masque Sommeil Soie 22 Mommes | Andromeda Paris'
+    assign seo_description = 'Masque de sommeil en pure soie de mûrier 22 mommes grade 6A. Certifié OEKO-TEX. Douceur absolue, obscurité parfaite et sons exclusifs pour un rituel du soir élégant.'
 
   elsif request.page_type == 'product'
-    if product.handle == 'masque-de-sommeil-en-soie'
-      assign seo_title = 'Masque de Sommeil en Soie de Mûrier 22 Mommes — Andromeda'
-      assign seo_description = 'Le masque de sommeil Andromeda en pure soie de mûrier 22 mommes, grade 6A. Douceur absolue, obscurité parfaite et sons d'ambiance exclusifs pour un endormissement en tout élégance.'
+    if product.handle == 'masque-pure-soie-de-murier-22-mommes' or product.handle == 'masque-de-sommeil-en-soie'
+      assign seo_title = 'Masque Sommeil Soie de Mûrier 22 Mommes — Andromeda'
+      assign seo_description = 'Masque de sommeil en pure soie de mûrier 22 mommes grade 6A. Hypoallergénique, anti-friction, certifié OEKO-TEX. Livraison offerte dès 40€.'
     else
       assign seo_title = product.title | append: ' — Andromeda'
       assign seo_description = product.description | strip_html | truncate: 155
@@ -22,23 +22,23 @@
 
   elsif request.page_type == 'collection'
     assign seo_title = collection.title | append: ' — Andromeda'
-    assign seo_description = 'Explorez la collection ' | append: collection.title | append: ' d'Andromeda. Accessoires de sommeil haut de gamme, pensés pour un rituel du soir élégant et apaisant.'
+    assign seo_description = 'Explorez la collection ' | append: collection.title | append: " d'Andromeda. Accessoires de sommeil haut de gamme en soie de mûrier, pensés pour un rituel du soir élégant."
 
   elsif request.page_type == 'article'
     assign seo_title = article.title | append: ' — Andromeda'
     assign seo_description = article.excerpt_or_content | strip_html | truncate: 155
 
   elsif request.page_type == 'blog'
-    assign seo_title = 'Blog Sommeil & Bien-être — Andromeda'
-    assign seo_description = 'Conseils, rituels et inspirations autour du sommeil et du bien-être par Andromeda. Plongez dans un univers de douceur et d'élégance.'
+    assign seo_title = 'Blog Sommeil & Bien-être — Andromeda Paris'
+    assign seo_description = 'Conseils, rituels et inspirations pour mieux dormir par Andromeda. Soie de mûrier, bien-être nocturne, routines beauté : plongez dans un univers de douceur.'
 
   elsif request.page_type == 'page'
     if page.handle == 'contact'
-      assign seo_title = 'Contact — Andromeda'
-      assign seo_description = 'Une question sur votre commande ou nos produits ? L'équipe Andromeda est à votre écoute. Contactez-nous pour toute demande.'
+      assign seo_title = 'Contactez Andromeda — Service Client & Commandes'
+      assign seo_description = 'Une question sur votre commande ou nos masques en soie ? Notre équipe vous répond sous 24h. Contactez Andromeda Paris par email ou formulaire.'
     elsif page.handle == 'faq'
-      assign seo_title = 'FAQ — Masque de Sommeil en Soie | Andromeda'
-      assign seo_description = 'Toutes vos questions sur le masque de sommeil Andromeda : matière, entretien, livraison, retours. La soie de mûrier grade 6A expliquée simplement.'
+      assign seo_title = 'FAQ — Masque de Sommeil en Soie | Andromeda Paris'
+      assign seo_description = 'Toutes vos questions sur le masque Andromeda : soie de mûrier grade 6A, entretien, livraison, retours. Réponses claires et complètes.'
     elsif page.handle == 'rituels'
       assign seo_title = 'Rituels du Soir — Andromeda'
       assign seo_description = ''
@@ -49,15 +49,15 @@
     endif
 
   elsif request.page_type == 'search'
-    assign seo_title = 'Recherche — Andromeda'
-    assign seo_description = 'Trouvez l'accessoire de sommeil idéal parmi la sélection premium Andromeda.'
+    assign seo_title = 'Recherche — Andromeda Paris'
+    assign seo_description = "Trouvez l'accessoire de sommeil idéal parmi la sélection premium Andromeda."
 
   elsif request.page_type == 'cart'
-    assign seo_title = 'Votre Panier — Andromeda'
-    assign seo_description = 'Finalisez votre commande et offrez-vous un rituel de sommeil d'exception avec Andromeda.'
+    assign seo_title = 'Votre Panier — Andromeda Paris'
+    assign seo_description = "Finalisez votre commande et offrez-vous un rituel de sommeil d'exception avec Andromeda."
 
   else
     assign seo_title = page_title | default: shop.name
-    assign seo_description = page_description | default: shop.description | default: 'Andromeda — Accessoires de sommeil premium en soie de mûrier. Un rituel du soir élégant, doux et sensoriel.'
+    assign seo_description = page_description | default: shop.description | default: "Andromeda — Masques de sommeil premium en soie de mûrier grade 6A. Un rituel du soir élégant, doux et sensoriel."
   endif
 %}
