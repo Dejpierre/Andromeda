@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Votre commande est en chemin — Andromeda Paris</title>
+</head>
+<body style="margin:0;padding:0;background:#f0ede8;font-family:Arial,sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f0ede8;padding:40px 16px;">
+  <tr><td align="center">
+    <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
+
+      <!-- HEADER -->
+      <tr>
+        <td style="background:#191a2e;border-radius:12px 12px 0 0;padding:40px 48px 32px;text-align:center;">
+          <img src="https://cdn.shopify.com/s/files/1/1000/9375/5727/files/logo-blanc-andromeda.png?v=1774981994" alt="Andromeda Paris" height="36" style="display:block;margin:0 auto 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0"><tr><td style="border-top:1px solid rgba(200,184,154,0.3);"></td></tr></table>
+          <p style="color:#C8B89A;font-size:32px;font-weight:300;margin-top:24px;">✈</p>
+          <p style="color:#C8B89A;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-top:12px;font-weight:bold;">En cours d'expédition</p>
+          <h1 style="color:#ffffff;font-size:26px;font-weight:300;letter-spacing:1px;margin-top:10px;line-height:1.3;">
+            Votre commande<br><span style="font-weight:bold;">est en chemin</span>
+          </h1>
+          <p style="color:rgba(255,255,255,0.5);font-size:13px;margin-top:12px;">Commande <span style="color:#C8B89A;">{{ order.name }}</span></p>
+        </td>
+      </tr>
+
+      <!-- BODY -->
+      <tr>
+        <td style="background:#ffffff;padding:40px 48px;">
+
+          <p style="color:#191a2e;font-size:15px;line-height:1.8;font-weight:300;margin-bottom:32px;">
+            Bonne nouvelle, {{ customer.first_name }} ! Votre masque de sommeil vient d'être expédié. Vous pouvez suivre votre colis en temps réel avec le numéro ci-dessous.
+          </p>
+
+          <!-- Numéro de suivi -->
+          {% if fulfillment.tracking_number %}
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#f9f7f4;border-radius:8px;margin-bottom:32px;">
+            <tr><td style="padding:24px 28px;">
+              <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C8B89A;font-weight:bold;margin-bottom:10px;">Numéro de suivi</p>
+              <p style="color:#191a2e;font-size:20px;font-weight:bold;letter-spacing:2px;margin-bottom:16px;">{{ fulfillment.tracking_number }}</p>
+              <p style="color:#888;font-size:12px;font-weight:300;">
+                {% if fulfillment.tracking_company %}Transporteur : {{ fulfillment.tracking_company }} · {% endif %}
+                Livraison estimée dans 2–3 jours ouvrés
+              </p>
+            </td></tr>
+          </table>
+          {% endif %}
+
+          <!-- CTA -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
+            <tr><td align="center">
+              {% if fulfillment.tracking_url %}
+              <a href="{{ fulfillment.tracking_url }}" style="display:inline-block;background:#191a2e;color:#ffffff;text-decoration:none;font-size:13px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;padding:14px 36px;border-radius:4px;">
+                Suivre mon colis
+              </a>
+              {% else %}
+              <a href="{{ order.status_url }}" style="display:inline-block;background:#191a2e;color:#ffffff;text-decoration:none;font-size:13px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;padding:14px 36px;border-radius:4px;">
+                Voir ma commande
+              </a>
+              {% endif %}
+            </td></tr>
+          </table>
+
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;"><tr><td style="border-top:1px solid #eeebe6;"></td></tr></table>
+
+          <!-- Récap produit -->
+          <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C8B89A;font-weight:bold;margin-bottom:20px;">Récapitulatif</p>
+
+          {% for line in fulfillment.fulfillment_line_items %}
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+            <tr>
+              <td width="72" style="vertical-align:top;">
+                {% if line.line_item.image %}
+                <img src="{{ line.line_item.image | img_url: '64x64', crop: 'center' }}" alt="{{ line.line_item.title }}" width="64" height="64" style="border-radius:8px;display:block;">
+                {% else %}
+                <div style="width:64px;height:64px;background:#f5f3ef;border-radius:8px;"></div>
+                {% endif %}
+              </td>
+              <td style="padding-left:16px;vertical-align:top;">
+                <p style="color:#191a2e;font-size:14px;font-weight:bold;margin-bottom:4px;">{{ line.line_item.title }}</p>
+                {% if line.line_item.variant_title != 'Default Title' %}
+                <p style="color:#888;font-size:13px;font-weight:300;">{{ line.line_item.variant_title }} · Qté : {{ line.quantity }}</p>
+                {% else %}
+                <p style="color:#888;font-size:13px;font-weight:300;">Qté : {{ line.quantity }}</p>
+                {% endif %}
+              </td>
+              <td style="vertical-align:top;text-align:right;white-space:nowrap;">
+                <p style="color:#191a2e;font-size:14px;font-weight:bold;">{{ line.line_item.price | money }}</p>
+              </td>
+            </tr>
+          </table>
+          {% endfor %}
+
+        </td>
+      </tr>
+
+      <!-- BANDE -->
+      <tr>
+        <td style="background:#f9f7f4;border-left:4px solid #C8B89A;padding:20px 48px;">
+          <p style="color:#191a2e;font-size:13px;line-height:1.8;font-weight:300;">
+            ✦ &nbsp;Prenez soin de votre masque : lavage à la main à l'eau froide, séchage à plat. Il vous accompagnera des milliers de nuits.
+          </p>
+        </td>
+      </tr>
+
+      <!-- FOOTER -->
+      <tr>
+        <td style="background:#191a2e;border-radius:0 0 12px 12px;padding:32px 48px;text-align:center;">
+          <img src="https://cdn.shopify.com/s/files/1/1000/9375/5727/files/logo-blanc-andromeda.png?v=1774981994" alt="Andromeda Paris" height="24" style="display:block;margin:0 auto 20px;opacity:0.5;">
+          <p style="color:rgba(255,255,255,0.4);font-size:11px;letter-spacing:1px;line-height:1.8;font-weight:300;">
+            Andromeda Paris — {{ shop.url }}<br>
+            Des questions ? Répondez à cet email, nous sommes là pour vous.
+          </p>
+        </td>
+      </tr>
+      <tr><td style="height:40px;"></td></tr>
+    </table>
+  </td></tr>
+</table>
+
+</body>
+</html>

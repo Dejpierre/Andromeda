@@ -309,3 +309,21 @@
     justify-content: right;
   }
 {% endstylesheet %}
+
+<script>
+  (function () {
+    var picker = document.querySelector('variant-picker[data-section-id="{{ section.id }}"]');
+    if (!picker) return;
+    picker.addEventListener('change', function () {
+      if (window.innerWidth >= 750) return;
+      setTimeout(function () {
+        var target = document.querySelector('media-gallery');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Déclenche le rechargement des images lazy après le scroll
+        setTimeout(function () {
+          window.dispatchEvent(new Event('scroll'));
+        }, 600);
+      }, 300);
+    });
+  })();
+</script>

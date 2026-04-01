@@ -820,6 +820,18 @@
     "marquee_HYpWxg": {
       "type": "marquee",
       "blocks": {
+        "icon_PwNeTE": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/61DFEC1B-9AD6-46C2-AA95-F8ACCBA6C225.png",
+            "width": 24,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
+        },
         "icon_xi4JUw": {
           "type": "icon",
           "name": "t:names.icon",
@@ -837,7 +849,7 @@
           "name": "t:names.icon",
           "settings": {
             "icon": "price_tag",
-            "image_upload": "shopify://shop_images/Vector-stars.svg",
+            "image_upload": "shopify://shop_images/Andromeda_Bedroom_Serene.png",
             "width": 24,
             "link": "",
             "open_in_new_tab": false
@@ -846,6 +858,7 @@
         }
       },
       "block_order": [
+        "icon_PwNeTE",
         "icon_xi4JUw",
         "icon_XqV9Pz"
       ],

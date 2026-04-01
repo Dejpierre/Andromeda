@@ -19,7 +19,15 @@
             assign block_image = block.settings.image
           endif
         endfor
-        if block_image != blank
+        assign block_bg = blank
+        for block in section.blocks
+          if block.settings.variant_title == variant.title and block.settings.background_image != blank
+            assign block_bg = block.settings.background_image
+          endif
+        endfor
+        if block_bg != blank
+          assign bg_url = block_bg | image_url: width: 1600
+        elsif block_image != blank
           assign bg_url = block_image | image_url: width: 1600
         else
           assign fallback = variant.featured_media | default: product_ref.featured_image
@@ -357,7 +365,12 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Image de fond"
+          "label": "Swatch (petit rond couleur)"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Photo de fond (optionnel — remplace le swatch comme fond)"
         }
       ]
     }

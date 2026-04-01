@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bienvenue chez Andromeda Paris</title>
+</head>
+<body style="margin:0;padding:0;background:#f0ede8;font-family:Arial,sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f0ede8;padding:40px 16px;">
+  <tr><td align="center">
+    <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
+
+      <!-- HEADER -->
+      <tr>
+        <td style="background:#191a2e;border-radius:12px 12px 0 0;padding:48px 48px 40px;text-align:center;">
+          <img src="https://cdn.shopify.com/s/files/1/1000/9375/5727/files/logo-blanc-andromeda.png?v=1774981994" alt="Andromeda Paris" height="36" style="display:block;margin:0 auto 28px;">
+          <table width="100%" cellpadding="0" cellspacing="0"><tr><td style="border-top:1px solid rgba(200,184,154,0.3);"></td></tr></table>
+          <p style="color:#C8B89A;font-size:32px;font-weight:300;margin-top:28px;letter-spacing:6px;">✦</p>
+          <p style="color:#C8B89A;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-top:12px;font-weight:bold;">Bienvenue</p>
+          <h1 style="color:#ffffff;font-size:28px;font-weight:300;letter-spacing:1px;margin-top:12px;line-height:1.4;">
+            Bienvenue dans<br><span style="font-weight:bold;">l'univers Andromeda</span>
+          </h1>
+          <p style="color:rgba(255,255,255,0.5);font-size:13px;margin-top:14px;font-weight:300;line-height:1.6;">Le sommeil est votre premier luxe.<br>Vous venez de faire le bon choix.</p>
+        </td>
+      </tr>
+
+      <!-- BODY -->
+      <tr>
+        <td style="background:#ffffff;padding:40px 48px;">
+
+          <p style="color:#191a2e;font-size:15px;line-height:1.8;font-weight:300;margin-bottom:32px;">
+            Bonjour {{ customer.first_name }},<br><br>
+            Votre compte Andromeda Paris est créé. Vous accédez maintenant à un espace dédié pour suivre vos commandes, gérer vos informations et retrouver l'historique de vos achats.
+          </p>
+
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;"><tr><td style="border-top:1px solid #eeebe6;"></td></tr></table>
+
+          <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C8B89A;font-weight:bold;margin-bottom:24px;">Notre engagement</p>
+
+          <!-- 01 -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
+            <tr>
+              <td width="48" style="vertical-align:top;">
+                <div style="width:32px;height:32px;border:1px solid #C8B89A;border-radius:50%;text-align:center;line-height:32px;">
+                  <span style="color:#C8B89A;font-size:12px;">01</span>
+                </div>
+              </td>
+              <td style="padding-left:16px;vertical-align:top;">
+                <p style="color:#191a2e;font-size:14px;font-weight:bold;margin-bottom:4px;">Soie Grade 6A, 22 mommes</p>
+                <p style="color:#888;font-size:13px;font-weight:300;line-height:1.7;">Moins de 5 % de la production mondiale. Une qualité qui se sent dès la première nuit.</p>
+              </td>
+            </tr>
+          </table>
+
+          <!-- 02 -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
+            <tr>
+              <td width="48" style="vertical-align:top;">
+                <div style="width:32px;height:32px;border:1px solid #C8B89A;border-radius:50%;text-align:center;line-height:32px;">
+                  <span style="color:#C8B89A;font-size:12px;">02</span>
+                </div>
+              </td>
+              <td style="padding-left:16px;vertical-align:top;">
+                <p style="color:#191a2e;font-size:14px;font-weight:bold;margin-bottom:4px;">Obscurité totale</p>
+                <p style="color:#888;font-size:13px;font-weight:300;line-height:1.7;">Design anatomique pensé pour bloquer 100 % de la lumière et préserver votre mélatonine.</p>
+              </td>
+            </tr>
+          </table>
+
+          <!-- 03 -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
+            <tr>
+              <td width="48" style="vertical-align:top;">
+                <div style="width:32px;height:32px;border:1px solid #C8B89A;border-radius:50%;text-align:center;line-height:32px;">
+                  <span style="color:#C8B89A;font-size:12px;">03</span>
+                </div>
+              </td>
+              <td style="padding-left:16px;vertical-align:top;">
+                <p style="color:#191a2e;font-size:14px;font-weight:bold;margin-bottom:4px;">Peau & cheveux</p>
+                <p style="color:#888;font-size:13px;font-weight:300;line-height:1.7;">Anti-friction, naturellement hydratant. La soie prend soin de vous pendant que vous dormez.</p>
+              </td>
+            </tr>
+          </table>
+
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;"><tr><td style="border-top:1px solid #eeebe6;"></td></tr></table>
+
+          <!-- CTA -->
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr><td align="center">
+              <a href="{{ shop.url }}/collections/all" style="display:inline-block;background:#191a2e;color:#ffffff;text-decoration:none;font-size:13px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;padding:16px 40px;border-radius:4px;">
+                Découvrir la collection
+              </a>
+            </td></tr>
+          </table>
+
+        </td>
+      </tr>
+
+      <!-- BANDE -->
+      <tr>
+        <td style="background:#f9f7f4;border-left:4px solid #C8B89A;padding:20px 48px;">
+          <p style="color:#191a2e;font-size:13px;line-height:1.8;font-weight:300;">
+            ✦ &nbsp;Andromeda Paris est une marque indépendante, fondée sur une conviction simple : le sommeil est le premier acte de soin. Merci de nous faire confiance.
+          </p>
+        </td>
+      </tr>
+
+      <!-- FOOTER -->
+      <tr>
+        <td style="background:#191a2e;border-radius:0 0 12px 12px;padding:32px 48px;text-align:center;">
+          <img src="https://cdn.shopify.com/s/files/1/1000/9375/5727/files/logo-blanc-andromeda.png?v=1774981994" alt="Andromeda Paris" height="24" style="display:block;margin:0 auto 20px;opacity:0.5;">
+          <p style="color:rgba(255,255,255,0.4);font-size:11px;letter-spacing:1px;line-height:1.8;font-weight:300;">
+            Andromeda Paris — {{ shop.url }}<br>
+            Des questions ? Répondez à cet email, nous sommes là pour vous.
+          </p>
+        </td>
+      </tr>
+      <tr><td style="height:40px;"></td></tr>
+    </table>
+  </td></tr>
+</table>
+
+</body>
+</html>

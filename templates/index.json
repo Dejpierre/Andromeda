@@ -953,22 +953,51 @@
     "section_product_hero_mANhnJ": {
       "type": "section-product-hero",
       "blocks": {
+        "variante_B4Ptdj": {
+          "type": "variante",
+          "settings": {
+            "variant_title": "Bleu nuit",
+            "image": "shopify://shop_images/Image_34.png",
+            "background_image": "shopify://shop_images/Masques_Bleu_Nuit_Motif_Repetitif.jpg"
+          }
+        },
+        "variante_tm8Cbt": {
+          "type": "variante",
+          "settings": {
+            "variant_title": "Rose",
+            "image": "shopify://shop_images/Image_32.png",
+            "background_image": "shopify://shop_images/Image_29_1.png"
+          }
+        },
+        "variante_GFzM9E": {
+          "type": "variante",
+          "settings": {
+            "variant_title": "Argent",
+            "image": "shopify://shop_images/Image_30.png",
+            "background_image": "shopify://shop_images/Masques_Gris_Anthracite_4K.webp"
+          }
+        },
         "variante_gaYabP": {
           "type": "variante",
           "settings": {
             "variant_title": "Beige",
-            "image": "shopify://shop_images/Image_27.png"
+            "image": "shopify://shop_images/Masque_Andromeda_sur_Soie.jpg",
+            "background_image": "shopify://shop_images/Image_27.png"
           }
         },
         "variante_Eetk6T": {
           "type": "variante",
           "settings": {
-            "variant_title": "Rose",
-            "image": "shopify://shop_images/Image_26.png"
+            "variant_title": "Bordeau",
+            "image": "shopify://shop_images/Image_33.png",
+            "background_image": "shopify://shop_images/Image_26.png"
           }
         }
       },
       "block_order": [
+        "variante_B4Ptdj",
+        "variante_tm8Cbt",
+        "variante_GFzM9E",
         "variante_gaYabP",
         "variante_Eetk6T"
       ],
@@ -1430,7 +1459,7 @@
               "type": "_featured-blog-posts-image",
               "static": true,
               "settings": {
-                "image_ratio": "square",
+                "image_ratio": "landscape",
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
@@ -1504,8 +1533,8 @@
         "blog": "actualites",
         "layout_type": "carousel",
         "carousel_on_mobile": true,
-        "post_limit": 5,
-        "columns": 3,
+        "post_limit": 2,
+        "columns": 2,
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
         "columns_gap": 8,

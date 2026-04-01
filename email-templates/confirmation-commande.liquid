@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmation de commande — Andromeda Paris</title>
+</head>
+<body style="margin:0;padding:0;background:#f0ede8;font-family:Arial,sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f0ede8;padding:40px 16px;">
+  <tr><td align="center">
+    <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
+
+      <!-- HEADER -->
+      <tr>
+        <td style="background:#191a2e;border-radius:12px 12px 0 0;padding:40px 48px 32px;text-align:center;">
+          <img src="https://cdn.shopify.com/s/files/1/1000/9375/5727/files/logo-blanc-andromeda.png?v=1774981994" alt="Andromeda Paris" height="36" style="display:block;margin:0 auto 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0"><tr><td style="border-top:1px solid rgba(200,184,154,0.3);"></td></tr></table>
+          <p style="color:#C8B89A;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-top:20px;font-weight:bold;">Confirmation de commande</p>
+          <h1 style="color:#ffffff;font-size:26px;font-weight:300;letter-spacing:1px;margin-top:10px;line-height:1.3;">
+            Merci pour votre commande,<br>
+            <span style="font-weight:bold;">{{ customer.first_name }}</span>
+          </h1>
+          <p style="color:rgba(255,255,255,0.5);font-size:13px;margin-top:12px;">Commande <span style="color:#C8B89A;">{{ order.name }}</span></p>
+        </td>
+      </tr>
+
+      <!-- BODY -->
+      <tr>
+        <td style="background:#ffffff;padding:40px 48px;">
+
+          <p style="color:#191a2e;font-size:15px;line-height:1.8;font-weight:300;margin-bottom:32px;">
+            Votre commande a bien été reçue et est en cours de préparation. Vous recevrez un email dès son expédition avec votre numéro de suivi.
+          </p>
+
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;"><tr><td style="border-top:1px solid #eeebe6;"></td></tr></table>
+
+          <!-- Récapitulatif -->
+          <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C8B89A;font-weight:bold;margin-bottom:20px;">Récapitulatif</p>
+
+          {% for line in order.line_items %}
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+            <tr>
+              <td width="72" style="vertical-align:top;">
+                {% if line.image %}
+                <img src="{{ line.image | img_url: '64x64', crop: 'center' }}" alt="{{ line.title }}" width="64" height="64" style="border-radius:8px;display:block;object-fit:cover;">
+                {% else %}
+                <div style="width:64px;height:64px;background:#f5f3ef;border-radius:8px;"></div>
+                {% endif %}
+              </td>
+              <td style="padding-left:16px;vertical-align:top;">
+                <p style="color:#191a2e;font-size:14px;font-weight:bold;margin-bottom:4px;">{{ line.title }}</p>
+                {% if line.variant_title != 'Default Title' %}
+                <p style="color:#888;font-size:13px;font-weight:300;margin-bottom:4px;">{{ line.variant_title }} · Qté : {{ line.quantity }}</p>
+                {% else %}
+                <p style="color:#888;font-size:13px;font-weight:300;margin-bottom:4px;">Qté : {{ line.quantity }}</p>
+                {% endif %}
+              </td>
+              <td style="vertical-align:top;text-align:right;white-space:nowrap;">
+                <p style="color:#191a2e;font-size:14px;font-weight:bold;">{{ line.price | money }}</p>
+              </td>
+            </tr>
+          </table>
+          {% endfor %}
+
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin:24px 0;"><tr><td style="border-top:1px solid #eeebe6;"></td></tr></table>
+
+          <!-- Totaux -->
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr><td style="padding-bottom:10px;">
+              <table width="100%" cellpadding="0" cellspacing="0"><tr>
+                <td style="color:#888;font-size:13px;font-weight:300;">Sous-total</td>
+                <td style="color:#191a2e;font-size:13px;text-align:right;">{{ order.subtotal_price | money }}</td>
+              </tr></table>
+            </td></tr>
+            <tr><td style="padding-bottom:10px;">
+              <table width="100%" cellpadding="0" cellspacing="0"><tr>
+                <td style="color:#888;font-size:13px;font-weight:300;">Livraison</td>
+                <td style="color:#191a2e;font-size:13px;text-align:right;">
+                  {% if order.shipping_price == 0 %}
+                    <span style="color:#2d9e5f;font-weight:bold;">Offerte</span>
+                  {% else %}
+                    {{ order.shipping_price | money }}
+                  {% endif %}
+                </td>
+              </tr></table>
+            </td></tr>
+            <tr><td style="padding-top:12px;border-top:1px solid #eeebe6;">
+              <table width="100%" cellpadding="0" cellspacing="0"><tr>
+                <td style="color:#191a2e;font-size:15px;font-weight:bold;padding-top:12px;">Total</td>
+                <td style="color:#191a2e;font-size:18px;font-weight:bold;text-align:right;padding-top:12px;">{{ order.total_price | money }}</td>
+              </tr></table>
+            </td></tr>
+          </table>
+
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin:32px 0;"><tr><td style="border-top:1px solid #eeebe6;"></td></tr></table>
+
+          <!-- Adresses -->
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="50%" style="padding-right:16px;vertical-align:top;">
+                <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C8B89A;font-weight:bold;margin-bottom:12px;">Livraison</p>
+                <p style="color:#191a2e;font-size:13px;font-weight:bold;line-height:1.8;">{{ shipping_address.name }}</p>
+                <p style="color:#888;font-size:13px;font-weight:300;line-height:1.8;">
+                  {{ shipping_address.address1 }}<br>
+                  {% if shipping_address.address2 != blank %}{{ shipping_address.address2 }}<br>{% endif %}
+                  {{ shipping_address.zip }} {{ shipping_address.city }}<br>
+                  {{ shipping_address.country }}
+                </p>
+              </td>
+              <td width="50%" style="padding-left:16px;vertical-align:top;">
+                <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C8B89A;font-weight:bold;margin-bottom:12px;">Paiement</p>
+                {% for transaction in order.transactions %}
+                {% if transaction.status == 'success' %}
+                <p style="color:#888;font-size:13px;font-weight:300;line-height:1.8;">{{ transaction.payment_details.credit_card_company }} •••• {{ transaction.payment_details.credit_card_last_four_digits }}</p>
+                <p style="color:#888;font-size:13px;font-weight:300;line-height:1.8;margin-top:4px;">{{ transaction.amount | money }} débité</p>
+                {% endif %}
+                {% endfor %}
+              </td>
+            </tr>
+          </table>
+
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin:32px 0;"><tr><td style="border-top:1px solid #eeebe6;"></td></tr></table>
+
+          <!-- CTA -->
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr><td align="center">
+              <a href="{{ order.status_url }}" style="display:inline-block;background:#191a2e;color:#ffffff;text-decoration:none;font-size:13px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;padding:14px 36px;border-radius:4px;">
+                Suivre ma commande
+              </a>
+            </td></tr>
+          </table>
+
+        </td>
+      </tr>
+
+      <!-- BANDE -->
+      <tr>
+        <td style="background:#f9f7f4;border-left:4px solid #C8B89A;padding:20px 48px;">
+          <p style="color:#191a2e;font-size:13px;line-height:1.8;font-weight:300;">
+            ✦ &nbsp;Votre masque est fabriqué avec une soie de mûrier Grade 6A, 22 mommes — parmi les 5 % de soie les plus rares au monde. Il est préparé avec soin avant de vous être expédié.
+          </p>
+        </td>
+      </tr>
+
+      <!-- FOOTER -->
+      <tr>
+        <td style="background:#191a2e;border-radius:0 0 12px 12px;padding:32px 48px;text-align:center;">
+          <img src="https://cdn.shopify.com/s/files/1/1000/9375/5727/files/logo-blanc-andromeda.png?v=1774981994" alt="Andromeda Paris" height="24" style="display:block;margin:0 auto 20px;opacity:0.5;">
+          <p style="color:rgba(255,255,255,0.4);font-size:11px;letter-spacing:1px;line-height:1.8;font-weight:300;">
+            Andromeda Paris — {{ shop.url }}<br>
+            Des questions ? Répondez à cet email, nous sommes là pour vous.
+          </p>
+          <p style="margin-top:16px;">
+            <a href="{{ shop.url }}/account" style="color:rgba(200,184,154,0.6);font-size:11px;text-decoration:none;letter-spacing:1px;">Mon compte</a>
+          </p>
+        </td>
+      </tr>
+      <tr><td style="height:40px;"></td></tr>
+    </table>
+  </td></tr>
+</table>
+
+</body>
+</html>
