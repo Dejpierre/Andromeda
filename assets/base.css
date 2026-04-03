@@ -4981,3 +4981,19 @@ product-recommendations:has([data-has-recommendations='false']) {
     translate: 0px var(--atc-destination, 0px);
   }
 }
+
+/* Hero homepage — gradient haut pour lisibilité header */
+.hero__container {
+  position: relative;
+}
+.hero__container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}

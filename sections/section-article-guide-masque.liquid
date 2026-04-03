@@ -1,179 +1,55 @@
-{% comment %} Article guide masque — Andromeda dark theme {% endcomment %}
+{% comment %} Article guide masque — Andromeda dark theme — contenu natif article {% endcomment %}
 
 <div class="ag" id="ag">
 
   <!-- HERO dark -->
   <header class="ag__hero">
-    <!-- Stars scoped au hero -->
     <div class="ag__hero-bg" aria-hidden="true">
       <div class="ag__stars ag__stars--1"></div>
       <div class="ag__stars ag__stars--2"></div>
     </div>
 
-    <!-- Back (dans la zone dark) -->
     <div class="ag__back-wrap">
       <a href="/blogs/actualites" class="ag__back">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Journal
       </a>
     </div>
+
     <div class="ag__hero-inner">
-    <p class="ag__eyebrow">Andromeda Paris — Guide</p>
-    <h1 class="ag__title">3 étapes pour choisir son masque de sommeil <em>en soie</em></h1>
-    <p class="ag__subtitle">Matière, grammage, grade : le guide complet pour un sommeil réellement réparateur.</p>
-    <div class="ag__meta">
-      <span>Lecture : 5 min</span>
-      <span>Guide expert</span>
-      <span>Mis à jour 2025</span>
+      <p class="ag__eyebrow">Andromeda Paris — Guide</p>
+      <h1 class="ag__title">{{ article.title }}</h1>
+      {% if article.excerpt != blank %}
+        <p class="ag__subtitle">{{ article.excerpt | strip_html }}</p>
+      {% endif %}
+      <div class="ag__meta">
+        <span>{{ article.published_at | date: "%d %B %Y" }}</span>
+        {% if article.tags.size > 0 %}
+          {% for tag in article.tags limit: 2 %}
+            <span>{{ tag }}</span>
+          {% endfor %}
+        {% endif %}
+      </div>
     </div>
-    </div><!-- /.ag__hero-inner -->
   </header>
 
-  <!-- ARTICLE BODY -->
-  <div class="ag__body">
+  <!-- IMAGE HERO (image mise en avant de l'article) -->
+  {% if article.image %}
+  <div class="ag__featured-img-wrap">
+    <img
+      src="{{ article.image | image_url: width: 1400 }}"
+      alt="{{ article.image.alt | default: article.title }}"
+      class="ag__featured-img"
+      loading="eager"
+      width="{{ article.image.width }}"
+      height="{{ article.image.height }}"
+    >
+  </div>
+  {% endif %}
 
-    <div class="ag__intro">
-      <p class="ag__intro-lead">Le sommeil est le seul luxe qui se mesure en heures perdues.</p>
-      <p>Chaque nuit, la qualité de votre repos dépend d'un paramètre que la plupart ignorent : la lumière. Même imperceptible, même à travers des paupières closes, elle suffit à inhiber la production de mélatonine et à perturber vos cycles. Le masque de sommeil n'est pas un accessoire de voyage — c'est un outil de performance, à condition de bien le choisir.</p>
-    </div>
-
-    {% if section.settings.image_hero != blank %}
-    <div class="ag__img-wrap">
-      <img
-        src="{{ section.settings.image_hero | image_url: width: 1200 }}"
-        alt="{{ section.settings.image_hero.alt | default: 'Masque de sommeil Andromeda' }}"
-        class="ag__img"
-        loading="lazy"
-        width="{{ section.settings.image_hero.width }}"
-        height="{{ section.settings.image_hero.height }}"
-      >
-    </div>
-    {% endif %}
-
-    <section class="ag__section">
-      <h2 class="ag__h2 ag__h2--intro">Pourquoi l'obscurité totale change tout</h2>
-      <p>Votre cerveau produit de la mélatonine — l'hormone du sommeil — uniquement en l'absence de lumière. Le moindre stimulus lumineux, même à travers vos paupières, active des photorécepteurs spécialisés qui signalent à votre hypothalamus de freiner la sécrétion. Résultat : vous vous endormez moins vite, votre sommeil profond est écourté, et vous vous réveillez moins reposé.</p>
-      <p>Un masque bien ajusté crée un environnement d'obscurité totale, indépendamment de votre chambre, de la saison ou de votre situation géographique.</p>
-      <div class="ag__benefits">
-        <div class="ag__benefit">
-          <svg class="ag__benefit-icon" viewBox="0 0 32 32" fill="none" width="32" height="32">
-            <circle cx="16" cy="16" r="10" stroke="#C8B89A" stroke-width="1.2"/>
-            <path d="M16 6 C10 6 7 10 7 16" stroke="#C8B89A" stroke-width="1.2" stroke-linecap="round"/>
-            <circle cx="16" cy="16" r="3" fill="#C8B89A" opacity="0.4"/>
-          </svg>
-          <h4>Mélatonine optimisée</h4>
-          <p>Obscurité totale = pic de mélatonine plus précoce et plus intense, pour un endormissement facilité.</p>
-        </div>
-        <div class="ag__benefit">
-          <svg class="ag__benefit-icon" viewBox="0 0 32 32" fill="none" width="32" height="32">
-            <path d="M6 22 Q10 10 16 10 Q22 10 26 22" stroke="#C8B89A" stroke-width="1.2" stroke-linecap="round" fill="none"/>
-            <path d="M10 18 Q13 13 16 13 Q19 13 22 18" stroke="#C8B89A" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.5"/>
-          </svg>
-          <h4>Sommeil plus profond</h4>
-          <p>Plus de temps en phases N3 et REM, qui gouvernent la récupération physique et cognitive.</p>
-        </div>
-        <div class="ag__benefit">
-          <svg class="ag__benefit-icon" viewBox="0 0 32 32" fill="none" width="32" height="32">
-            <rect x="6" y="10" width="20" height="14" rx="2" stroke="#C8B89A" stroke-width="1.2"/>
-            <path d="M10 10 V8 M16 10 V7 M22 10 V8" stroke="#C8B89A" stroke-width="1.2" stroke-linecap="round"/>
-            <circle cx="16" cy="17" r="2" fill="#C8B89A" opacity="0.4"/>
-          </svg>
-          <h4>Voyage & décalage horaire</h4>
-          <p>Avion, train, hôtel : maintenez votre rythme circadien où que vous soyez dans le monde.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="ag__section">
-      <p class="ag__section-label">01 — La matière</p>
-      <h2 class="ag__h2">Soie, coton, synthétique : misez sur les bienfaits d'un masque de sommeil en soie</h2>
-      <p>Tous les masques ne se valent pas. Le choix de la matière conditionne non seulement votre confort immédiat, mais aussi la santé de votre peau et de vos cheveux sur le long terme.</p>
-      <div class="ag__table-wrap">
-        <table class="ag__table">
-          <thead>
-            <tr><th>Matière</th><th>Confort</th><th>Peau & cheveux</th><th>Note</th></tr>
-          </thead>
-          <tbody>
-            <tr class="ag__table-row--highlight"><td class="ag__table-name">Soie mulberry</td><td>Exceptionnel</td><td>Hydratant, anti-friction</td><td>★★★★★</td></tr>
-            <tr><td class="ag__table-name">Coton satiné</td><td>Bon</td><td>Neutre à légèrement absorbant</td><td>★★★☆☆</td></tr>
-            <tr><td class="ag__table-name">Polyester / satin</td><td>Moyen</td><td>Accumule l'électricité statique</td><td>★★☆☆☆</td></tr>
-            <tr><td class="ag__table-name">Bambou / viscose</td><td>Bon</td><td>Respirant, thermorégulant</td><td>★★★☆☆</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>La soie de mûrier (mulberry silk) est tissée à partir des cocons du ver à soie <em>Bombyx mori</em>. Sa structure en fibroïne lui confère des propriétés hydratantes naturelles — contrairement au coton, elle ne déshydrate pas votre peau, elle la préserve.</p>
-      {% if section.settings.image_matiere != blank %}
-      <div class="ag__img-wrap ag__img-wrap--matiere">
-        <img
-          src="{{ section.settings.image_matiere | image_url: width: 1200 }}"
-          alt="{{ section.settings.image_matiere.alt | default: 'Soie de mûrier' }}"
-          class="ag__img"
-          loading="lazy"
-          width="{{ section.settings.image_matiere.width }}"
-          height="{{ section.settings.image_matiere.height }}"
-        >
-      </div>
-      {% endif %}
-      <blockquote class="ag__quote">
-        <p>"La soie de mûrier ne glisse pas sur la peau — elle l'accompagne, sans friction, sans pression. C'est une différence que vous ressentez dès la première nuit."</p>
-      </blockquote>
-    </section>
-
-    <section class="ag__section">
-      <p class="ag__section-label">02 — Le grammage</p>
-      <h2 class="ag__h2">Les mommes de soie : trouver le juste équilibre</h2>
-      <p>Le « momme » (mm) est l'unité de mesure du poids des tissus de soie. Plus le nombre est élevé, plus le tissu est dense et opaque. Mais au-delà d'un certain seuil, il devient trop lourd pour être confortable au visage durant plusieurs heures.</p>
-      <div class="ag__scale">
-        <div class="ag__scale-track">
-          <div class="ag__scale-fill"></div>
-          <div class="ag__scale-marker" style="left:15%">
-            <div class="ag__scale-dot"></div>
-            <div class="ag__scale-val">12–14</div>
-            <div class="ag__scale-lbl">Entrée de gamme</div>
-          </div>
-          <div class="ag__scale-marker" style="left:40%">
-            <div class="ag__scale-dot"></div>
-            <div class="ag__scale-val">19</div>
-            <div class="ag__scale-lbl">Bon rapport</div>
-          </div>
-          <div class="ag__scale-marker ag__scale-marker--active" style="left:73%">
-            <div class="ag__scale-dot"></div>
-            <div class="ag__scale-val">22</div>
-            <div class="ag__scale-lbl">Optimal — Andromeda</div>
-          </div>
-          <div class="ag__scale-marker" style="left:95%">
-            <div class="ag__scale-dot"></div>
-            <div class="ag__scale-val">25+</div>
-            <div class="ag__scale-lbl">Trop lourd</div>
-          </div>
-        </div>
-      </div>
-      <p>À 22 mommes, le tissu est suffisamment dense pour garantir une opacité totale, tout en restant aéré. C'est le point d'équilibre que les fabricants premium ciblent pour les utilisateurs quotidiens. En dessous de 19 mommes, la soie peut laisser filtrer la lumière ; au-delà de 25 mommes, le poids devient perceptible pour les dormeurs latéraux.</p>
-    </section>
-
-    <section class="ag__section">
-      <p class="ag__section-label">03 — Les grades</p>
-      <h2 class="ag__h2">Grade A, AAA, 6A : pourquoi cela change tout</h2>
-      <p>Le grade de la soie évalue la longueur, la continuité et la blancheur naturelle des filaments. Voici ce qu'il signifie vraiment.</p>
-      <div class="ag__table-wrap">
-        <table class="ag__table">
-          <thead>
-            <tr><th>Grade</th><th>Filament</th><th>Blancheur</th><th>% Production</th></tr>
-          </thead>
-          <tbody>
-            <tr><td class="ag__table-name">Grade A</td><td>Court, irrégulier</td><td>Jaunâtre</td><td>~60 %</td></tr>
-            <tr><td class="ag__table-name">Grade AAA</td><td>Long, homogène</td><td>Crème</td><td>~25 %</td></tr>
-            <tr><td class="ag__table-name">Grade 5A</td><td>Très long, fin</td><td>Blanc naturel</td><td>~10 %</td></tr>
-            <tr class="ag__table-row--highlight"><td class="ag__table-name">Grade 6A <span class="ag__badge">Andromeda</span></td><td>Extra-long, continu</td><td>Blanc pur, lustré</td><td>&lt; 5 %</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="ag__plus">
-        <p class="ag__plus-label">Le + Andromeda</p>
-        <p>Moins de 5 % de la production mondiale de soie de mûrier atteint le Grade 6A. Ce classement est attribué aux filaments les plus longs, prélevés depuis le cœur du cocon. La différence avec un grade inférieur est immédiatement perceptible au toucher : là où un grade inférieur présente de légères rugosités créant des micro-frictions nocturnes, le Grade 6A glisse sans résistance.</p>
-      </div>
-    </section>
-
+  <!-- ARTICLE BODY — contenu natif Shopify -->
+  <div class="ag__body ag__rte">
+    {{ article.content }}
   </div>
 
   <!-- CTA dark -->
@@ -214,12 +90,9 @@
   }
 
   /* ── Base ────────────────────────────────────────────── */
-  .ag {
-    background: #FAF7F2;
-    color: #3A3733;
-  }
+  .ag { background: #FAF7F2; color: #3A3733; }
 
-  /* ── Stars (scoped hero + cta) ───────────────────────── */
+  /* ── Stars ───────────────────────────────────────────── */
   .ag__hero-bg, .ag__cta-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
   .ag__stars { position: absolute; inset: 0; }
   .ag__stars--1 {
@@ -278,20 +151,13 @@
     padding-bottom: 72px;
     overflow: hidden;
   }
-
   .ag__hero > *:not(.ag__hero-bg) { position: relative; z-index: 1; }
-
-  .ag__hero .ag__back-wrap { padding-top: 40px; }
-
-  .ag__hero-inner {
-    max-width: 760px; margin: 0 auto; padding: 48px 24px 0;
-  }
+  .ag__hero-inner { max-width: 760px; margin: 0 auto; padding: 48px 24px 0; }
   .ag__eyebrow {
     font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase;
     color: #C8B89A; margin-bottom: 24px;
   }
-  #ag .ag__title,
-  .ag__title {
+  #ag .ag__title, .ag__title {
     font-family: 'Stellar', serif !important;
     font-size: clamp(36px, 6vw, 62px) !important;
     font-weight: normal !important;
@@ -316,142 +182,112 @@
     border-radius: 50%; background: #C8B89A; opacity: 0.6;
   }
 
+  /* ── Image mise en avant ─────────────────────────────── */
+  .ag__featured-img-wrap {
+    max-width: 900px;
+    margin: -40px auto 0;
+    padding: 0 24px;
+    position: relative;
+    z-index: 2;
+  }
+  .ag__featured-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+    box-shadow: 0 24px 60px rgba(25,26,46,0.18);
+  }
+
   /* ── Body (fond clair) ───────────────────────────────── */
   .ag__body {
     max-width: 760px; margin: 0 auto; padding: 0 24px;
     background: #FAF7F2;
   }
 
-  /* ── Intro ───────────────────────────────────────────── */
-  .ag__intro {
-    padding: 52px 0 40px;
-    border-bottom: 1px solid rgba(184,151,90,0.18);
-    margin-bottom: 8px;
-  }
-  .ag__intro-lead {
-    font-size: 22px; font-weight: 300; font-style: italic;
-    color: #3A3733; line-height: 1.6; margin-bottom: 18px; font-family: Georgia, serif;
-  }
-  .ag__intro p { font-size: 15px; font-weight: 300; color: #5A5450; line-height: 1.85; }
+  /* ── RTE — styles pour le contenu natif Shopify ─────── */
+  .ag__rte { padding-top: 56px; padding-bottom: 56px; }
 
-  /* ── Images ─────────────────────────────────────────── */
-  .ag__img-wrap {
-    margin: 40px 0;
-    border-radius: 12px;
-    overflow: hidden;
+  .ag__rte p {
+    font-size: 15px; font-weight: 300; color: #5A5450;
+    line-height: 1.85; margin-bottom: 20px;
   }
-  .ag__img-wrap--matiere {
+  .ag__rte h2 {
+    font-size: clamp(24px, 3.5vw, 34px); font-weight: 400;
+    color: #1C1A18; line-height: 1.2; margin: 52px 0 20px; letter-spacing: -0.01em;
+  }
+  .ag__rte h3 {
+    font-size: 15px; font-weight: 600;
+    color: #1C1A18; line-height: 1.5;
+    margin: 32px 0 8px;
+    padding-left: 16px;
+    border-left: 2px solid #B8975A;
+    letter-spacing: 0.01em;
+  }
+  .ag__rte h4 {
+    font-size: 14px; font-weight: 600; color: #1C1A18;
+    letter-spacing: 0.08em; text-transform: uppercase; margin: 28px 0 10px;
+  }
+  .ag__rte em { color: #B8975A; font-style: italic; }
+  .ag__rte strong { font-weight: 600; color: #1C1A18; }
+
+  .ag__rte img {
+    width: 100%; height: auto; display: block;
+    border-radius: 12px; margin: 36px 0;
+  }
+
+  .ag__rte blockquote {
+    border-left: 2px solid #B8975A;
+    padding: 16px 0 16px 28px;
     margin: 36px 0;
   }
-  .ag__img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  /* ── Sections (fond clair) ───────────────────────────── */
-  .ag__section { padding: 52px 0 0; }
-  .ag__section-label {
-    font-size: 10px; font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase;
-    color: #B8975A; margin-bottom: 14px;
-  }
-  .ag__h2 {
-    font-size: clamp(24px, 3.5vw, 34px); font-weight: 400;
-    color: #1C1A18; line-height: 1.2; margin-bottom: 20px; letter-spacing: -0.01em;
-  }
-  .ag__h2--intro {
-    font-size: clamp(20px, 2.8vw, 28px);
-  }
-  .ag__section p { font-size: 15px; font-weight: 300; color: #5A5450; line-height: 1.85; margin-bottom: 16px; }
-  .ag__section em { color: #B8975A; font-style: italic; }
-
-  /* ── Benefits ────────────────────────────────────────── */
-  .ag__benefits {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
-    background: rgba(184,151,90,0.15);
-    border: 1px solid rgba(184,151,90,0.2); border-radius: 8px; overflow: hidden;
-    margin: 32px 0 40px;
-  }
-  .ag__benefit { background: #FAF7F2; padding: 28px 22px; transition: background 0.2s; }
-  .ag__benefit:hover { background: #F0EBE1; }
-  .ag__benefit-icon { width: 32px; height: 32px; margin-bottom: 14px; }
-  .ag__benefit h4 { font-size: 15px; font-weight: 500; color: #1C1A18; margin-bottom: 8px; }
-  .ag__benefit p {
-    font-size: 13px !important; color: #8A837A !important; line-height: 1.6 !important; margin: 0 !important;
-  }
-
-  /* ── Table ───────────────────────────────────────────── */
-  .ag__table-wrap {
-    margin: 28px 0 36px; border: 1px solid rgba(184,151,90,0.25); border-radius: 8px; overflow: hidden;
-  }
-  .ag__table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .ag__table thead { background: #1C1A18; }
-  .ag__table thead th {
-    padding: 13px 18px; text-align: left; font-weight: 400;
-    letter-spacing: 0.1em; font-size: 10px; text-transform: uppercase; color: rgba(250,247,242,0.7);
-  }
-  .ag__table tbody tr { border-bottom: 1px solid rgba(184,151,90,0.15); }
-  .ag__table tbody tr:last-child { border-bottom: none; }
-  .ag__table-row--highlight { background: rgba(184,151,90,0.06); }
-  .ag__table td { padding: 13px 18px; color: #5A5450; vertical-align: middle; }
-  .ag__table-name { color: #1C1A18 !important; font-weight: 500; }
-  .ag__badge {
-    display: inline-block; padding: 2px 8px; background: #B8975A; color: #fff;
-    font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-    border-radius: 4px; margin-left: 6px; vertical-align: middle;
-  }
-
-  /* ── Quote ───────────────────────────────────────────── */
-  .ag__quote { border-left: 2px solid #B8975A; padding: 16px 0 16px 28px; margin: 32px 0 52px; }
-  .ag__quote p {
+  .ag__rte blockquote p {
     font-size: 19px !important; font-weight: 300 !important; font-style: italic;
-    color: #3A3733 !important; line-height: 1.6 !important; margin: 0 !important; font-family: Georgia, serif;
+    color: #3A3733 !important; line-height: 1.6 !important; margin: 0 !important;
+    font-family: Georgia, serif;
   }
 
-  /* ── Scale mommes ────────────────────────────────────── */
-  .ag__scale { margin: 32px 0 36px; }
-  .ag__scale-track {
-    height: 5px; background: #E8E2D8; border-radius: 3px; position: relative; margin-bottom: 40px;
+  .ag__rte ul, .ag__rte ol {
+    padding-left: 24px; margin-bottom: 20px;
   }
-  .ag__scale-fill {
-    position: absolute; left: 0; top: 0; height: 100%; width: 73%;
-    background: linear-gradient(to right, #D4B07A, #B8975A); border-radius: 3px;
+  .ag__rte ul li, .ag__rte ol li {
+    font-size: 15px; font-weight: 300; color: #5A5450;
+    line-height: 1.8; margin-bottom: 6px;
   }
-  .ag__scale-marker { position: absolute; top: -5px; transform: translateX(-50%); text-align: center; }
-  .ag__scale-dot {
-    width: 15px; height: 15px; border-radius: 50%;
-    border: 2px solid #FAF7F2; background: #8A837A; margin: 0 auto 10px;
-  }
-  .ag__scale-marker--active .ag__scale-dot {
-    background: #B8975A; border-color: #B8975A; box-shadow: 0 0 0 4px rgba(184,151,90,0.2);
-  }
-  .ag__scale-val { font-size: 13px; font-weight: 500; color: #8A837A; white-space: nowrap; }
-  .ag__scale-marker--active .ag__scale-val { color: #B8975A; }
-  .ag__scale-lbl { font-size: 10px; color: #AAA49E; letter-spacing: 0.05em; white-space: nowrap; margin-top: 3px; }
+  .ag__rte ul li::marker { color: #B8975A; }
 
-  /* ── Le + Andromeda ──────────────────────────────────── */
-  .ag__plus {
-    background: rgba(184,151,90,0.06);
-    border: 1px solid rgba(184,151,90,0.2);
-    border-radius: 8px;
-    padding: 24px 28px;
-    margin: 0 0 52px;
+  .ag__rte hr {
+    border: none;
+    border-top: 1px solid rgba(184,151,90,0.2);
+    margin: 48px 0;
   }
-  .ag__plus-label {
-    font-size: 10px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase;
-    color: #B8975A; margin-bottom: 12px;
+
+  .ag__rte table {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+    border: 1px solid rgba(184,151,90,0.25); border-radius: 8px;
+    overflow: hidden; margin: 28px 0 36px;
   }
-  .ag__plus p {
-    font-size: 14px !important; color: #5A5450 !important; line-height: 1.8 !important; margin: 0 !important;
+  .ag__rte table thead { background: #1C1A18; }
+  .ag__rte table thead th {
+    padding: 13px 18px; text-align: left; font-weight: 400;
+    letter-spacing: 0.1em; font-size: 10px; text-transform: uppercase;
+    color: rgba(250,247,242,0.7);
+  }
+  .ag__rte table tbody tr { border-bottom: 1px solid rgba(184,151,90,0.15); }
+  .ag__rte table tbody tr:last-child { border-bottom: none; }
+  .ag__rte table td {
+    padding: 13px 18px; color: #5A5450; vertical-align: middle;
+  }
+  .ag__rte table td:first-child { color: #1C1A18; font-weight: 500; }
+
+  .ag__rte a {
+    color: #B8975A; text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   /* ── CTA (dark) ──────────────────────────────────────── */
   .ag__cta {
-    position: relative;
-    background: #191A2E;
-    padding: 80px 24px;
-    text-align: center;
-    overflow: hidden;
+    position: relative; background: #191A2E;
+    padding: 80px 24px; text-align: center; overflow: hidden;
   }
   .ag__cta-bg { z-index: 0; }
   .ag__cta > *:not(.ag__cta-bg) { position: relative; z-index: 1; }
@@ -461,7 +297,8 @@
     color: #C8B89A; margin-bottom: 16px;
   }
   .ag__cta-title {
-    font-size: clamp(28px, 4vw, 44px); font-weight: 400; color: #FFFFFF; margin-bottom: 14px; line-height: 1.15;
+    font-size: clamp(28px, 4vw, 44px); font-weight: 400;
+    color: #FFFFFF; margin-bottom: 14px; line-height: 1.15;
   }
   .ag__cta-text {
     font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.45);
@@ -482,32 +319,84 @@
   }
   .ag__cta-btn:hover { background: rgba(200,184,154,0.12); }
 
+  /* ── Classes article (contenu natif avec classes custom) ── */
+  .ag__intro { padding: 52px 0 40px; border-bottom: 1px solid rgba(184,151,90,0.18); margin-bottom: 8px; }
+  .ag__intro-lead { font-size: 22px; font-weight: 300; font-style: italic; color: #3A3733; line-height: 1.6; margin-bottom: 18px; font-family: Georgia, serif; }
+  .ag__intro p { font-size: 15px; font-weight: 300; color: #5A5450; line-height: 1.85; }
+
+  .ag__section { padding: 52px 0 0; }
+  .ag__section-label { font-size: 10px; font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase; color: #B8975A; margin-bottom: 14px; }
+  .ag__h2 { font-size: clamp(24px, 3.5vw, 34px); font-weight: 400; color: #1C1A18; line-height: 1.2; margin-bottom: 20px; letter-spacing: -0.01em; }
+  .ag__h2--intro { font-size: clamp(20px, 2.8vw, 28px); }
+  .ag__section p { font-size: 15px; font-weight: 300; color: #5A5450; line-height: 1.85; margin-bottom: 16px; }
+  .ag__section em { color: #B8975A; font-style: italic; }
+
+  .ag__benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(184,151,90,0.15); border: 1px solid rgba(184,151,90,0.2); border-radius: 8px; overflow: hidden; margin: 32px 0 40px; }
+  .ag__benefit { background: #FAF7F2; padding: 28px 22px; transition: background 0.2s; }
+  .ag__benefit:hover { background: #F0EBE1; }
+  .ag__benefit-icon { width: 32px; height: 32px; margin-bottom: 14px; }
+  .ag__benefit h4 { font-size: 15px; font-weight: 500; color: #1C1A18; margin-bottom: 8px; }
+  .ag__benefit p { font-size: 13px !important; color: #8A837A !important; line-height: 1.6 !important; margin: 0 !important; }
+
+  .ag__table-wrap { margin: 28px 0 36px; border: 1px solid rgba(184,151,90,0.25); border-radius: 8px; overflow: hidden; }
+  .ag__table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .ag__table thead { background: #1C1A18; }
+  .ag__table thead th { padding: 13px 18px; text-align: left; font-weight: 400; letter-spacing: 0.1em; font-size: 10px; text-transform: uppercase; color: rgba(250,247,242,0.7); }
+  .ag__table tbody tr { border-bottom: 1px solid rgba(184,151,90,0.15); }
+  .ag__table tbody tr:last-child { border-bottom: none; }
+  .ag__table-row--highlight { background: rgba(184,151,90,0.06); }
+  .ag__table td { padding: 13px 18px; color: #5A5450; vertical-align: middle; }
+  .ag__table-name { color: #1C1A18 !important; font-weight: 500; }
+  .ag__badge { display: inline-block; padding: 2px 8px; background: #B8975A; color: #fff; font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 4px; margin-left: 6px; vertical-align: middle; }
+
+  .ag__quote { border-left: 2px solid #B8975A; padding: 16px 0 16px 28px; margin: 32px 0 52px; }
+  .ag__quote p { font-size: 19px !important; font-weight: 300 !important; font-style: italic; color: #3A3733 !important; line-height: 1.6 !important; margin: 0 !important; font-family: Georgia, serif; }
+
+  .ag__scale { margin: 32px 0 36px; }
+  .ag__scale-track { height: 5px; background: #E8E2D8; border-radius: 3px; position: relative; margin-bottom: 40px; }
+  .ag__scale-fill { position: absolute; left: 0; top: 0; height: 100%; width: 73%; background: linear-gradient(to right, #D4B07A, #B8975A); border-radius: 3px; }
+  .ag__scale-marker { position: absolute; top: -5px; transform: translateX(-50%); text-align: center; }
+  .ag__scale-dot { width: 15px; height: 15px; border-radius: 50%; border: 2px solid #FAF7F2; background: #8A837A; margin: 0 auto 10px; }
+  .ag__scale-marker--active .ag__scale-dot { background: #B8975A; border-color: #B8975A; box-shadow: 0 0 0 4px rgba(184,151,90,0.2); }
+  .ag__scale-val { font-size: 13px; font-weight: 500; color: #8A837A; white-space: nowrap; }
+  .ag__scale-marker--active .ag__scale-val { color: #B8975A; }
+  .ag__scale-lbl { font-size: 10px; color: #AAA49E; letter-spacing: 0.05em; white-space: nowrap; margin-top: 3px; }
+
+  .ag__plus { background: rgba(184,151,90,0.06); border: 1px solid rgba(184,151,90,0.2); border-radius: 8px; padding: 24px 28px; margin: 0 0 52px; }
+  .ag__plus-label { font-size: 10px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: #B8975A; margin-bottom: 12px; }
+  .ag__plus p { font-size: 14px !important; color: #5A5450 !important; line-height: 1.8 !important; margin: 0 !important; }
+
+  /* ── FAQ ─────────────────────────────────────────────── */
+  .ag__faq { margin: 28px 0 52px; border-top: 1px solid rgba(184,151,90,0.2); }
+  .ag__faq-item { padding: 24px 0; border-bottom: 1px solid rgba(184,151,90,0.15); }
+  .ag__faq-q {
+    font-size: 15px; font-weight: 600; color: #1C1A18;
+    line-height: 1.4; margin: 0 0 10px;
+    padding-left: 20px;
+    position: relative;
+  }
+  .ag__faq-q::before {
+    content: '✦';
+    position: absolute; left: 0; top: 1px;
+    font-size: 9px; color: #B8975A; line-height: 1.6;
+  }
+  .ag__faq-a { font-size: 14px; font-weight: 300; color: #5A5450; line-height: 1.8; margin: 0; padding-left: 20px; }
+
   /* ── Responsive ──────────────────────────────────────── */
   @media (max-width: 640px) {
-    .ag__benefits { grid-template-columns: 1fr; }
-    .ag__table thead th:nth-child(3), .ag__table td:nth-child(3) { display: none; }
-    .ag__scale-lbl { font-size: 9px; }
+    .ag__rte table thead th:nth-child(3),
+    .ag__rte table td:nth-child(3) { display: none; }
     .ag__cta-specs { gap: 24px; }
-    .ag__hero { padding: 48px 20px 48px; }
+    .ag__hero { padding-bottom: 48px; }
     .ag__body { padding: 0 20px; }
+    .ag__featured-img-wrap { padding: 0 16px; margin-top: -24px; }
   }
 </style>
 
 {% schema %}
 {
   "name": "Article Guide Masque",
-  "settings": [
-    {
-      "type": "image_picker",
-      "id": "image_hero",
-      "label": "Image hero (masque + packaging)"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_matiere",
-      "label": "Image matière (cocons de soie)"
-    }
-  ],
+  "settings": [],
   "presets": [{ "name": "Article Guide Masque" }]
 }
 {% endschema %}

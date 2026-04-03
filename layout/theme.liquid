@@ -42,7 +42,63 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
-  </head>
+    
+
+  <!-- JSON-LD Structured Data — Andromeda -->
+  {%- if request.page_type == 'product' -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "description": {{ product.description | strip_html | truncate: 300 | json }},
+    "image": [
+      {%- for image in product.images -%}
+        {{ image | image_url: width: 800 | prepend: 'https:' | json }}{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ],
+    "brand": {
+      "@type": "Brand",
+      "name": "Andromeda Paris"
+    },
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "lowPrice": {{ product.price_min | money_without_currency }},
+      "highPrice": {{ product.price_max | money_without_currency }},
+      "offerCount": {{ product.variants.size }},
+      "availability": {%- if product.available -%}"https://schema.org/InStock"{%- else -%}"https://schema.org/OutOfStock"{%- endif -%},
+      "url": {{ shop.url | append: product.url | json }}
+    },
+    "url": {{ shop.url | append: product.url | json }}
+  }
+  </script>
+  {%- endif -%}
+
+  {%- if request.page_type == 'index' -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Andromeda Paris",
+    "url": "https://www.andromedaparis.com",
+    "logo": "https://www.andromedaparis.com/cdn/shop/files/logo-andromeda.png",
+    "description": "Masques de sommeil en pure soie de mûrier Grade 6A, 22 mommes. Accessoires de sommeil haut de gamme.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "email": "contact@andromedaparis.com",
+      "availableLanguage": "French"
+    },
+    "sameAs": [
+      "https://www.instagram.com/andromedaparis",
+      "https://www.pinterest.com/andromedaparis"
+    ]
+  }
+  </script>
+  {%- endif -%}
+
+</head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
