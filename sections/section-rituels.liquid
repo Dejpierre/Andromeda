@@ -79,6 +79,12 @@
         </div>
 
         <div class="moona-rituel__controls">
+          <button class="moona-rituel__seek-btn moona-rituel__skip-btn" id="moona-prev" type="button" aria-label="Piste précédente">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
+            </svg>
+          </button>
+
           <button class="moona-rituel__seek-btn" id="moona-rewind" type="button" aria-label="Reculer 15s">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
               <path d="M12 5V2L7 7l5 5V8c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="currentColor"/>
@@ -101,6 +107,12 @@
               <text x="12" y="14.5" text-anchor="middle" font-size="5.5" fill="currentColor" font-family="sans-serif">15</text>
             </svg>
           </button>
+
+          <button class="moona-rituel__seek-btn moona-rituel__skip-btn" id="moona-next" type="button" aria-label="Piste suivante">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 18l8.5-6L6 6v12zm2.5-6 8.5 6V6l-8.5 6zM16 6h2v12h-2z"/>
+            </svg>
+          </button>
         </div>
 
         <div class="moona-rituel__progress-wrap">
@@ -113,12 +125,21 @@
         </div>
 
         <div class="moona-rituel__sleep">
-          <button class="moona-rituel__sleep-btn" id="moona-sleep-btn" type="button">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
-            </svg>
-            <span id="moona-sleep-label">Minuterie</span>
-          </button>
+          <div class="moona-rituel__sleep-row">
+            <button class="moona-rituel__sleep-btn" id="moona-sleep-btn" type="button">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+              </svg>
+              <span id="moona-sleep-label">Minuterie</span>
+            </button>
+            <button class="moona-rituel__playlist-btn moona-rituel__playlist-btn--active" id="moona-playlist-btn" type="button" aria-label="Mode playlist activé">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="15" y2="18"/>
+                <polyline points="17 15 21 18 17 21"/>
+              </svg>
+              <span id="moona-playlist-label">Playlist</span>
+            </button>
+          </div>
           <div class="moona-rituel__sleep-opts" id="moona-sleep-opts" hidden>
             <button class="moona-rituel__sleep-opt" data-min="15" type="button">15 min</button>
             <button class="moona-rituel__sleep-opt" data-min="30" type="button">30 min</button>
@@ -915,6 +936,47 @@
     border-color: rgba(255,255,255,0.25);
   }
 
+  /* ── Skip prev/next ────────────────────────────────── */
+  .moona-rituel__skip-btn {
+    color: rgba(255,255,255,0.35);
+  }
+  .moona-rituel__skip-btn:disabled {
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  /* ── Sleep row & playlist toggle ───────────────────── */
+  .moona-rituel__sleep-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .moona-rituel__playlist-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    padding: 4px 10px;
+    border-radius: 20px;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .moona-rituel__playlist-btn:hover {
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.55);
+  }
+
+  .moona-rituel__playlist-btn--active {
+    color: #C8B89A;
+    background: rgba(200,184,154,0.1);
+    font-weight: 500;
+  }
+
   /* ── Footer ─────────────────────────────────────────── */
   .moona-rituel__footer {
     text-align: center;
@@ -989,6 +1051,10 @@
   const sleepBtn      = document.getElementById('moona-sleep-btn');
   const sleepLabel    = document.getElementById('moona-sleep-label');
   const sleepOpts     = document.getElementById('moona-sleep-opts');
+  const prevBtn       = document.getElementById('moona-prev');
+  const nextBtn       = document.getElementById('moona-next');
+  const playlistBtn   = document.getElementById('moona-playlist-btn');
+  const playlistLabel = document.getElementById('moona-playlist-label');
 
   /* ── Helpers animation ───────────────────────────────── */
   function showEl(el) {
@@ -1081,6 +1147,7 @@
     iconPause.style.display = 'none';
     playerEl.classList.remove('is-playing');
     cancelSleepTimer();
+    if (playlistMode) playNextTrack();
   });
 
   /* ── Clic sur la barre ───────────────────────────────── */
@@ -1121,8 +1188,10 @@
   const folderNameEl    = document.getElementById('moona-folder-name');
   const backToFoldersBtn = document.getElementById('moona-back-to-folders');
 
-  let currentFolder = null;
-  let currentTrack  = null;
+  let currentFolder     = null;
+  let currentTrack      = null;
+  let currentTrackIndex = -1;
+  let playlistMode      = true;
 
   /* ── Afficher les dossiers ───────────────────────────── */
   function showFolders() {
@@ -1190,7 +1259,7 @@
             ${track.desc ? `<span class="moona-rituel__moment-desc">${track.desc}</span>` : ''}
           </div>
         </div>`;
-      btn.addEventListener('click', () => { initOrbAudio(); loadRituel(track); });
+      btn.addEventListener('click', () => { initOrbAudio(); currentTrackIndex = i; loadRituel(track, i); });
       tracksEl.appendChild(btn);
     });
   }
@@ -1326,9 +1395,53 @@
     opt.addEventListener('click', () => startSleepTimer(parseInt(opt.dataset.min, 10)));
   });
 
+  /* ── Navigation prev/next ───────────────────────────── */
+  function playNextTrack() {
+    if (!currentFolder) return;
+    const list = folders[currentFolder] || [];
+    const next = currentTrackIndex + 1;
+    if (next < list.length) {
+      currentTrackIndex = next;
+      loadRituel(list[next]);
+    }
+  }
+
+  function playPrevTrack() {
+    if (!currentFolder) return;
+    const list = folders[currentFolder] || [];
+    // Si on est à plus de 3s, recommencer le son courant
+    if (audioEl.currentTime > 3) {
+      audioEl.currentTime = 0;
+      return;
+    }
+    const prev = currentTrackIndex - 1;
+    if (prev >= 0) {
+      currentTrackIndex = prev;
+      loadRituel(list[prev]);
+    }
+  }
+
+  function updateSkipButtons() {
+    if (!currentFolder) return;
+    const list = folders[currentFolder] || [];
+    prevBtn.disabled = currentTrackIndex <= 0 && audioEl.currentTime <= 3;
+    nextBtn.disabled = currentTrackIndex >= list.length - 1;
+  }
+
+  prevBtn.addEventListener('click', () => { initOrbAudio(); playPrevTrack(); });
+  nextBtn.addEventListener('click', () => { initOrbAudio(); playNextTrack(); });
+
+  playlistBtn.addEventListener('click', () => {
+    playlistMode = !playlistMode;
+    playlistBtn.classList.toggle('moona-rituel__playlist-btn--active', playlistMode);
+    playlistLabel.textContent = playlistMode ? 'Playlist' : 'Son seul';
+    playlistBtn.setAttribute('aria-label', playlistMode ? 'Mode playlist activé' : 'Mode son seul activé');
+  });
+
   /* ── Charger un rituel (track object) ───────────────── */
-  function loadRituel(track) {
+  function loadRituel(track, index) {
     currentTrack             = track;
+    if (index !== undefined) currentTrackIndex = index;
     tracksViewEl.hidden      = true;
     greetingEl.style.display = 'none';
     cancelSleepTimer();
@@ -1358,6 +1471,7 @@
     playerWrap.style.display = 'block';
 
     if (currentRemoteUrl) { audioEl.play().catch(() => {}); }
+    updateSkipButtons();
   }
 
   /* ── Orbe WebAudio ───────────────────────────────────── */

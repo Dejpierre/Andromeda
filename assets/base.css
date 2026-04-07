@@ -4982,6 +4982,11 @@ product-recommendations:has([data-has-recommendations='false']) {
   }
 }
 
+/* Hero homepage */
+.hero-title--tagline {
+  margin-top: 1rem;
+}
+
 /* Hero homepage — gradient haut pour lisibilité header */
 .hero__container {
   position: relative;

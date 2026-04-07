@@ -68,15 +68,9 @@
   <body>
     <!-- Header minimal transparent -->
     <header class="moona-header">
-      {%- if settings.logo != blank -%}
-        <a href="{{ routes.root_url }}" class="moona-header__logo">
-          {{ settings.logo | image_url: width: 200 | image_tag: alt: shop.name, loading: 'eager' }}
-        </a>
-      {%- else -%}
-        <a href="{{ routes.root_url }}" class="moona-header__logo moona-header__logo--text">
-          {{ shop.name }}
-        </a>
-      {%- endif -%}
+      <a href="{{ routes.root_url }}" class="moona-header__logo">
+        <img src="https://cdn.shopify.com/s/files/1/1000/9375/5727/files/logo-blanc-andromeda.png?v=1774981994" alt="{{ shop.name }}" height="32" loading="eager">
+      </a>
     </header>
 
     <main id="MainContent" role="main">
