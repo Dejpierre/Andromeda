@@ -22,6 +22,7 @@
         },
         "track_1": {
           "type": "audio_track",
+          "disabled": true,
           "settings": {
             "folder": "Ambiance situationnelle",
             "label": "Pluie sur Paris",
@@ -49,6 +50,7 @@
         },
         "track_4": {
           "type": "audio_track",
+          "disabled": true,
           "settings": {
             "folder": "Accompagnement vocal",
             "label": "Endormissement guidé",

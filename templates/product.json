@@ -672,6 +672,14 @@
                 "col_right"
               ]
             },
+            "rituel_banner": {
+              "type": "custom-liquid",
+              "name": "Bannière espace rituel",
+              "settings": {
+                "custom_liquid": "{% render 'product-rituel-banner' %}"
+              },
+              "blocks": {}
+            },
             "text_aEtTtq": {
               "type": "text",
               "name": "Product description",
@@ -758,24 +766,16 @@
                 }
               },
               "block_order": []
-            },
-            "rituel_banner": {
-              "type": "custom-liquid",
-              "name": "Bannière espace rituel",
-              "settings": {
-                "custom_liquid": "{% render 'product-rituel-banner' %}"
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "group_icgrde",
             "benefits_group",
+            "rituel_banner",
             "text_aEtTtq",
             "divider_VJhene",
             "variant_picker_R3rGDr",
-            "buy_buttons_eYQEYi",
-            "rituel_banner"
+            "buy_buttons_eYQEYi"
           ]
         }
       },
@@ -798,14 +798,14 @@
           "type": "item",
           "settings": {
             "titre": "Description",
-            "contenu": "<h2>Un masque de sommeil hors du commun</h2><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux masques synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h2>Obscurité totale pour un sommeil profond</h2><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre masque de sommeil bloque 100% de la lumière et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h2>Confort &amp; élégance</h2><ul>\n<li>Élastique réglable pour s'adapter à toutes les morphologies</li>\n<li>Thermorégulation naturelle — fraîche en été, douce en hiver</li>\n<li>Hypoallergénique, idéal pour les peaux sensibles</li>\n<li>Disponible en Rose et Beige — deux teintes intemporelles</li>\n</ul><h2>Le rituel Andromeda</h2><p>Chaque masque est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement. Méditation, nature, ondes delta — une expérience sensorielle complète pour transformer chaque nuit en véritable <strong>rituel de sommeil de luxe</strong>.</p>"
+            "contenu": "<h2>Un masque de sommeil hors du commun</h2><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux masques synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h2>Obscurité totale pour un sommeil profond</h2><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre masque de sommeil bloque 100% de la lumière et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h2>Confort &amp; élégance</h2><ul>\n<li>Élastique réglable pour s'adapter à toutes les morphologies</li>\n<li>Thermorégulation naturelle — fraîche en été, douce en hiver</li>\n<li>Hypoallergénique, idéal pour les peaux sensibles</li>\n</ul><h2>Le rituel Andromeda</h2><p>Chaque masque est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement. Méditation, nature, ondes delta — une expérience sensorielle complète pour transformer chaque nuit en véritable <strong>rituel de sommeil de luxe</strong>.</p>"
           }
         },
         "livraison": {
           "type": "item",
           "settings": {
             "titre": "Livraison & Retours",
-            "contenu": "<p><strong>Livraison France</strong> — 3 à 6 jours ouvrés. Livraison offerte dès 50€ d'achat.</p><p><strong>Livraison internationale</strong> — disponible dans la plupart des pays. Délai : 5 à 10 jours ouvrés.</p><p><strong>Retours</strong> — satisfait ou remboursé sous 14 jours. Le produit doit être retourné dans son emballage d'origine, non utilisé. Contactez-nous à contact@andromeda-paris.com pour initier un retour.</p>"
+            "contenu": "<p><strong>Livraison France</strong> — 3 à 6 jours ouvrés. Livraison offerte dès 50€ d'achat.</p><p><strong>Livraison internationale</strong> — disponible dans la plupart des pays. Délai : 5 à 10 jours ouvrés.</p><p><strong>Retours</strong> — satisfait ou remboursé sous 14 jours. Le produit doit être retourné dans son emballage d'origine, non utilisé. Contactez-nous à contact@andromedaparis.com pour initier un retour.</p>"
           }
         }
       },

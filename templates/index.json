@@ -260,7 +260,7 @@
           "settings": {
             "icon": "shopify://shop_images/pictogramme-22-c.svg",
             "title": "22 mommes",
-            "text": "Le grammage optimal : opacité totale et légèreté pour une nuit sans compromis."
+            "text": "Le grammage parfait : opacité totale et légèreté pour une nuit reposante."
           }
         },
         "avantage_jY7gDb": {
@@ -268,7 +268,7 @@
           "settings": {
             "icon": "shopify://shop_images/pictogramme-nuit-c.svg",
             "title": "Obscurité totale",
-            "text": "Conçu pour bloquer 100% de la lumière et maximiser la production de mélatonine."
+            "text": "Conçu pour bloquer 100% de la lumière et maximiser la production de l'hormone du sommeil : la mélatonine."
           }
         },
         "avantage_MEkhef": {
@@ -954,10 +954,18 @@
     "section_product_hero_mANhnJ": {
       "type": "section-product-hero",
       "blocks": {
+        "variante_NCjErm": {
+          "type": "variante",
+          "settings": {
+            "variant_title": "Nébuleuse",
+            "image": "shopify://shop_images/Image_35.png",
+            "background_image": "shopify://shop_images/Masques_Bordeaux_Motif_Corrige.jpg"
+          }
+        },
         "variante_B4Ptdj": {
           "type": "variante",
           "settings": {
-            "variant_title": "Bleu nuit",
+            "variant_title": "Nuit céleste",
             "image": "shopify://shop_images/Image_34.png",
             "background_image": "shopify://shop_images/Masques_Bleu_Nuit_Motif_Repetitif.jpg"
           }
@@ -965,7 +973,7 @@
         "variante_tm8Cbt": {
           "type": "variante",
           "settings": {
-            "variant_title": "Rose",
+            "variant_title": "Douce lueur",
             "image": "shopify://shop_images/Image_32.png",
             "background_image": "shopify://shop_images/Image_29_1.png"
           }
@@ -973,7 +981,7 @@
         "variante_GFzM9E": {
           "type": "variante",
           "settings": {
-            "variant_title": "Argent",
+            "variant_title": "Clair de lune",
             "image": "shopify://shop_images/Image_30.png",
             "background_image": "shopify://shop_images/Masques_Gris_Anthracite_4K.webp"
           }
@@ -981,7 +989,7 @@
         "variante_gaYabP": {
           "type": "variante",
           "settings": {
-            "variant_title": "Beige",
+            "variant_title": "Poussière d'étoile",
             "image": "shopify://shop_images/Masque_Andromeda_sur_Soie.jpg",
             "background_image": "shopify://shop_images/Image_27.png"
           }
@@ -989,13 +997,14 @@
         "variante_Eetk6T": {
           "type": "variante",
           "settings": {
-            "variant_title": "Bordeau",
+            "variant_title": "Crépuscule",
             "image": "shopify://shop_images/Image_33.png",
             "background_image": "shopify://shop_images/Image_26.png"
           }
         }
       },
       "block_order": [
+        "variante_NCjErm",
         "variante_B4Ptdj",
         "variante_tm8Cbt",
         "variante_GFzM9E",
@@ -1007,7 +1016,7 @@
         "product": "masque-pure-soie-de-murier-22-mommes",
         "title": "",
         "subtitle": "22 momme",
-        "button_label": "J'achète un masque",
+        "button_label": "J'améliore mon sommeil",
         "button_url": "",
         "height": 500,
         "height_mobile": 380,
@@ -1023,7 +1032,7 @@
           "type": "custom-liquid",
           "name": "t:names.custom_liquid",
           "settings": {
-            "custom_liquid": "<h2 class=\"hero-title\">Le sommeil est <span class=\"title-accent\">un luxe.</span>\n<br>Offrez-vous <span class=\"title-accent\">le votre.</span></h2>"
+            "custom_liquid": "<h2 class=\"hero-title\">Le sommeil est <span class=\"title-accent\">un luxe.</span>\n<br>Offrez-vous <span class=\"title-accent\">le vôtre.</span></h2>"
           },
           "blocks": {}
         },
@@ -1031,7 +1040,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>Nous fabriquons des articles plus performants et plus durables. Nos produits résolvent de vrais problèmes avec un design épuré et des matériaux honnêtes.</p>",
+            "text": "<p>Nous participons à un sommeil plus performant et plus durable. Nos produits à l'étoffe noble vous accompagnent dans votre quotidien avec élégance.</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -1555,7 +1564,7 @@
         "seo_text": {
           "type": "text",
           "settings": {
-            "text": "<p style=\"max-width:720px;margin:0 auto;text-align:center;font-size:0.95rem;line-height:1.8;color:#444;\">Andromeda crée des <strong>masques de sommeil en soie de mûrier</strong> grade 6A, 22 mommes — le standard le plus exigeant du marché. Notre masque bloque 100% de la lumière, respecte la peau et les cheveux, et s'adapte à toutes les morphologies grâce à son élastique réglable. Conçu pour les dormeurs exigeants, il transforme chaque nuit en véritable <strong>rituel de sommeil de luxe</strong>. Livraison soignée en France et à l'international.</p>"
+            "text": "<p style=\"max-width:720px;margin:0 auto;text-align:center;font-size:0.95rem;line-height:1.8;color:#444;\">Andromeda crée des <strong>masques de sommeil en soie de mûrier</strong> grade 6A, 22 mommes — le standard le plus exigeant du marché. Notre masque bloque 100% de la lumière, respecte la peau et les cheveux, et s'adapte à toutes les morphologies grâce à son élastique. Conçu pour les dormeurs exigeants, il transforme chaque nuit en véritable <strong>rituel de sommeil de luxe</strong>. Livraison soignée en France et à l'international.</p>"
           }
         }
       },
