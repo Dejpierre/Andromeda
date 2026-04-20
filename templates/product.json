@@ -766,6 +766,66 @@
                 }
               },
               "block_order": []
+            },
+            "accordion_desc_livraison": {
+              "type": "accordion",
+              "name": "Description & Livraison",
+              "settings": {
+                "icon": "plus",
+                "dividers": true,
+                "type_preset": "h5",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 8,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "row_description": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Description",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_desc": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<h2>Un masque de sommeil hors du commun</h2><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux masques synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h2>Obscurité totale pour un sommeil profond</h2><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre masque de sommeil bloque 100% de la lumière et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h2>Confort &amp; élégance</h2><ul><li>Élastique réglable pour s'adapter à toutes les morphologies</li><li>Thermorégulation naturelle — fraîche en été, douce en hiver</li><li>Hypoallergénique, idéal pour les peaux sensibles</li></ul><h2>Le rituel Andromeda</h2><p>Chaque masque est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement.</p>"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_desc"]
+                },
+                "row_livraison": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Livraison & Retours",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_livraison": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p><strong>Livraison France</strong> — 3 à 6 jours ouvrés. Livraison offerte dès 50€ d'achat.</p><p><strong>Livraison internationale</strong> — disponible dans la plupart des pays. Délai : 5 à 10 jours ouvrés.</p><p><strong>Retours</strong> — satisfait ou remboursé sous 14 jours. Le produit doit être retourné dans son emballage d'origine, non utilisé. Contactez-nous à contact@andromedaparis.com pour initier un retour.</p>"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_livraison"]
+                }
+              },
+              "block_order": ["row_description", "row_livraison"]
             }
           },
           "block_order": [
@@ -775,7 +835,8 @@
             "text_aEtTtq",
             "divider_VJhene",
             "variant_picker_R3rGDr",
-            "buy_buttons_eYQEYi"
+            "buy_buttons_eYQEYi",
+            "accordion_desc_livraison"
           ]
         }
       },
@@ -793,6 +854,7 @@
     },
     "accordeon_produit": {
       "type": "section-accordeon-seo",
+      "disabled": true,
       "blocks": {
         "desc": {
           "type": "item",
@@ -1415,10 +1477,62 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "why_masque_produit": {
+      "type": "section-why-masque",
+      "blocks": {
+        "avantage_1": {
+          "type": "avantage",
+          "settings": {
+            "icon": "shopify://shop_images/pictogramme-soie-c.svg",
+            "title": "Soie Grade 6A",
+            "text": "Moins de 5% de la production mondiale. Filaments extra-longs pour une douceur incomparable."
+          }
+        },
+        "avantage_2": {
+          "type": "avantage",
+          "settings": {
+            "icon": "shopify://shop_images/pictogramme-22-c.svg",
+            "title": "22 mommes",
+            "text": "Le grammage parfait : opacité totale et légèreté pour une nuit reposante."
+          }
+        },
+        "avantage_3": {
+          "type": "avantage",
+          "settings": {
+            "icon": "shopify://shop_images/pictogramme-nuit-c.svg",
+            "title": "Obscurité totale",
+            "text": "Conçu pour bloquer 100% de la lumière et maximiser la production de mélatonine."
+          }
+        },
+        "avantage_4": {
+          "type": "avantage",
+          "settings": {
+            "icon": "shopify://shop_images/pictogramme-cheveux-c.svg",
+            "title": "Peau & cheveux",
+            "text": "Anti-friction, hydratant naturel. La soie préserve là où le coton absorbe."
+          }
+        }
+      },
+      "block_order": ["avantage_1", "avantage_2", "avantage_3", "avantage_4"],
+      "settings": {
+        "title": "Pourquoi choisir",
+        "title_accent": "nos masques ?",
+        "subtitle": "",
+        "image": "shopify://shop_images/Image_15.png",
+        "image_width": 36,
+        "image_ratio": "4/3",
+        "image_radius": 16,
+        "background_color": "#FAF7F2",
+        "text_color": "#1C1A18",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
     }
   },
   "order": [
     "main",
+    "why_masque_produit",
     "accordeon_produit",
     "marquee_HYpWxg",
     "section_comparatif",

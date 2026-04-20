@@ -1,10 +1,61 @@
 
-{% render 'product-media-gallery-content',
-  media_presentation: block.settings.media_presentation,
-  block_settings: block.settings,
-  block_id: block.id,
-  block_shopify_attributes: block.shopify_attributes
-%}
+<div class="andromeda-gallery-wrap">
+  {% render 'product-media-gallery-content',
+    media_presentation: block.settings.media_presentation,
+    block_settings: block.settings,
+    block_id: block.id,
+    block_shopify_attributes: block.shopify_attributes
+  %}
+  <div class="andromeda-oeko-badge" aria-label="Certifié OEKO-TEX® STANDARD 100">
+    <span class="andromeda-oeko-badge__top">OEKO-TEX®</span>
+    <span class="andromeda-oeko-badge__bottom">STANDARD 100</span>
+  </div>
+</div>
+
+<style>
+  .andromeda-gallery-wrap {
+    position: relative;
+    z-index: 0;
+    isolation: isolate;
+  }
+
+  .andromeda-oeko-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #5AAB97;
+    border-radius: 50% 50% 50% 8px;
+    width: 72px;
+    height: 72px;
+    padding: 6px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    pointer-events: none;
+  }
+
+  .andromeda-oeko-badge__top {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: #fff;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .andromeda-oeko-badge__bottom {
+    font-size: 6px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.3;
+    text-align: center;
+    margin-top: 2px;
+  }
+</style>
 
 {% schema %}
 {

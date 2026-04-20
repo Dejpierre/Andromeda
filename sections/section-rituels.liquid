@@ -1077,6 +1077,29 @@
     el.addEventListener('animationend', doHide, { once: true });
   }
 
+  /* ── Media Session — audio en arrière-plan + contrôles écran verrouillé ── */
+  function updateMediaSession(track) {
+    if (!('mediaSession' in navigator)) return;
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title:  track.label  || 'Rituel Andromeda',
+      artist: track.desc   || 'Andromeda Paris',
+      album:  track.folder || 'Rituels',
+      artwork: [
+        { src: 'https://cdn.shopify.com/s/files/1/1000/9375/5727/files/logo-blanc-andromeda.png?v=1774981994', sizes: '512x512', type: 'image/png' }
+      ]
+    });
+
+    navigator.mediaSession.setActionHandler('play',          () => { audioEl.play().catch(() => {}); });
+    navigator.mediaSession.setActionHandler('pause',         () => { audioEl.pause(); });
+    navigator.mediaSession.setActionHandler('previoustrack', () => { playPrevTrack(); });
+    navigator.mediaSession.setActionHandler('nexttrack',     () => { playNextTrack(); });
+    navigator.mediaSession.setActionHandler('seekbackward',  () => { audioEl.currentTime = Math.max(0, audioEl.currentTime - 15); });
+    navigator.mediaSession.setActionHandler('seekforward',   () => { audioEl.currentTime = Math.min(audioEl.duration || 0, audioEl.currentTime + 15); });
+  }
+
+  audioEl.addEventListener('play',  () => { if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing'; });
+  audioEl.addEventListener('pause', () => { if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused'; });
+
   /* ── Métadonnées des dossiers (blocks audio_folder) ─── */
   const folderMeta = {};
   {% for block in section.blocks %}
@@ -1172,8 +1195,6 @@
 
   /* ── Boutons lecture ─────────────────────────────────── */
   playBtn.addEventListener('click', () => {
-    initOrbAudio();
-    if (orbCtx) orbCtx.resume();
     if (audioEl.paused) audioEl.play().catch(() => {});
     else audioEl.pause();
   });
@@ -1471,28 +1492,13 @@
     playerWrap.style.display = 'block';
 
     if (currentRemoteUrl) { audioEl.play().catch(() => {}); }
+    updateMediaSession(track);
     updateSkipButtons();
   }
 
   /* ── Orbe WebAudio ───────────────────────────────────── */
-  let orbCtx, orbAnalyser;
-
-  function initOrbAudio() {
-    if (orbCtx) {
-      orbCtx.resume();
-      return;
-    }
-    try {
-      orbCtx = new (window.AudioContext || window.webkitAudioContext)();
-      orbAnalyser = orbCtx.createAnalyser();
-      orbAnalyser.fftSize = 256;
-      orbAnalyser.smoothingTimeConstant = 0.82;
-      const src = orbCtx.createMediaElementSource(audioEl);
-      src.connect(orbAnalyser);
-      orbAnalyser.connect(orbCtx.destination);
-      orbCtx.resume();
-    } catch(e) {}
-  }
+  // AudioContext retiré — l'audio joue directement pour continuer en arrière-plan sur iOS
+  function initOrbAudio() {}
 
   /* ── Orbe draw loop ──────────────────────────────────── */
   const orbCanvas = document.getElementById('moona-orb-canvas');

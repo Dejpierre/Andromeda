@@ -1,74 +1,350 @@
 {% assign total_reviews = 5 %}
 {% assign avg_rating = 5.0 %}
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
-<div class="section page-width color-{{ section.settings.color_scheme }}" style="padding-block-start: 48px; padding-block-end: 48px;">
+<section class="andromeda-avis">
 
-  <h2 style="font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Avis clients</h2>
-  
-  <div class="avis-summary" style="display:flex; align-items:center; gap: 16px; margin-bottom: 32px;">
-    <span style="font-size: 2.5rem; font-weight: 700;">5.0</span>
-    <div>
-      <div style="color: #C9A96E; font-size: 1.3rem;">★★★★★</div>
-      <div style="font-size: 0.85rem; opacity: 0.7;">Basé sur {{ total_reviews }} avis vérifiés</div>
+  <h2 class="andromeda-avis__title">Avis vérifiés</h2>
+
+  <div class="andromeda-avis__header">
+    <div class="andromeda-avis__summary">
+      <div class="andromeda-avis__score-block">
+        <div class="andromeda-avis__score">
+          <span class="andromeda-avis__score-num">5.0</span>
+          <span class="andromeda-avis__score-max">/ 5</span>
+        </div>
+        <div class="andromeda-avis__stars" aria-label="5 sur 5">★★★★★</div>
+        <p class="andromeda-avis__count">Basé sur {{ total_reviews }} avis vérifiés</p>
+      </div>
+      <div class="andromeda-avis__bars">
+        <div class="andromeda-avis__bar-row">
+          <span class="andromeda-avis__bar-label">5 ★</span>
+          <div class="andromeda-avis__bar-track"><div class="andromeda-avis__bar-fill" style="width:100%"></div></div>
+          <span class="andromeda-avis__bar-count">5</span>
+        </div>
+        <div class="andromeda-avis__bar-row">
+          <span class="andromeda-avis__bar-label">4 ★</span>
+          <div class="andromeda-avis__bar-track"><div class="andromeda-avis__bar-fill" style="width:0%"></div></div>
+          <span class="andromeda-avis__bar-count">0</span>
+        </div>
+        <div class="andromeda-avis__bar-row">
+          <span class="andromeda-avis__bar-label">3 ★</span>
+          <div class="andromeda-avis__bar-track"><div class="andromeda-avis__bar-fill" style="width:0%"></div></div>
+          <span class="andromeda-avis__bar-count">0</span>
+        </div>
+        <div class="andromeda-avis__bar-row">
+          <span class="andromeda-avis__bar-label">2 ★</span>
+          <div class="andromeda-avis__bar-track"><div class="andromeda-avis__bar-fill" style="width:0%"></div></div>
+          <span class="andromeda-avis__bar-count">0</span>
+        </div>
+        <div class="andromeda-avis__bar-row">
+          <span class="andromeda-avis__bar-label">1 ★</span>
+          <div class="andromeda-avis__bar-track"><div class="andromeda-avis__bar-fill" style="width:0%"></div></div>
+          <span class="andromeda-avis__bar-count">0</span>
+        </div>
+      </div>
     </div>
+    <a href="mailto:contact@andromedaparis.com?subject=Laisser un avis" class="andromeda-avis__cta">Rédiger un avis</a>
   </div>
 
-  <div class="avis-list" style="display: flex; flex-direction: column; gap: 24px;">
+  <div class="andromeda-avis__divider"></div>
 
-    <div class="avis-item" style="border-top: 1px solid rgba(var(--color-foreground-rgb, 0,0,0), 0.12); padding-top: 20px;">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
-        <span style="font-weight:600; font-size:0.9rem;">Julie Julie</span>
-        <span style="font-size:0.78rem; opacity:0.5;">Achat vérifié</span>
+  <div class="andromeda-avis__list">
+
+    <div class="andromeda-avis__item">
+      <div class="andromeda-avis__item-top">
+        <div class="andromeda-avis__item-author">
+          Julie Julie
+          <span class="andromeda-avis__verified">Vérifié</span>
+        </div>
+        <span class="andromeda-avis__date">12/01/2026</span>
       </div>
-      <div style="color: #C9A96E; font-size: 1rem; margin-bottom: 4px;">★★★★★</div>
-      <div style="font-weight:600; font-size:0.88rem; margin-bottom:8px;">Top produit ! Nécessaire pour votre rituel beauté !</div>
-      <p style="font-size:0.88rem; line-height:1.7; opacity:0.85; margin:0;">"Le produit est magnifique, la texture est douce, ça se voit que la soie est d'une haute qualité ! Très agréable pour les yeux ! Je recommande vivement !"</p>
+      <div class="andromeda-avis__item-stars">★★★★★</div>
+      <p class="andromeda-avis__item-title">Top produit ! Nécessaire pour votre rituel beauté !</p>
+      <p class="andromeda-avis__item-text">Le produit est magnifique, la texture est douce, ça se voit que la soie est d'une haute qualité ! Très agréable pour les yeux ! Je recommande vivement !</p>
     </div>
 
-    <div class="avis-item" style="border-top: 1px solid rgba(var(--color-foreground-rgb, 0,0,0), 0.12); padding-top: 20px;">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
-        <span style="font-weight:600; font-size:0.9rem;">Arbi Ben Ali</span>
-        <span style="font-size:0.78rem; opacity:0.5;">Achat vérifié</span>
+    <div class="andromeda-avis__item">
+      <div class="andromeda-avis__item-top">
+        <div class="andromeda-avis__item-author">
+          Arbi Ben Ali
+          <span class="andromeda-avis__verified">Vérifié</span>
+        </div>
+        <span class="andromeda-avis__date">05/01/2026</span>
       </div>
-      <div style="color: #C9A96E; font-size: 1rem; margin-bottom: 4px;">★★★★★</div>
-      <div style="font-weight:600; font-size:0.88rem; margin-bottom:8px;">Masque confortable et de qualité</div>
-      <p style="font-size:0.88rem; line-height:1.7; opacity:0.85; margin:0;">"Qualité du produit remarquable, ça vaut largement son prix. Soie très douce et lisse. Je me lève le matin avec un regard frais et reposé. Je pense qu'il me servira encore de nombreuses années."</p>
+      <div class="andromeda-avis__item-stars">★★★★★</div>
+      <p class="andromeda-avis__item-title">Masque confortable et de qualité</p>
+      <p class="andromeda-avis__item-text">Qualité du produit remarquable, ça vaut largement son prix. Soie très douce et lisse. Je me lève le matin avec un regard frais et reposé. Je pense qu'il me servira encore de nombreuses années.</p>
     </div>
 
-    <div class="avis-item" style="border-top: 1px solid rgba(var(--color-foreground-rgb, 0,0,0), 0.12); padding-top: 20px;">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
-        <span style="font-weight:600; font-size:0.9rem;">Viktoriia Nechiporenko</span>
-        <span style="font-size:0.78rem; opacity:0.5;">Achat vérifié</span>
+    <div class="andromeda-avis__item">
+      <div class="andromeda-avis__item-top">
+        <div class="andromeda-avis__item-author">
+          Viktoriia Nechiporenko
+          <span class="andromeda-avis__verified">Vérifié</span>
+        </div>
+        <span class="andromeda-avis__date">28/12/2025</span>
       </div>
-      <div style="color: #C9A96E; font-size: 1rem; margin-bottom: 4px;">★★★★★</div>
-      <div style="font-weight:600; font-size:0.88rem; margin-bottom:8px;">Bon rapport qualité / prix</div>
-      <p style="font-size:0.88rem; line-height:1.7; opacity:0.85; margin:0;">"La matière est belle, soie naturelle, c'est très différent de mon masque synthétique précédent ! Masque bien large pour protéger les yeux de la lumière, confortable et doux sur le visage. Reçu avec un bel emballage cadeau. J'adore."</p>
+      <div class="andromeda-avis__item-stars">★★★★★</div>
+      <p class="andromeda-avis__item-title">Bon rapport qualité / prix</p>
+      <p class="andromeda-avis__item-text">La matière est belle, soie naturelle, c'est très différent de mon masque synthétique précédent ! Masque bien large pour protéger les yeux de la lumière, confortable et doux sur le visage. Reçu avec un bel emballage cadeau. J'adore.</p>
     </div>
 
-    <div class="avis-item" style="border-top: 1px solid rgba(var(--color-foreground-rgb, 0,0,0), 0.12); padding-top: 20px;">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
-        <span style="font-weight:600; font-size:0.9rem;">Kristina Gobova</span>
-        <span style="font-size:0.78rem; opacity:0.5;">Achat vérifié</span>
+    <div class="andromeda-avis__item">
+      <div class="andromeda-avis__item-top">
+        <div class="andromeda-avis__item-author">
+          Kristina Gobova
+          <span class="andromeda-avis__verified">Vérifié</span>
+        </div>
+        <span class="andromeda-avis__date">18/12/2025</span>
       </div>
-      <div style="color: #C9A96E; font-size: 1rem; margin-bottom: 4px;">★★★★★</div>
-      <div style="font-weight:600; font-size:0.88rem; margin-bottom:8px;">Très bonne qualité</div>
-      <p style="font-size:0.88rem; line-height:1.7; opacity:0.85; margin:0;">"Masque très confortable et doux, agréable sur la peau. Soie naturelle avec un joli éclat, et la boîte est un vrai coup de cœur."</p>
+      <div class="andromeda-avis__item-stars">★★★★★</div>
+      <p class="andromeda-avis__item-title">Très bonne qualité</p>
+      <p class="andromeda-avis__item-text">Masque très confortable et doux, agréable sur la peau. Soie naturelle avec un joli éclat, et la boîte est un vrai coup de cœur.</p>
     </div>
 
-    <div class="avis-item" style="border-top: 1px solid rgba(var(--color-foreground-rgb, 0,0,0), 0.12); padding-top: 20px;">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
-        <span style="font-weight:600; font-size:0.9rem;">jean_moreau</span>
-        <span style="font-size:0.78rem; opacity:0.5;">Achat vérifié</span>
+    <div class="andromeda-avis__item">
+      <div class="andromeda-avis__item-top">
+        <div class="andromeda-avis__item-author">
+          Jean Moreau
+          <span class="andromeda-avis__verified">Vérifié</span>
+        </div>
+        <span class="andromeda-avis__date">02/12/2025</span>
       </div>
-      <div style="color: #C9A96E; font-size: 1rem; margin-bottom: 4px;">★★★★★</div>
-      <div style="font-weight:600; font-size:0.88rem; margin-bottom:8px;">Excellent produit</div>
-      <p style="font-size:0.88rem; line-height:1.7; opacity:0.85; margin:0;">"Taille parfaite, très confortable aussi bien pour moi que pour ma femme. Excellent rapport qualité-prix."</p>
+      <div class="andromeda-avis__item-stars">★★★★★</div>
+      <p class="andromeda-avis__item-title">Excellent produit</p>
+      <p class="andromeda-avis__item-text">Taille parfaite, très confortable aussi bien pour moi que pour ma femme. Excellent rapport qualité-prix.</p>
     </div>
 
-    <div style="border-top: 1px solid rgba(var(--color-foreground-rgb, 0,0,0), 0.12);"></div>
   </div>
-</div>
+
+</section>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
+
+  .andromeda-avis,
+  .andromeda-avis * {
+    font-family: 'Raleway', sans-serif !important;
+    max-width: unset;
+  }
+  .andromeda-avis {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 64px 24px;
+  }
+
+  .andromeda-avis__title {
+    font-family: 'Raleway', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #1C1A18;
+    margin-bottom: 40px;
+  }
+
+  /* ── Header summary ──────────────────────────────────── */
+  .andromeda-avis__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+
+  .andromeda-avis__summary {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .andromeda-avis__score-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .andromeda-avis__score {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .andromeda-avis__score-num {
+    font-size: 40px;
+    font-weight: 700;
+    color: #1C1A18;
+    line-height: 1;
+  }
+  .andromeda-avis__score-max {
+    font-size: 16px;
+    font-weight: 400;
+    color: #1C1A18;
+    opacity: 0.4;
+  }
+
+  .andromeda-avis__stars {
+    color: #B8975A;
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
+
+  .andromeda-avis__count {
+    font-size: 12px;
+    font-weight: 400;
+    color: #1C1A18;
+    opacity: 0.45;
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Barres ──────────────────────────────────────────── */
+  .andromeda-avis__bars {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 4px;
+  }
+  .andromeda-avis__bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .andromeda-avis__bar-label {
+    font-size: 11px;
+    color: #1C1A18;
+    opacity: 0.5;
+    width: 28px;
+    flex-shrink: 0;
+  }
+  .andromeda-avis__bar-track {
+    width: 140px;
+    height: 4px;
+    background: rgba(28,26,24,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .andromeda-avis__bar-fill {
+    height: 100%;
+    background: #B8975A;
+    border-radius: 2px;
+  }
+  .andromeda-avis__bar-count {
+    font-size: 11px;
+    color: #1C1A18;
+    opacity: 0.4;
+    width: 16px;
+  }
+
+  /* ── CTA ─────────────────────────────────────────────── */
+  .andromeda-avis__cta {
+    display: inline-block;
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    background: #1C1A18;
+    border: none;
+    padding: 14px 24px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s ease;
+  }
+  .andromeda-avis__cta:hover {
+    background: #B8975A;
+  }
+
+  /* ── Divider ─────────────────────────────────────────── */
+  .andromeda-avis__divider {
+    height: 1px;
+    background: rgba(28,26,24,0.1);
+    margin-bottom: 0;
+  }
+
+  /* ── Liste des avis ──────────────────────────────────── */
+  .andromeda-avis__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .andromeda-avis__item {
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(28,26,24,0.1);
+  }
+
+  .andromeda-avis__item-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .andromeda-avis__item-author {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1C1A18;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .andromeda-avis__verified {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    background: #1C1A18;
+    padding: 2px 7px;
+    border-radius: 2px;
+  }
+
+  .andromeda-avis__date {
+    font-size: 11px;
+    color: #1C1A18;
+    opacity: 0.35;
+  }
+
+  .andromeda-avis__item-stars {
+    color: #B8975A;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .andromeda-avis__item-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1C1A18;
+    margin: 0 0 6px;
+    line-height: 1.4;
+  }
+
+  .andromeda-avis__item-text {
+    font-size: 13px;
+    font-weight: 400;
+    color: #1C1A18;
+    opacity: 0.65;
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  /* ── Mobile ──────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .andromeda-avis__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+    }
+    .andromeda-avis__summary { gap: 20px; }
+    .andromeda-avis__bar-track { width: 80px; }
+    .andromeda-avis__cta { width: 100%; text-align: center; }
+  }
+</style>
 
 <script type="application/ld+json">
 {
@@ -77,10 +353,7 @@
   "name": "Masque de sommeil en pure soie de mûrier",
   "description": "Masque de sommeil en pure soie de mûrier Grade 6A, 22 mommes. Opacité totale, douceur incomparable. Fabriqué par Andromeda Paris.",
   "image": "https://www.andromedaparis.com/cdn/shop/files/Image_30.png?v=1774800706",
-  "brand": {
-    "@type": "Brand",
-    "name": "Andromeda Paris"
-  },
+  "brand": { "@type": "Brand", "name": "Andromeda Paris" },
   "url": "https://www.andromedaparis.com/products/masque-pure-soie-de-murier-22-mommes",
   "offers": {
     "@type": "Offer",
@@ -89,10 +362,7 @@
     "price": "34.90",
     "priceValidUntil": "2026-12-31",
     "availability": "https://schema.org/InStock",
-    "seller": {
-      "@type": "Organization",
-      "name": "Andromeda Paris"
-    }
+    "seller": { "@type": "Organization", "name": "Andromeda Paris" }
   },
   "aggregateRating": {
     "@type": "AggregateRating",
@@ -102,97 +372,20 @@
     "worstRating": "1"
   },
   "review": [
-    {
-      "@type": "Review",
-      "author": {
-        "@type": "Person",
-        "name": "Julie"
-      },
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": "5",
-        "bestRating": "5"
-      },
-      "reviewBody": "Le produit est magnifique, la texture est douce, ça se voit que la soie est d'une haute qualité ! Très agréable pour les yeux ! Je recommande vivement !"
-    },
-    {
-      "@type": "Review",
-      "author": {
-        "@type": "Person",
-        "name": "Arbi"
-      },
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": "5",
-        "bestRating": "5"
-      },
-      "reviewBody": "Qualité du produit remarquable, ça vaut largement son prix. Soie très douce et lisse. Je me lève le matin avec un regard frais et reposé."
-    },
-    {
-      "@type": "Review",
-      "author": {
-        "@type": "Person",
-        "name": "Viktoriia"
-      },
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": "5",
-        "bestRating": "5"
-      },
-      "reviewBody": "La matière est belle, soie naturelle. Masque bien large, confortable et doux sur le visage. Reçu avec un bel emballage cadeau. J'adore."
-    },
-    {
-      "@type": "Review",
-      "author": {
-        "@type": "Person",
-        "name": "Kristina"
-      },
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": "5",
-        "bestRating": "5"
-      },
-      "reviewBody": "Masque très confortable et doux, agréable sur la peau. Soie naturelle avec un joli éclat, et la boîte est un vrai coup de cœur."
-    },
-    {
-      "@type": "Review",
-      "author": {
-        "@type": "Person",
-        "name": "Jean"
-      },
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": "5",
-        "bestRating": "5"
-      },
-      "reviewBody": "Taille parfaite, très confortable aussi bien pour moi que pour ma femme. Excellent rapport qualité-prix."
-    }
+    { "@type": "Review", "author": { "@type": "Person", "name": "Julie" }, "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "reviewBody": "Le produit est magnifique, la texture est douce, ça se voit que la soie est d'une haute qualité ! Très agréable pour les yeux ! Je recommande vivement !" },
+    { "@type": "Review", "author": { "@type": "Person", "name": "Arbi" }, "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "reviewBody": "Qualité du produit remarquable, ça vaut largement son prix. Soie très douce et lisse." },
+    { "@type": "Review", "author": { "@type": "Person", "name": "Viktoriia" }, "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "reviewBody": "La matière est belle, soie naturelle. Masque bien large, confortable et doux sur le visage. J'adore." },
+    { "@type": "Review", "author": { "@type": "Person", "name": "Kristina" }, "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "reviewBody": "Masque très confortable et doux, agréable sur la peau. Soie naturelle avec un joli éclat." },
+    { "@type": "Review", "author": { "@type": "Person", "name": "Jean" }, "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "reviewBody": "Taille parfaite, très confortable aussi bien pour moi que pour ma femme. Excellent rapport qualité-prix." }
   ],
   "shippingDetails": {
     "@type": "OfferShippingDetails",
-    "shippingRate": {
-      "@type": "MonetaryAmount",
-      "value": "3.60",
-      "currency": "EUR"
-    },
-    "shippingDestination": {
-      "@type": "DefinedRegion",
-      "addressCountry": "FR"
-    },
+    "shippingRate": { "@type": "MonetaryAmount", "value": "3.60", "currency": "EUR" },
+    "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "FR" },
     "deliveryTime": {
       "@type": "ShippingDeliveryTime",
-      "handlingTime": {
-        "@type": "QuantitativeValue",
-        "minValue": 0,
-        "maxValue": 1,
-        "unitCode": "DAY"
-      },
-      "transitTime": {
-        "@type": "QuantitativeValue",
-        "minValue": 3,
-        "maxValue": 6,
-        "unitCode": "DAY"
-      }
+      "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 1, "unitCode": "DAY" },
+      "transitTime": { "@type": "QuantitativeValue", "minValue": 3, "maxValue": 6, "unitCode": "DAY" }
     }
   },
   "hasMerchantReturnPolicy": {

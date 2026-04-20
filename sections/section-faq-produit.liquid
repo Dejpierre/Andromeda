@@ -1,5 +1,6 @@
 {% if section.blocks.size > 0 %}
 <div class="sfaq" style="background: {{ section.settings.bg_color }}; padding: {{ section.settings.padding_top }}px 24px {{ section.settings.padding_bottom }}px;">
+  <div class="sfaq__inner">
   {% if section.settings.title != blank %}
     <h2 class="sfaq__title">{{ section.settings.title }}</h2>
   {% endif %}
@@ -16,11 +17,13 @@
       {% endif %}
     {% endfor %}
   </div>
+  </div>
 </div>
 {% endif %}
 
 <style>
 .sfaq { width: 100%; }
+.sfaq__inner { max-width: 860px; margin: 0 auto; }
 .sfaq__title {
   font-size: 1.1rem;
   font-weight: 600;
@@ -30,7 +33,7 @@
   margin-bottom: 20px;
   text-align: center;
 }
-.sfaq__list { max-width: 580px; margin: 0 auto; }
+.sfaq__list { max-width: 100%; }
 .sfaq__item {
   border-bottom: 1px solid rgba(28,26,24,0.12);
   padding: 0;

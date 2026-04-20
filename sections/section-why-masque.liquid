@@ -29,7 +29,7 @@
           <div class="wm__item" {{ block.shopify_attributes }}>
             <div class="wm__icon-wrap">
               {% if block.settings.icon != blank %}
-                <img src="{{ block.settings.icon | image_url: width: 64 }}" alt="{{ block.settings.title | default: 'Icône bénéfice Andromeda' | escape }}" class="wm__icon-img" width="32" height="32">
+                <img src="{{ block.settings.icon | image_url: width: 96 }}" alt="{{ block.settings.title | default: 'Icône bénéfice Andromeda' | escape }}" class="wm__icon-img" width="48" height="48">
               {% else %}
                 <svg class="wm__icon-svg" viewBox="0 0 32 32" fill="none" width="32" height="32">
                   <circle cx="16" cy="16" r="10" stroke="#B8975A" stroke-width="1.2"/>
@@ -66,7 +66,7 @@
           <div class="wm__item" {{ block.shopify_attributes }}>
             <div class="wm__icon-wrap">
               {% if block.settings.icon != blank %}
-                <img src="{{ block.settings.icon | image_url: width: 64 }}" alt="{{ block.settings.title | default: 'Icône bénéfice Andromeda' | escape }}" class="wm__icon-img" width="32" height="32">
+                <img src="{{ block.settings.icon | image_url: width: 96 }}" alt="{{ block.settings.title | default: 'Icône bénéfice Andromeda' | escape }}" class="wm__icon-img" width="48" height="48">
               {% else %}
                 <svg class="wm__icon-svg" viewBox="0 0 32 32" fill="none" width="32" height="32">
                   <circle cx="16" cy="16" r="10" stroke="#B8975A" stroke-width="1.2"/>
@@ -145,18 +145,21 @@
   .wm__col--right { text-align: left; align-items: flex-start; }
 
   /* ── Item ──────────────────────────────────────────────── */
-  .wm__item { max-width: 260px; }
+  .wm__item {
+    max-width: 260px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .wm__col--left .wm__item { align-items: flex-end; }
+  .wm__col--right .wm__item { align-items: flex-start; }
 
   .wm__icon-wrap {
-    width: 44px; height: 44px;
-    border: 1px solid rgba(184,151,90,0.3);
-    border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 14px;
   }
-  .wm__col--left .wm__icon-wrap { margin-left: auto; }
 
-  .wm__icon-svg, .wm__icon-img { width: 20px; height: 20px; }
+  .wm__icon-svg, .wm__icon-img { width: 48px; height: 48px; }
 
   .wm__item-title {
     font-size: 15px;
@@ -207,29 +210,72 @@
     margin: 40px auto 0;
   }
 
-  /* ── Responsive ────────────────────────────────────────── */
-  @media (max-width: 768px) {
+  /* ── Desktop petit écran ───────────────────────────────── */
+  @media (max-width: 1100px) and (min-width: 769px) {
     .wm__inner {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto auto;
       gap: 32px;
     }
-    .wm__visual { width: 100%; max-width: 320px; margin: 0 auto; }
+    .wm__col { gap: 32px; }
+  }
+
+  /* ── Responsive ────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .wm {
+      max-height: 100vh;
+      overflow: hidden;
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
+    .wm__header { margin-bottom: 20px; }
+    .wm__inner {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .wm__visual {
+      order: 0;
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      aspect-ratio: auto;
+      height: auto;
+    }
+    .wm__col--left {
+      order: 1;
+    }
+    .wm__col--right {
+      order: 2;
+    }
+    /* Les 2 colonnes côte à côte */
+    .wm__inner::after {
+      display: none;
+    }
     .wm__col--left,
     .wm__col--right {
+      flex: 1;
+      gap: 16px;
       text-align: left;
       align-items: flex-start;
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 24px;
     }
-    .wm__col--left .wm__icon-wrap { margin-left: 0; }
-    .wm__item { max-width: calc(50% - 12px); min-width: 200px; flex: 1; }
-  }
-  @media (max-width: 480px) {
+    /* Wrapper flex pour les 2 colonnes */
     .wm__col--left,
-    .wm__col--right { flex-direction: column; }
-    .wm__item { max-width: 100%; }
+    .wm__col--right {
+      width: calc(50% - 8px);
+    }
+    /* Regroupe les colonnes sur la même ligne */
+    .wm__inner {
+      flex-wrap: wrap;
+      flex-direction: row;
+    }
+    .wm__visual {
+      flex: 0 0 100%;
+    }
+    .wm__col--left .wm__item,
+    .wm__col--right .wm__item { align-items: flex-start; width: 100%; max-width: 100%; }
+    .wm__icon-svg, .wm__icon-img { width: 32px; height: 32px; }
+    .wm__item-title { font-size: 12px; }
+    .wm__item-text { font-size: 11px; line-height: 1.5; }
+    .wm__icon-wrap { margin-bottom: 8px; }
   }
 </style>
 
