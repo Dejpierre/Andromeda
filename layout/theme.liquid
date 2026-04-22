@@ -46,6 +46,7 @@
 
   <!-- JSON-LD Structured Data — Andromeda -->
   {%- if request.page_type == 'product' -%}
+  {%- assign jm = product.metafields.judgeme -%}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org/",
@@ -71,6 +72,15 @@
       "url": {{ shop.url | append: product.url | json }}
     },
     "url": {{ shop.url | append: product.url | json }}
+    {%- if jm.rating and jm.rating_count -%}
+    ,"aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "{{ jm.rating }}",
+      "reviewCount": "{{ jm.rating_count }}",
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+    {%- endif -%}
   }
   </script>
   {%- endif -%}
