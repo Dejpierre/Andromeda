@@ -11,11 +11,5 @@ SHOPIFY_STORE_URL = "andromeda-paris.myshopify.com"
 SHOPIFY_API_VERSION = "2024-10"
 ALLOWED_ORIGIN = "https://andromeda-paris.myshopify.com"
 
-# Route pour llms.txt — intercepte avant Shopify
-# Nécessite que andromedaparis.com soit proxié via Cloudflare (orange cloud)
-[[routes]]
-pattern = "www.andromedaparis.com/llms.txt"
-zone_name = "andromedaparis.com"
-
 # Secrets à configurer via CLI (jamais dans ce fichier) :
 #   wrangler secret put SHOPIFY_ADMIN_API_TOKEN
