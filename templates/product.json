@@ -817,7 +817,7 @@
                     "text_livraison": {
                       "type": "text",
                       "settings": {
-                        "text": "<p><strong>Livraison France</strong> — 3 à 6 jours ouvrés. Livraison offerte dès 50€ d'achat.</p><p><strong>Livraison internationale</strong> — disponible dans la plupart des pays. Délai : 5 à 10 jours ouvrés.</p><p><strong>Retours</strong> — satisfait ou remboursé sous 14 jours. Le produit doit être retourné dans son emballage d'origine, non utilisé. Contactez-nous à contact@andromedaparis.com pour initier un retour.</p>"
+                        "text": "<p><strong>Livraison France</strong> — 2 à 4 jours ouvrés. Livraison offerte dès 65€ d'achat.</p><p><strong>Livraison internationale</strong> — disponible dans la plupart des pays. Délai : 5 à 10 jours ouvrés.</p><p><strong>Retours</strong> — satisfait ou remboursé sous 30 jours. Le produit doit être retourné dans son emballage d'origine, non utilisé. Contactez-nous à contact@andromedaparis.com pour initier un retour.</p>"
                       },
                       "blocks": {}
                     }
@@ -867,7 +867,7 @@
           "type": "item",
           "settings": {
             "titre": "Livraison & Retours",
-            "contenu": "<p><strong>Livraison France</strong> — 3 à 6 jours ouvrés. Livraison offerte dès 50€ d'achat.</p><p><strong>Livraison internationale</strong> — disponible dans la plupart des pays. Délai : 5 à 10 jours ouvrés.</p><p><strong>Retours</strong> — satisfait ou remboursé sous 14 jours. Le produit doit être retourné dans son emballage d'origine, non utilisé. Contactez-nous à contact@andromedaparis.com pour initier un retour.</p>"
+            "contenu": "<p><strong>Livraison France</strong> — 2 à 4 jours ouvrés. Livraison offerte dès 65€ d'achat.</p><p><strong>Livraison internationale</strong> — disponible dans la plupart des pays. Délai : 5 à 10 jours ouvrés.</p><p><strong>Retours</strong> — satisfait ou remboursé sous 30 jours. Le produit doit être retourné dans son emballage d'origine, non utilisé. Contactez-nous à contact@andromedaparis.com pour initier un retour.</p>"
           }
         }
       },
