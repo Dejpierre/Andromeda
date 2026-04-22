@@ -174,6 +174,42 @@
   </script>
   {%- endif -%}
 
+  {%- if request.page_type == 'article' -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ article.title | json }},
+    "description": {{ article.excerpt | strip_html | default: article.content | strip_html | truncate: 200 | json }},
+    {%- if article.image -%}
+    "image": {{ article.image | image_url: width: 1200 | prepend: 'https:' | json }},
+    {%- endif -%}
+    "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S+01:00' }}",
+    "dateModified": "{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S+01:00' }}",
+    "author": {
+      "@type": "Organization",
+      "name": "L'équipe Andromeda Paris",
+      "url": "https://www.andromedaparis.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Andromeda Paris",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.andromedaparis.com/cdn/shop/files/logo-andromeda.png",
+        "width": 300,
+        "height": 80
+      }
+    },
+    "url": {{ shop.url | append: article.url | json }},
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": {{ shop.url | append: article.url | json }}
+    }
+  }
+  </script>
+  {%- endif -%}
+
   {%- if request.page_type == 'index' -%}
   <script type="application/ld+json">
   {

@@ -122,6 +122,11 @@
   name="description"
   content="Masque de nuit 100% soie de mûrier Grade 6A, 22 mommes — 5★ | 34,90€ | Livraison offerte dès 65€. Andromeda Paris."
 >
+{%- elsif request.page_type == 'article' -%}
+<meta
+  name="description"
+  content="{{ page_description | default: article.excerpt | strip_html | default: article.content | strip_html | truncate: 160 | escape }}"
+>
 {%- else -%}
 <meta
   name="description"

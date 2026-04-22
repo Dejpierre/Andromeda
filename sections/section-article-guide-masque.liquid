@@ -30,6 +30,14 @@
           {% endfor %}
         {% endif %}
       </div>
+
+      <div class="ag__author">
+        <span class="ag__author-avatar" aria-hidden="true">A</span>
+        <div>
+          <span class="ag__author-name">L'équipe Andromeda Paris</span>
+          <span class="ag__author-bio">Spécialistes du sommeil &amp; de la soie de mûrier</span>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -175,11 +183,29 @@
   .ag__meta {
     display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 24px;
     font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3);
+    margin-bottom: 28px;
   }
   .ag__meta span { display: flex; align-items: center; gap: 8px; }
   .ag__meta span::before {
     content: ''; display: inline-block; width: 4px; height: 4px;
     border-radius: 50%; background: #C8B89A; opacity: 0.6;
+  }
+  .ag__author {
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .ag__author-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(200,184,154,0.15); border: 1px solid rgba(200,184,154,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: #C8B89A; flex-shrink: 0;
+  }
+  .ag__author-name {
+    display: block; font-size: 11px; font-weight: 500;
+    color: rgba(255,255,255,0.7); letter-spacing: 0.04em;
+  }
+  .ag__author-bio {
+    display: block; font-size: 10px; font-weight: 300;
+    color: rgba(255,255,255,0.3); letter-spacing: 0.04em; margin-top: 2px;
   }
 
   /* ── Image mise en avant ─────────────────────────────── */
@@ -392,6 +418,35 @@
     .ag__featured-img-wrap { padding: 0 16px; margin-top: -24px; }
   }
 </style>
+
+<script>
+(function() {
+  function buildFAQSchema() {
+    var qs = document.querySelectorAll('.ag__faq-q');
+    var as = document.querySelectorAll('.ag__faq-a');
+    if (!qs.length) return;
+    var entities = [];
+    for (var i = 0; i < qs.length; i++) {
+      if (!as[i]) continue;
+      entities.push({
+        "@type": "Question",
+        "name": qs[i].textContent.trim(),
+        "acceptedAnswer": { "@type": "Answer", "text": as[i].textContent.trim() }
+      });
+    }
+    if (!entities.length) return;
+    var s = document.createElement('script');
+    s.type = 'application/ld+json';
+    s.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": entities });
+    document.head.appendChild(s);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', buildFAQSchema);
+  } else {
+    buildFAQSchema();
+  }
+})();
+</script>
 
 {% schema %}
 {

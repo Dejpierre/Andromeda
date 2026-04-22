@@ -33,6 +33,14 @@
       {% if article.excerpt != blank %}
         <p class="aa__excerpt">{{ article.excerpt | strip_html }}</p>
       {% endif %}
+
+      <div class="aa__author">
+        <span class="aa__author-avatar" aria-hidden="true">A</span>
+        <div>
+          <span class="aa__author-name">L'équipe Andromeda Paris</span>
+          <span class="aa__author-bio">Spécialistes du sommeil &amp; de la soie de mûrier</span>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -165,7 +173,26 @@
   }
   .aa__excerpt {
     font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.5);
-    line-height: 1.75; max-width: 500px; margin: 0 auto;
+    line-height: 1.75; max-width: 500px; margin: 0 auto 28px;
+  }
+  .aa__author {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 4px;
+  }
+  .aa__author-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(200,184,154,0.15); border: 1px solid rgba(200,184,154,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: #C8B89A;
+    flex-shrink: 0;
+  }
+  .aa__author-name {
+    display: block; font-size: 11px; font-weight: 500;
+    color: rgba(255,255,255,0.7); letter-spacing: 0.04em;
+  }
+  .aa__author-bio {
+    display: block; font-size: 10px; font-weight: 300;
+    color: rgba(255,255,255,0.3); letter-spacing: 0.04em; margin-top: 2px;
   }
 
   /* ── Body ──────────────────────────────────────────────── */
