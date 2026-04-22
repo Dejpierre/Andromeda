@@ -1,0 +1,98 @@
+{% comment %}
+  breadcrumbs.liquid
+  Usage: {% render 'breadcrumbs', color: 'light' %}  (light = texte clair sur fond sombre)
+         {% render 'breadcrumbs', color: 'dark' %}   (dark = texte sombre sur fond clair, défaut)
+{% endcomment %}
+
+{%- liquid
+  assign bc_color = color | default: 'dark'
+  assign bc_position = 2
+-%}
+
+<nav class="andromeda-bc andromeda-bc--{{ bc_color }}" aria-label="Fil d'Ariane">
+  <ol class="andromeda-bc__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+
+    <li class="andromeda-bc__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="{{ shop.url }}" class="andromeda-bc__link" itemprop="item">
+        <span itemprop="name">Accueil</span>
+      </a>
+      <meta itemprop="position" content="1">
+    </li>
+
+    {%- if request.page_type == 'product' -%}
+      {%- if product.collections.first -%}
+        <li class="andromeda-bc__sep" aria-hidden="true">›</li>
+        <li class="andromeda-bc__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="{{ product.collections.first.url }}" class="andromeda-bc__link" itemprop="item">
+            <span itemprop="name">{{ product.collections.first.title }}</span>
+          </a>
+          <meta itemprop="position" content="{{ bc_position }}">
+          {%- assign bc_position = bc_position | plus: 1 -%}
+        </li>
+      {%- endif -%}
+      <li class="andromeda-bc__sep" aria-hidden="true">›</li>
+      <li class="andromeda-bc__item andromeda-bc__item--current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name">{{ product.title }}</span>
+        <meta itemprop="position" content="{{ bc_position }}">
+      </li>
+
+    {%- elsif request.page_type == 'article' -%}
+      <li class="andromeda-bc__sep" aria-hidden="true">›</li>
+      <li class="andromeda-bc__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="{{ blog.url }}" class="andromeda-bc__link" itemprop="item">
+          <span itemprop="name">{{ blog.title }}</span>
+        </a>
+        <meta itemprop="position" content="2">
+      </li>
+      <li class="andromeda-bc__sep" aria-hidden="true">›</li>
+      <li class="andromeda-bc__item andromeda-bc__item--current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name">{{ article.title }}</span>
+        <meta itemprop="position" content="3">
+      </li>
+
+    {%- elsif request.page_type == 'collection' -%}
+      <li class="andromeda-bc__sep" aria-hidden="true">›</li>
+      <li class="andromeda-bc__item andromeda-bc__item--current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name">{{ collection.title }}</span>
+        <meta itemprop="position" content="2">
+      </li>
+
+    {%- elsif request.page_type == 'blog' -%}
+      <li class="andromeda-bc__sep" aria-hidden="true">›</li>
+      <li class="andromeda-bc__item andromeda-bc__item--current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name">{{ blog.title }}</span>
+        <meta itemprop="position" content="2">
+      </li>
+    {%- endif -%}
+
+  </ol>
+</nav>
+
+<style>
+  .andromeda-bc {
+    padding: 12px 0 4px;
+  }
+  .andromeda-bc__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .andromeda-bc--dark .andromeda-bc__link { color: #AAA49E; text-decoration: none; transition: color 0.2s; }
+  .andromeda-bc--dark .andromeda-bc__link:hover { color: #1C1A18; }
+  .andromeda-bc--dark .andromeda-bc__sep { color: rgba(28,26,24,0.3); }
+  .andromeda-bc--dark .andromeda-bc__item--current span { color: #1C1A18; }
+
+  .andromeda-bc--light .andromeda-bc__link { color: rgba(255,255,255,0.38); text-decoration: none; transition: color 0.2s; }
+  .andromeda-bc--light .andromeda-bc__link:hover { color: #C8B89A; }
+  .andromeda-bc--light .andromeda-bc__sep { color: rgba(255,255,255,0.2); }
+  .andromeda-bc--light .andromeda-bc__item--current span { color: rgba(255,255,255,0.6); }
+</style>
