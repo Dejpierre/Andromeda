@@ -27,9 +27,9 @@ const LLMS_TXT = `# Andromeda Paris
 - Espace rituel: https://www.andromedaparis.com/pages/univers
 
 ## Informations pratiques
-- Livraison France: 3–6 jours ouvrés, offerte dès 50 €
+- Livraison France: 2–4 jours ouvrés, offerte dès 65 €
 - International: 5–10 jours ouvrés
-- Retours: 14 jours satisfait ou remboursé
+- Retours: 30 jours satisfait ou remboursé
 - Contact: contact@andromedaparis.com
 
 ## Certifications
