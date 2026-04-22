@@ -22,7 +22,7 @@ Andromeda Paris est une marque française fondée en 2024, spécialisée dans le
 
 ## Produits
 
-- [Masque de sommeil soie de mûrier 22mm Grade 6A](https://www.andromedaparis.com/products/masque-pure-soie-de-murier-22-mommes): Pure soie de mûrier Grade 6A, 22 mommes. Opacité totale, thermorégulation naturelle, hypoallergénique, certifié OEKO-TEX® STANDARD 100. Élastique réglable en soie. Disponible en plusieurs coloris. Prix : 34,90 €.
+- [Masque de sommeil soie de mûrier 22mm Grade 6A](https://www.andromedaparis.com/products/masque-pure-soie-de-murier-22-mommes): Pure soie de mûrier Grade 6A, 22 mommes. Opacité totale, thermorégulation naturelle, hypoallergénique, certifié OEKO-TEX® STANDARD 100. Élastique réglable en soie. Disponible en plusieurs coloris. Prix : 35,99 €.
 
 ## Pages utiles
 
@@ -37,7 +37,7 @@ Andromeda Paris est une marque française fondée en 2024, spécialisée dans le
 - Opacité : 100 % (obscurité totale garantie)
 - Élastique : réglable, en soie, sans pression ni marques au réveil
 - Entretien : lavage main eau froide ou machine 30 °C cycle délicat, séchage à plat
-- Prix : 34,90 €
+- Prix : 35,99 €
 - Livraison France : 2–4 jours ouvrés, offerte dès 65 €
 - Livraison internationale : 5–10 jours ouvrés
 - Retours : gratuits sous 30 jours
