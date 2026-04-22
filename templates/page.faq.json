@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
@@ -24,52 +15,112 @@
           "type": "item",
           "settings": {
             "titre": "Quelle est la différence entre soie 22 mommes et 19 mommes ?",
-            "contenu": "<p>Les mommes désignent le poids du tissu. À 22 mommes, notre soie est plus dense, plus opaque et plus durable. Elle bloque 100% de la lumière et conserve sa douceur lavage après lavage.</p>"
+            "contenu": "<p>Les mommes mesurent la densité du tissu de soie. À 22 mommes, la soie Andromeda est 15 à 20 % plus dense qu'une soie 19 mommes standard. Elle bloque 100 % de la lumière, résiste mieux aux lavages et conserve sa douceur sur le long terme. Une soie 19 mommes, plus fine, perd ses propriétés plus rapidement.</p>"
           }
         },
         "faq_2": {
           "type": "item",
           "settings": {
-            "titre": "Qu'est-ce que le grade 6A de la soie ?",
-            "contenu": "<p>Le grade 6A est la classification la plus haute de la soie de mûrier. Moins de 5% de la production mondiale l'atteint. Les filaments extra-longs donnent une surface parfaitement lisse et douce.</p>"
+            "titre": "Qu'est-ce que le grade 6A de la soie de mûrier ?",
+            "contenu": "<p>Le grade 6A est la plus haute classification mondiale de la soie de mûrier. Moins de 5 % de la production mondiale atteint ce niveau. Les filaments sont extra-longs, uniformes, sans nœuds ni irrégularités. Cela donne une surface parfaitement lisse, idéale pour le contact prolongé avec la peau et les cheveux pendant le sommeil.</p>"
           }
         },
         "faq_3": {
           "type": "item",
           "settings": {
-            "titre": "Comment laver mon masque Andromeda ?",
-            "contenu": "<p>Lavage à la main à l'eau froide avec un savon doux, ou en machine cycle délicat 30°C (filet de lavage recommandé). Séchage à plat, loin de toute chaleur.</p>"
+            "titre": "La soie est-elle bonne pour la peau et les cheveux ?",
+            "contenu": "<p>Oui. La soie de mûrier génère très peu de friction comparée au coton — elle réduit les marques de pression sur la peau (plis du sommeil) et les cassures capillaires. Elle est naturellement thermorégulatrice, hypoallergénique, et ne crée pas d'électricité statique. Ce sont ces propriétés qui en font le matériau préféré des dermatologues pour les accessoires de sommeil.</p>"
           }
         },
         "faq_4": {
           "type": "item",
           "settings": {
-            "titre": "C'est quoi le QR code inclus dans ma commande ?",
-            "contenu": "<p>Chaque masque est livré avec un QR code donnant accès à notre espace rituel exclusif — une sélection de sons d'ambiance conçus pour accompagner l'endormissement.</p>"
+            "titre": "Le masque bloque-t-il vraiment 100 % de la lumière ?",
+            "contenu": "<p>Oui. La densité de la soie 22 mommes combinée à la coupe anatomique du masque garantit une obscurité totale. La forme enveloppante laisse une légère cavité pour les yeux, ce qui évite toute pression sur les paupières tout en maintenant une opacité complète.</p>"
           }
         },
         "faq_5": {
           "type": "item",
           "settings": {
-            "titre": "Le masque est-il adapté aux dormeurs sur le côté ?",
-            "contenu": "<p>Oui. L'élastique réglable ne laisse aucune pression sur la tête ni marque sur la peau. Le masque reste en place toute la nuit quelle que soit votre position.</p>"
+            "titre": "Le masque Andromeda est-il certifié ?",
+            "contenu": "<p>Oui. Le masque est certifié OEKO-TEX® STANDARD 100, la certification textile la plus reconnue mondialement. Elle garantit l'absence de substances nocives : colorants, métaux lourds, pesticides, formaldéhyde. Sûr pour le contact direct et prolongé avec la peau, y compris pour les personnes sensibles.</p>"
           }
         },
         "faq_6": {
           "type": "item",
           "settings": {
+            "titre": "Comment laver mon masque en soie ?",
+            "contenu": "<p>Lavage à la main à l'eau froide avec un savon doux, ou en machine sur cycle délicat à 30 °C maximum dans un filet de lavage. Séchage à plat à l'air libre, loin de toute chaleur directe. Ne pas essorer. La soie étant naturellement antibactérienne, un lavage tous les 7 à 10 jours est suffisant pour un usage quotidien.</p>"
+          }
+        },
+        "faq_7": {
+          "type": "item",
+          "settings": {
+            "titre": "Le masque convient-il aux dormeurs sur le côté ?",
+            "contenu": "<p>Oui. L'élastique réglable en soie s'adapte à toutes les morphologies sans pression ni marques au réveil. Le masque reste en place toute la nuit quelle que soit la position — dos, côté ou position mixte.</p>"
+          }
+        },
+        "faq_8": {
+          "type": "item",
+          "settings": {
+            "titre": "Le masque convient-il aux personnes avec une peau sensible ?",
+            "contenu": "<p>Oui. La soie de mûrier est hypoallergénique par nature. La certification OEKO-TEX® STANDARD 100 garantit en plus l'absence de substances irritantes dans le tissu. Le masque est adapté aux peaux sensibles, réactives ou sujettes à l'eczéma.</p>"
+          }
+        },
+        "faq_9": {
+          "type": "item",
+          "settings": {
+            "titre": "Quelle est la taille du masque ? Est-il ajustable ?",
+            "contenu": "<p>Le masque Andromeda est taille unique, ajustable grâce à un élastique réglable en soie. Il s'adapte à tous les tours de tête et à toutes les morphologies — homme, femme, adulte. La forme anatomique couvre intégralement les yeux sans presser les paupières.</p>"
+          }
+        },
+        "faq_10": {
+          "type": "item",
+          "settings": {
+            "titre": "C'est quoi le QR code inclus dans ma commande ?",
+            "contenu": "<p>Chaque masque est livré avec un QR code donnant accès à l'espace rituel Andromeda — une sélection de sons d'ambiance pour l'endormissement : pluie, forêt, océan, sons binauraux. Accès permanent, exclusivement réservé aux clients.</p>"
+          }
+        },
+        "faq_11": {
+          "type": "item",
+          "settings": {
+            "titre": "Quelle est la différence entre soie de mûrier et autres types de soie ?",
+            "contenu": "<p>La soie de mûrier (Bombyx mori) est la plus fine et la plus régulière des soies. Contrairement aux soies sauvages (tussah, eri), ses filaments sont continus et uniformes, ce qui donne un tissu beaucoup plus lisse. C'est la seule soie adaptée à un contact direct prolongé avec la peau — les autres soies sont plus rugueuses et moins hypoallergéniques.</p>"
+          }
+        },
+        "faq_12": {
+          "type": "item",
+          "settings": {
             "titre": "Sous combien de temps suis-je livré(e) ?",
-            "contenu": "<p>Livraison en France sous 2 à 4 jours ouvrés. Livraison internationale sous 5 à 10 jours. Chaque commande est expédiée dans un emballage soigné, prête à offrir.</p>"
+            "contenu": "<p>Livraison en France métropolitaine sous 2 à 4 jours ouvrés. Livraison internationale sous 5 à 10 jours ouvrés. La livraison est offerte dès 65 € d'achat. Chaque commande est expédiée dans un emballage soigné, prête à offrir.</p>"
+          }
+        },
+        "faq_13": {
+          "type": "item",
+          "settings": {
+            "titre": "Comment fonctionne la livraison offerte ?",
+            "contenu": "<p>La livraison est offerte pour toute commande de 65 € ou plus, en France métropolitaine. Elle est automatiquement appliquée dans le panier dès que le montant minimum est atteint. En dessous de ce seuil, les frais de port sont de 3,60 € pour la France.</p>"
+          }
+        },
+        "faq_14": {
+          "type": "item",
+          "settings": {
+            "titre": "Quelle est la politique de retour d'Andromeda Paris ?",
+            "contenu": "<p>Vous disposez de 30 jours à compter de la réception pour retourner votre masque si vous n'êtes pas satisfait(e). Le retour est gratuit. Le remboursement intégral est effectué sous 5 à 7 jours ouvrés après réception de l'article. Pour initier un retour, contactez contact@andromedaparis.com.</p>"
+          }
+        },
+        "faq_15": {
+          "type": "item",
+          "settings": {
+            "titre": "Le masque est-il disponible en plusieurs couleurs ?",
+            "contenu": "<p>Oui. Le masque Andromeda est disponible en plusieurs coloris : Noir minuit, Ivoire nacré, Rose poudré et Bleu nuit. Toutes les couleurs sont réalisées avec des teintures certifiées OEKO-TEX®, sans substances nocives.</p>"
           }
         }
       },
       "block_order": [
-        "faq_1",
-        "faq_2",
-        "faq_3",
-        "faq_4",
-        "faq_5",
-        "faq_6"
+        "faq_1", "faq_2", "faq_3", "faq_4", "faq_5",
+        "faq_6", "faq_7", "faq_8", "faq_9", "faq_10",
+        "faq_11", "faq_12", "faq_13", "faq_14", "faq_15"
       ],
       "settings": {}
     }
