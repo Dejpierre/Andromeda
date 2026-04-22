@@ -64,13 +64,72 @@
     "offers": {
       "@type": "AggregateOffer",
       "priceCurrency": {{ cart.currency.iso_code | json }},
-      "lowPrice": {{ product.price_min | money_without_currency }},
-      "highPrice": {{ product.price_max | money_without_currency }},
+      "lowPrice": {{ product.price_min | divided_by: 100.0 }},
+      "highPrice": {{ product.price_max | divided_by: 100.0 }},
       "offerCount": {{ product.variants.size }},
       "availability": {%- if product.available -%}"https://schema.org/InStock"{%- else -%}"https://schema.org/OutOfStock"{%- endif -%},
       "url": {{ shop.url | append: product.url | json }}
     },
     "url": {{ shop.url | append: product.url | json }}
+  }
+  </script>
+  {%- endif -%}
+
+  {%- if request.page_type == 'product' -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Quelle est la différence entre soie 22 mommes et 19 mommes ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Les mommes désignent le poids du tissu. À 22 mommes, notre soie est plus dense, plus opaque et plus durable qu'une soie 19 mommes. Elle bloque 100% de la lumière et conserve sa douceur lavage après lavage — là où un tissu moins épais se dégrade plus vite."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Qu'est-ce que le grade 6A de la soie ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le grade 6A est la classification la plus haute de la soie de mûrier. Moins de 5% de la production mondiale l'atteint. Les filaments sont extra-longs, sans nœuds ni irrégularités — ce qui donne une surface parfaitement lisse, douce et homogène au contact de votre peau."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Comment laver mon masque Andromeda ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Lavage à la main à l'eau froide avec un savon doux, ou en machine sur cycle délicat (30°C max, filet de lavage recommandé). Séchage à plat, loin de toute source de chaleur. La soie est naturellement antibactérienne — un lavage tous les 7 à 10 jours est suffisant."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "C'est quoi le QR code inclus dans ma commande ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Chaque masque Andromeda est livré avec un QR code donnant accès à notre espace rituel exclusif — une sélection de sons d'ambiance conçus pour accompagner l'endormissement : pluie, forêt, océan, sons binauraux. Une expérience sensorielle unique, réservée à nos clients."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Le masque est-il adapté aux dormeurs sur le côté ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui. L'élastique réglable est conçu pour ne pas exercer de pression sur la tête ni marquer la peau. Le masque reste en place toute la nuit quelle que soit votre position de sommeil."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Sous combien de temps suis-je livré(e) ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Livraison en France sous 2 à 4 jours ouvrés. Livraison internationale sous 5 à 10 jours. Chaque commande est expédiée dans un emballage soigné, prête à offrir."
+        }
+      }
+    ]
   }
   </script>
   {%- endif -%}
