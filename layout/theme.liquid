@@ -68,6 +68,7 @@
       "lowPrice": {{ product.price_min | divided_by: 100.0 }},
       "highPrice": {{ product.price_max | divided_by: 100.0 }},
       "offerCount": {{ product.variants.size }},
+      "priceValidUntil": "{{ 'now' | date: '%Y' }}-12-31",
       "availability": {%- if product.available -%}"https://schema.org/InStock"{%- else -%}"https://schema.org/OutOfStock"{%- endif -%},
       "url": {{ shop.url | append: product.url | json }}
     },
