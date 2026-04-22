@@ -20,11 +20,17 @@
     </li>
 
     {%- if request.page_type == 'product' -%}
-      {%- if product.collections.first -%}
+      {%- assign bc_collection = nil -%}
+      {%- for col in product.collections -%}
+        {%- if col.handle != 'frontpage' and col.handle != 'all' and bc_collection == nil -%}
+          {%- assign bc_collection = col -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if bc_collection -%}
         <li class="andromeda-bc__sep" aria-hidden="true">›</li>
         <li class="andromeda-bc__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="{{ product.collections.first.url }}" class="andromeda-bc__link" itemprop="item">
-            <span itemprop="name">{{ product.collections.first.title }}</span>
+          <a href="{{ bc_collection.url }}" class="andromeda-bc__link" itemprop="item">
+            <span itemprop="name">{{ bc_collection.title }}</span>
           </a>
           <meta itemprop="position" content="{{ bc_position }}">
           {%- assign bc_position = bc_position | plus: 1 -%}
@@ -70,7 +76,8 @@
 
 <style>
   .andromeda-bc {
-    padding: 12px 0 4px;
+    padding: 8px 0 0;
+    margin-block-end: calc(-1 * var(--gap, 48px) + 8px);
   }
   .andromeda-bc__list {
     display: flex;

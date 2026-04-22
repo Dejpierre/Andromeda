@@ -59,12 +59,18 @@
         "item": {{ shop.url | json }}
       }
       {%- if request.page_type == 'product' -%}
-      {%- if product.collections.first -%}
+      {%- assign ld_collection = nil -%}
+      {%- for col in product.collections -%}
+        {%- if col.handle != 'frontpage' and col.handle != 'all' and ld_collection == nil -%}
+          {%- assign ld_collection = col -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if ld_collection -%}
       ,{
         "@type": "ListItem",
         "position": 2,
-        "name": {{ product.collections.first.title | json }},
-        "item": {{ shop.url | append: product.collections.first.url | json }}
+        "name": {{ ld_collection.title | json }},
+        "item": {{ shop.url | append: ld_collection.url | json }}
       }
       ,{
         "@type": "ListItem",
