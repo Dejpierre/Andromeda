@@ -14,6 +14,38 @@
 
 const VALID_CATEGORIES = ['sommeil'];
 
+const LLMS_TXT = `# Andromeda Paris
+
+> Masques de sommeil en pure soie de mûrier Grade 6A, 22 mommes — accessoires de sommeil haut de gamme, fabriqués et expédiés depuis Paris.
+
+Andromeda Paris est une marque française fondée en 2024, spécialisée dans les masques de sommeil premium. Nos masques sont fabriqués en soie de mûrier Grade 6A (classification maximale, moins de 5 % de la production mondiale), 22 mommes, certifiés OEKO-TEX® STANDARD 100. Chaque commande est livrée avec un accès exclusif à un espace rituel sonore (sons binauraux, pluie, forêt, océan).
+
+## Produits
+
+- [Masque de sommeil soie de mûrier 22mm Grade 6A](https://www.andromedaparis.com/products/masque-pure-soie-de-murier-22-mommes): Pure soie de mûrier Grade 6A, 22 mommes. Opacité totale, thermorégulation naturelle, hypoallergénique, certifié OEKO-TEX® STANDARD 100. Élastique réglable en soie. Disponible en plusieurs coloris. Prix : 34,90 €.
+
+## Pages utiles
+
+- [FAQ — 15 questions fréquentes](https://www.andromedaparis.com/pages/faq): Réponses complètes sur la soie (grades, mommes, entretien), les certifications, la livraison, les retours et le QR code rituel.
+- [Journal Andromeda](https://www.andromedaparis.com/blogs/actualites): Articles sur le sommeil, les propriétés de la soie de mûrier, les rituels de nuit.
+- [Contact](https://www.andromedaparis.com/pages/contact): Service client — contact@andromedaparis.com
+
+## Informations clés
+
+- Matière : soie de mûrier (Bombyx mori), Grade 6A, 22 mommes
+- Certification : OEKO-TEX® STANDARD 100 — aucune substance nocive, adapté peaux sensibles
+- Opacité : 100 % (obscurité totale garantie)
+- Élastique : réglable, en soie, sans pression ni marques au réveil
+- Entretien : lavage main eau froide ou machine 30 °C cycle délicat, séchage à plat
+- Prix : 34,90 €
+- Livraison France : 2–4 jours ouvrés, offerte dès 65 €
+- Livraison internationale : 5–10 jours ouvrés
+- Retours : gratuits sous 30 jours
+- Fondée : 2024, Paris, France
+- Contact : contact@andromedaparis.com
+- Instagram : https://www.instagram.com/andromeda_paris/
+`;
+
 // ─── GraphQL query ─────────────────────────────────────────────────────────────
 
 const QUERY = `
@@ -137,7 +169,19 @@ export default {
       return corsPreflightResponse(origin);
     }
 
-    // Route unique
+    // llms.txt — lisible par les AI crawlers
+    if (url.pathname === '/llms.txt') {
+      return new Response(LLMS_TXT, {
+        status: 200,
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'Cache-Control': 'public, max-age=86400',
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
+    }
+
+    // Route API rituels
     if (url.pathname !== '/api/audio') {
       return json({ error: 'Not found' }, 404, origin);
     }
