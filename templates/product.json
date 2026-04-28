@@ -108,6 +108,10 @@
                 "padding-inline-end": 0
               },
               "blocks": {
+                "judge_me_reviews_preview_badge_6TaTMh": {
+                  "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+                  "settings": {}
+                },
                 "text_xrnftG": {
                   "type": "text",
                   "name": "Product title",
@@ -140,11 +144,11 @@
                     "show_sale_price_first": true,
                     "show_installments": false,
                     "show_tax_info": false,
-                    "type_preset": "paragraph",
+                    "type_preset": "custom",
                     "width": "100%",
                     "alignment": "left",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
+                    "font": "var(--font-accent--family)",
+                    "font_size": "1.25rem",
                     "line_height": "normal",
                     "letter_spacing": "normal",
                     "case": "none",
@@ -158,6 +162,7 @@
                 }
               },
               "block_order": [
+                "judge_me_reviews_preview_badge_6TaTMh",
                 "text_xrnftG",
                 "price_tVjtKg"
               ]
@@ -672,14 +677,6 @@
                 "col_right"
               ]
             },
-            "rituel_banner": {
-              "type": "custom-liquid",
-              "name": "Bannière espace rituel",
-              "settings": {
-                "custom_liquid": "{% render 'product-rituel-banner' %}"
-              },
-              "blocks": {}
-            },
             "text_aEtTtq": {
               "type": "text",
               "name": "Product description",
@@ -798,12 +795,32 @@
                     "text_desc": {
                       "type": "text",
                       "settings": {
-                        "text": "<h2>Un masque de sommeil hors du commun</h2><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux masques synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h2>Obscurité totale pour un sommeil profond</h2><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre masque de sommeil bloque 100% de la lumière et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h2>Confort &amp; élégance</h2><ul><li>Élastique réglable pour s'adapter à toutes les morphologies</li><li>Thermorégulation naturelle — fraîche en été, douce en hiver</li><li>Hypoallergénique, idéal pour les peaux sensibles</li></ul><h2>Le rituel Andromeda</h2><p>Chaque masque est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement.</p>"
+                        "text": "<h2>Un masque de sommeil hors du commun</h2><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux masques synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h2>Obscurité totale pour un sommeil profond</h2><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre masque de sommeil bloque 100% de la lumière et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h2>Confort & élégance</h2><ul><li>Élastique qui s'adapte à toutes les morphologies</li><li>Thermorégulation naturelle — fraîche en été, douce en hiver</li><li>Hypoallergénique, idéal pour les peaux sensibles</li></ul><h2>Le rituel Andromeda</h2><p>Chaque masque est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement.</p>",
+                        "width": "fit-content",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
                       },
                       "blocks": {}
                     }
                   },
-                  "block_order": ["text_desc"]
+                  "block_order": [
+                    "text_desc"
+                  ]
                 },
                 "row_livraison": {
                   "type": "_accordion-row",
@@ -817,26 +834,57 @@
                     "text_livraison": {
                       "type": "text",
                       "settings": {
-                        "text": "<p><strong>Livraison France</strong> — 2 à 4 jours ouvrés. Livraison offerte dès 65€ d'achat.</p><p><strong>Livraison internationale</strong> — disponible dans la plupart des pays. Délai : 5 à 10 jours ouvrés.</p><p><strong>Retours</strong> — satisfait ou remboursé sous 30 jours. Le produit doit être retourné dans son emballage d'origine, non utilisé. Contactez-nous à contact@andromedaparis.com pour initier un retour.</p>"
+                        "text": "<p><strong>Livraison France</strong> — 2 à 4 jours ouvrés. Livraison offerte dès 65€ d'achat.</p><p><strong>Livraison internationale</strong> — disponible dans la plupart des pays. Délai : 5 à 10 jours ouvrés.</p><p><strong>Retours</strong> — satisfait ou remboursé sous 30 jours. Le produit doit être retourné dans son emballage d'origine, non utilisé. Contactez-nous à contact@andromedaparis.com pour initier un retour.</p>",
+                        "width": "fit-content",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
                       },
                       "blocks": {}
                     }
                   },
-                  "block_order": ["text_livraison"]
+                  "block_order": [
+                    "text_livraison"
+                  ]
                 }
               },
-              "block_order": ["row_description", "row_livraison"]
+              "block_order": [
+                "row_description",
+                "row_livraison"
+              ]
+            },
+            "rituel_banner": {
+              "type": "custom-liquid",
+              "name": "Bannière espace rituel",
+              "settings": {
+                "custom_liquid": "{% render 'product-rituel-banner' %}"
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "group_icgrde",
             "benefits_group",
-            "rituel_banner",
             "text_aEtTtq",
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
-            "accordion_desc_livraison"
+            "accordion_desc_livraison",
+            "rituel_banner"
           ]
         }
       },
@@ -850,33 +898,6 @@
         "color_scheme": "scheme-1",
         "padding-block-start": 16,
         "padding-block-end": 0
-      }
-    },
-    "accordeon_produit": {
-      "type": "section-accordeon-seo",
-      "disabled": true,
-      "blocks": {
-        "desc": {
-          "type": "item",
-          "settings": {
-            "titre": "Description",
-            "contenu": "<h2>Un masque de sommeil hors du commun</h2><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux masques synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h2>Obscurité totale pour un sommeil profond</h2><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre masque de sommeil bloque 100% de la lumière et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h2>Confort &amp; élégance</h2><ul>\n<li>Élastique réglable pour s'adapter à toutes les morphologies</li>\n<li>Thermorégulation naturelle — fraîche en été, douce en hiver</li>\n<li>Hypoallergénique, idéal pour les peaux sensibles</li>\n</ul><h2>Le rituel Andromeda</h2><p>Chaque masque est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement. Méditation, nature, ondes delta — une expérience sensorielle complète pour transformer chaque nuit en véritable <strong>rituel de sommeil de luxe</strong>.</p>"
-          }
-        },
-        "livraison": {
-          "type": "item",
-          "settings": {
-            "titre": "Livraison & Retours",
-            "contenu": "<p><strong>Livraison France</strong> — 2 à 4 jours ouvrés. Livraison offerte dès 65€ d'achat.</p><p><strong>Livraison internationale</strong> — disponible dans la plupart des pays. Délai : 5 à 10 jours ouvrés.</p><p><strong>Retours</strong> — satisfait ou remboursé sous 30 jours. Le produit doit être retourné dans son emballage d'origine, non utilisé. Contactez-nous à contact@andromedaparis.com pour initier un retour.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "desc",
-        "livraison"
-      ],
-      "settings": {
-        "color_scheme": ""
       }
     },
     "marquee_HYpWxg": {
@@ -935,6 +956,90 @@
         "padding-block-start": 24,
         "padding-block-end": 24,
         "gap_between_elements": 24
+      }
+    },
+    "why_masque_produit": {
+      "type": "section-why-masque",
+      "blocks": {
+        "avantage_1": {
+          "type": "avantage",
+          "settings": {
+            "icon": "shopify://shop_images/pictogramme-soie-c.svg",
+            "title": "Soie Grade 6A",
+            "text": "Moins de 5% de la production mondiale. Filaments extra-longs pour une douceur incomparable."
+          }
+        },
+        "avantage_2": {
+          "type": "avantage",
+          "settings": {
+            "icon": "shopify://shop_images/pictogramme-22-c.svg",
+            "title": "22 mommes",
+            "text": "Le grammage parfait : opacité totale et légèreté pour une nuit reposante."
+          }
+        },
+        "avantage_3": {
+          "type": "avantage",
+          "settings": {
+            "icon": "shopify://shop_images/pictogramme-nuit-c.svg",
+            "title": "Obscurité totale",
+            "text": "Conçu pour bloquer 100% de la lumière et maximiser la production de mélatonine."
+          }
+        },
+        "avantage_4": {
+          "type": "avantage",
+          "settings": {
+            "icon": "shopify://shop_images/pictogramme-cheveux-c.svg",
+            "title": "Peau & cheveux",
+            "text": "Anti-friction, hydratant naturel. La soie préserve là où le coton absorbe."
+          }
+        }
+      },
+      "block_order": [
+        "avantage_1",
+        "avantage_2",
+        "avantage_3",
+        "avantage_4"
+      ],
+      "settings": {
+        "title": "Pourquoi choisir",
+        "title_accent": "nos masques ?",
+        "subtitle": "",
+        "image": "shopify://shop_images/Image_15.png",
+        "image_width": 36,
+        "image_ratio": "4/3",
+        "image_radius": 16,
+        "heading": "",
+        "background_color": "#faf7f2",
+        "text_color": "#1c1a18",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "accordeon_produit": {
+      "type": "section-accordeon-seo",
+      "blocks": {
+        "desc": {
+          "type": "item",
+          "settings": {
+            "titre": "Description",
+            "contenu": "<h2>Un masque de sommeil hors du commun</h2><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux masques synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h2>Obscurité totale pour un sommeil profond</h2><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre masque de sommeil bloque 100% de la lumière et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h2>Confort &amp; élégance</h2><ul>\n<li>Élastique réglable pour s'adapter à toutes les morphologies</li>\n<li>Thermorégulation naturelle — fraîche en été, douce en hiver</li>\n<li>Hypoallergénique, idéal pour les peaux sensibles</li>\n</ul><h2>Le rituel Andromeda</h2><p>Chaque masque est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement. Méditation, nature, ondes delta — une expérience sensorielle complète pour transformer chaque nuit en véritable <strong>rituel de sommeil de luxe</strong>.</p>"
+          }
+        },
+        "livraison": {
+          "type": "item",
+          "settings": {
+            "titre": "Livraison & Retours",
+            "contenu": "<p><strong>Livraison France</strong> — 2 à 4 jours ouvrés. Livraison offerte dès 65€ d'achat.</p><p><strong>Livraison internationale</strong> — disponible dans la plupart des pays. Délai : 5 à 10 jours ouvrés.</p><p><strong>Retours</strong> — satisfait ou remboursé sous 30 jours. Le produit doit être retourné dans son emballage d'origine, non utilisé. Contactez-nous à contact@andromedaparis.com pour initier un retour.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "desc",
+        "livraison"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": ""
       }
     },
     "section_comparatif": {
@@ -1146,10 +1251,48 @@
         "padding-block-end": 48
       }
     },
-    "avis_clients": {
-      "type": "section-avis",
+    "17772818659bf33857": {
+      "type": "_blocks",
+      "blocks": {
+        "judge_me_reviews_review_widget_JdwGek": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "real_data",
+            "max_width": 750,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_JdwGek"
+      ],
       "settings": {
-        "color_scheme": ""
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
       }
     },
     "section_pX6aLk": {
@@ -1477,67 +1620,16 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
-    },
-    "why_masque_produit": {
-      "type": "section-why-masque",
-      "blocks": {
-        "avantage_1": {
-          "type": "avantage",
-          "settings": {
-            "icon": "shopify://shop_images/pictogramme-soie-c.svg",
-            "title": "Soie Grade 6A",
-            "text": "Moins de 5% de la production mondiale. Filaments extra-longs pour une douceur incomparable."
-          }
-        },
-        "avantage_2": {
-          "type": "avantage",
-          "settings": {
-            "icon": "shopify://shop_images/pictogramme-22-c.svg",
-            "title": "22 mommes",
-            "text": "Le grammage parfait : opacité totale et légèreté pour une nuit reposante."
-          }
-        },
-        "avantage_3": {
-          "type": "avantage",
-          "settings": {
-            "icon": "shopify://shop_images/pictogramme-nuit-c.svg",
-            "title": "Obscurité totale",
-            "text": "Conçu pour bloquer 100% de la lumière et maximiser la production de mélatonine."
-          }
-        },
-        "avantage_4": {
-          "type": "avantage",
-          "settings": {
-            "icon": "shopify://shop_images/pictogramme-cheveux-c.svg",
-            "title": "Peau & cheveux",
-            "text": "Anti-friction, hydratant naturel. La soie préserve là où le coton absorbe."
-          }
-        }
-      },
-      "block_order": ["avantage_1", "avantage_2", "avantage_3", "avantage_4"],
-      "settings": {
-        "title": "Pourquoi choisir",
-        "title_accent": "nos masques ?",
-        "subtitle": "",
-        "image": "shopify://shop_images/Image_15.png",
-        "image_width": 36,
-        "image_ratio": "4/3",
-        "image_radius": 16,
-        "background_color": "#FAF7F2",
-        "text_color": "#1C1A18",
-        "padding_top": 80,
-        "padding_bottom": 80
-      }
     }
   },
   "order": [
     "main",
+    "marquee_HYpWxg",
     "why_masque_produit",
     "accordeon_produit",
-    "marquee_HYpWxg",
     "section_comparatif",
     "product_recommendations_qggXJq",
-    "avis_clients",
+    "17772818659bf33857",
     "section_pX6aLk"
   ]
 }

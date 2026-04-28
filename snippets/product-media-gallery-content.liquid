@@ -667,12 +667,11 @@
 
   @media screen and (max-width: 749px) {
     .dialog-zoomed-gallery {
-      /* Prevent scroll wheel or swipe scrolling */
       overscroll-behavior: none;
       scrollbar-width: none;
       display: flex;
       scroll-snap-type: x mandatory;
-      overflow-x: hidden;
+      overflow-x: scroll;
       scroll-behavior: smooth;
       height: 100%;
 

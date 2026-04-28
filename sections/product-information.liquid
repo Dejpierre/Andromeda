@@ -208,7 +208,7 @@
       border: var(--border) solid #0000;
       border-radius: inherit;
       z-index: -1;
-      backdrop-filter: blur(20px) saturate(180%) brightness(1.5);
+      backdrop-filter: blur(8px);
     }
   }
 
@@ -291,6 +291,12 @@
       &::before {
         --border: 1px;
       }
+    }
+
+    /* Always visible on mobile */
+    sticky-add-to-cart[data-variant-available='true'] .sticky-add-to-cart__bar {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0%);
     }
 
     .sticky-add-to-cart__bar .add-to-cart-text__content {

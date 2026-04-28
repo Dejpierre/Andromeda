@@ -13,7 +13,26 @@
   >
     {% render 'text', fallback_text: product_title, block: block %}
   </a>
+  {%- if request.page_type == 'product' -%}
+    <div class="andromeda-judgeme">
+      <div class="jdgm-widget jdgm-preview-badge"
+           data-id="{{ closest.product.id }}"
+           data-product-title="{{ closest.product.title | escape }}"
+           data-product-handle="{{ closest.product.handle }}">
+        {{- closest.product.metafields.judgeme.badge -}}
+      </div>
+    </div>
+  {%- endif -%}
 {% endif %}
+
+{% stylesheet %}
+  .andromeda-judgeme {
+    margin-top: 6px;
+  }
+  .andromeda-judgeme .jdgm-preview-badge {
+    font-family: 'Raleway', sans-serif;
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

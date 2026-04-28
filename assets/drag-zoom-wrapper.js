@@ -4,7 +4,7 @@ import { Component } from '@theme/component';
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 5;
-const DEFAULT_ZOOM = 1.5;
+const DEFAULT_ZOOM = 1;
 const DOUBLE_TAP_DELAY = 300;
 const DOUBLE_TAP_DISTANCE = 50;
 const DRAG_THRESHOLD = 10;
@@ -106,9 +106,13 @@ export class DragZoomWrapper extends Component {
    * @param {TouchEvent} event
    */
   #handleTouchStart = (event) => {
-    preventDefault(event);
-
     const touchCount = event.touches.length;
+
+    // At scale 1 with single touch, don't preventDefault yet —
+    // let touchmove decide if it's a horizontal swipe (carousel nav) or vertical drag
+    if (touchCount !== 1 || this.#scale > MIN_ZOOM) {
+      preventDefault(event);
+    }
 
     if (touchCount === 2) {
       // Early exit if touches are invalid
@@ -244,9 +248,22 @@ export class DragZoomWrapper extends Component {
    * @param {TouchEvent} event
    */
   #handleTouchMove = (event) => {
-    preventDefault(event);
-
     const touchCount = event.touches.length;
+
+    if (touchCount === 1 && this.#scale <= MIN_ZOOM && this.#isDragging) {
+      const touch = event.touches[0];
+      if (touch) {
+        const dx = Math.abs(touch.clientX - this.#startPosition.x);
+        const dy = Math.abs(touch.clientY - this.#startPosition.y);
+        // If gesture is more horizontal than vertical, let the carousel scroll
+        if (dx > dy) return;
+        preventDefault(event);
+        this.#processDragGesture(touch);
+      }
+      return;
+    }
+
+    preventDefault(event);
 
     if (touchCount === 2) {
       const touch1 = event.touches[0];
