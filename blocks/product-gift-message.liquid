@@ -1,0 +1,197 @@
+{%- liquid
+  assign product_id   = closest.product.id
+  assign checkbox_id  = 'GiftMsg-Toggle-' | append: product_id | append: '-' | append: block.id
+  assign textarea_id  = 'GiftMsg-Text-'   | append: product_id | append: '-' | append: block.id
+  assign form_id      = 'BuyButtons-ProductForm-section.id' | replace: 'section.id', section.id
+  assign label        = block.settings.checkbox_label   | default: "Ajouter un mot pour maman 💐"
+  assign placeholder  = block.settings.placeholder      | default: "Ex : Merci pour tout, je t'aime..."
+  assign max_chars    = block.settings.max_length        | default: 150
+-%}
+
+<div class="pgm" {{ block.shopify_attributes }}>
+  <label class="pgm__toggle" for="{{ checkbox_id }}">
+    <input
+      class="pgm__checkbox"
+      type="checkbox"
+      id="{{ checkbox_id }}"
+      aria-expanded="false"
+      aria-controls="{{ textarea_id }}"
+    >
+    <span class="pgm__check-icon">
+      <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+        <path d="M1 5L4.5 8.5L11 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <span class="pgm__label-text">{{ label }}</span>
+  </label>
+
+  <div class="pgm__field" id="{{ textarea_id }}" aria-hidden="true">
+    <textarea
+      class="pgm__textarea field__input"
+      name="properties[{{ block.settings.property_key | default: 'Message pour maman' }}]"
+      form="{{ form_id }}"
+      placeholder="{{ placeholder | escape }}"
+      maxlength="{{ max_chars }}"
+      rows="3"
+      tabindex="-1"
+      disabled
+    ></textarea>
+    <span class="pgm__counter" aria-live="polite">0 / {{ max_chars }}</span>
+  </div>
+</div>
+
+{% stylesheet %}
+.pgm {
+  width: 100%;
+}
+
+.pgm__toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.pgm__checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.pgm__check-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  border: 1.5px solid var(--color-input-border, #C8B89A);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.18s, border-color 0.18s;
+  color: transparent;
+}
+
+.pgm__checkbox:checked ~ .pgm__check-icon {
+  background: #C8B89A;
+  border-color: #C8B89A;
+  color: #fff;
+}
+
+.pgm__checkbox:focus-visible ~ .pgm__check-icon {
+  outline: 2px solid #C8B89A;
+  outline-offset: 2px;
+}
+
+.pgm__label-text {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--color-foreground, #1C1A18);
+}
+
+/* Collapsed field */
+.pgm__field {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.28s ease, margin-top 0.28s ease;
+  margin-top: 0;
+}
+
+/* Expanded field */
+.pgm__field.is-open {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 12px;
+}
+
+.pgm__textarea {
+  width: 100%;
+  resize: none;
+  min-height: 80px;
+}
+
+.pgm__counter {
+  display: block;
+  font-size: 0.75rem;
+  color: rgb(var(--color-foreground-rgb, 28 26 24) / 0.45);
+  text-align: right;
+  margin-top: 4px;
+}
+{% endstylesheet %}
+
+<script>
+(function() {
+  var checkbox  = document.getElementById('{{ checkbox_id }}');
+  var field     = document.getElementById('{{ textarea_id }}');
+  if (!checkbox || !field) return;
+  var textarea  = field.querySelector('textarea');
+  var counter   = field.querySelector('.pgm__counter');
+  var maxChars  = {{ max_chars }};
+
+  checkbox.addEventListener('change', function() {
+    var open = this.checked;
+    field.classList.toggle('is-open', open);
+    field.setAttribute('aria-hidden', String(!open));
+    this.setAttribute('aria-expanded', String(open));
+    textarea.disabled = !open;
+    textarea.setAttribute('tabindex', open ? '0' : '-1');
+    if (open) {
+      setTimeout(function() { textarea.focus(); }, 50);
+    } else {
+      textarea.value = '';
+      if (counter) counter.textContent = '0 / ' + maxChars;
+    }
+  });
+
+  if (textarea && counter) {
+    textarea.addEventListener('input', function() {
+      counter.textContent = this.value.length + ' / ' + maxChars;
+    });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Message cadeau",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "checkbox_label",
+      "label": "Texte de la case à cocher",
+      "default": "Ajouter un mot pour maman 💐"
+    },
+    {
+      "type": "text",
+      "id": "property_key",
+      "label": "Clé de la propriété (commande)",
+      "default": "Message pour maman",
+      "info": "Nom visible dans l'admin Shopify sur chaque commande"
+    },
+    {
+      "type": "textarea",
+      "id": "placeholder",
+      "label": "Placeholder du message",
+      "default": "Ex : Merci pour tout, je t'aime..."
+    },
+    {
+      "type": "range",
+      "id": "max_length",
+      "label": "Nombre de caractères max",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "default": 150
+    }
+  ],
+  "presets": [
+    {
+      "name": "Message cadeau"
+    }
+  ]
+}
+{% endschema %}

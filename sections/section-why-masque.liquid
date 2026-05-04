@@ -221,60 +221,37 @@
   /* ── Responsive ────────────────────────────────────────── */
   @media (max-width: 768px) {
     .wm {
-      max-height: 100vh;
-      overflow: hidden;
       padding-top: 32px;
       padding-bottom: 32px;
     }
     .wm__header { margin-bottom: 20px; }
-    .wm__inner {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
     .wm__visual {
       order: 0;
       width: 100%;
       max-width: 100%;
-      margin: 0;
-      aspect-ratio: auto;
-      height: auto;
+      aspect-ratio: 4/3;
     }
-    .wm__col--left {
-      order: 1;
+    .wm__inner {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 16px;
     }
-    .wm__col--right {
-      order: 2;
-    }
-    /* Les 2 colonnes côte à côte */
-    .wm__inner::after {
-      display: none;
-    }
+    .wm__col--left { order: 1; }
+    .wm__col--right { order: 2; }
     .wm__col--left,
     .wm__col--right {
+      width: calc(50% - 8px);
       flex: 1;
       gap: 16px;
       text-align: left;
       align-items: flex-start;
     }
-    /* Wrapper flex pour les 2 colonnes */
-    .wm__col--left,
-    .wm__col--right {
-      width: calc(50% - 8px);
-    }
-    /* Regroupe les colonnes sur la même ligne */
-    .wm__inner {
-      flex-wrap: wrap;
-      flex-direction: row;
-    }
-    .wm__visual {
-      flex: 0 0 100%;
-    }
     .wm__col--left .wm__item,
     .wm__col--right .wm__item { align-items: flex-start; width: 100%; max-width: 100%; }
     .wm__icon-svg, .wm__icon-img { width: 32px; height: 32px; }
-    .wm__item-title { font-size: 12px; }
-    .wm__item-text { font-size: 11px; line-height: 1.5; }
+    .wm__item-title { font-size: 15px; }
+    .wm__item-text { font-size: 12px; line-height: 1.5; }
     .wm__icon-wrap { margin-bottom: 8px; }
   }
 </style>

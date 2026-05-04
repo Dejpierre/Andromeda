@@ -6,6 +6,7 @@
   lang="{{ request.locale.iso_code }}"
 >
   <head>
+    <script>if(!window.requestIdleCallback){window.requestIdleCallback=function(cb,o){var s=Date.now();return setTimeout(function(){cb({didTimeout:false,timeRemaining:function(){return Math.max(0,50-(Date.now()-s))}})},o&&o.timeout||1)};window.cancelIdleCallback=function(id){clearTimeout(id)}}</script>
     {%- if settings.favicon != blank -%}
       <link
         rel="icon"

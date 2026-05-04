@@ -145,7 +145,7 @@
               "name": "t:names.button",
               "settings": {
                 "label": "Découvrir notre masque",
-                "link": "shopify://collections/all",
+                "link": "shopify://products/masque-pure-soie-de-murier-22-mommes",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",
@@ -1530,7 +1530,9 @@
                 "wrap": "pretty",
                 "color": "var(--color-foreground)",
                 "padding-block-start": 8,
-                "padding-block-end": 16
+                "padding-block-end": 8,
+                "padding-inline-start": 8,
+                "padding-inline-end": 8
               },
               "blocks": {}
             }

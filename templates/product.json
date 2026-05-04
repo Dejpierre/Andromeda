@@ -728,6 +728,16 @@
               },
               "blocks": {}
             },
+            "message_maman_fdm": {
+              "type": "product-gift-message",
+              "settings": {
+                "checkbox_label": "Ajouter un mot pour maman 💐",
+                "property_key": "Message pour maman",
+                "placeholder": "Ex : Merci pour tout, je t'aime...",
+                "max_length": 150
+              },
+              "blocks": {}
+            },
             "buy_buttons_eYQEYi": {
               "type": "buy-buttons",
               "settings": {
@@ -882,6 +892,7 @@
             "text_aEtTtq",
             "divider_VJhene",
             "variant_picker_R3rGDr",
+            "message_maman_fdm",
             "buy_buttons_eYQEYi",
             "accordion_desc_livraison",
             "rituel_banner"
