@@ -1,0 +1,88 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "intro": {
+          "type": "about-intro",
+          "settings": {
+            "label": "Notre histoire",
+            "title": "Qui sommes-nous ?",
+            "text": "<p>Décrivez ici l'histoire d'Andromeda Paris — votre vision, ce qui vous a poussé à créer la marque, et ce qui vous rend unique.</p>",
+            "alignment": "left",
+            "padding_vertical": 64
+          }
+        },
+        "valeur_1": {
+          "type": "about-valeur",
+          "settings": {
+            "icon": "✦",
+            "title": "Qualité exceptionnelle",
+            "text": "Nous sélectionnons chaque matière avec une exigence absolue pour vous offrir ce qu'il y a de mieux.",
+            "alignment": "left",
+            "padding_vertical": 24
+          }
+        },
+        "valeur_2": {
+          "type": "about-valeur",
+          "settings": {
+            "icon": "♾",
+            "title": "Conçu pour durer",
+            "text": "Nos produits sont pensés pour traverser le temps, pas pour être remplacés.",
+            "alignment": "left",
+            "padding_vertical": 24
+          }
+        },
+        "valeur_3": {
+          "type": "about-valeur",
+          "settings": {
+            "icon": "❤",
+            "title": "Soin & bien-être",
+            "text": "Chaque détail est pensé pour améliorer votre quotidien et votre sommeil.",
+            "alignment": "left",
+            "padding_vertical": 24
+          }
+        },
+        "citation": {
+          "type": "about-citation",
+          "settings": {
+            "quote": "Nous croyons que la beauté naît du soin apporté aux détails.",
+            "author": "Fondateur(trice) Andromeda",
+            "role": "Directrice créative",
+            "alignment": "center",
+            "padding_vertical": 80
+          }
+        },
+        "equipe_1": {
+          "type": "about-equipe",
+          "settings": {
+            "name": "Prénom Nom",
+            "role": "Co-fondateur(trice)",
+            "bio": "Décrivez en quelques mots le parcours ou la passion de cette personne.",
+            "photo_size": 120,
+            "photo_shape": "50%",
+            "alignment": "left",
+            "padding_vertical": 32
+          }
+        }
+      },
+      "block_order": [
+        "intro",
+        "valeur_1",
+        "valeur_2",
+        "valeur_3",
+        "citation",
+        "equipe_1"
+      ],
+      "settings": {
+        "gap": 0,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 60,
+        "padding-block-end": 80
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
