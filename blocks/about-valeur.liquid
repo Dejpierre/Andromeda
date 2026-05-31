@@ -1,0 +1,97 @@
+
+<div
+  class="about-valeur about-valeur--{{ block.id }}"
+  style="text-align: {{ block.settings.alignment }}; padding-block: {{ block.settings.padding_vertical }}px;"
+  {{ block.shopify_attributes }}
+>
+  {%- if block.settings.icon != blank -%}
+    <div class="about-valeur__icon">{{ block.settings.icon }}</div>
+  {%- endif -%}
+
+  {%- if block.settings.title != blank -%}
+    <h3 class="about-valeur__title">{{ block.settings.title }}</h3>
+  {%- endif -%}
+
+  {%- if block.settings.text != blank -%}
+    <p class="about-valeur__text">{{ block.settings.text }}</p>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .about-valeur {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .about-valeur__icon {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .about-valeur__title {
+    font-family: var(--font-heading--family);
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--color-foreground-heading);
+  }
+
+  .about-valeur__text {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--color-foreground);
+    opacity: 0.8;
+    margin: 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Valeur / engagements",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "icon",
+      "label": "Icône ou emoji",
+      "default": "✦",
+      "info": "Collez un emoji ou un symbole (ex: ✦ ♻ ❤)"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre de la valeur",
+      "default": "Qualité exceptionnelle"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description",
+      "default": "Nous sélectionnons chaque matière avec soin pour vous offrir le meilleur."
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Alignement",
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "label": "Espacement vertical",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "Valeur / engagements",
+      "category": "À propos"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,195 @@
+
+<div
+  class="about-equipe about-equipe--{{ block.id }}"
+  style="text-align: {{ block.settings.alignment }}; padding-block: {{ block.settings.padding_vertical }}px;"
+  {{ block.shopify_attributes }}
+>
+  {%- if block.settings.photo != blank -%}
+    <div class="about-equipe__photo-wrapper">
+      {{
+        block.settings.photo
+        | image_url: width: 400
+        | image_tag:
+          class: 'about-equipe__photo',
+          alt: block.settings.name,
+          loading: 'lazy',
+          widths: '200, 400'
+      }}
+    </div>
+  {%- else -%}
+    <div class="about-equipe__photo-wrapper about-equipe__photo-wrapper--placeholder">
+      <span class="about-equipe__photo-initial">
+        {%- if block.settings.name != blank -%}{{ block.settings.name | slice: 0 }}{%- else -%}A{%- endif -%}
+      </span>
+    </div>
+  {%- endif -%}
+
+  <div class="about-equipe__info">
+    {%- if block.settings.name != blank -%}
+      <p class="about-equipe__name">{{ block.settings.name }}</p>
+    {%- endif -%}
+
+    {%- if block.settings.role != blank -%}
+      <p class="about-equipe__role">{{ block.settings.role }}</p>
+    {%- endif -%}
+
+    {%- if block.settings.bio != blank -%}
+      <p class="about-equipe__bio">{{ block.settings.bio }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .about-equipe {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .about-equipe__photo-wrapper {
+    width: {{ block.settings.photo_size }}px;
+    aspect-ratio: 1;
+    border-radius: {{ block.settings.photo_shape }};
+    overflow: hidden;
+  }
+
+  .about-equipe[style*="text-align: center"] .about-equipe__photo-wrapper {
+    margin-inline: auto;
+  }
+
+  .about-equipe__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-equipe__photo-wrapper--placeholder {
+    background-color: var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .about-equipe__photo-initial {
+    font-family: var(--font-heading--family);
+    font-size: 2rem;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+  }
+
+  .about-equipe__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .about-equipe__name {
+    font-family: var(--font-heading--family);
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--color-foreground-heading);
+  }
+
+  .about-equipe__role {
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    margin: 0;
+    color: var(--color-foreground);
+  }
+
+  .about-equipe__bio {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    margin: 0.5rem 0 0;
+    color: var(--color-foreground);
+    opacity: 0.85;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Membre équipe",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "photo",
+      "label": "Photo"
+    },
+    {
+      "type": "range",
+      "id": "photo_size",
+      "label": "Taille de la photo",
+      "min": 60,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "select",
+      "id": "photo_shape",
+      "label": "Forme de la photo",
+      "options": [
+        {
+          "value": "0px",
+          "label": "Carré"
+        },
+        {
+          "value": "8px",
+          "label": "Arrondi"
+        },
+        {
+          "value": "50%",
+          "label": "Cercle"
+        }
+      ],
+      "default": "50%"
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": "Nom",
+      "default": "Prénom Nom"
+    },
+    {
+      "type": "text",
+      "id": "role",
+      "label": "Rôle / poste",
+      "default": "Co-fondatrice"
+    },
+    {
+      "type": "textarea",
+      "id": "bio",
+      "label": "Biographie courte",
+      "default": "Décrivez en quelques mots le parcours ou la passion de cette personne."
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Alignement",
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "label": "Espacement vertical",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "Membre équipe",
+      "category": "À propos"
+    }
+  ]
+}
+{% endschema %}

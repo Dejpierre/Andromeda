@@ -1,0 +1,98 @@
+
+<div
+  class="about-intro about-intro--{{ block.id }}"
+  style="text-align: {{ block.settings.alignment }}; padding-block: {{ block.settings.padding_vertical }}px;"
+  {{ block.shopify_attributes }}
+>
+  {%- if block.settings.label != blank -%}
+    <p class="about-intro__label">{{ block.settings.label }}</p>
+  {%- endif -%}
+
+  {%- if block.settings.title != blank -%}
+    <h2 class="about-intro__title">{{ block.settings.title }}</h2>
+  {%- endif -%}
+
+  {%- if block.settings.text != blank -%}
+    <div class="about-intro__text rte">{{ block.settings.text }}</div>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .about-intro__label {
+    font-family: var(--font-subheading--family);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    opacity: 0.6;
+    margin: 0 0 0.75rem;
+  }
+
+  .about-intro__title {
+    font-family: var(--font-heading--family);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    margin: 0 0 1.5rem;
+    color: var(--color-foreground-heading);
+  }
+
+  .about-intro__text {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-foreground);
+    max-width: 680px;
+  }
+
+  .about-intro[style*="text-align: center"] .about-intro__text {
+    margin-inline: auto;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Intro présentation",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label (ex: Notre histoire)",
+      "default": "Notre histoire"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre principal",
+      "default": "Qui sommes-nous ?"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texte d'introduction",
+      "default": "<p>Décrivez votre marque ici — votre vision, votre histoire, ce qui vous rend unique.</p>"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Alignement",
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "label": "Espacement vertical",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Intro présentation",
+      "category": "À propos"
+    }
+  ]
+}
+{% endschema %}

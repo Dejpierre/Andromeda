@@ -1,0 +1,119 @@
+
+<blockquote
+  class="about-citation about-citation--{{ block.id }}"
+  style="text-align: {{ block.settings.alignment }}; padding-block: {{ block.settings.padding_vertical }}px;"
+  {{ block.shopify_attributes }}
+>
+  {%- if block.settings.quote != blank -%}
+    <p class="about-citation__quote">{{ block.settings.quote }}</p>
+  {%- endif -%}
+
+  {%- if block.settings.author != blank or block.settings.role != blank -%}
+    <footer class="about-citation__footer">
+      {%- if block.settings.author != blank -%}
+        <cite class="about-citation__author">{{ block.settings.author }}</cite>
+      {%- endif -%}
+      {%- if block.settings.role != blank -%}
+        <span class="about-citation__role">{{ block.settings.role }}</span>
+      {%- endif -%}
+    </footer>
+  {%- endif -%}
+</blockquote>
+
+{% stylesheet %}
+  .about-citation {
+    margin: 0;
+    border: none;
+  }
+
+  .about-citation__quote {
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+    font-style: italic;
+    line-height: 1.3;
+    color: var(--color-foreground-heading);
+    margin: 0 0 1.5rem;
+  }
+
+  .about-citation__quote::before {
+    content: '\201C';
+  }
+
+  .about-citation__quote::after {
+    content: '\201D';
+  }
+
+  .about-citation__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .about-citation[style*="text-align: center"] .about-citation__footer {
+    align-items: center;
+  }
+
+  .about-citation__author {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--color-foreground);
+  }
+
+  .about-citation__role {
+    font-size: 0.8125rem;
+    opacity: 0.6;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Citation",
+  "tag": null,
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Citation",
+      "default": "Nous croyons que la beauté naît du soin apporté aux détails."
+    },
+    {
+      "type": "text",
+      "id": "author",
+      "label": "Auteur",
+      "default": "Fondatrice Andromeda"
+    },
+    {
+      "type": "text",
+      "id": "role",
+      "label": "Rôle / titre",
+      "default": "Directrice créative"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Alignement",
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "label": "Espacement vertical",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Citation",
+      "category": "À propos"
+    }
+  ]
+}
+{% endschema %}
