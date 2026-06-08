@@ -1169,8 +1169,11 @@
     iconPlay.style.display  = 'block';
     iconPause.style.display = 'none';
     playerEl.classList.remove('is-playing');
-    cancelSleepTimer();
-    if (playlistMode) playNextTrack();
+    if (playlistMode) {
+      playNextTrack();
+    } else {
+      cancelSleepTimer();
+    }
   });
 
   /* ── Clic sur la barre ───────────────────────────────── */
@@ -1495,11 +1498,10 @@
     updateSkipButtons();
   }
 
-  /* ── Orbe WebAudio ───────────────────────────────────── */
-  // AudioContext retiré — l'audio joue directement pour continuer en arrière-plan sur iOS
   function initOrbAudio() {}
 
   /* ── Orbe draw loop ──────────────────────────────────── */
+  let orbAnalyser = null;
   const orbCanvas = document.getElementById('moona-orb-canvas');
   const orbCx     = orbCanvas.getContext('2d');
   const OW = orbCanvas.width, OH = orbCanvas.height, OCX = OW / 2, OCY = OH / 2;

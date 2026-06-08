@@ -5,7 +5,7 @@
   {% endif %}
   lang="{{ request.locale.iso_code }}"
 >
-  <head>
+  <head><!-- SEOAnt Speed Up Script -->{%- if shop.metafields.seoantAppSiteSpeedUpV2.switch == 1 -%}{% include 'SEOAnt-SpeedUp' %}{%- endif -%}<!-- /SEOAnt Speed Up Script -->
     <script>if(!window.requestIdleCallback){window.requestIdleCallback=function(cb,o){var s=Date.now();return setTimeout(function(){cb({didTimeout:false,timeRemaining:function(){return Math.max(0,50-(Date.now()-s))}})},o&&o.timeout||1)};window.cancelIdleCallback=function(id){clearTimeout(id)}}</script>
     {%- if settings.favicon != blank -%}
       <link
@@ -519,6 +519,26 @@
   }
   </script>
   {%- endif -%}
+
+  <style>
+    .instafeed-new-layout-container {
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+    }
+    @media (max-width: 749px) {
+      .instafeed-new-layout-container {
+        width: 100% !important;
+        height: 140px !important;
+        overflow: hidden !important;
+      }
+      .instafeed-new-layout-item {
+        width: 140px !important;
+        height: 140px !important;
+        clip-path: inset(0px round 8px) !important;
+        flex-shrink: 0 !important;
+      }
+    }
+  </style>
 
 </head>
 

@@ -322,3 +322,14 @@
     --sticky-header-offset: var(--header-height);
   }
 {% endstylesheet %}
+
+<script>
+(function () {
+  document.addEventListener('variant:update', function () {
+    if (window.innerWidth <= 749) return;
+    var gallery = document.querySelector('media-gallery');
+    if (!gallery) return;
+    gallery.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+})();
+</script>

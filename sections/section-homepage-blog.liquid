@@ -1,0 +1,251 @@
+{% comment %} Section blog homepage — Andromeda style avec animations au survol {% endcomment %}
+
+<section class="hb" id="hb-{{ section.id }}">
+  <div class="hb__inner">
+
+    {% if section.settings.title != blank %}
+    <div class="hb__header">
+      <p class="hb__eyebrow">{{ section.settings.eyebrow | default: 'Journal' }}</p>
+      <h2 class="hb__title">{{ section.settings.title }}</h2>
+    </div>
+    {% endif %}
+
+    {% assign blog_source = blogs[section.settings.blog] %}
+    {% if blog_source and blog_source.articles_count > 0 %}
+
+    <div class="hb__grid">
+      {% for article in blog_source.articles limit: section.settings.post_limit %}
+      <a href="{{ article.url }}" class="hb__card">
+
+        <div class="hb__card-img-wrap">
+          {% if article.image %}
+          <img
+            src="{{ article.image | image_url: width: 800 }}"
+            alt="{{ article.image.alt | default: article.title | escape }}"
+            class="hb__card-img"
+            loading="lazy"
+          >
+          {% else %}
+          <div class="hb__card-img hb__card-img--placeholder"></div>
+          {% endif %}
+          <div class="hb__card-overlay"></div>
+        </div>
+
+        <div class="hb__card-body">
+          <div class="hb__card-meta">
+            {%- assign _m = article.published_at | date: "%-m" -%}
+            {%- case _m -%}
+              {%- when '1' -%}{%- assign _mfr = 'jan.' -%}
+              {%- when '2' -%}{%- assign _mfr = 'fév.' -%}
+              {%- when '3' -%}{%- assign _mfr = 'mars' -%}
+              {%- when '4' -%}{%- assign _mfr = 'avr.' -%}
+              {%- when '5' -%}{%- assign _mfr = 'mai' -%}
+              {%- when '6' -%}{%- assign _mfr = 'juin' -%}
+              {%- when '7' -%}{%- assign _mfr = 'juil.' -%}
+              {%- when '8' -%}{%- assign _mfr = 'août' -%}
+              {%- when '9' -%}{%- assign _mfr = 'sept.' -%}
+              {%- when '10' -%}{%- assign _mfr = 'oct.' -%}
+              {%- when '11' -%}{%- assign _mfr = 'nov.' -%}
+              {%- when '12' -%}{%- assign _mfr = 'déc.' -%}
+            {%- endcase -%}
+            <span>{{ article.published_at | date: "%-d" }} {{ _mfr }} {{ article.published_at | date: "%Y" }}</span>
+            {% assign word_count = article.content | strip_html | split: ' ' | size %}
+            {% assign read_time = word_count | divided_by: 200 | plus: 1 %}
+            <span>{{ read_time }} min de lecture</span>
+          </div>
+
+          <h3 class="hb__card-title">{{ article.title }}</h3>
+
+          {% if article.excerpt != blank %}
+          <p class="hb__card-excerpt">{{ article.excerpt | strip_html | truncate: 105 }}</p>
+          {% endif %}
+
+          <span class="hb__card-cta">
+            Lire l'article
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M3 7h8M7 4l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </div>
+
+      </a>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.show_all_link %}
+    <div class="hb__footer">
+      <a href="{{ blog_source.url }}" class="hb__all-link">
+        Voir tous les articles
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M3 7h8M7 4l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+    {% endif %}
+
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  #hb-{{ section.id }} {
+    background: {{ section.settings.bg_color | default: '#FAF7F2' }};
+    padding: {{ section.settings.padding_top | default: 64 }}px 0 {{ section.settings.padding_bottom | default: 64 }}px;
+  }
+  .hb__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ── Header ───────────────────────────────────────────── */
+  .hb__header { margin-bottom: 48px; }
+  .hb__eyebrow {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase;
+    color: #B8975A; margin-bottom: 10px;
+  }
+  .hb__title {
+    font-size: clamp(26px, 3.5vw, 38px); font-weight: 400;
+    color: #1C1A18; line-height: 1.15; letter-spacing: -0.01em;
+  }
+
+  /* ── Grid ─────────────────────────────────────────────── */
+  #hb-{{ section.id }} .hb__grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns | default: 3 }}, 1fr);
+    gap: 20px;
+  }
+
+  /* ── Card ─────────────────────────────────────────────── */
+  .hb__card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #FFFFFF;
+    border: 1px solid rgba(184,151,90,0.12);
+    box-shadow: 0 2px 12px rgba(28,26,24,0.04);
+    transition:
+      transform 0.38s cubic-bezier(0.22,1,0.36,1),
+      box-shadow 0.38s cubic-bezier(0.22,1,0.36,1),
+      border-color 0.25s ease;
+    will-change: transform;
+  }
+  .hb__card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(28,26,24,0.12);
+    border-color: rgba(184,151,90,0.35);
+  }
+
+  /* ── Image ────────────────────────────────────────────── */
+  .hb__card-img-wrap {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/2;
+    flex-shrink: 0;
+  }
+  .hb__card-img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    display: block;
+    transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
+  }
+  .hb__card-img--placeholder {
+    background: linear-gradient(135deg, #E8E2D8, #D4C9B5);
+  }
+  .hb__card:hover .hb__card-img { transform: scale(1.06); }
+
+  .hb__card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(28,26,24,0.12) 100%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .hb__card:hover .hb__card-overlay { opacity: 1; }
+
+  .hb__card-tag {
+    position: absolute; top: 14px; left: 14px;
+    font-size: 9px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #C8B89A;
+    background: rgba(25,26,46,0.7);
+    border: 1px solid rgba(200,184,154,0.3);
+    border-radius: 20px; padding: 3px 10px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ── Body ─────────────────────────────────────────────── */
+  .hb__card-body {
+    padding: 22px 24px 24px;
+    display: flex; flex-direction: column; flex: 1; gap: 10px;
+  }
+  .hb__card-meta {
+    display: flex; align-items: center; gap: 0;
+    font-size: 10px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #AAA49E;
+  }
+  .hb__card-meta span + span::before {
+    content: ' · '; margin: 0 4px; opacity: 0.5;
+  }
+  .hb__card-title {
+    font-size: 16px; font-weight: 500;
+    color: #1C1A18; line-height: 1.35;
+    transition: color 0.22s ease;
+  }
+  .hb__card:hover .hb__card-title { color: #B8975A; }
+
+  .hb__card-excerpt {
+    font-size: 13px; font-weight: 300; color: #8A837A;
+    line-height: 1.7; flex: 1;
+  }
+
+  .hb__card-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #B8975A;
+    margin-top: 2px;
+    transition: gap 0.22s ease;
+  }
+  .hb__card:hover .hb__card-cta { gap: 10px; }
+
+  /* ── Footer ───────────────────────────────────────────── */
+  .hb__footer { margin-top: 48px; text-align: center; }
+  .hb__all-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #B8975A; text-decoration: none;
+    border: 1px solid rgba(184,151,90,0.4); border-radius: 40px; padding: 14px 32px;
+    transition: background 0.22s ease, gap 0.22s ease;
+  }
+  .hb__all-link:hover { background: rgba(184,151,90,0.07); gap: 12px; }
+
+  /* ── Responsive ───────────────────────────────────────── */
+  @media (max-width: 900px) {
+    #hb-{{ section.id }} .hb__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    #hb-{{ section.id }} .hb__grid { grid-template-columns: 1fr; gap: 14px; }
+    .hb__inner { padding: 0 16px; }
+    .hb__header { margin-bottom: 32px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Blog homepage Andromeda",
+  "tag": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "blog", "id": "blog", "label": "Blog" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Journal" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Vous le saviez ?" },
+    { "type": "range", "id": "post_limit", "label": "Nombre d'articles", "min": 2, "max": 9, "step": 1, "default": 3 },
+    { "type": "range", "id": "columns", "label": "Colonnes (desktop)", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "checkbox", "id": "show_all_link", "label": "Lien \"Voir tous les articles\"", "default": true },
+    { "type": "color", "id": "bg_color", "label": "Couleur de fond", "default": "#FAF7F2" },
+    { "type": "range", "id": "padding_top", "label": "Padding haut", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bas", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 }
+  ],
+  "presets": [{ "name": "Blog homepage Andromeda" }]
+}
+{% endschema %}

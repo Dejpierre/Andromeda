@@ -1,0 +1,153 @@
+{%- liquid
+  assign end_date = block.settings.end_date
+  assign end_time = block.settings.end_time | default: '23:59'
+  assign label    = block.settings.label | default: 'Offre se termine dans'
+-%}
+
+{% if end_date != blank %}
+<div class="pcd" id="pcd-{{ block.id }}" data-end="{{ end_date }}T{{ end_time }}:00" {{ block.shopify_attributes }}>
+  <p class="pcd__label">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    {{ label }}
+  </p>
+  <div class="pcd__units">
+    <div class="pcd__unit">
+      <span class="pcd__val" id="pcd-d-{{ block.id }}">--</span>
+      <span class="pcd__lbl">jours</span>
+    </div>
+    <span class="pcd__sep">:</span>
+    <div class="pcd__unit">
+      <span class="pcd__val" id="pcd-h-{{ block.id }}">--</span>
+      <span class="pcd__lbl">heures</span>
+    </div>
+    <span class="pcd__sep">:</span>
+    <div class="pcd__unit">
+      <span class="pcd__val" id="pcd-m-{{ block.id }}">--</span>
+      <span class="pcd__lbl">minutes</span>
+    </div>
+    <span class="pcd__sep">:</span>
+    <div class="pcd__unit">
+      <span class="pcd__val" id="pcd-s-{{ block.id }}">--</span>
+      <span class="pcd__lbl">secondes</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .pcd {
+    background: linear-gradient(135deg, rgba(184,151,90,0.08) 0%, rgba(200,184,154,0.05) 100%);
+    border: 1px solid rgba(184,151,90,0.25);
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .pcd[hidden] { display: none; }
+
+  .pcd__label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    color: #B8975A;
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  .pcd__units {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .pcd__unit {
+    display: flex; flex-direction: column; align-items: center;
+    background: #1C1A18;
+    border-radius: 8px;
+    padding: 8px 12px;
+    min-width: 52px;
+  }
+  .pcd__val {
+    font-size: 22px; font-weight: 300;
+    color: #FFFFFF;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+  .pcd__lbl {
+    font-size: 9px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-top: 4px;
+  }
+  .pcd__sep {
+    font-size: 20px; font-weight: 300; color: #B8975A;
+    margin-bottom: 14px;
+  }
+
+  @media (max-width: 480px) {
+    .pcd { gap: 10px; }
+    .pcd__label { font-size: 10px; }
+    .pcd__unit { min-width: 44px; padding: 6px 8px; }
+    .pcd__val { font-size: 18px; }
+  }
+</style>
+
+<script>
+(function() {
+  var el     = document.getElementById('pcd-{{ block.id }}');
+  if (!el) return;
+  var endMs  = new Date(el.dataset.end).getTime();
+  var elD    = document.getElementById('pcd-d-{{ block.id }}');
+  var elH    = document.getElementById('pcd-h-{{ block.id }}');
+  var elM    = document.getElementById('pcd-m-{{ block.id }}');
+  var elS    = document.getElementById('pcd-s-{{ block.id }}');
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    var diff = endMs - Date.now();
+    if (diff <= 0) { el.hidden = true; return; }
+    var d = Math.floor(diff / 86400000);
+    var h = Math.floor((diff % 86400000) / 3600000);
+    var m = Math.floor((diff % 3600000)  / 60000);
+    var s = Math.floor((diff % 60000)    / 1000);
+    elD.textContent = pad(d);
+    elH.textContent = pad(h);
+    elM.textContent = pad(m);
+    elS.textContent = pad(s);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Countdown promo",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "Date de fin (AAAA-MM-JJ)",
+      "placeholder": "2026-05-17"
+    },
+    {
+      "type": "text",
+      "id": "end_time",
+      "label": "Heure de fin (HH:MM)",
+      "default": "23:59"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Texte",
+      "default": "Offre se termine dans"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Countdown promo"
+    }
+  ]
+}
+{% endschema %}

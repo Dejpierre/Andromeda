@@ -1,0 +1,16 @@
+api_version = "2026-04"
+
+[[extensions]]
+name = "Point Relais en premier"
+handle = "delivery-sort-relais"
+type = "function"
+uid = "7e0e3c57-7925-1f4a-5369-144d9441bc84ee66c32c"
+
+  [[extensions.targeting]]
+  target = "cart.delivery-options.transform.run"
+  input_query = "src/cart_delivery_options_transform_run.graphql"
+  export = "cart-delivery-options-transform-run"
+
+  [extensions.build]
+  command = ""
+  path = "dist/function.wasm"

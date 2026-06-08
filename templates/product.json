@@ -159,7 +159,7 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {}
-                }
+                },
               },
               "block_order": [
                 "judge_me_reviews_preview_badge_6TaTMh",
@@ -728,16 +728,6 @@
               },
               "blocks": {}
             },
-            "message_maman_fdm": {
-              "type": "product-gift-message",
-              "settings": {
-                "checkbox_label": "Ajouter un mot pour maman 💐",
-                "property_key": "Message pour maman",
-                "placeholder": "Ex : Merci pour tout, je t'aime...",
-                "max_length": 150
-              },
-              "blocks": {}
-            },
             "buy_buttons_eYQEYi": {
               "type": "buy-buttons",
               "settings": {
@@ -892,7 +882,6 @@
             "text_aEtTtq",
             "divider_VJhene",
             "variant_picker_R3rGDr",
-            "message_maman_fdm",
             "buy_buttons_eYQEYi",
             "accordion_desc_livraison",
             "rituel_banner"
@@ -956,6 +945,7 @@
         "icon_xi4JUw",
         "icon_XqV9Pz"
       ],
+      "disabled": true,
       "custom_css": [
         ".marquee__repeated-items p {font-family: \"Stellar\", serif !important; font-weight: 400; font-style: normal;}",
         ".marquee__repeated-items img {width: 200px !important; height: 200px !important; object-fit: cover; border-radius: 16px; display: block;}"
@@ -967,6 +957,59 @@
         "padding-block-start": 24,
         "padding-block-end": 24,
         "gap_between_elements": 24
+      }
+    },
+    "1777960337a20780a9": {
+      "type": "_blocks",
+      "blocks": {
+        "instafeed_app_block_VyH76n": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "Rejoignez-nous sur instagram",
+            "title_color": "",
+            "title_size_v2": 32,
+            "alignment": "left",
+            "instafeed_margin_top": 0,
+            "instafeed_margin_bottom": 0,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": false,
+            "link_alignment": "left",
+            "link_color": "#000000",
+            "background_color": "",
+            "feed_id": "",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_VyH76n"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 64,
+        "padding-block-end": 64
       }
     },
     "why_masque_produit": {
@@ -1636,6 +1679,7 @@
   "order": [
     "main",
     "marquee_HYpWxg",
+    "1777960337a20780a9",
     "why_masque_produit",
     "accordeon_produit",
     "section_comparatif",

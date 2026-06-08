@@ -99,8 +99,55 @@
     endif
   endif
 
+  assign selected_variant = selected_product.selected_or_first_available_variant
+  assign selected_variant_title = selected_variant.title
+
+  # Detect if any media uses alt text containing a variant title (multi-image-per-variant system)
+  assign uses_variant_alt = false
+  for media in selected_product.media
+    assign media_alt_lower = media.alt | downcase
+    for v in selected_product.variants
+      assign v_title_lower = v.title | downcase
+      if media_alt_lower contains v_title_lower
+        assign uses_variant_alt = true
+        break
+      endif
+    endfor
+    if uses_variant_alt
+      break
+    endif
+  endfor
+
+  assign selected_variant_title_lower = selected_variant_title | downcase
+
   assign sorted_media = '' | split: ','
-  if selected_variant_media
+
+  if uses_variant_alt
+    # 1. Images whose alt contains the current variant title
+    for media in selected_product.media
+      assign media_alt_lower = media.alt | downcase
+      if media_alt_lower contains selected_variant_title_lower
+        assign found_media = selected_product.media | where: 'id', media.id
+        assign sorted_media = sorted_media | concat: found_media
+      endif
+    endfor
+    # 2. Images not tagged to any variant (shared images)
+    for media in selected_product.media
+      assign media_alt_lower = media.alt | downcase
+      assign is_tagged = false
+      for v in selected_product.variants
+        assign v_title_lower = v.title | downcase
+        if media_alt_lower contains v_title_lower
+          assign is_tagged = true
+          break
+        endif
+      endfor
+      unless is_tagged
+        assign found_media = selected_product.media | where: 'id', media.id
+        assign sorted_media = sorted_media | concat: found_media
+      endunless
+    endfor
+  elsif selected_variant_media
     assign sorted_media = sorted_media | concat: selected_product.media | where: 'id', selected_variant_media.id
 
     for media in selected_product.media
@@ -860,6 +907,12 @@
   @keyframes fade-out {
     to {
       opacity: 0;
+    }
+  }
+  /* Force native touch scroll on mobile — in-viewport may not be set fast enough after replaceWith() */
+  @media screen and (max-width: 749px) {
+    media-gallery slideshow-component:not([disabled='true']) slideshow-slides {
+      overflow-x: scroll !important;
     }
   }
 {% endstylesheet %}

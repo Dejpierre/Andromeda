@@ -1,0 +1,547 @@
+{%- liquid
+  assign product_ref = all_products[section.settings.product]
+-%}
+
+{%- if product_ref != blank -%}
+<div class="sgm" id="sgm-{{ section.id }}" style="margin-top:{{ section.settings.padding_top }}px;margin-bottom:{{ section.settings.padding_bottom }}px;">
+
+    {%- comment -%} Backgrounds par variante {%- endcomment -%}
+    <div class="sgm__backgrounds">
+      {%- for variant in product_ref.variants -%}
+        {%- liquid
+          assign block_bg = blank
+          assign block_bg_mobile = blank
+          for block in section.blocks
+            if block.settings.variant_title == variant.title
+              if block.settings.background_image != blank
+                assign block_bg = block.settings.background_image
+              endif
+              if block.settings.background_image_mobile != blank
+                assign block_bg_mobile = block.settings.background_image_mobile
+              endif
+            endif
+          endfor
+          if block_bg != blank
+            assign bg_src = block_bg
+          else
+            assign bg_src = variant.featured_media | default: product_ref.featured_image
+          endif
+        -%}
+        <div class="sgm__bg{% if forloop.first %} is-active{% endif %}" data-variant-id="{{ variant.id }}">
+          {%- if bg_src != blank -%}
+            <picture>
+              {%- if block_bg_mobile != blank -%}
+                <source media="(max-width: 749px)" srcset="{{ block_bg_mobile | image_url: width: 1000 }} 1000w, {{ block_bg_mobile | image_url: width: 750 }} 750w" sizes="100vw">
+              {%- endif -%}
+              {%- if forloop.first -%}
+                {{- bg_src | image_url: width: 2000 | image_tag: class: 'sgm__bg-img', loading: 'eager', fetchpriority: 'high', widths: '800,1200,1600,2000', sizes: '100vw' -}}
+              {%- else -%}
+                {{- bg_src | image_url: width: 2000 | image_tag: class: 'sgm__bg-img', loading: 'lazy', widths: '800,1200,1600,2000', sizes: '100vw' -}}
+              {%- endif -%}
+            </picture>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="sgm__overlay-title"></div>
+
+    {%- comment -%} Titre section {%- endcomment -%}
+    {%- if section.settings.section_title != blank -%}
+      <h2 class="sgm__heading">{{ section.settings.section_title }}</h2>
+    {%- endif -%}
+
+    {%- comment -%} Carte de contenu par variante {%- endcomment -%}
+    <div class="sgm__content">
+      {%- for variant in product_ref.variants -%}
+        {%- liquid
+          assign block_desc = blank
+          assign block_desc_mobile = blank
+          assign block_btn_label = blank
+          assign block_btn_link = blank
+          for block in section.blocks
+            if block.settings.variant_title == variant.title
+              assign block_desc = block.settings.description
+              assign block_desc_mobile = block.settings.description_mobile
+              assign block_btn_label = block.settings.button_label
+              assign block_btn_link = block.settings.button_link
+            endif
+          endfor
+          assign btn_label = block_btn_label | default: section.settings.default_button_label | default: 'Je craque'
+          assign btn_url = block_btn_link | default: product_ref.url | append: '?variant=' | append: variant.id
+        -%}
+        <div class="sgm__card{% if forloop.first %} is-active{% endif %}" data-variant-id="{{ variant.id }}">
+          <p class="sgm__card-title">{{ variant.title }}</p>
+          {%- if block_desc != blank -%}
+            {%- if block_desc_mobile != blank -%}
+              <p class="sgm__card-desc sgm__card-desc--desktop">{{ block_desc }}</p>
+              <p class="sgm__card-desc sgm__card-desc--mobile">{{ block_desc_mobile }}</p>
+            {%- else -%}
+              <p class="sgm__card-desc">{{ block_desc }}</p>
+            {%- endif -%}
+          {%- endif -%}
+          <a href="{{ btn_url }}" class="button">{{ btn_label }}</a>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%} Swatches {%- endcomment -%}
+    <div class="sgm__swatches">
+      {%- for variant in product_ref.variants -%}
+        {%- liquid
+          assign block_thumb = blank
+          for block in section.blocks
+            if block.settings.variant_title == variant.title and block.settings.swatch_image != blank
+              assign block_thumb = block.settings.swatch_image
+            endif
+          endfor
+          if block_thumb == blank
+            assign block_thumb = variant.featured_media | default: product_ref.featured_image
+          endif
+        -%}
+        <button
+          class="sgm__swatch{% if forloop.first %} is-active{% endif %}"
+          type="button"
+          data-variant-id="{{ variant.id }}"
+          data-variant-url="{{ product_ref.url }}?variant={{ variant.id }}"
+          aria-label="{{ variant.title | escape }}"
+          aria-pressed="{{ forloop.first }}"
+        >
+          {%- if block_thumb != blank -%}
+            {{- block_thumb | image_url: width: 80 | image_tag:
+              class: 'sgm__swatch-img',
+              loading: 'lazy',
+              widths: '40,80',
+              sizes: '40px'
+            -}}
+          {%- endif -%}
+          <span class="sgm__swatch-label">{{ variant.title }}</span>
+        </button>
+      {%- endfor -%}
+    </div>
+
+</div>
+
+<style>
+.sgm {
+  position: relative;
+  width: 100%;
+  height: 90vh;
+  height: 90svh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.sgm__backgrounds {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.sgm--will-animate .sgm__heading,
+.sgm--will-animate .sgm__card,
+.sgm--will-animate .sgm__swatch {
+  opacity: 0;
+}
+.sgm__bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+.sgm__bg.is-active {
+  opacity: 1;
+}
+.sgm__bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 35%;
+  display: block;
+}
+.sgm__overlay-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 45%;
+  background: radial-gradient(ellipse at top left, rgba(0,0,0,0.6) 0%, transparent 65%);
+  z-index: 1;
+  pointer-events: none;
+}
+.sgm__heading {
+  position: absolute;
+  top: 32px;
+  left: 40px;
+  z-index: 2;
+  font-family: var(--font-primary--family, serif);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 400;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.sgm__content {
+  position: relative;
+  z-index: 2;
+  padding: 0 40px 16px;
+}
+.sgm__card {
+  display: none;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 14px;
+  padding: 22px 24px 20px;
+  max-width: 340px;
+  backdrop-filter: blur(4px);
+}
+.sgm__card.is-active {
+  display: block;
+}
+.sgm__card-title {
+  font-family: var(--font-primary--family, serif);
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1c1a18;
+  margin: 0 0 8px;
+  line-height: 1.1;
+}
+.sgm__card-desc {
+  font-size: 1rem;
+  line-height: 110%;
+  color: #4a4a4a;
+  margin: 0 0 16px;
+}
+.sgm__card-desc--mobile {
+  display: none;
+}
+@media (max-width: 749px) {
+  .sgm__card-desc--desktop {
+    display: none;
+  }
+  .sgm__card-desc--mobile {
+    display: block;
+  }
+}
+.sgm__swatches {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 8px;
+  padding: 12px 40px 28px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.sgm__swatches::-webkit-scrollbar {
+  display: none;
+}
+.sgm__swatch {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  background: rgb(255 255 255 / 70%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: none;
+  border-radius: 10px;
+  padding: 6px 16px 6px 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.sgm__swatch.is-active,
+.sgm__swatch:hover {
+  background: rgb(255 255 255 / 95%);
+}
+.sgm__swatch-img {
+  width: 52px;
+  height: 52px;
+  border-radius: 6px;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+}
+.sgm__swatch-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1a1f3a;
+  white-space: nowrap;
+  line-height: 1;
+}
+@media (max-width: 749px) {
+  .sgm__heading {
+    top: 20px;
+    left: 20px;
+    font-size: 1.6rem;
+  }
+  .sgm__content {
+    padding: 0 16px 12px;
+  }
+  .sgm__card {
+    padding: 16px 18px 16px;
+    max-width: 100%;
+  }
+  .sgm__card-title {
+    font-size: 1.7rem;
+  }
+  .sgm__card-desc {
+    font-size: 1rem;
+    line-height: 110%;
+  }
+  .sgm__card-btn {
+    font-size: 1.2rem;
+    padding: 10px 18px;
+  }
+  .sgm__swatches {
+    padding: 10px 16px 20px;
+    gap: 6px;
+  }
+  .sgm__swatch {
+    padding: 5px 12px 5px 5px;
+  }
+  .sgm__swatch-img {
+    width: 44px;
+    height: 44px;
+  }
+  .sgm__swatch-label {
+    font-size: 1rem;
+  }
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script>
+(function () {
+  var outer = document.getElementById('sgm-{{ section.id }}');
+  if (!outer) return;
+
+  var bgs      = outer.querySelectorAll('.sgm__bg');
+  var cards    = outer.querySelectorAll('.sgm__card');
+  var swatches = outer.querySelectorAll('.sgm__swatch');
+
+  // ── Masquer immédiatement les éléments à animer ────────────
+  outer.classList.add('sgm--will-animate');
+
+  // ── Swatch click ──────────────────────────────────────────
+  swatches.forEach(function (swatch) {
+    swatch.addEventListener('click', function () {
+      var id = this.dataset.variantId;
+
+      bgs.forEach(function (el) { el.classList.remove('is-active'); });
+      cards.forEach(function (el) { el.classList.remove('is-active'); });
+      swatches.forEach(function (el) {
+        el.classList.remove('is-active');
+        el.setAttribute('aria-pressed', 'false');
+      });
+
+      outer.querySelector('.sgm__bg[data-variant-id="' + id + '"]')?.classList.add('is-active');
+      outer.querySelector('.sgm__card[data-variant-id="' + id + '"]')?.classList.add('is-active');
+      this.classList.add('is-active');
+      this.setAttribute('aria-pressed', 'true');
+    });
+  });
+
+  // ── GSAP scroll animations ─────────────────────────────────
+  function initGsap() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+      // Fallback si GSAP ne charge pas : tout afficher
+      outer.classList.remove('sgm--will-animate');
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    var heading   = outer.querySelector('.sgm__heading');
+    var card      = outer.querySelector('.sgm__card.is-active');
+    var swatchEls = outer.querySelectorAll('.sgm__swatch');
+
+    // États initiaux invisibles
+    if (heading)          gsap.set(heading,   { opacity: 0, y: -24 });
+    if (card)             gsap.set(card,      { opacity: 0, y: 32 });
+    if (swatchEls.length) gsap.set(swatchEls, { opacity: 0, y: 20 });
+
+    // Titre : se déclenche tôt (top 50%)
+    if (heading) {
+      gsap.to(heading, {
+        opacity: 1, y: 0, duration: 0.7, ease: 'power2.out',
+        scrollTrigger: { trigger: outer, start: 'top 50%', once: true }
+      });
+    }
+
+    // Carte + swatches : start différent selon mobile/desktop
+    var isMobile = window.innerWidth <= 749;
+    var tlBottom = gsap.timeline({
+      scrollTrigger: { trigger: outer, start: isMobile ? 'top 60%' : 'bottom 90%', once: true },
+      onComplete: function () {
+        outer.classList.remove('sgm--will-animate');
+        if (heading)          gsap.set(heading,   { clearProps: 'opacity,transform,y' });
+        if (card)             gsap.set(card,      { clearProps: 'opacity,transform,y' });
+        if (swatchEls.length) gsap.set(swatchEls, { clearProps: 'opacity,transform,y' });
+      }
+    });
+
+    if (card) {
+      tlBottom.to(card, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0);
+    }
+    if (swatchEls.length) {
+      tlBottom.to(swatchEls, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.08 }, 0.15);
+    }
+  }
+
+  if (document.readyState === 'complete') {
+    initGsap();
+  } else {
+    window.addEventListener('load', initGsap);
+  }
+})();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Notre gamme",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Produit"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Titre de la section",
+      "default": "Notre gamme"
+    },
+    {
+      "type": "text",
+      "id": "default_button_label",
+      "label": "Texte bouton par défaut",
+      "default": "Je craque"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Hauteur desktop",
+      "min": 400,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "default": 680
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "label": "Hauteur mobile",
+      "min": 300,
+      "max": 700,
+      "step": 20,
+      "unit": "px",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "label": "Arrondi des coins (desktop)",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "radius_mobile",
+      "label": "Arrondi des coins (mobile)",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacement haut",
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacement bas",
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "variante",
+      "name": "Contenu par variante",
+      "settings": [
+        {
+          "type": "text",
+          "id": "variant_title",
+          "label": "Nom exact de la variante",
+          "info": "Doit correspondre exactement (ex: Crépuscule)"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Image de fond (desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image_mobile",
+          "label": "Image de fond (mobile)",
+          "info": "Optionnel — si vide, utilise l'image desktop"
+        },
+        {
+          "type": "image_picker",
+          "id": "swatch_image",
+          "label": "Thumbnail du swatch (close-up tissu)"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description (desktop)"
+        },
+        {
+          "type": "textarea",
+          "id": "description_mobile",
+          "label": "Description (mobile)",
+          "info": "Optionnel — version courte pour mobile. Si vide, utilise la description desktop."
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Texte du bouton (optionnel)"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Lien du bouton (optionnel, sinon → page produit)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Notre gamme",
+      "blocks": [
+        { "type": "variante", "settings": { "variant_title": "Crépuscule" } },
+        { "type": "variante", "settings": { "variant_title": "Clair de lune" } },
+        { "type": "variante", "settings": { "variant_title": "Terracotta" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

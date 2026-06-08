@@ -1,5 +1,13 @@
 {% comment %} Article guide masque — Andromeda dark theme — contenu natif article {% endcomment %}
 
+<!-- Barre de lecture -->
+<div class="ag__progress-bar" id="ag-progress" aria-hidden="true"></div>
+
+<!-- Scroll to top -->
+<button class="ag__scroll-top" id="ag-scroll-top" aria-label="Retour en haut" hidden>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
 <div class="ag" id="ag">
 
   <!-- HERO dark -->
@@ -25,6 +33,9 @@
       {% endif %}
       <div class="ag__meta">
         <span>{{ article.published_at | date: "%d %B %Y" }}</span>
+        {% assign word_count = article.content | strip_html | split: ' ' | size %}
+        {% assign read_time = word_count | divided_by: 200 | plus: 1 %}
+        <span>{{ read_time }} min de lecture</span>
         {% if article.tags.size > 0 %}
           {% for tag in article.tags limit: 2 %}
             <span>{{ tag }}</span>
@@ -55,6 +66,13 @@
     >
   </div>
   {% endif %}
+
+  <!-- Ornement séparateur -->
+  <div class="ag__ornament" aria-hidden="true">
+    <span class="ag__ornament-line"></span>
+    <span class="ag__ornament-star">✦</span>
+    <span class="ag__ornament-line"></span>
+  </div>
 
   <!-- ARTICLE BODY — contenu natif Shopify -->
   <div class="ag__body ag__rte">
@@ -145,6 +163,7 @@
 
   /* ── Back ────────────────────────────────────────────── */
   .ag__back-wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 40px 24px 0; }
+  .ag__back-wrap .andromeda-bc { margin-block-end: 0; }
   .ag__back {
     display: inline-flex; align-items: center; gap: 6px;
     font-size: 11px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase;
@@ -219,7 +238,9 @@
   }
   .ag__featured-img {
     width: 100%;
-    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
     display: block;
     border-radius: 12px;
     box-shadow: 0 24px 60px rgba(25,26,46,0.18);
@@ -394,20 +415,89 @@
   .ag__plus p { font-size: 14px !important; color: #5A5450 !important; line-height: 1.8 !important; margin: 0 !important; }
 
   /* ── FAQ ─────────────────────────────────────────────── */
-  .ag__faq { margin: 28px 0 52px; border-top: 1px solid rgba(184,151,90,0.2); }
-  .ag__faq-item { padding: 24px 0; border-bottom: 1px solid rgba(184,151,90,0.15); }
+  .ag__faq { margin: 28px 0 52px; }
+  .ag__faq-item { padding: 28px 0; border-bottom: 1px solid rgba(184,151,90,0.12); }
+  .ag__faq-item:first-child { border-top: 1px solid rgba(184,151,90,0.12); }
   .ag__faq-q {
-    font-size: 15px; font-weight: 600; color: #1C1A18;
-    line-height: 1.4; margin: 0 0 10px;
-    padding-left: 20px;
-    position: relative;
+    font-size: 16px; font-weight: 500; color: #1C1A18;
+    line-height: 1.4; margin: 0 0 12px;
+    display: flex; align-items: flex-start; gap: 10px;
   }
   .ag__faq-q::before {
     content: '✦';
-    position: absolute; left: 0; top: 1px;
-    font-size: 9px; color: #B8975A; line-height: 1.6;
+    flex-shrink: 0;
+    font-size: 8px; color: #B8975A;
+    margin-top: 0.35em;
   }
-  .ag__faq-a { font-size: 14px; font-weight: 300; color: #5A5450; line-height: 1.8; margin: 0; padding-left: 20px; }
+  .ag__faq-a { font-size: 15px; font-weight: 300; color: #5A5450; line-height: 1.85; margin: 0; padding-left: 18px; }
+
+  /* ── Progress bar ────────────────────────────────────── */
+  .ag__progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: linear-gradient(to right, #C8B89A, #B8975A);
+    z-index: 9999;
+    transition: width 0.1s linear;
+  }
+
+  /* ── Scroll to top ───────────────────────────────────── */
+  .ag__scroll-top {
+    position: fixed;
+    bottom: 32px; right: 24px;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: #1C1A18;
+    border: 1px solid rgba(200,184,154,0.3);
+    color: #C8B89A;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    z-index: 999;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .ag__scroll-top.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .ag__scroll-top[hidden] { display: none; }
+
+  /* ── Ornement ─────────────────────────────────────────── */
+  .ag__ornament {
+    display: flex; align-items: center; justify-content: center;
+    gap: 16px;
+    max-width: 760px; margin: 48px auto 0;
+    padding: 0 24px;
+  }
+  .ag__ornament-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(184,151,90,0.3), transparent);
+  }
+  .ag__ornament-star {
+    font-size: 10px; color: #B8975A; opacity: 0.7;
+  }
+
+  /* ── Lead paragraph ──────────────────────────────────── */
+  .ag__rte > p:first-of-type {
+    font-size: 18px !important;
+    font-weight: 300;
+    color: #3A3733 !important;
+    line-height: 1.75;
+  }
+
+  /* ── H2 numérotés ────────────────────────────────────── */
+  .ag__rte { counter-reset: ag-h2; }
+  .ag__rte h2 { counter-increment: ag-h2; }
+  .ag__rte h2::before {
+    content: counter(ag-h2, decimal-leading-zero);
+    display: block;
+    font-size: 10px; font-weight: 500; letter-spacing: 0.25em;
+    color: #B8975A; margin-bottom: 8px;
+    font-family: inherit;
+  }
 
   /* ── Responsive ──────────────────────────────────────── */
   @media (max-width: 640px) {
@@ -445,6 +535,23 @@
     document.addEventListener('DOMContentLoaded', buildFAQSchema);
   } else {
     buildFAQSchema();
+  }
+
+  var progressBar = document.getElementById('ag-progress');
+  var scrollTop = document.getElementById('ag-scroll-top');
+  if (progressBar || scrollTop) {
+    window.addEventListener('scroll', function() {
+      var doc = document.documentElement;
+      var scrolled = doc.scrollTop || document.body.scrollTop;
+      var total = doc.scrollHeight - doc.clientHeight;
+      if (progressBar) progressBar.style.width = (total > 0 ? (scrolled / total * 100) : 0) + '%';
+      if (scrollTop) scrollTop.classList.toggle('is-visible', scrolled > 400);
+    }, { passive: true });
+    if (scrollTop) {
+      scrollTop.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
   }
 })();
 </script>

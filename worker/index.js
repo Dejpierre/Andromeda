@@ -147,6 +147,85 @@ async function fetchRituel(token, env) {
   return data.data?.metaobjects?.nodes?.[0] ?? null;
 }
 
+// ─── Activate delivery customization ─────────────────────────────────────────
+
+async function handleActivateDeliverySort(env, origin) {
+  const apiUrl = `https://${env.SHOPIFY_STORE_URL}/admin/api/2024-10/graphql.json`;
+  const headers = {
+    'Content-Type': 'application/json',
+    'X-Shopify-Access-Token': env.SHOPIFY_ADMIN_API_TOKEN,
+  };
+
+  // Check token scopes first
+  const scopeRes = await fetch(apiUrl, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      query: `{ currentAppInstallation { accessScopes { handle } } }`,
+    }),
+  });
+  const scopeData = await scopeRes.json();
+  const scopes = scopeData.data?.currentAppInstallation?.accessScopes?.map(s => s.handle) ?? [];
+  const hasDeliveryScope = scopes.includes('read_delivery_customizations');
+
+  // 1. Find the delivery-sort-relais function ID
+  const fnRes = await fetch(apiUrl, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      query: `{ shopifyFunctions(first: 25) { nodes { id title apiType } } }`,
+    }),
+  });
+  const fnData = await fnRes.json();
+  const functions = fnData.data?.shopifyFunctions?.nodes ?? [];
+  const fn = functions.find(f =>
+    f.title?.toLowerCase().includes('relais') ||
+    f.title?.toLowerCase().includes('delivery-sort') ||
+    f.apiType === 'cart_delivery_options_transform'
+  );
+
+  if (!fn) {
+    return json({
+      error: 'Function not found',
+      available: functions.map(f => f.title),
+      hasDeliveryScope,
+      scopes: scopes.filter(s => s.includes('deliver')),
+      rawFnErrors: fnData.errors,
+    }, 404, origin);
+  }
+
+  // 2. Create the delivery customization
+  const mutRes = await fetch(apiUrl, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      query: `
+        mutation CreateDeliveryCustomization($input: DeliveryCustomizationInput!) {
+          deliveryCustomizationCreate(deliveryCustomization: $input) {
+            deliveryCustomization { id title enabled }
+            userErrors { field message }
+          }
+        }
+      `,
+      variables: {
+        input: {
+          functionId: fn.id,
+          title: 'Point Relais en premier',
+          enabled: true,
+        },
+      },
+    }),
+  });
+  const mutData = await mutRes.json();
+  const result = mutData.data?.deliveryCustomizationCreate;
+
+  if (result?.userErrors?.length) {
+    return json({ error: 'GraphQL errors', details: result.userErrors }, 400, origin);
+  }
+
+  return json({ success: true, customization: result?.deliveryCustomization, functionFound: fn }, 200, origin);
+}
+
 // ─── Main handler ─────────────────────────────────────────────────────────────
 
 export default {
@@ -172,6 +251,11 @@ export default {
           'Access-Control-Allow-Origin': '*',
         },
       });
+    }
+
+    // Route activation delivery customization (one-shot)
+    if (url.pathname === '/api/activate-delivery-sort') {
+      return handleActivateDeliverySort(env, origin);
     }
 
     // Route API rituels

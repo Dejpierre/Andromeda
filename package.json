@@ -9,6 +9,7 @@
     "shopify:dev": "shopify theme dev --store andromeda-paris.myshopify.com"
   },
   "dependencies": {
+    "@shopify/shopify_function": "~2.0.0",
     "dotenv": "^16.4.5"
   }
 }
