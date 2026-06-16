@@ -293,8 +293,8 @@
       }
     }
 
-    /* Always visible on mobile */
-    sticky-add-to-cart[data-variant-available='true'] .sticky-add-to-cart__bar {
+    /* Visible sur mobile uniquement quand stuck (CTA dépassé) */
+    sticky-add-to-cart[data-variant-available='true'] .sticky-add-to-cart__bar[data-stuck='true'] {
       opacity: 1;
       transform: translateX(-50%) translateY(0%);
     }
@@ -360,6 +360,10 @@
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+  }
+  @media screen and (max-width: 749px) {
+    /* Breadcrumb masqué sur mobile */
+    .andromeda-bc { display: none !important; }
   }
 {% endstylesheet %}
 
