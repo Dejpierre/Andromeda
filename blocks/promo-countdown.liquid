@@ -1,8 +1,25 @@
 {%- liquid
-  assign end_date = block.settings.end_date
-  assign end_time = block.settings.end_time | default: '23:59'
-  assign label    = block.settings.label | default: 'Offre se termine dans'
+  assign end_date    = block.settings.end_date
+  assign end_time    = block.settings.end_time | default: '23:59'
+  assign label       = block.settings.label | default: 'Offre se termine dans'
+  assign simple_mode = block.settings.simple_mode
+  assign simple_text = block.settings.simple_text
+  assign dot_color   = block.settings.dot_color | default: '#E63946'
 -%}
+
+{%- if simple_mode and simple_text != blank -%}
+<p class="pcd-msg" {{ block.shopify_attributes }}>{{ simple_text }}</p>
+<style>
+  .pcd-msg {
+    display: block;
+    margin: -24px 0 0;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    letter-spacing: 0.01em;
+  }
+</style>
+{%- elsif end_date != blank -%}
 
 {% if end_date != blank %}
 <div class="pcd" id="pcd-{{ block.id }}" data-end="{{ end_date }}T{{ end_time }}:00" {{ block.shopify_attributes }}>
@@ -37,55 +54,46 @@
   .pcd {
     background: linear-gradient(135deg, rgba(184,151,90,0.08) 0%, rgba(200,184,154,0.05) 100%);
     border: 1px solid rgba(184,151,90,0.25);
-    border-radius: 12px;
-    padding: 14px 18px;
-    display: flex;
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: inline-flex;
     align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
+    gap: 8px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
   }
   .pcd[hidden] { display: none; }
 
   .pcd__label {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 4px;
+    font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
     color: #B8975A;
     white-space: nowrap;
     margin: 0;
   }
 
   .pcd__units {
-    display: flex; align-items: center; gap: 6px;
+    display: flex; align-items: center; gap: 3px;
   }
   .pcd__unit {
-    display: flex; flex-direction: column; align-items: center;
+    display: flex; flex-direction: row; align-items: baseline; gap: 2px;
     background: #1C1A18;
-    border-radius: 8px;
-    padding: 8px 12px;
-    min-width: 52px;
+    border-radius: 5px;
+    padding: 3px 6px;
   }
   .pcd__val {
-    font-size: 22px; font-weight: 300;
+    font-size: 13px; font-weight: 400;
     color: #FFFFFF;
     line-height: 1;
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.02em;
   }
   .pcd__lbl {
-    font-size: 9px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
-    margin-top: 4px;
+    font-size: 9px; font-weight: 400; letter-spacing: 0.05em; text-transform: lowercase;
+    color: rgba(255,255,255,0.5);
   }
   .pcd__sep {
-    font-size: 20px; font-weight: 300; color: #B8975A;
-    margin-bottom: 14px;
-  }
-
-  @media (max-width: 480px) {
-    .pcd { gap: 10px; }
-    .pcd__label { font-size: 10px; }
-    .pcd__unit { min-width: 44px; padding: 6px 8px; }
-    .pcd__val { font-size: 18px; }
+    font-size: 11px; font-weight: 300; color: #B8975A;
   }
 </style>
 
@@ -119,12 +127,41 @@
 })();
 </script>
 {% endif %}
+{%- endif -%}
 
 {% schema %}
 {
   "name": "Countdown promo",
   "tag": "div",
   "settings": [
+    {
+      "type": "header",
+      "content": "Mode message simple"
+    },
+    {
+      "type": "checkbox",
+      "id": "simple_mode",
+      "label": "Afficher un message simple (sans compteur)",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "simple_text",
+      "label": "Texte du message",
+      "default": "La promotion se termine dimanche",
+      "visible_if": "{{ block.settings.simple_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Couleur du point",
+      "default": "#E63946",
+      "visible_if": "{{ block.settings.simple_mode }}"
+    },
+    {
+      "type": "header",
+      "content": "Compteur"
+    },
     {
       "type": "text",
       "id": "end_date",

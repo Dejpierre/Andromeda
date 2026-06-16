@@ -909,6 +909,32 @@
       opacity: 0;
     }
   }
+  /* Vidéo galerie produit en cover pour remplir le cadre */
+  .product-media-container--video deferred-media,
+  .product-media-container--external_video deferred-media {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .product-media-container--video deferred-media video,
+  .product-media-container--video deferred-media .deferred-media__poster-button ~ video {
+    object-fit: cover !important;
+    aspect-ratio: unset !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .product-media-container--video .deferred-media__poster-button,
+  .product-media-container--external_video .deferred-media__poster-button {
+    aspect-ratio: unset !important;
+    width: 100%;
+    height: 100%;
+  }
+  .product-media-container--video .deferred-media__poster-button img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
   /* Force native touch scroll on mobile — in-viewport may not be set fast enough after replaceWith() */
   @media screen and (max-width: 749px) {
     media-gallery slideshow-component:not([disabled='true']) slideshow-slides {
@@ -916,3 +942,157 @@
     }
   }
 {% endstylesheet %}
+
+<script>
+(function () {
+  if (window.innerWidth > 749) return;
+
+  function initThumbnailScroll(gallery) {
+    var thumbnails = gallery.querySelectorAll('.slideshow-controls__thumbnail');
+    var scroller   = gallery.querySelector('slideshow-slides');
+    if (!thumbnails.length || !scroller) return;
+
+    thumbnails.forEach(function (btn, i) {
+      btn.addEventListener('click', function () {
+        var slides = scroller.querySelectorAll('slideshow-slide');
+        if (!slides[i]) return;
+
+        scroller.scrollTo({ left: slides[i].offsetLeft, behavior: 'smooth' });
+
+        thumbnails.forEach(function (t) { t.setAttribute('aria-selected', 'false'); });
+        btn.setAttribute('aria-selected', 'true');
+      });
+    });
+  }
+
+  function attachToGalleries() {
+    document.querySelectorAll('media-gallery').forEach(initThumbnailScroll);
+  }
+
+  document.addEventListener('DOMContentLoaded', attachToGalleries);
+
+  // Re-attache après un changement de variante (replaceWith)
+  document.addEventListener('variant:update', function () {
+    setTimeout(attachToGalleries, 300);
+  });
+
+  // Mise à jour des vignettes actives en temps réel pendant le scroll natif (mobile)
+  function initThumbnailScrollSync(gallery) {
+    var scroller   = gallery.querySelector('slideshow-slides');
+    var thumbnails = gallery.querySelectorAll('.slideshow-controls__thumbnail');
+    if (!scroller || !thumbnails.length) return;
+
+    scroller.addEventListener('scroll', function () {
+      var slides    = scroller.querySelectorAll('slideshow-slide');
+      if (!slides.length) return;
+      var center    = scroller.scrollLeft + scroller.offsetWidth / 2;
+      var closest   = 0;
+      var minDist   = Infinity;
+      slides.forEach(function (slide, i) {
+        var slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+        var dist = Math.abs(slideCenter - center);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      thumbnails.forEach(function (t, i) {
+        t.setAttribute('aria-selected', i === closest ? 'true' : 'false');
+      });
+    }, { passive: true });
+  }
+
+  function attachScrollSync() {
+    document.querySelectorAll('media-gallery').forEach(initThumbnailScrollSync);
+  }
+
+  document.addEventListener('DOMContentLoaded', attachScrollSync);
+  document.addEventListener('variant:update', function () {
+    setTimeout(attachScrollSync, 350);
+  });
+
+  // ── Désactiver le zoom dialog sur mobile ──────────────────
+  document.addEventListener('click', function (e) {
+    var slide = e.target.closest('slideshow-slide');
+    if (slide && (slide.getAttribute('on:click') || '').includes('zoom-dialog')) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+    }
+  }, true);
+
+  // ── Autoplay vidéo mobile via IntersectionObserver ────────
+  function playSlideVideo(slide) {
+    var dm     = slide.querySelector('deferred-media');
+    var poster = slide.querySelector('.deferred-media__poster-button');
+
+    function hidePoster() {
+      if (poster) {
+        poster.style.opacity = '0';
+        poster.style.transition = 'opacity 0.3s';
+        poster.style.pointerEvents = 'none';
+      }
+    }
+
+    function setupVideo(video) {
+      video.muted      = true;
+      video.loop       = true;
+      video.controls   = false;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      video.removeAttribute('controls');
+      hidePoster();
+      video.play().catch(function () {});
+      video.addEventListener('playing', hidePoster, { once: true });
+    }
+
+    var video = slide.querySelector('video');
+    if (video) { setupVideo(video); return; }
+
+    // Charger depuis le <template>
+    if (dm) {
+      if (typeof dm.showDeferredMedia === 'function') {
+        dm.showDeferredMedia();
+      } else {
+        var tpl = dm.querySelector('template');
+        if (tpl) {
+          var clone = tpl.content.firstElementChild?.cloneNode(true);
+          if (clone) dm.appendChild(clone);
+        }
+      }
+      // Attendre que le DOM soit mis à jour
+      requestAnimationFrame(function () {
+        var v = slide.querySelector('video');
+        if (v) setupVideo(v);
+      });
+    }
+  }
+
+  function initVideoAutoplay(gallery) {
+    var slides = gallery.querySelectorAll('slideshow-slide');
+    if (!slides.length) return;
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          if (entry.target.querySelector('deferred-media, video')) {
+            playSlideVideo(entry.target);
+          }
+        } else {
+          var video = entry.target.querySelector('video');
+          if (video && !video.paused) video.pause();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    slides.forEach(function (slide) {
+      if (slide.querySelector('deferred-media, video')) observer.observe(slide);
+    });
+  }
+
+  function attachVideoAutoplay() {
+    document.querySelectorAll('media-gallery').forEach(initVideoAutoplay);
+  }
+
+  document.addEventListener('DOMContentLoaded', attachVideoAutoplay);
+  document.addEventListener('variant:update', function () {
+    setTimeout(attachVideoAutoplay, 350);
+  });
+})();
+</script>

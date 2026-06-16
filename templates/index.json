@@ -16,7 +16,7 @@
           "type": "custom-liquid",
           "name": "t:names.custom_liquid",
           "settings": {
-            "custom_liquid": "<div class=\"gradient\">\n</div>\n\n<style>\n.gradient{\nposition: absolute;\nleft: -10%;\nright: -10%;\nbottom: -40px;\nheight: 50%;\nwidth: auto;\nbackground: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, #000 100%);\n}\n</style>"
+            "custom_liquid": "<div class=\"gradient\">\n</div>\n\n<style>\n.gradient{\ndisplay:none;\nposition: absolute;\nleft: -10%;\nright: -10%;\nbottom: -40px;\nheight: 50%;\nwidth: auto;\nbackground: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, #000 100%);\n}\n</style>"
           },
           "blocks": {}
         },
@@ -24,16 +24,16 @@
           "type": "group",
           "name": "t:names.group",
           "settings": {
-            "content_direction": "row",
+            "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "space-between",
             "vertical_alignment": "flex-end",
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "flex-end",
+            "vertical_alignment_flex_direction_column": "center",
             "gap": 0,
-            "width": "fill",
-            "custom_width": 100,
+            "width": "custom",
+            "custom_width": 40,
             "width_mobile": "fill",
             "custom_width_mobile": 100,
             "height": "fit",
@@ -104,7 +104,7 @@
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
                   "settings": {
-                    "custom_liquid": "<h1 class=\"hero-title hero-title--seo\">\n  Masque de Sommeil en Soie de Mûrier 22 Mommes\n</h1>\n<h2 class=\"hero-title hero-title--tagline\">\n  Dormez dans l'obscurité <span class=\"title-accent\">parfaite.</span> <br>Réveillez-vous\n  <span class=\"title-accent\">transformé</span>\n</h2>\n\n<style>\n\n@font-face {\n    font-family: 'Stellar';\n    src: url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/MirageStellar.ttf?v=1772405200') format('opentype');\n  }\n\n  .hero-title {\n    font-weight: 400 !important;\n    margin-bottom: 0.4rem;\n  }\n  .hero-title--seo {\n    font-size: 1.1rem;\n    letter-spacing: 0.12em;\n    text-transform: uppercase;\n    opacity: 0.75;\n  }\n  .hero-title--tagline {\n    font-size: 3rem;\n    margin-bottom: 1rem;\n  }\n  @media (max-width: 749px) {\n    .hero-title--tagline {\n      font-size: 2rem;\n    }\n  }\n  .title-accent {\n    font-family: 'Stellar', serif;\n    font-weight: 400;\n    font-style: normal;\n    font-display: swap;\n    margin-bottom: 0px;\n  }\n</style>"
+                    "custom_liquid": "<h1 class=\"hero-title hero-title--seo\">\n  Masque de Sommeil en Soie de Mûrier 22 Mommes\n</h1>\n<h2 class=\"hero-title hero-title--tagline\">\n  Dormez dans l'obscurité <span class=\"title-accent\">parfaite.</span> <br>Réveillez-vous\n  <span class=\"title-accent\">transformé</span>\n</h2>\n\n<style>\n\n@font-face {\n    font-family: 'Stellar';\n    src: url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/MirageStellar.ttf?v=1772405200') format('opentype');\n  }\n\n  .hero-title {\n    font-weight: 400 !important;\n    margin-bottom: 0.4rem;\n  }\n  .hero-title--seo {\n    font-size: 1rem;\n    letter-spacing: 0.12em;\n    text-transform: uppercase;\n    opacity: 0.75;\n  }\n  .hero-title--tagline {\n    font-size: 3rem;\n    margin-bottom: 1rem;\n  }\n  @media (max-width: 749px) {\n    .hero-title--tagline {\n      font-size: 2rem;\n    }\n  }\n  .title-accent {\n    font-family: 'Stellar', serif;\n    font-weight: 400;\n    font-style: normal;\n    font-display: swap;\n    margin-bottom: 0px;\n  }\n</style>"
                   },
                   "blocks": {}
                 },
@@ -167,24 +167,25 @@
         "group_YQjhVq"
       ],
       "custom_css": [
-        ".hero__container {border-radius: 0px 0px 48px 48px; position: relative; overflow: hidden;}"
+        ".hero__container {border-radius: 0px 0px 48px 48px; position: relative; overflow: hidden;}",
+        ".section-content-wrapper.section-content-wrapper {--vertical-alignment-mobile: flex-end !important;}"
       ],
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/Image_2_2_1.png",
+        "image_1": "shopify://shop_images/hero-section-andromeda.png",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": true,
         "media_type_1_mobile": "image",
-        "image_1_mobile": "shopify://shop_images/Andromeda_Packaging_Mobile_Portrait.png",
+        "image_1_mobile": "shopify://shop_images/hero-section-andromeda-mobile_02bd4574-a4d6-49f7-85e3-34a99f9159a5.png",
         "media_type_2_mobile": "image",
         "link": "",
         "open_in_new_tab": false,
         "content_direction": "row",
         "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
         "align_baseline": true,
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "flex-end",
@@ -192,14 +193,14 @@
         "section_width": "page-width",
         "section_height": "custom",
         "section_height_custom": 90,
-        "color_scheme": "scheme-6",
+        "color_scheme": "scheme-58084d4c-a86e-4d0a-855e-a0966e5043f7",
         "toggle_overlay": false,
         "overlay_color": "#12121266",
         "overlay_style": "solid",
         "gradient_direction": "to bottom",
         "blurred_reflection": false,
         "reflection_opacity": 75,
-        "padding-block-start": 100,
+        "padding-block-start": 0,
         "padding-block-end": 24
       }
     },
@@ -296,84 +297,109 @@
         "image_ratio": "4/3",
         "image_radius": 16,
         "heading": "",
+        "cta_label": "J'achète",
+        "cta_link": "shopify://products/masque-de-sommeil-en-soie-de-murier-22-mommes",
         "background_color": "#ffffff",
         "text_color": "#1c1a18",
         "padding_top": 64,
         "padding_bottom": 64
       }
     },
-    "section_product_hero_mANhnJ": {
-      "type": "section-product-hero",
+    "section_gamme_mkyTdK": {
+      "type": "section-gamme",
       "blocks": {
-        "variante_NCjErm": {
+        "variante_BL8ehd": {
           "type": "variante",
           "settings": {
             "variant_title": "Nébuleuse",
-            "image": "shopify://shop_images/Image_35.png",
-            "background_image": "shopify://shop_images/Masques_Bordeaux_Motif_Corrige.jpg"
+            "background_image": "shopify://shop_images/Masque-nebuleuse-lueur-camille.png",
+            "background_image_mobile": "shopify://shop_images/Masque-nebuleuse-lueur-camille-mobile.png",
+            "description": "Un violet profond et soyeux, inspiré des brumes mystérieuses qui dansent au cœur des galaxies.\nUne teinte envoûtante et précieuse, entre rêve céleste, douceur nocturne et élégance magnétique.",
+            "description_mobile": "Un violet profond et soyeux, inspiré des brumes mystérieuses qui dansent au cœur des galaxies.",
+            "button_label": "",
+            "button_link": "https://www.andromedaparis.com/products/masque-de-sommeil-en-soie-de-murier-22-mommes?variant=57399412851023"
           }
         },
-        "variante_B4Ptdj": {
-          "type": "variante",
-          "settings": {
-            "variant_title": "Nuit céleste",
-            "image": "shopify://shop_images/Image_34.png",
-            "background_image": "shopify://shop_images/Masques_Bleu_Nuit_Motif_Repetitif.jpg"
-          }
-        },
-        "variante_tm8Cbt": {
-          "type": "variante",
-          "settings": {
-            "variant_title": "Douce lueur",
-            "image": "shopify://shop_images/Image_32.png",
-            "background_image": "shopify://shop_images/Image_29_1.png"
-          }
-        },
-        "variante_GFzM9E": {
-          "type": "variante",
-          "settings": {
-            "variant_title": "Clair de lune",
-            "image": "shopify://shop_images/Image_30.png",
-            "background_image": "shopify://shop_images/Masques_Gris_Anthracite_4K.webp"
-          }
-        },
-        "variante_gaYabP": {
+        "variante_KcKQAj": {
           "type": "variante",
           "settings": {
             "variant_title": "Poussière d'étoile",
-            "image": "shopify://shop_images/Masque_Andromeda_sur_Soie.jpg",
-            "background_image": "shopify://shop_images/Image_27.png"
+            "background_image": "shopify://shop_images/Masque-poussiere-etoile-lina.png",
+            "background_image_mobile": "shopify://shop_images/Masque-poussiere-etoile-lina-mobile.png",
+            "description": "Un champagne lumineux et soyeux, inspiré des éclats dorés qui scintillent dans la nuit.\nUne teinte délicate et précieuse, entre douceur nacrée et élégance céleste.",
+            "description_mobile": "Un champagne lumineux et soyeux, inspiré des éclats dorés qui scintillent dans la nuit.",
+            "button_label": "",
+            "button_link": "https://www.andromedaparis.com/products/masque-de-sommeil-en-soie-de-murier-22-mommes?variant=57347302195535"
           }
         },
-        "variante_Eetk6T": {
+        "variante_BfVX38": {
+          "type": "variante",
+          "settings": {
+            "variant_title": "Douce lueur",
+            "background_image": "shopify://shop_images/Masque-nuit-douce-lueur-danny.png",
+            "background_image_mobile": "shopify://shop_images/Masque-nuit-douce-lueur-dann-mobile.png",
+            "description": "Un rose gold délicat, lumineux et satiné, inspiré des reflets tendres d’une lumière au petit matin.\nUne teinte douce et précieuse, entre chaleur rosée et éclat doré, qui évoque la féminité et le raffinement.",
+            "description_mobile": "Un rose gold délicat, lumineux et satiné, inspiré des reflets tendres d’une lumière au petit matin.",
+            "button_label": "",
+            "button_link": "https://www.andromedaparis.com/products/masque-de-sommeil-en-soie-de-murier-22-mommes?variant=57347302162767"
+          }
+        },
+        "variante_nUPA9F": {
           "type": "variante",
           "settings": {
             "variant_title": "Crépuscule",
-            "image": "shopify://shop_images/Image_33.png",
-            "background_image": "shopify://shop_images/Image_26.png"
+            "background_image": "shopify://shop_images/hf_20260604_220613_1c80c128-552f-4178-bcb3-f4c18727c292.png",
+            "background_image_mobile": "shopify://shop_images/Masque-crepuscule-line-mobile.png",
+            "description": "Une teinte terracotta profonde, chaude et enveloppante, inspirée des dernières lueurs du jour.\nUn rouge terreux et solaire, à la fois doux, sensuel et résolument élégant.",
+            "description_mobile": "Une teinte terracotta profonde, chaude et enveloppante, inspirée des dernières lueurs du jour.",
+            "button_label": "",
+            "button_link": "https://www.andromedaparis.com/products/masque-de-sommeil-en-soie-de-murier-22-mommes?variant=57296556753231"
+          }
+        },
+        "variante_DQHcz7": {
+          "type": "variante",
+          "settings": {
+            "variant_title": "Clair de lune",
+            "background_image": "shopify://shop_images/hf_20260604_093954_99e78a68-50b2-45c3-a8f2-ebc80193be71.png",
+            "background_image_mobile": "shopify://shop_images/Masque-clair-lune-lina.png",
+            "description": "Un gris soyeux et lumineux, inspiré du calme argenté des nuits éclairées par la lune.\nUne teinte douce, pure et intemporelle, qui évoque l’élégance silencieuse du ciel nocturne.",
+            "description_mobile": "Un gris soyeux et lumineux, inspiré du calme argenté des nuits éclairées par la lune.",
+            "button_label": "",
+            "button_link": "https://www.andromedaparis.com/products/masque-de-sommeil-en-soie-de-murier-22-mommes?variant=57293079413071"
+          }
+        },
+        "variante_EJx4An": {
+          "type": "variante",
+          "settings": {
+            "variant_title": "Nuit céleste",
+            "background_image": "shopify://shop_images/Masque-nuit-celeste-emma.png",
+            "background_image_mobile": "shopify://shop_images/Masque-nuit-celeste-emma-mobile.png",
+            "description": "Un bleu nuit profond, presque noir, inspiré de l’immensité silencieuse du ciel étoilé.\nUne teinte mystérieuse et raffinée, qui enveloppe le regard d’une élégance calme et absolue.",
+            "description_mobile": "Un bleu nuit profond, presque noir, inspiré de l’immensité silencieuse du ciel étoilé.",
+            "button_label": "",
+            "button_link": "https://www.andromedaparis.com/products/masque-de-sommeil-en-soie-de-murier-22-mommes?variant=57347298394447"
           }
         }
       },
       "block_order": [
-        "variante_NCjErm",
-        "variante_B4Ptdj",
-        "variante_tm8Cbt",
-        "variante_GFzM9E",
-        "variante_gaYabP",
-        "variante_Eetk6T"
+        "variante_BL8ehd",
+        "variante_KcKQAj",
+        "variante_BfVX38",
+        "variante_nUPA9F",
+        "variante_DQHcz7",
+        "variante_EJx4An"
       ],
-      "name": "Hero produit",
+      "name": "Notre gamme",
       "settings": {
         "product": "masque-de-sommeil-en-soie-de-murier-22-mommes",
-        "title": "",
-        "subtitle": "22 momme",
-        "button_label": "J'améliore mon sommeil",
-        "button_url": "",
-        "height": 500,
-        "height_mobile": 380,
-        "radius": 16,
-        "padding_top": 64,
-        "padding_bottom": 64
+        "section_title": "Notre gamme",
+        "default_button_label": "Je craque",
+        "height": 680,
+        "height_mobile": 520,
+        "radius": 8,
+        "radius_mobile": 12,
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "section_R7Vhzp": {
@@ -830,7 +856,7 @@
         "post_limit": 3,
         "columns": 3,
         "show_all_link": true,
-        "bg_color": "#FAF7F2",
+        "bg_color": "#faf7f2",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -853,13 +879,201 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
+    },
+    "collection_list_eyV4dE": {
+      "type": "collection-list",
+      "blocks": {
+        "group_UW3gDG": {
+          "type": "group",
+          "name": "t:names.header",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_PAUFwK": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<h2>Notre gamme</h2>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 16,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_PAUFwK"
+          ]
+        },
+        "ai_gen_block_875cd4e_QUAJin": {
+          "type": "ai_gen_block_875cd4e",
+          "settings": {
+            "desktop_width_percent": 100,
+            "section_padding": 40,
+            "cards_per_row": 4,
+            "card_gap": 20,
+            "mobile_card_width": 80,
+            "mobile_card_gap": 15,
+            "mobile_padding": 20,
+            "image_aspect_ratio": 100,
+            "image_border_radius": 8,
+            "placeholder_bg_color": "#f4f4f4",
+            "content_padding": 12,
+            "title_size": 18,
+            "title_weight": "600",
+            "title_color": "#191a2e",
+            "text_size": 14,
+            "text_color": "#000000cf",
+            "text_spacing": 8,
+            "card_1_enabled": true,
+            "card_1_image": "shopify://shop_images/Lifestyle_Masque_Andromeda_Champagne.png",
+            "card_1_title": "Poussière d'étoile",
+            "card_1_text": "",
+            "card_1_link": "",
+            "card_2_enabled": true,
+            "card_2_image": "shopify://shop_images/hf_20260513_230448_b06ace82-d433-47ac-8751-30dff4d550d9.png",
+            "card_2_title": "Crépuscule",
+            "card_2_text": "",
+            "card_2_link": "",
+            "card_3_enabled": true,
+            "card_3_title": "Carte 3",
+            "card_3_text": "Description de la carte",
+            "card_3_link": "",
+            "card_4_enabled": true,
+            "card_4_title": "Carte 4",
+            "card_4_text": "Description de la carte",
+            "card_4_link": "",
+            "card_5_enabled": false,
+            "card_5_title": "Carte 5",
+            "card_5_text": "Description de la carte",
+            "card_5_link": "",
+            "card_6_enabled": false,
+            "card_6_title": "Carte 6",
+            "card_6_text": "Description de la carte",
+            "card_6_link": ""
+          },
+          "blocks": {}
+        },
+        "static-collection-card": {
+          "type": "_collection-card",
+          "name": "t:names.collection_card",
+          "disabled": true,
+          "static": true,
+          "settings": {
+            "placement": "below_image",
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "collection_card_gap": 8,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0
+          },
+          "blocks": {
+            "collection-card-image": {
+              "type": "_collection-card-image",
+              "name": "t:names.collection_card_image",
+              "static": true,
+              "settings": {
+                "image_ratio": "adapt",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 16
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        }
+      },
+      "block_order": [
+        "group_UW3gDG",
+        "ai_gen_block_875cd4e_QUAJin"
+      ],
+      "disabled": true,
+      "name": "t:names.collections_carousel",
+      "settings": {
+        "collection_list": [],
+        "layout_type": "carousel",
+        "carousel_on_mobile": false,
+        "columns": 3,
+        "mobile_columns": "2",
+        "mobile_card_size": "60cqw",
+        "columns_gap": 8,
+        "bento_gap": 8,
+        "rows_gap": 8,
+        "max_collections": 4,
+        "icons_style": "arrow",
+        "icons_shape": "circle",
+        "section_width": "page-width",
+        "gap": 12,
+        "color_scheme": "",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
   "order": [
     "hero_jVaWmY",
     "marquee_BX4UPp",
     "section_why_masque_YfVJ3C",
-    "section_product_hero_mANhnJ",
+    "section_gamme_mkyTdK",
     "section_R7Vhzp",
     "marquee_EYMzLt",
     "marquee_xLEVQF",
@@ -867,6 +1081,7 @@
     "section_rituel_teaser",
     "17779329099eeb9679",
     "featured_blog_posts_F8LihH",
-    "section_seo_footer"
+    "section_seo_footer",
+    "collection_list_eyV4dE"
   ]
 }

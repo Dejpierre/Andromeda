@@ -178,6 +178,13 @@
       "visible_if": "{{ block.settings.width == 'custom' }}"
     },
     {
+      "type": "text",
+      "id": "custom_width_raw",
+      "label": "Largeur exacte (px ou %)",
+      "info": "Ex: 48px ou 30% — remplace le curseur si renseigné",
+      "visible_if": "{{ block.settings.width == 'custom' }}"
+    },
+    {
       "type": "select",
       "id": "width_mobile",
       "label": "t:settings.width_mobile",
@@ -206,6 +213,13 @@
       "step": 1,
       "unit": "%",
       "default": 100,
+      "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
+    },
+    {
+      "type": "text",
+      "id": "custom_width_mobile_raw",
+      "label": "Largeur exacte mobile (px ou %)",
+      "info": "Ex: 48px ou 30% — remplace le curseur si renseigné",
       "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
     },
     {

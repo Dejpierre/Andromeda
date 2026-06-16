@@ -5,8 +5,11 @@
 {%- endcomment -%}
 
 {%- if settings.width == 'custom' -%}
-  --size-style-width:
-  {{- settings.custom_width }}%;
+  {%- if settings.custom_width_raw != blank -%}
+    --size-style-width: {{- settings.custom_width_raw }}; max-width: {{- settings.custom_width_raw }}; flex-shrink: 0; flex-grow: 0;
+  {%- else -%}
+    --size-style-width: {{- settings.custom_width }}%;
+  {%- endif -%}
 {%- elsif settings.width == 'fill' -%}
   --size-style-width: 100%;
 {%- else -%}
@@ -23,9 +26,11 @@
 {%- endif -%}
 
 {% if settings.width_mobile == 'custom' %}
-  --size-style-width-mobile:
-  {{- settings.custom_width_mobile }}%; --size-style-width-mobile-min:
-  {{- settings.custom_width_mobile }}%;
+  {%- if settings.custom_width_mobile_raw != blank -%}
+    --size-style-width-mobile: {{- settings.custom_width_mobile_raw }}; --size-style-width-mobile-min: {{- settings.custom_width_mobile_raw }};
+  {%- else -%}
+    --size-style-width-mobile: {{- settings.custom_width_mobile }}%; --size-style-width-mobile-min: {{- settings.custom_width_mobile }}%;
+  {%- endif -%}
 {%- elsif settings.width_mobile == 'fill' -%}
   --size-style-width-mobile: 100%; --size-style-width-mobile-min: 5rem;
 {%- elsif settings.width_mobile == 'fit-content' -%}

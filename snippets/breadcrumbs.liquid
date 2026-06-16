@@ -81,7 +81,7 @@
   }
   .andromeda-bc__list {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
     gap: 4px;
     list-style: none;
@@ -92,6 +92,17 @@
     font-weight: 400;
     letter-spacing: 0.06em;
     text-transform: uppercase;
+    min-width: 0;
+  }
+  .andromeda-bc__item--current {
+    overflow: hidden;
+    min-width: 0;
+  }
+  .andromeda-bc__item--current span {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .andromeda-bc--dark .andromeda-bc__link { color: #AAA49E; text-decoration: none; }
   .andromeda-bc--dark .andromeda-bc__link:hover { color: #1C1A18; }

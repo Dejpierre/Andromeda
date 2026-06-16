@@ -55,8 +55,8 @@
   margin-top: 2px;
 }
 .spb__icon img {
-  width: 20px;
-  height: 20px;
+  width: {{ section.settings.icon_size | default: '20px' }};
+  height: {{ section.settings.icon_size | default: '20px' }};
   object-fit: contain;
 }
 .spb__text {
@@ -89,6 +89,13 @@
   "tag": "div",
   "limit": 1,
   "settings": [
+    {
+      "type": "text",
+      "id": "icon_size",
+      "label": "Taille des icônes",
+      "info": "Ex: 20px ou 8%",
+      "default": "20px"
+    },
     {
       "type": "color",
       "id": "bg_color",
