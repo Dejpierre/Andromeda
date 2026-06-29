@@ -1,16 +1,15 @@
 
-{% render 'text', block: block %}
-
 {%- if block.settings.slidein_enabled and block.settings.slidein_content != blank -%}
-  <button
+  <div
     class="text-slidein__trigger"
-    type="button"
+    role="button"
+    tabindex="0"
     data-slidein-id="slidein-{{ block.id }}"
     aria-expanded="false"
+    aria-haspopup="dialog"
   >
-    {{- block.settings.slidein_link_label | default: 'En savoir plus' -}}
-    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" style="margin-left:5px;vertical-align:middle"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
+    {% render 'text', block: block %}
+  </div>
 
   <div class="text-slidein" id="slidein-{{ block.id }}" role="dialog" aria-modal="true" hidden>
     <button class="text-slidein__overlay" type="button" aria-label="Fermer" tabindex="-1"></button>
@@ -22,31 +21,33 @@
         <p class="text-slidein__title">{{ block.settings.slidein_title }}</p>
       {%- endif -%}
       <div class="text-slidein__body rte">{{ block.settings.slidein_content }}</div>
+      {%- if block.settings.slidein_cta_label != blank and block.settings.slidein_cta_url != blank -%}
+        <div class="text-slidein__cta-wrap">
+          <a class="text-slidein__cta" href="{{ block.settings.slidein_cta_url }}">
+            {{- block.settings.slidein_cta_label -}}
+          </a>
+        </div>
+      {%- endif -%}
     </div>
   </div>
+{%- else -%}
+  {% render 'text', block: block %}
 {%- endif -%}
 
 {% stylesheet %}
 .text-slidein__trigger {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 8px;
-  background: none;
-  border: none;
-  padding: 0;
+  display: block;
   cursor: pointer;
-  font-size: inherit;
-  font-weight: inherit;
-  color: inherit;
   text-decoration: underline;
   text-underline-offset: 3px;
+  text-decoration-color: currentColor;
 }
 .text-slidein__trigger:hover { opacity: 0.7; }
 
 .text-slidein {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: 9999;
   display: flex;
   justify-content: flex-end;
 }
@@ -66,15 +67,16 @@
   background: #fff;
   width: min(420px, 92vw);
   height: 100%;
-  overflow-y: auto;
-  padding: 48px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   box-shadow: -4px 0 24px rgba(0,0,0,0.12);
   animation: slidein-slide-in 0.3s cubic-bezier(0.32,0,0.67,0);
 }
 
 .text-slidein__close {
   position: absolute;
-  top: 16px;
+  top: calc(var(--header-height, 0px) + 16px);
   right: 16px;
   background: none;
   border: none;
@@ -82,6 +84,7 @@
   padding: 4px;
   color: var(--color-foreground);
   opacity: 0.6;
+  z-index: 1;
 }
 .text-slidein__close:hover { opacity: 1; }
 
@@ -90,9 +93,42 @@
   font-weight: 600;
   margin: 0 0 16px;
   color: var(--color-foreground);
+  padding: calc(var(--header-height, 0px) + 48px) 32px 0;
+  flex-shrink: 0;
 }
 
-.text-slidein__body { font-size: 0.95rem; line-height: 1.65; }
+.text-slidein__body {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  flex: 1;
+  overflow-y: auto;
+  padding: calc(var(--header-height, 0px) + 48px) 32px 24px;
+}
+
+.text-slidein__title + .text-slidein__body {
+  padding-top: 0;
+}
+
+.text-slidein__cta-wrap {
+  flex-shrink: 0;
+  padding: 16px 32px 32px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+.text-slidein__cta {
+  display: block;
+  text-align: center;
+  padding: 12px 24px;
+  background: #1C1A18;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  transition: opacity 0.2s ease;
+}
+.text-slidein__cta:hover { opacity: 0.8; }
 
 @keyframes slidein-fade-in {
   from { opacity: 0; }
@@ -107,9 +143,18 @@
   .text-slidein { align-items: flex-end; justify-content: stretch; }
   .text-slidein__panel {
     width: 100%;
-    height: 85vh;
+    height: 50vh;
     border-radius: 16px 16px 0 0;
     animation: slidein-slide-up 0.3s cubic-bezier(0.32,0,0.67,0);
+  }
+  .text-slidein__body {
+    padding: 24px 24px 16px;
+  }
+  .text-slidein__title {
+    padding: 32px 24px 0;
+  }
+  .text-slidein__cta-wrap {
+    padding: 12px 24px 24px;
   }
   @keyframes slidein-slide-up {
     from { transform: translateY(100%); }
@@ -144,9 +189,22 @@
   });
 
   document.addEventListener('keydown', function (e) {
-    if (e.key !== 'Escape') return;
-    var open = document.querySelector('.text-slidein:not([hidden])');
-    if (open) closeSlidein(open);
+    if (e.key === 'Escape') {
+      var open = document.querySelector('.text-slidein:not([hidden])');
+      if (open) closeSlidein(open);
+      return;
+    }
+    if (e.key === 'Enter' || e.key === ' ') {
+      var trigger = e.target.closest('[data-slidein-id]');
+      if (!trigger) return;
+      e.preventDefault();
+      var id = trigger.dataset.slideinId;
+      var panel = document.getElementById(id);
+      if (!panel) return;
+      panel.hidden = false;
+      trigger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
   });
 
   function closeSlidein(el) {
@@ -494,6 +552,18 @@
       "type": "richtext",
       "id": "slidein_content",
       "label": "Contenu du slide-in",
+      "visible_if": "{{ block.settings.slidein_enabled }}"
+    },
+    {
+      "type": "text",
+      "id": "slidein_cta_label",
+      "label": "Texte du CTA (optionnel)",
+      "visible_if": "{{ block.settings.slidein_enabled }}"
+    },
+    {
+      "type": "url",
+      "id": "slidein_cta_url",
+      "label": "Lien du CTA (URL ou ancre #section)",
       "visible_if": "{{ block.settings.slidein_enabled }}"
     },
     {

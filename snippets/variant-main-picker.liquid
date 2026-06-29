@@ -327,3 +327,42 @@
     });
   })();
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script>
+(function () {
+  function animateLetters(el) {
+    if (!window.gsap) return;
+    var text = el.textContent;
+    if (!text) return;
+
+    el.innerHTML = text.split('').map(function (ch) {
+      return '<span style="display:inline-block;will-change:transform,opacity">' + (ch === ' ' ? '&nbsp;' : ch) + '</span>';
+    }).join('');
+
+    gsap.fromTo(el.querySelectorAll('span'),
+      { opacity: 0, y: -6 },
+      { opacity: 1, y: 0, duration: 0.18, stagger: 0.025, ease: 'power2.out' }
+    );
+  }
+
+  function initSwatchObserver() {
+    document.querySelectorAll('.variant-option--swatches legend .variant-option__swatch-value').forEach(function (el) {
+      var observer = new MutationObserver(function (mutations, obs) {
+        var text = el.textContent;
+        if (!text) return;
+        obs.disconnect();
+        animateLetters(el);
+        obs.observe(el, { childList: true, characterData: true, subtree: true });
+      });
+      observer.observe(el, { childList: true, characterData: true, subtree: true });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSwatchObserver);
+  } else {
+    initSwatchObserver();
+  }
+})();
+</script>

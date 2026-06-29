@@ -20,23 +20,20 @@
             "image": "shopify://shop_images/Couverture_dossier_ambiance.png"
           }
         },
-        "track_1": {
-          "type": "audio_track",
-          "disabled": true,
+        "audio_folder_9LQFiK": {
+          "type": "audio_folder",
           "settings": {
-            "folder": "Ambiance situationnelle",
-            "label": "Pluie sur Paris",
-            "desc": "Pluie douce sur les toits",
-            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/Pluie_Nocturne_Ambiance_2026-03-16T133443.mp3?v=1777311750"
+            "folder_name": "S'endormir aux quatre coins du monde",
+            "image": "shopify://shop_images/ChatGPT_Image_18_juin_2026_13_11_00.png"
           }
         },
-        "track_2": {
+        "track_1": {
           "type": "audio_track",
           "settings": {
             "folder": "Ambiance situationnelle",
-            "label": "Forêt la nuit",
-            "desc": "Grillons et vent dans les feuilles",
-            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/Fort_Nocturne_2026-03-27T093727.mp3?v=1774941837"
+            "label": "Nuit pluvieuse",
+            "desc": "Pluie intense sur les toits",
+            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/chanson_2026-06-18T113620.mp3?v=1781782657"
           }
         },
         "track_3": {
@@ -44,8 +41,44 @@
           "settings": {
             "folder": "Ambiance situationnelle",
             "label": "Vagues de l'océan",
-            "desc": "Ressac lent et apaisant",
-            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/Sunset_Shoreline_Loop_2026-03-31T072954.mp3?v=1774942321"
+            "desc": "Au bord de l'eau",
+            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/Calm_Seaside_Ambience_2026-06-05T161028.mp3?v=1781779191"
+          }
+        },
+        "audio_track_Ja9UAJ": {
+          "type": "audio_track",
+          "settings": {
+            "folder": "Ambiance situationnelle",
+            "label": "Nuit au coin du feu",
+            "desc": "Installez-vous dans une forêt calme, bercé par le crépitement doux d’un feu de bois",
+            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/Au_Coin_du_Feu_2026-06-18T112644.mp3?v=1781782345"
+          }
+        },
+        "audio_track_ePDk4U": {
+          "type": "audio_track",
+          "settings": {
+            "folder": "S'endormir aux quatre coins du monde",
+            "label": "Pluie sur les rizières d’Ubud",
+            "desc": "Rizières apaisantes et atmosphère tropicale.",
+            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/Echoes_of_Ubud_2026-06-18T105058.mp3?v=1781780093"
+          }
+        },
+        "audio_track_dM3jh8": {
+          "type": "audio_track",
+          "settings": {
+            "folder": "S'endormir aux quatre coins du monde",
+            "label": "Sous les étoiles de Marrakech",
+            "desc": "Entre mélodie instrumentale orientale, notes douces et atmosphère nocturne.",
+            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/Relaxation_au_Maroc_2026-06-18T105703.mp3?v=1781780633"
+          }
+        },
+        "audio_track_yact4b": {
+          "type": "audio_track",
+          "settings": {
+            "folder": "S'endormir aux quatre coins du monde",
+            "label": "Sommeil à Rio",
+            "desc": "Chaleur tropicale, rythme lent et atmosphère apaisante.",
+            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/Brisa_de_Sonho_Msica_para_Dormir_2026-06-18T111648.mp3?v=1781781575"
           }
         },
         "track_4": {
@@ -61,9 +94,13 @@
       },
       "block_order": [
         "audio_folder_XX3fzq",
+        "audio_folder_9LQFiK",
         "track_1",
-        "track_2",
         "track_3",
+        "audio_track_Ja9UAJ",
+        "audio_track_ePDk4U",
+        "audio_track_dM3jh8",
+        "audio_track_yact4b",
         "track_4"
       ],
       "settings": {

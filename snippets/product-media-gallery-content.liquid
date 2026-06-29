@@ -399,6 +399,18 @@
     data-presentation="{{ media_presentation }}"
     {{ block_shopify_attributes }}
   >
+    {%- liquid
+      assign _v = closest.product.selected_or_first_available_variant
+      if _v.compare_at_price > _v.price
+        assign _discount = _v.compare_at_price | minus: _v.price | times: 100.0 | divided_by: _v.compare_at_price | ceil
+      else
+        assign _discount = 0
+      endif
+    -%}
+    {%- if _discount > 0 -%}
+      <div class="andromeda-img-badge" aria-label="-{{ _discount }}% de réduction">−{{ _discount }}% de réduction</div>
+    {%- endif -%}
+
     {% capture slides %}
       {% for media in sorted_media %}
         {% capture children %}
@@ -805,12 +817,8 @@
 
   /* Mobile thumbnails styling */
   @media screen and (max-width: 749px) {
-    .media-gallery__mobile-controls[thumbnails] {
-      --thumbnail-width: 44px;
-    }
-
     .media-gallery__mobile-controls[thumbnails] .slideshow-controls__thumbnail {
-      width: var(--thumbnail-width);
+      width: 52px;
       height: auto;
     }
   }
@@ -939,6 +947,7 @@
   @media screen and (max-width: 749px) {
     media-gallery slideshow-component:not([disabled='true']) slideshow-slides {
       overflow-x: scroll !important;
+      border-radius: 0 0 16px 16px;
     }
   }
 {% endstylesheet %}

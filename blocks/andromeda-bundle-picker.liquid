@@ -1,0 +1,445 @@
+{%- liquid
+  assign product = closest.product
+  assign variant = product.selected_or_first_available_variant
+  assign price_cents = variant.price
+  assign compare_cents = variant.compare_at_price | default: variant.price
+-%}
+
+<div
+  id="andromeda-bundle-{{ block.id }}"
+  class="andromeda-bundle-wrap spacing-style"
+  data-block-id="{{ block.id }}"
+  data-price="{{ price_cents }}"
+  data-compare="{{ compare_cents }}"
+  style="{% render 'spacing-style', settings: block.settings %}"
+  {{ block.shopify_attributes }}
+>
+<div class="andromeda-bundle">
+  {%- assign options = block.settings.options | split: ',' -%}
+
+  {%- for opt in options -%}
+    {%- assign qty = opt | strip | plus: 0 -%}
+    {%- if qty < 1 -%}{%- continue -%}{%- endif -%}
+
+    {%- assign total_price = price_cents | times: qty -%}
+    {%- assign total_compare = compare_cents | times: qty -%}
+    {%- assign has_free_shipping = false -%}
+    {%- if block.settings.shipping_qty == qty -%}
+      {%- assign has_free_shipping = true -%}
+    {%- endif -%}
+
+    {%- comment -%} Image personnalisée par quantité {%- endcomment -%}
+    {%- case qty -%}
+      {%- when 1 -%}{%- assign custom_img = block.settings.image_1 -%}
+      {%- when 2 -%}{%- assign custom_img = block.settings.image_2 -%}
+      {%- when 3 -%}{%- assign custom_img = block.settings.image_3 -%}
+      {%- else -%}{%- assign custom_img = blank -%}
+    {%- endcase -%}
+
+    <div
+      class="ab-card{% if forloop.first %} ab-card--selected{% endif %}{% if block.settings.popular_qty == qty %} ab-card--popular{% endif %}"
+      data-qty="{{ qty }}"
+      role="button"
+      tabindex="0"
+    >
+      {%- if block.settings.popular_qty == qty -%}
+        <div class="ab-card__badge-top">{{ block.settings.popular_label | default: 'Plus populaire' }}</div>
+      {%- endif -%}
+
+      <div class="ab-card__header">
+        {%- case qty -%}
+          {%- when 1 -%}{{ block.settings.label_1 | default: '1 masque' }}
+          {%- when 2 -%}{{ block.settings.label_2 | default: '2 masques' }}
+          {%- when 3 -%}{{ block.settings.label_3 | default: '3 masques' }}
+          {%- else -%}{{ qty }} {{ block.settings.unit_label | default: 'masques' }}
+        {%- endcase -%}
+      </div>
+
+      <div class="ab-card__image">
+        {%- if custom_img != blank -%}
+          {{
+            custom_img
+            | image_url: width: 240
+            | image_tag:
+              loading: 'lazy',
+              alt: product.title,
+              class: 'ab-card__img ab-card__img--custom',
+              width: 120,
+              height: 80
+          }}
+        {%- else -%}
+          {%- assign fallback_img = variant.featured_image | default: product.featured_image -%}
+          {%- if fallback_img != blank -%}
+            {%- for i in (1..qty) -%}
+              {{
+                fallback_img
+                | image_url: width: 120
+                | image_tag:
+                  loading: 'lazy',
+                  alt: product.title,
+                  class: 'ab-card__img',
+                  width: 52,
+                  height: 52
+              }}
+            {%- endfor -%}
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+
+      <div class="ab-card__prices">
+        {%- if total_compare > total_price -%}
+          <span class="ab-card__compare">{{ total_compare | money }}</span>
+        {%- endif -%}
+        <span class="ab-card__price" data-price-display>{{ total_price | money }}</span>
+      </div>
+
+      {%- if has_free_shipping -%}
+        <div class="ab-card__shipping">{{ block.settings.shipping_label | default: '+ Livraison offerte' }}</div>
+      {%- endif -%}
+    </div>
+  {%- endfor -%}
+</div>
+
+</div>
+
+<style>
+  .andromeda-bundle-wrap {
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .andromeda-bundle {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .ab-card {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 8px 8px;
+    border: 2px solid #e0dbd4;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.18s;
+    background: #fff;
+    user-select: none;
+  }
+
+  .ab-card:hover {
+    border-color: #191a2e;
+  }
+
+  .ab-card--selected {
+    border-color: #191a2e;
+  }
+
+  .ab-card__badge-top {
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #191a2e;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .ab-card__header {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #1c1a18;
+    margin-top: 2px;
+  }
+
+  .ab-card__image {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .ab-card__img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+
+  .ab-card__img--custom {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .ab-card__prices {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+  }
+
+  .ab-card__compare {
+    font-size: 11px;
+    color: #999;
+    text-decoration: line-through;
+  }
+
+  .ab-card__price {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1c1a18;
+    font-variant-numeric: normal;
+    font-feature-settings: normal;
+  }
+
+  .ab-card__shipping {
+    font-size: 10px;
+    font-weight: 700;
+    color: #191a2e;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: rgba(25, 26, 46, 0.08);
+    border-radius: 4px;
+    padding: 3px 8px;
+  }
+
+
+
+  @media (max-width: 480px) {
+    .andromeda-bundle { gap: 8px; }
+    .ab-card { padding: 12px 8px 10px; }
+    .ab-card__img { width: 40px; height: 40px; }
+    .ab-card__price { font-size: 13px; }
+  }
+</style>
+
+<script>
+(function () {
+  var bundle = document.getElementById('andromeda-bundle-{{ block.id }}');
+  if (!bundle) return;
+
+
+  function fmt(cents) {
+    return (cents / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+  }
+
+  function currentQty() {
+    var sel = bundle.querySelector('.ab-card--selected');
+    return sel ? parseInt(sel.dataset.qty, 10) : 1;
+  }
+
+  /* ── Totaux ── */
+  function updateTotals() {
+    var qty     = currentQty();
+    var price   = parseInt(bundle.dataset.price, 10);
+    var compare = parseInt(bundle.dataset.compare, 10);
+    updateAtcPrice(qty, price, compare);
+  }
+
+  /* ── Prix dans le bouton ATC ── */
+  function updateAtcPrice(qty, price, compare) {
+    var sp = document.querySelector('.atc-bundle-price');
+    if (!sp) return;
+    var total = price * qty;
+    sp.textContent = ' • ' + fmt(total);
+  }
+
+  /* Init : retry pour attendre que add-to-cart-component soit prêt */
+  updateTotals();
+  setTimeout(updateTotals, 300);
+  setTimeout(updateTotals, 800);
+  window.addEventListener('load', updateTotals);
+
+  /* ── Quantité ── */
+  function getQtyInput() {
+    var form = document.querySelector('[data-type="add-to-cart-form"]');
+    if (!form) return null;
+    return form.querySelector('input[name="quantity"], .quantity__input');
+  }
+
+  function selectCard(card) {
+    bundle.querySelectorAll('.ab-card').forEach(function (c) { c.classList.remove('ab-card--selected'); });
+    card.classList.add('ab-card--selected');
+    var qty = parseInt(card.dataset.qty, 10);
+    var input = getQtyInput();
+    if (input) { input.value = qty; input.dispatchEvent(new Event('change', { bubbles: true })); }
+    updateTotals();
+  }
+
+  bundle.querySelectorAll('.ab-card').forEach(function (card) {
+    card.addEventListener('click', function () { selectCard(card); });
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectCard(card); }
+    });
+  });
+
+  /* ── Changement de variante ── */
+  document.addEventListener('variant:change', function (e) {
+    if (!e.detail || !e.detail.variant) return;
+    var v = e.detail.variant;
+    bundle.dataset.price   = v.price;
+    bundle.dataset.compare = v.compare_at_price || v.price;
+
+    /* Mise à jour des prix dans chaque carte */
+    bundle.querySelectorAll('.ab-card').forEach(function (card) {
+      var qty  = parseInt(card.dataset.qty, 10);
+      var tot  = v.price * qty;
+      var comp = (v.compare_at_price || v.price) * qty;
+      var pEl  = card.querySelector('.ab-card__price');
+      var cEl  = card.querySelector('.ab-card__compare');
+      if (pEl) pEl.textContent = fmt(tot);
+      if (cEl) { if (comp > tot) { cEl.textContent = fmt(comp); cEl.hidden = false; } else { cEl.hidden = true; } }
+    });
+    updateTotals();
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Bundle picker",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "options",
+      "label": "Quantités (séparées par des virgules)",
+      "default": "1,2",
+      "info": "Ex: 1,2,3"
+    },
+    {
+      "type": "header",
+      "content": "Labels"
+    },
+    {
+      "type": "text",
+      "id": "label_1",
+      "label": "Label quantité 1",
+      "default": "1 masque"
+    },
+    {
+      "type": "text",
+      "id": "label_2",
+      "label": "Label quantité 2",
+      "default": "2 masques"
+    },
+    {
+      "type": "text",
+      "id": "label_3",
+      "label": "Label quantité 3",
+      "default": "3 masques"
+    },
+    {
+      "type": "text",
+      "id": "unit_label",
+      "label": "Unité (pour qty > 3)",
+      "default": "masques"
+    },
+    {
+      "type": "header",
+      "content": "Images personnalisées"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image quantité 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image quantité 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Image quantité 3"
+    },
+    {
+      "type": "header",
+      "content": "Mise en avant"
+    },
+    {
+      "type": "range",
+      "id": "popular_qty",
+      "label": "Badge 'Plus populaire' sur la quantité",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 2,
+      "info": "0 = désactivé"
+    },
+    {
+      "type": "text",
+      "id": "popular_label",
+      "label": "Texte du badge mise en avant",
+      "default": "Plus populaire"
+    },
+    {
+      "type": "header",
+      "content": "Livraison offerte"
+    },
+    {
+      "type": "range",
+      "id": "shipping_qty",
+      "label": "Afficher 'Livraison offerte' sur la quantité",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 2,
+      "info": "0 = désactivé"
+    },
+    {
+      "type": "text",
+      "id": "shipping_label",
+      "label": "Texte livraison offerte",
+      "default": "+ Livraison offerte"
+    },
+    {
+      "type": "header",
+      "content": "Espacement"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Haut",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bas",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundle picker",
+      "category": "Produit"
+    }
+  ]
+}
+{% endschema %}

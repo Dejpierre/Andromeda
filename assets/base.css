@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+#google-merchantwidget-iframe-wrapper {
+  display: none !important;
+}
+
 body {
   color: var(--color-foreground);
   background: var(--color-background);
@@ -2480,28 +2484,17 @@ deferred-media[class] :is(.deferred-media__poster-button img, .deferred-media__p
 }
 
 .swatch-label {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  font-size: 0.6rem;
-  color: #1C1A18;
-  opacity: 1;
-  line-height: 1.2;
-  white-space: normal;
-  width: 52px;
-  pointer-events: none;
+  display: none;
 }
 
 .variant-option__button-label--has-swatch {
-  margin-bottom: 36px;
+  margin-bottom: 0;
   margin-inline: 4px;
 }
 
-/* Cacher le nom de la variante sélectionnée dans le titre */
-.variant-option--swatches legend .variant-option__swatch-value {
-  display: none;
+/* Afficher "Couleur — Crépuscule" dans la legend */
+.variant-option--swatches legend .variant-option__swatch-value::before {
+  content: '— ';
 }
 
 .variant-picker, .variant-picker__form {
@@ -2655,6 +2648,32 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   opacity: 0.4;
   text-decoration-line: line-through;
   text-decoration-thickness: 1.5px;
+}
+
+.price {
+  font-variant-numeric: normal;
+  font-feature-settings: normal;
+}
+
+media-gallery {
+  position: relative;
+}
+
+.andromeda-img-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  background: #191a2e;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 5px 11px;
+  border-radius: 6px;
+  pointer-events: none;
+  font-variant-numeric: normal;
+  font-feature-settings: normal;
 }
 
 .card-gallery {
