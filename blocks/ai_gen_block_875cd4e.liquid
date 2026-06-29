@@ -1,0 +1,618 @@
+{% doc %}
+  @prompt
+    Je veux une section avec les images alignés sur la même ligne et sur mobile en caroussel scrollable, c'est comme des cartes prodiuts mais je dois pouvoir mettre l'image lien et texte que je veux
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-custom-cards-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: {{ block.settings.section_padding }}px 0;
+  }
+
+  .ai-custom-cards-container-{{ ai_gen_id }} {
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .ai-custom-cards-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    gap: {{ block.settings.card_gap }}px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .ai-custom-cards-wrapper-{{ ai_gen_id }}::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ai-custom-card-{{ ai_gen_id }} {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    width: calc((100% - ({{ block.settings.cards_per_row | minus: 1 }} * {{ block.settings.card_gap }}px)) / {{ block.settings.cards_per_row }});
+    min-width: 200px;
+  }
+
+  .ai-custom-card-link-{{ ai_gen_id }} {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+  }
+
+  .ai-custom-card-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: {{ block.settings.image_aspect_ratio }}%;
+    overflow: hidden;
+    border-radius: {{ block.settings.image_border_radius }}px;
+    background-color: {{ block.settings.placeholder_bg_color }};
+  }
+
+  .ai-custom-card-image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-custom-card-placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-custom-card-placeholder-{{ ai_gen_id }} svg {
+    width: 50%;
+    height: 50%;
+    opacity: 0.3;
+  }
+
+  .ai-custom-card-content-{{ ai_gen_id }} {
+    padding: {{ block.settings.content_padding }}px 0 0;
+  }
+
+  .ai-custom-card-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: {{ block.settings.title_weight }};
+    color: {{ block.settings.title_color }};
+    margin: 0 0 {{ block.settings.text_spacing }}px;
+    line-height: 1.3;
+  }
+
+  .ai-custom-card-text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_size }}px;
+    color: {{ block.settings.text_color }};
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-custom-card-{{ ai_gen_id }} {
+      width: {{ block.settings.mobile_card_width }}%;
+      min-width: {{ block.settings.mobile_card_width }}%;
+    }
+
+    .ai-custom-cards-wrapper-{{ ai_gen_id }} {
+      gap: {{ block.settings.mobile_card_gap }}px;
+      padding: 0 {{ block.settings.mobile_padding }}px;
+      margin: 0 -{{ block.settings.mobile_padding }}px;
+    }
+  }
+{% endstyle %}
+
+<custom-cards-{{ ai_gen_id }} class="ai-custom-cards-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-custom-cards-container-{{ ai_gen_id }}">
+    <div class="ai-custom-cards-wrapper-{{ ai_gen_id }}">
+      {% for i in (1..6) %}
+        {% liquid
+          assign card_enabled_key = 'card_' | append: i | append: '_enabled'
+          assign card_image_key = 'card_' | append: i | append: '_image'
+          assign card_title_key = 'card_' | append: i | append: '_title'
+          assign card_text_key = 'card_' | append: i | append: '_text'
+          assign card_link_key = 'card_' | append: i | append: '_link'
+
+          assign card_enabled = block.settings[card_enabled_key]
+          assign card_image = block.settings[card_image_key]
+          assign card_title = block.settings[card_title_key]
+          assign card_text = block.settings[card_text_key]
+          assign card_link = block.settings[card_link_key]
+        %}
+
+        {% if card_enabled %}
+          <div class="ai-custom-card-{{ ai_gen_id }}">
+            {% if card_link != blank %}
+              <a href="{{ card_link }}" class="ai-custom-card-link-{{ ai_gen_id }}">
+            {% else %}
+              <div class="ai-custom-card-link-{{ ai_gen_id }}">
+            {% endif %}
+              <div class="ai-custom-card-image-wrapper-{{ ai_gen_id }}">
+                {% if card_image %}
+                  <img
+                    src="{{ card_image | image_url: width: 800 }}"
+                    alt="{{ card_image.alt | escape }}"
+                    loading="lazy"
+                    width="{{ card_image.width }}"
+                    height="{{ card_image.height }}"
+                    class="ai-custom-card-image-{{ ai_gen_id }}"
+                  >
+                {% else %}
+                  <div class="ai-custom-card-placeholder-{{ ai_gen_id }}">
+                    {{ 'image' | placeholder_svg_tag }}
+                  </div>
+                {% endif %}
+              </div>
+
+              {% if card_title != blank or card_text != blank %}
+                <div class="ai-custom-card-content-{{ ai_gen_id }}">
+                  {% if card_title != blank %}
+                    <h3 class="ai-custom-card-title-{{ ai_gen_id }}">{{ card_title }}</h3>
+                  {% endif %}
+                  {% if card_text != blank %}
+                    <p class="ai-custom-card-text-{{ ai_gen_id }}">{{ card_text }}</p>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% if card_link != blank %}
+              </a>
+            {% else %}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</custom-cards-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class CustomCards{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.wrapper = this.querySelector('.ai-custom-cards-wrapper-{{ ai_gen_id }}');
+        this.setupMobileScroll();
+      }
+
+      setupMobileScroll() {
+        if (!this.wrapper) return;
+
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        this.wrapper.addEventListener('mousedown', (e) => {
+          if (window.innerWidth > 749) return;
+          isDown = true;
+          startX = e.pageX - this.wrapper.offsetLeft;
+          scrollLeft = this.wrapper.scrollLeft;
+        });
+
+        this.wrapper.addEventListener('mouseleave', () => {
+          isDown = false;
+        });
+
+        this.wrapper.addEventListener('mouseup', () => {
+          isDown = false;
+        });
+
+        this.wrapper.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - this.wrapper.offsetLeft;
+          const walk = (x - startX) * 2;
+          this.wrapper.scrollLeft = scrollLeft - walk;
+        });
+      }
+    }
+
+    customElements.define('custom-cards-{{ ai_gen_id }}', CustomCards{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Cartes personnalisées",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Disposition"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Largeur desktop",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Espacement vertical",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "cards_per_row",
+      "label": "Cartes par ligne (desktop)",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Espacement entre cartes (desktop)",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Mobile"
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_width",
+      "label": "Largeur carte mobile",
+      "min": 60,
+      "max": 95,
+      "step": 5,
+      "unit": "%",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_gap",
+      "label": "Espacement entre cartes",
+      "min": 5,
+      "max": 30,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding",
+      "label": "Marge latérale",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Style des images"
+    },
+    {
+      "type": "range",
+      "id": "image_aspect_ratio",
+      "label": "Ratio d'aspect",
+      "min": 50,
+      "max": 150,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Arrondi des coins",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "placeholder_bg_color",
+      "label": "Couleur de fond placeholder",
+      "default": "#f4f4f4"
+    },
+    {
+      "type": "header",
+      "content": "Style du texte"
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "label": "Espacement au-dessus du texte",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Taille du titre",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Poids du titre",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Moyen"
+        },
+        {
+          "value": "600",
+          "label": "Semi-gras"
+        },
+        {
+          "value": "700",
+          "label": "Gras"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Couleur du titre",
+      "default": "#191a2e"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Taille du texte",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Couleur du texte",
+      "default": "#000000cf"
+    },
+    {
+      "type": "range",
+      "id": "text_spacing",
+      "label": "Espacement titre-texte",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Carte 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_1_enabled",
+      "label": "Activer la carte 1",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "card_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "card_1_title",
+      "label": "Titre",
+      "default": "Carte 1"
+    },
+    {
+      "type": "textarea",
+      "id": "card_1_text",
+      "label": "Texte",
+      "default": "Description de la carte"
+    },
+    {
+      "type": "url",
+      "id": "card_1_link",
+      "label": "Lien"
+    },
+    {
+      "type": "header",
+      "content": "Carte 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_2_enabled",
+      "label": "Activer la carte 2",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "card_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "card_2_title",
+      "label": "Titre",
+      "default": "Carte 2"
+    },
+    {
+      "type": "textarea",
+      "id": "card_2_text",
+      "label": "Texte",
+      "default": "Description de la carte"
+    },
+    {
+      "type": "url",
+      "id": "card_2_link",
+      "label": "Lien"
+    },
+    {
+      "type": "header",
+      "content": "Carte 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_3_enabled",
+      "label": "Activer la carte 3",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "card_3_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "card_3_title",
+      "label": "Titre",
+      "default": "Carte 3"
+    },
+    {
+      "type": "textarea",
+      "id": "card_3_text",
+      "label": "Texte",
+      "default": "Description de la carte"
+    },
+    {
+      "type": "url",
+      "id": "card_3_link",
+      "label": "Lien"
+    },
+    {
+      "type": "header",
+      "content": "Carte 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_4_enabled",
+      "label": "Activer la carte 4",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "card_4_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "card_4_title",
+      "label": "Titre",
+      "default": "Carte 4"
+    },
+    {
+      "type": "textarea",
+      "id": "card_4_text",
+      "label": "Texte",
+      "default": "Description de la carte"
+    },
+    {
+      "type": "url",
+      "id": "card_4_link",
+      "label": "Lien"
+    },
+    {
+      "type": "header",
+      "content": "Carte 5"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_5_enabled",
+      "label": "Activer la carte 5",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "card_5_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "card_5_title",
+      "label": "Titre",
+      "default": "Carte 5"
+    },
+    {
+      "type": "textarea",
+      "id": "card_5_text",
+      "label": "Texte",
+      "default": "Description de la carte"
+    },
+    {
+      "type": "url",
+      "id": "card_5_link",
+      "label": "Lien"
+    },
+    {
+      "type": "header",
+      "content": "Carte 6"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_6_enabled",
+      "label": "Activer la carte 6",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "card_6_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "card_6_title",
+      "label": "Titre",
+      "default": "Carte 6"
+    },
+    {
+      "type": "textarea",
+      "id": "card_6_text",
+      "label": "Texte",
+      "default": "Description de la carte"
+    },
+    {
+      "type": "url",
+      "id": "card_6_link",
+      "label": "Lien"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cartes personnalisées"
+    }
+  ]
+}
+{% endschema %}

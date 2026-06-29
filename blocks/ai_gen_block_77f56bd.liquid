@@ -1,0 +1,336 @@
+{% doc %}
+  @prompt
+    je veux une section avec un titre et en dessous 3 colonnes avec titre et sous-titre sans icon
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-three-columns-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    padding: {{ block.settings.section_padding }}px 0;
+  }
+
+  .ai-three-columns__container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-three-columns__main-title-{{ ai_gen_id }} {
+    text-align: {{ block.settings.title_alignment }};
+    margin: 0 0 {{ block.settings.title_spacing }}px;
+    color: {{ block.settings.title_color }};
+    font-size: {{ block.settings.title_size }}px;
+  }
+
+  .ai-three-columns__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: {{ block.settings.column_gap }}px;
+  }
+
+  .ai-three-columns__column-{{ ai_gen_id }} {
+    text-align: {{ block.settings.column_alignment }};
+  }
+
+  .ai-three-columns__column-title-{{ ai_gen_id }} {
+    margin: 0 0 {{ block.settings.column_title_spacing }}px;
+    color: {{ block.settings.column_title_color }};
+    font-size: {{ block.settings.column_title_size }}px;
+  }
+
+  .ai-three-columns__column-subtitle-{{ ai_gen_id }} {
+    margin: 0;
+    color: {{ block.settings.column_subtitle_color }};
+    font-size: {{ block.settings.column_subtitle_size }}px;
+    line-height: 1.6;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-three-columns__grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: {{ block.settings.mobile_column_gap }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-three-columns-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-three-columns__container-{{ ai_gen_id }}">
+    {% if block.settings.main_title != blank %}
+      <h2 class="ai-three-columns__main-title-{{ ai_gen_id }}">
+        {{ block.settings.main_title }}
+      </h2>
+    {% endif %}
+
+    <div class="ai-three-columns__grid-{{ ai_gen_id }}">
+      <div class="ai-three-columns__column-{{ ai_gen_id }}">
+        {% if block.settings.column_1_title != blank %}
+          <h3 class="ai-three-columns__column-title-{{ ai_gen_id }}">
+            {{ block.settings.column_1_title }}
+          </h3>
+        {% endif %}
+        {% if block.settings.column_1_subtitle != blank %}
+          <div class="ai-three-columns__column-subtitle-{{ ai_gen_id }}">
+            {{ block.settings.column_1_subtitle }}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="ai-three-columns__column-{{ ai_gen_id }}">
+        {% if block.settings.column_2_title != blank %}
+          <h3 class="ai-three-columns__column-title-{{ ai_gen_id }}">
+            {{ block.settings.column_2_title }}
+          </h3>
+        {% endif %}
+        {% if block.settings.column_2_subtitle != blank %}
+          <div class="ai-three-columns__column-subtitle-{{ ai_gen_id }}">
+            {{ block.settings.column_2_subtitle }}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="ai-three-columns__column-{{ ai_gen_id }}">
+        {% if block.settings.column_3_title != blank %}
+          <h3 class="ai-three-columns__column-title-{{ ai_gen_id }}">
+            {{ block.settings.column_3_title }}
+          </h3>
+        {% endif %}
+        {% if block.settings.column_3_subtitle != blank %}
+          <div class="ai-three-columns__column-subtitle-{{ ai_gen_id }}">
+            {{ block.settings.column_3_subtitle }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Trois colonnes",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Titre principal"
+    },
+    {
+      "type": "text",
+      "id": "main_title",
+      "label": "Titre",
+      "default": "Notre expertise"
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Alignement",
+      "options": [
+        {
+          "value": "left",
+          "label": "Gauche"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "right",
+          "label": "Droite"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Taille",
+      "min": 16,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Couleur",
+      "default": "#191a2e"
+    },
+    {
+      "type": "range",
+      "id": "title_spacing",
+      "label": "Espacement en dessous",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Colonne 1"
+    },
+    {
+      "type": "text",
+      "id": "column_1_title",
+      "label": "Titre",
+      "default": "Qualité premium"
+    },
+    {
+      "type": "textarea",
+      "id": "column_1_subtitle",
+      "label": "Sous-titre",
+      "default": "Des produits fabriqués avec soin et attention aux détails"
+    },
+    {
+      "type": "header",
+      "content": "Colonne 2"
+    },
+    {
+      "type": "text",
+      "id": "column_2_title",
+      "label": "Titre",
+      "default": "Livraison rapide"
+    },
+    {
+      "type": "textarea",
+      "id": "column_2_subtitle",
+      "label": "Sous-titre",
+      "default": "Expédition sous 24h partout en France"
+    },
+    {
+      "type": "header",
+      "content": "Colonne 3"
+    },
+    {
+      "type": "text",
+      "id": "column_3_title",
+      "label": "Titre",
+      "default": "Service client"
+    },
+    {
+      "type": "textarea",
+      "id": "column_3_subtitle",
+      "label": "Sous-titre",
+      "default": "Une équipe à votre écoute 7j/7"
+    },
+    {
+      "type": "header",
+      "content": "Style des colonnes"
+    },
+    {
+      "type": "select",
+      "id": "column_alignment",
+      "label": "Alignement",
+      "options": [
+        {
+          "value": "left",
+          "label": "Gauche"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "right",
+          "label": "Droite"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "column_title_size",
+      "label": "Taille du titre",
+      "min": 14,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "column_title_color",
+      "label": "Couleur du titre",
+      "default": "#191a2e"
+    },
+    {
+      "type": "range",
+      "id": "column_title_spacing",
+      "label": "Espacement sous le titre",
+      "min": 5,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "column_subtitle_size",
+      "label": "Taille du sous-titre",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "column_subtitle_color",
+      "label": "Couleur du sous-titre",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Mise en page"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Espacement entre colonnes",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_column_gap",
+      "label": "Espacement mobile",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Espacement vertical",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Largeur sur desktop",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trois colonnes"
+    }
+  ]
+}
+{% endschema %}
