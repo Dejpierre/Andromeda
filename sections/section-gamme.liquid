@@ -34,9 +34,9 @@
                 <source media="(max-width: 749px)" srcset="{{ block_bg_mobile | image_url: width: 1000 }} 1000w, {{ block_bg_mobile | image_url: width: 750 }} 750w" sizes="100vw">
               {%- endif -%}
               {%- if forloop.first -%}
-                {{- bg_src | image_url: width: 2000 | image_tag: class: 'sgm__bg-img', loading: 'eager', fetchpriority: 'high', widths: '800,1200,1600,2000', sizes: '100vw' -}}
+                {{- bg_src | image_url: width: 2000 | image_tag: class: 'sgm__bg-img', loading: 'eager', fetchpriority: 'high', widths: '800,1200,1600,2000', sizes: '100vw', alt: variant.title | default: product_ref.title | escape -}}
               {%- else -%}
-                {{- bg_src | image_url: width: 2000 | image_tag: class: 'sgm__bg-img', loading: 'lazy', widths: '800,1200,1600,2000', sizes: '100vw' -}}
+                {{- bg_src | image_url: width: 2000 | image_tag: class: 'sgm__bg-img', loading: 'lazy', widths: '800,1200,1600,2000', sizes: '100vw', alt: variant.title | default: product_ref.title | escape -}}
               {%- endif -%}
             </picture>
           {%- endif -%}
@@ -112,7 +112,8 @@
               class: 'sgm__swatch-img',
               loading: 'lazy',
               widths: '40,80',
-              sizes: '40px'
+              sizes: '40px',
+              alt: variant.title | escape
             -}}
           {%- endif -%}
           <span class="sgm__swatch-label">{{ variant.title }}</span>

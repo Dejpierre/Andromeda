@@ -14,12 +14,12 @@
   <div class="text-slidein" id="slidein-{{ block.id }}" role="dialog" aria-modal="true" hidden>
     <button class="text-slidein__overlay" type="button" aria-label="Fermer" tabindex="-1"></button>
     <div class="text-slidein__panel">
-      <button class="text-slidein__close" type="button" aria-label="Fermer">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 3l12 12M15 3L3 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      </button>
-      {%- if block.settings.slidein_title != blank -%}
+      <div class="text-slidein__head">
         <p class="text-slidein__title">{{ block.settings.slidein_title }}</p>
-      {%- endif -%}
+        <button class="text-slidein__close" type="button" aria-label="Fermer">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 3l12 12M15 3L3 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
       <div class="text-slidein__body rte">{{ block.settings.slidein_content }}</div>
       {%- if block.settings.slidein_cta_label != blank and block.settings.slidein_cta_url != blank -%}
         <div class="text-slidein__cta-wrap">
@@ -50,6 +50,12 @@
   z-index: 9999;
   display: flex;
   justify-content: flex-end;
+  visibility: hidden;
+  pointer-events: none;
+}
+.text-slidein.is-open {
+  visibility: visible;
+  pointer-events: auto;
 }
 .text-slidein[hidden] { display: none; }
 
@@ -59,7 +65,11 @@
   background: rgba(0,0,0,0.4);
   border: none;
   cursor: pointer;
-  animation: slidein-fade-in 0.25s ease;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.text-slidein.is-open .text-slidein__overlay {
+  opacity: 1;
 }
 
 .text-slidein__panel {
@@ -71,42 +81,50 @@
   flex-direction: column;
   overflow: hidden;
   box-shadow: -4px 0 24px rgba(0,0,0,0.12);
-  animation: slidein-slide-in 0.3s cubic-bezier(0.32,0,0.67,0);
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.32,0,0.67,0);
+}
+.text-slidein.is-open .text-slidein__panel {
+  transform: translateX(0);
+}
+
+.text-slidein__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 20px 16px 32px;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.text-slidein__title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-foreground);
+  flex: 1;
+  min-width: 0;
 }
 
 .text-slidein__close {
-  position: absolute;
-  top: calc(var(--header-height, 0px) + 16px);
-  right: 16px;
+  flex-shrink: 0;
   background: none;
   border: none;
   cursor: pointer;
   padding: 4px;
   color: var(--color-foreground);
   opacity: 0.6;
-  z-index: 1;
+  line-height: 0;
 }
 .text-slidein__close:hover { opacity: 1; }
-
-.text-slidein__title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin: 0 0 16px;
-  color: var(--color-foreground);
-  padding: calc(var(--header-height, 0px) + 48px) 32px 0;
-  flex-shrink: 0;
-}
 
 .text-slidein__body {
   font-size: 0.95rem;
   line-height: 1.65;
   flex: 1;
   overflow-y: auto;
-  padding: calc(var(--header-height, 0px) + 48px) 32px 24px;
-}
-
-.text-slidein__title + .text-slidein__body {
-  padding-top: 0;
+  padding: 24px 32px;
 }
 
 .text-slidein__cta-wrap {
@@ -130,56 +148,81 @@
 }
 .text-slidein__cta:hover { opacity: 0.8; }
 
-@keyframes slidein-fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-@keyframes slidein-slide-in {
-  from { transform: translateX(100%); }
-  to   { transform: translateX(0); }
-}
-
 @media (max-width: 749px) {
   .text-slidein { align-items: flex-end; justify-content: stretch; }
   .text-slidein__panel {
     width: 100%;
     height: 50vh;
     border-radius: 16px 16px 0 0;
-    animation: slidein-slide-up 0.3s cubic-bezier(0.32,0,0.67,0);
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.32,0,0.67,0);
+  }
+  .text-slidein.is-open .text-slidein__panel {
+    transform: translateY(0);
+  }
+  .text-slidein__head {
+    padding: 20px 16px 16px 24px;
   }
   .text-slidein__body {
-    padding: 24px 24px 16px;
-  }
-  .text-slidein__title {
-    padding: 32px 24px 0;
+    padding: 20px 24px 16px;
+    -webkit-overflow-scrolling: touch;
   }
   .text-slidein__cta-wrap {
     padding: 12px 24px 24px;
-  }
-  @keyframes slidein-slide-up {
-    from { transform: translateY(100%); }
-    to   { transform: translateY(0); }
   }
 }
 {% endstylesheet %}
 
 {% javascript %}
 (function () {
+  var _scrollY = 0;
+
+  function lockScroll() {
+    _scrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = '-' + _scrollY + 'px';
+    document.body.style.width = '100%';
+  }
+
+  function unlockScroll() {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, _scrollY);
+  }
+
+  function openSlidein(panel, trigger) {
+    panel.hidden = false;
+    requestAnimationFrame(function () {
+      panel.classList.add('is-open');
+    });
+    if (trigger) trigger.setAttribute('aria-expanded', 'true');
+    lockScroll();
+    var focusEl = panel.querySelector('.text-slidein__panel');
+    if (focusEl) focusEl.focus();
+  }
+
+  function closeSlidein(el) {
+    el.classList.remove('is-open');
+    unlockScroll();
+    var id = el.id;
+    var trigger = document.querySelector('[data-slidein-id="' + id + '"]');
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
+    el.addEventListener('transitionend', function hide() {
+      el.hidden = true;
+      el.removeEventListener('transitionend', hide);
+    });
+  }
+
   document.addEventListener('click', function (e) {
-    // Ouvrir
     var trigger = e.target.closest('[data-slidein-id]');
     if (trigger) {
       var id = trigger.dataset.slideinId;
       var panel = document.getElementById(id);
       if (!panel) return;
-      panel.hidden = false;
-      trigger.setAttribute('aria-expanded', 'true');
-      document.body.style.overflow = 'hidden';
-      panel.querySelector('.text-slidein__panel')?.focus?.();
+      openSlidein(panel, trigger);
       return;
     }
-
-    // Fermer via overlay ou bouton close
     var closer = e.target.closest('.text-slidein__close, .text-slidein__overlay');
     if (closer) {
       var slidein = closer.closest('.text-slidein');
@@ -190,7 +233,7 @@
 
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
-      var open = document.querySelector('.text-slidein:not([hidden])');
+      var open = document.querySelector('.text-slidein.is-open');
       if (open) closeSlidein(open);
       return;
     }
@@ -201,19 +244,9 @@
       var id = trigger.dataset.slideinId;
       var panel = document.getElementById(id);
       if (!panel) return;
-      panel.hidden = false;
-      trigger.setAttribute('aria-expanded', 'true');
-      document.body.style.overflow = 'hidden';
+      openSlidein(panel, trigger);
     }
   });
-
-  function closeSlidein(el) {
-    el.hidden = true;
-    document.body.style.overflow = '';
-    var id = el.id;
-    var trigger = document.querySelector('[data-slidein-id="' + id + '"]');
-    if (trigger) trigger.setAttribute('aria-expanded', 'false');
-  }
 })();
 {% endjavascript %}
 

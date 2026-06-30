@@ -6,6 +6,15 @@
   display: none !important;
 }
 
+.andromeda-low-stock {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.63em;
+  font-weight: 700;
+  color: #191a2e;
+  letter-spacing: 0.02em;
+}
+
 body {
   color: var(--color-foreground);
   background: var(--color-background);

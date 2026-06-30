@@ -22,6 +22,7 @@
           <img
             src="{{ article.image | image_url: width: 800 }}"
             alt="{{ article.image.alt | default: article.title | escape }}"
+            title="{{ article.image.alt | default: article.title | escape }}"
             class="hb__card-img"
             loading="lazy"
           >

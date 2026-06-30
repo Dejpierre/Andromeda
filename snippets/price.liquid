@@ -122,6 +122,9 @@
     -%}
     {% render 'unit-price', price: unit_price, measurement: selected_variant.unit_price_measurement %}
   {%- endif -%}
+  {%- if template.name == 'product' and selected_variant.inventory_management == 'shopify' and selected_variant.inventory_quantity > 0 and selected_variant.inventory_quantity <= 10 -%}
+    <span class="andromeda-low-stock">• Peu de pièces disponibles</span>
+  {%- endif -%}
 </div>
 {%- if has_volume_pricing -%}
   <small ref="volumePricingNote" class="volume-pricing-note">{{ 'content.volume_pricing_available' | t }}</small>

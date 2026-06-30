@@ -29,6 +29,7 @@
             <img
               src="{{ article.image | image_url: width: 1200 }}"
               alt="{{ article.image.alt | default: article.title | escape }}"
+              title="{{ article.image.alt | default: article.title | escape }}"
               class="andro-blog__card-img"
               loading="{% if forloop.index <= 2 %}eager{% else %}lazy{% endif %}"
               width="{{ article.image.width }}"
