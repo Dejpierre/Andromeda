@@ -46,17 +46,29 @@
       <div class="moona-rituel__moments" id="moona-tracks"></div>
     </div>
 
-    <!-- Player immersif -->
+    <!-- Player immersif v2 -->
     <div class="moona-rituel__player-wrap" id="moona-player-wrap" hidden>
 
+      <!-- Image de fond du dossier -->
+      <div class="moona-rituel__player-bg" aria-hidden="true">
+        <img class="moona-rituel__player-bg-img" id="moona-player-bg-img" src="" alt="">
+        <div class="moona-rituel__player-bg-overlay"></div>
+      </div>
+
+      <!-- Header : retour + logo + offline -->
       <div class="moona-rituel__player-header">
         <button class="moona-rituel__back-btn" id="moona-back-btn" type="button">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          {{ section.settings.back_to_moments | default: 'Choisir un autre rituel' }}
         </button>
-        <span class="moona-rituel__player-moment" id="moona-player-moment"></span>
+        <div class="moona-rituel__player-logo-wrap">
+          {%- if section.settings.logo_image != blank -%}
+            <img src="{{ section.settings.logo_image | image_url: width: 200 }}" alt="Andromeda" class="moona-rituel__player-logo-img">
+          {%- else -%}
+            <img src="https://cdn.shopify.com/s/files/1/1000/9375/5727/files/logo-blanc-andromeda.png?v=1774981994" alt="Andromeda" class="moona-rituel__player-logo-img">
+          {%- endif -%}
+        </div>
         <button class="moona-rituel__offline-btn" id="moona-offline-btn" type="button" aria-label="Sauvegarder hors-ligne" hidden>
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="moona-offline-icon-dl" aria-hidden="true">
             <path d="M12 3v12M7 11l5 5 5-5"/><path d="M4 19h16"/>
@@ -74,47 +86,14 @@
 
       <!-- Player custom -->
       <div class="moona-rituel__player" id="moona-player" hidden>
-        <div class="moona-rituel__orb-wrap" aria-hidden="true">
-          <canvas id="moona-orb-canvas" width="560" height="560"></canvas>
+
+        <!-- Titre de la piste -->
+        <div class="moona-rituel__player-info">
+          <p class="moona-rituel__player-moment" id="moona-player-moment"></p>
+          <p class="moona-rituel__player-subtitle">{{ section.settings.player_subtitle | default: 'Sons apaisants pour le sommeil' }}</p>
         </div>
 
-        <div class="moona-rituel__controls">
-          <button class="moona-rituel__seek-btn moona-rituel__skip-btn" id="moona-prev" type="button" aria-label="Piste précédente">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
-            </svg>
-          </button>
-
-          <button class="moona-rituel__seek-btn" id="moona-rewind" type="button" aria-label="Reculer 15s">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M12 5V2L7 7l5 5V8c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="currentColor"/>
-              <text x="12" y="14.5" text-anchor="middle" font-size="5.5" fill="currentColor" font-family="sans-serif">15</text>
-            </svg>
-          </button>
-
-          <button class="moona-rituel__play-btn" id="moona-play-btn" type="button" aria-label="Lecture">
-            <svg class="moona-rituel__icon-play" width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-            <svg class="moona-rituel__icon-pause" width="26" height="26" viewBox="0 0 24 24" fill="currentColor" style="display:none">
-              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-            </svg>
-          </button>
-
-          <button class="moona-rituel__seek-btn" id="moona-forward" type="button" aria-label="Avancer 15s">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M12 5V2l5 5-5 5V8c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z" fill="currentColor"/>
-              <text x="12" y="14.5" text-anchor="middle" font-size="5.5" fill="currentColor" font-family="sans-serif">15</text>
-            </svg>
-          </button>
-
-          <button class="moona-rituel__seek-btn moona-rituel__skip-btn" id="moona-next" type="button" aria-label="Piste suivante">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M6 18l8.5-6L6 6v12zm2.5-6 8.5 6V6l-8.5 6zM16 6h2v12h-2z"/>
-            </svg>
-          </button>
-        </div>
-
+        <!-- Barre de progression -->
         <div class="moona-rituel__progress-wrap">
           <span class="moona-rituel__time" id="moona-current">0:00</span>
           <div class="moona-rituel__progress-track" id="moona-track" role="slider" aria-label="Progression" tabindex="0">
@@ -124,30 +103,59 @@
           <span class="moona-rituel__time" id="moona-duration">—</span>
         </div>
 
-        <div class="moona-rituel__sleep">
-          <div class="moona-rituel__sleep-row">
-            <button class="moona-rituel__sleep-btn" id="moona-sleep-btn" type="button">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
-              </svg>
-              <span id="moona-sleep-label">Minuterie</span>
-            </button>
-            <button class="moona-rituel__playlist-btn moona-rituel__playlist-btn--active" id="moona-playlist-btn" type="button" aria-label="Mode playlist activé">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="15" y2="18"/>
-                <polyline points="17 15 21 18 17 21"/>
-              </svg>
-              <span id="moona-playlist-label">Playlist</span>
-            </button>
-          </div>
-          <div class="moona-rituel__sleep-opts" id="moona-sleep-opts" hidden>
-            <button class="moona-rituel__sleep-opt" data-min="15" type="button">15 min</button>
-            <button class="moona-rituel__sleep-opt" data-min="30" type="button">30 min</button>
-            <button class="moona-rituel__sleep-opt" data-min="45" type="button">45 min</button>
-            <button class="moona-rituel__sleep-opt" data-min="60" type="button">60 min</button>
-          </div>
+        <!-- Contrôles : minuterie | prev | play | next | playlist -->
+        <div class="moona-rituel__controls">
+          <button class="moona-rituel__seek-btn" id="moona-sleep-btn" type="button" aria-label="Minuterie">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+            </svg>
+          </button>
+          <button class="moona-rituel__seek-btn moona-rituel__skip-btn" id="moona-prev" type="button" aria-label="Piste précédente">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
+            </svg>
+          </button>
+          <button class="moona-rituel__play-btn" id="moona-play-btn" type="button" aria-label="Lecture">
+            <svg class="moona-rituel__icon-play" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <svg class="moona-rituel__icon-pause" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+          </button>
+          <button class="moona-rituel__seek-btn moona-rituel__skip-btn" id="moona-next" type="button" aria-label="Piste suivante">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M6 18l8.5-6L6 6v12zm2.5-6 8.5 6V6l-8.5 6zM16 6h2v12h-2z"/>
+            </svg>
+          </button>
+          <button class="moona-rituel__seek-btn moona-rituel__playlist-btn--active" id="moona-playlist-btn" type="button" aria-label="Mode playlist activé">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="15" y2="18"/>
+              <polyline points="17 15 21 18 17 21"/>
+            </svg>
+          </button>
         </div>
+
+        <!-- Options minuterie -->
+        <div class="moona-rituel__sleep-opts" id="moona-sleep-opts" hidden>
+          <button class="moona-rituel__sleep-opt" data-min="15" type="button">15 min</button>
+          <button class="moona-rituel__sleep-opt" data-min="30" type="button">30 min</button>
+          <button class="moona-rituel__sleep-opt" data-min="45" type="button">45 min</button>
+          <button class="moona-rituel__sleep-opt" data-min="60" type="button">60 min</button>
+        </div>
+
+        <!-- Tagline -->
+        <p class="moona-rituel__tagline">{{ section.settings.tagline | default: 'Respirez. Détendez-vous. Laissez-vous porter.' }}</p>
+
+        <!-- Éléments requis par le JS, non affichés -->
+        <button id="moona-rewind" type="button" hidden aria-hidden="true"></button>
+        <button id="moona-forward" type="button" hidden aria-hidden="true"></button>
+        <span id="moona-sleep-label" hidden></span>
+        <span id="moona-playlist-label" hidden></span>
       </div>
+
+      <!-- Canvas orbe requis par le JS -->
+      <canvas id="moona-orb-canvas" width="1" height="1" aria-hidden="true" style="display:none;position:absolute;pointer-events:none;"></canvas>
 
       <audio id="moona-audio" preload="metadata" crossorigin="anonymous"></audio>
     </div>
@@ -1022,6 +1030,206 @@
     .moona-rituel__loader span { animation: none; opacity: 1; }
     .moona-is-entering, .moona-is-leaving { animation: none !important; }
   }
+
+  /* ══════════════════════════════════════════════════════
+     PLAYER IMMERSIF v2
+  ══════════════════════════════════════════════════════ */
+
+  .moona-rituel__player-wrap {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow: hidden;
+  }
+
+  /* ── Image de fond ── */
+  .moona-rituel__player-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(ellipse at 50% 30%, #1E2244 0%, #191A2E 100%);
+  }
+
+  .moona-rituel__player-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .moona-rituel__player-bg-img[src=""] {
+    display: none;
+  }
+
+  .moona-rituel__player-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(25, 26, 46, 0.25) 0%,
+      rgba(25, 26, 46, 0.55) 45%,
+      rgba(25, 26, 46, 0.97) 80%
+    );
+  }
+
+  /* ── Header ── */
+  .moona-rituel__player-header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: max(48px, env(safe-area-inset-top, 48px)) 24px 16px;
+  }
+
+  .moona-rituel__player-logo-wrap {
+    text-align: center;
+    flex: 1;
+  }
+
+  .moona-rituel__player-logo-img {
+    height: 38px;
+    width: auto;
+    opacity: 0.9;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+  }
+
+  /* ── Player body ── */
+  .moona-rituel__player {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 28px max(40px, env(safe-area-inset-bottom, 40px));
+    gap: 18px;
+  }
+
+  /* ── Info piste ── */
+  .moona-rituel__player-info {
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .moona-rituel__player-moment {
+    font-family: 'Stellar', serif !important;
+    font-size: clamp(30px, 8vw, 48px);
+    color: #FFFFFF;
+    margin: 0 0 8px;
+    letter-spacing: 0.01em;
+    line-height: 1.15;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.4);
+    display: block;
+  }
+
+  .moona-rituel__player-subtitle {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ── Progress ── */
+  .moona-rituel__progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* ── Contrôles redesign ── */
+  .moona-rituel__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin: 0;
+  }
+
+  .moona-rituel__seek-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.7);
+    transition: background 0.15s, color 0.15s, transform 0.18s cubic-bezier(.34,1.56,.64,1);
+    flex-shrink: 0;
+  }
+
+  .moona-rituel__seek-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    transform: scale(1.08);
+  }
+
+  .moona-rituel__play-btn {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    transition: transform 0.18s cubic-bezier(.34,1.56,.64,1), background 0.18s ease;
+    flex-shrink: 0;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  }
+
+  .moona-rituel__play-btn:hover {
+    background: rgba(255, 255, 255, 0.28);
+    transform: scale(1.08);
+  }
+
+  .moona-rituel__play-btn:active,
+  .moona-rituel__seek-btn:active {
+    transform: scale(0.94);
+  }
+
+  /* ── Sleep opts ── */
+  .moona-rituel__sleep-opts {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Tagline ── */
+  .moona-rituel__tagline {
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.38);
+    margin: 0;
+    font-style: italic;
+    letter-spacing: 0.03em;
+    line-height: 1.65;
+  }
+
+  /* ── Loader centré ── */
+  .moona-rituel__loader {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
 </style>
 
 <script>
@@ -1479,6 +1687,13 @@
     currentEl.textContent   = '0:00';
     durationEl.textContent  = '—';
 
+    // Image de fond depuis le dossier
+    const bgImg = document.getElementById('moona-player-bg-img');
+    if (bgImg) {
+      const fMeta = folderMeta[track.folder] || {};
+      bgImg.src = fMeta.image || '';
+    }
+
     if (currentRemoteUrl) {
       audioEl.src = currentRemoteUrl;
       setOfflineState('available');
@@ -1643,6 +1858,18 @@
       "type": "image_picker",
       "id": "logo_image",
       "label": "Logo (optionnel)"
+    },
+    {
+      "type": "text",
+      "id": "player_subtitle",
+      "label": "Sous-titre du player",
+      "default": "Sons apaisants pour le sommeil"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline (bas du player)",
+      "default": "Respirez. Détendez-vous. Laissez-vous porter."
     },
     {
       "type": "text",
