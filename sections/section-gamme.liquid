@@ -68,7 +68,8 @@
             endif
           endfor
           assign btn_label = block_btn_label | default: section.settings.default_button_label | default: 'Je craque'
-          assign btn_url = block_btn_link | default: product_ref.url | append: '?variant=' | append: variant.id
+          assign _product_clean_url = product_ref.url | split: '?' | first | append: '?variant=' | append: variant.id
+          assign btn_url = block_btn_link | default: _product_clean_url
         -%}
         <div class="sgm__card{% if forloop.first %} is-active{% endif %}" data-variant-id="{{ variant.id }}">
           <p class="sgm__card-title">{{ variant.title }}</p>
@@ -103,7 +104,7 @@
           class="sgm__swatch{% if forloop.first %} is-active{% endif %}"
           type="button"
           data-variant-id="{{ variant.id }}"
-          data-variant-url="{{ product_ref.url }}?variant={{ variant.id }}"
+          data-variant-url="{{ product_ref.url | split: '?' | first }}?variant={{ variant.id }}"
           aria-label="{{ variant.title | escape }}"
           aria-pressed="{{ forloop.first }}"
         >

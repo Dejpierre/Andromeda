@@ -34,6 +34,29 @@ details.accordeon-item summary::-webkit-details-marker { display: none; }
 }
 </style>
 
+{%- if section.blocks.size > 0 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- for block in section.blocks -%}
+    {%- assign q = block.settings.titre | strip_html | escape -%}
+    {%- assign a = block.settings.contenu | strip_html | escape -%}
+    {
+      "@type": "Question",
+      "name": {{ q | json }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ a | json }}
+      }
+    }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Accordéon produit",
