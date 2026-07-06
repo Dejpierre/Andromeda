@@ -1,16 +1,21 @@
 {% comment %} Section Pourquoi choisir — image centrale + 4 avantages {% endcomment %}
 
+{%- assign _en = false -%}
+{%- if request.locale.iso_code == 'en' -%}{%- assign _en = true -%}{%- endif -%}
+
+{%- assign wm_titles_en = 'Grade 6A Silk,22 Momme,Total darkness,Skin & hair' | split: ',' -%}
+{%- assign wm_texts_en = 'Less than 5% of world production. Extra-long filaments for unmatched softness.|The perfect weight: total opacity and lightness for a restful night.|Designed to block 100% of light and maximise melatonin production for deep sleep.|Anti-friction, natural moisturizer. Silk preserves where cotton absorbs.' | split: '|' -%}
+
 <div class="wm" id="wm">
 
   {% if section.settings.title != blank or section.settings.title_accent != blank %}
     <div class="wm__header">
       <h2 class="wm__title">
-        {{ section.settings.title }}
-        {% if section.settings.title_accent != blank %}
-          <em>{{ section.settings.title_accent }}</em>
-        {% endif %}
+        {%- if _en -%}Why choose our masks?{%- else -%}{{ section.settings.title }}
+        {% if section.settings.title_accent != blank %}<em>{{ section.settings.title_accent }}</em>{% endif %}
+        {%- endif -%}
       </h2>
-      {% if section.settings.subtitle != blank %}
+      {% if section.settings.subtitle != blank and _en == false %}
         <p class="wm__subtitle">{{ section.settings.subtitle }}</p>
       {% endif %}
     </div>
@@ -37,8 +42,8 @@
                 </svg>
               {% endif %}
             </div>
-            <h3 class="wm__item-title">{{ block.settings.title }}</h3>
-            <p class="wm__item-text">{{ block.settings.text }}</p>
+            <h3 class="wm__item-title">{%- if _en -%}{{ wm_titles_en[idx] }}{%- else -%}{{ block.settings.title }}{%- endif -%}</h3>
+            <p class="wm__item-text">{%- if _en -%}{{ wm_texts_en[idx] }}{%- else -%}{{ block.settings.text }}{%- endif -%}</p>
           </div>
         {% endif %}
       {% endfor %}
@@ -75,8 +80,8 @@
                 </svg>
               {% endif %}
             </div>
-            <h3 class="wm__item-title">{{ block.settings.title }}</h3>
-            <p class="wm__item-text">{{ block.settings.text }}</p>
+            <h3 class="wm__item-title">{%- if _en -%}{{ wm_titles_en[idx] }}{%- else -%}{{ block.settings.title }}{%- endif -%}</h3>
+            <p class="wm__item-text">{%- if _en -%}{{ wm_texts_en[idx] }}{%- else -%}{{ block.settings.text }}{%- endif -%}</p>
           </div>
         {% endif %}
       {% endfor %}
@@ -88,9 +93,9 @@
     <p class="wm__heading-label">{{ section.settings.heading }}</p>
   {% endif %}
 
-  {% if section.settings.cta_label != blank %}
+  {% if section.settings.cta_label != blank or _en %}
     <div class="wm__cta">
-      <a href="{{ section.settings.cta_link | default: '#' }}" class="button">{{ section.settings.cta_label }}</a>
+      <a href="{{ section.settings.cta_link | default: '#' }}" class="button">{%- if _en -%}Shop now{%- else -%}{{ section.settings.cta_label }}{%- endif -%}</a>
     </div>
   {% endif %}
 </div>

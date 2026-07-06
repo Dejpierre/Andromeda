@@ -1,4 +1,6 @@
 {% comment %} Section blog homepage — Andromeda style avec animations au survol {% endcomment %}
+{%- assign _en = false -%}
+{%- if request.locale.iso_code == 'en' -%}{%- assign _en = true -%}{%- endif -%}
 
 <section class="hb" id="hb-{{ section.id }}">
   <div class="hb__inner">
@@ -6,7 +8,7 @@
     {% if section.settings.title != blank %}
     <div class="hb__header">
       <p class="hb__eyebrow">{{ section.settings.eyebrow | default: 'Journal' }}</p>
-      <h2 class="hb__title">{{ section.settings.title }}</h2>
+      <h2 class="hb__title">{%- if _en -%}Did you know?{%- else -%}{{ section.settings.title }}{%- endif -%}</h2>
     </div>
     {% endif %}
 
@@ -35,24 +37,28 @@
         <div class="hb__card-body">
           <div class="hb__card-meta">
             {%- assign _m = article.published_at | date: "%-m" -%}
-            {%- case _m -%}
-              {%- when '1' -%}{%- assign _mfr = 'jan.' -%}
-              {%- when '2' -%}{%- assign _mfr = 'fév.' -%}
-              {%- when '3' -%}{%- assign _mfr = 'mars' -%}
-              {%- when '4' -%}{%- assign _mfr = 'avr.' -%}
-              {%- when '5' -%}{%- assign _mfr = 'mai' -%}
-              {%- when '6' -%}{%- assign _mfr = 'juin' -%}
-              {%- when '7' -%}{%- assign _mfr = 'juil.' -%}
-              {%- when '8' -%}{%- assign _mfr = 'août' -%}
-              {%- when '9' -%}{%- assign _mfr = 'sept.' -%}
-              {%- when '10' -%}{%- assign _mfr = 'oct.' -%}
-              {%- when '11' -%}{%- assign _mfr = 'nov.' -%}
-              {%- when '12' -%}{%- assign _mfr = 'déc.' -%}
-            {%- endcase -%}
-            <span>{{ article.published_at | date: "%-d" }} {{ _mfr }} {{ article.published_at | date: "%Y" }}</span>
+            {%- if _en -%}
+              <span>{{ article.published_at | date: "%b %-d, %Y" }}</span>
+            {%- else -%}
+              {%- case _m -%}
+                {%- when '1' -%}{%- assign _mfr = 'jan.' -%}
+                {%- when '2' -%}{%- assign _mfr = 'fév.' -%}
+                {%- when '3' -%}{%- assign _mfr = 'mars' -%}
+                {%- when '4' -%}{%- assign _mfr = 'avr.' -%}
+                {%- when '5' -%}{%- assign _mfr = 'mai' -%}
+                {%- when '6' -%}{%- assign _mfr = 'juin' -%}
+                {%- when '7' -%}{%- assign _mfr = 'juil.' -%}
+                {%- when '8' -%}{%- assign _mfr = 'août' -%}
+                {%- when '9' -%}{%- assign _mfr = 'sept.' -%}
+                {%- when '10' -%}{%- assign _mfr = 'oct.' -%}
+                {%- when '11' -%}{%- assign _mfr = 'nov.' -%}
+                {%- when '12' -%}{%- assign _mfr = 'déc.' -%}
+              {%- endcase -%}
+              <span>{{ article.published_at | date: "%-d" }} {{ _mfr }} {{ article.published_at | date: "%Y" }}</span>
+            {%- endif -%}
             {% assign word_count = article.content | strip_html | split: ' ' | size %}
             {% assign read_time = word_count | divided_by: 200 | plus: 1 %}
-            <span>{{ read_time }} min de lecture</span>
+            <span>{{ read_time }} {%- if _en -%} min read{%- else -%} min de lecture{%- endif -%}</span>
           </div>
 
           <h3 class="hb__card-title">{{ article.title }}</h3>
@@ -62,7 +68,7 @@
           {% endif %}
 
           <span class="hb__card-cta">
-            Lire l'article
+            {%- if _en -%}Read article{%- else -%}Lire l'article{%- endif -%}
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M3 7h8M7 4l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -76,7 +82,7 @@
     {% if section.settings.show_all_link %}
     <div class="hb__footer">
       <a href="{{ blog_source.url }}" class="hb__all-link">
-        Voir tous les articles
+        {%- if _en -%}See all articles{%- else -%}Voir tous les articles{%- endif -%}
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path d="M3 7h8M7 4l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>

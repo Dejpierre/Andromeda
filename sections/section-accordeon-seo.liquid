@@ -1,17 +1,21 @@
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div class="section page-width color-{{ section.settings.color_scheme }}" style="padding-block-start: 48px; padding-block-end: 48px;">
 
-  {% for block in section.blocks %}
-    <details class="accordeon-item" style="border-top:1px solid rgba(var(--color-foreground-rgb, 0,0,0), 0.12); padding:0;">
-      <summary class="accordeon-summary" style="cursor:pointer; padding:18px 0; list-style:none; display:flex; justify-content:space-between; align-items:center; font-size:0.95rem; letter-spacing:0.05em; text-transform:uppercase;">
-        {{ block.settings.titre }}
-        <span class="accordeon-icon" style="font-size:1.2rem; transition:transform 0.3s;">+</span>
-      </summary>
-      <div class="accordeon-content" style="padding:0 0 24px 0; font-size:0.92rem; line-height:1.8; opacity:0.85;">
-        {{ block.settings.contenu }}
-      </div>
-    </details>
-  {% endfor %}
+  {%- if request.locale.iso_code == 'en' -%}
+    {%- render 'faq-en-content' -%}
+  {%- else -%}
+    {% for block in section.blocks %}
+      <details class="accordeon-item" style="border-top:1px solid rgba(var(--color-foreground-rgb, 0,0,0), 0.12); padding:0;">
+        <summary class="accordeon-summary" style="cursor:pointer; padding:18px 0; list-style:none; display:flex; justify-content:space-between; align-items:center; font-size:0.95rem; letter-spacing:0.05em; text-transform:uppercase;">
+          {{ block.settings.titre }}
+          <span class="accordeon-icon" style="font-size:1.2rem; transition:transform 0.3s;">+</span>
+        </summary>
+        <div class="accordeon-content" style="padding:0 0 24px 0; font-size:0.92rem; line-height:1.8; opacity:0.85;">
+          {{ block.settings.contenu }}
+        </div>
+      </details>
+    {% endfor %}
+  {%- endif -%}
   <div style="border-top:1px solid rgba(var(--color-foreground-rgb, 0,0,0), 0.12);"></div>
 
 </div>

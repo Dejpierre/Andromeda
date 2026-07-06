@@ -1,6 +1,10 @@
 <div style="background-color: {{ section.settings.bg_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
   <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
-    {{ section.blocks | map: 'settings' | map: 'text' | join: '' }}
+    {%- if request.locale.iso_code == 'en' -%}
+      <p style="max-width:720px;margin:0 auto;text-align:center;font-size:0.95rem;line-height:1.8;color:#444;">Andromeda creates <strong>mulberry silk sleep masks</strong> in Grade 6A, 22 momme — the most demanding standard on the market. Our mask blocks 100% of light, is gentle on skin and hair, and adapts to all face shapes with its adjustable elastic. Designed for discerning sleepers, it transforms every night into a true <strong>luxury sleep ritual</strong>. Carefully packaged delivery across France and internationally.</p>
+    {%- else -%}
+      {{ section.blocks | map: 'settings' | map: 'text' | join: '' }}
+    {%- endif -%}
   </div>
 </div>
 

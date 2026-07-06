@@ -1,0 +1,36 @@
+{% assign faq_en = "
+What's the difference between 22 momme and 19 momme silk?|<p>Momme measures the density of silk fabric. At 22 momme, Andromeda silk is 15–20% denser than a standard 19 momme silk. It blocks 100% of light, holds up better through washing, and maintains its softness over time. 19 momme silk, being lighter, loses its properties more quickly.</p>||
+What is Grade 6A mulberry silk?|<p>Grade 6A is the highest global classification for mulberry silk. Less than 5% of world production reaches this level. The filaments are extra-long, uniform, with no knots or irregularities. This results in a perfectly smooth surface, ideal for prolonged contact with skin and hair during sleep.</p>||
+Is silk good for skin and hair?|<p>Yes. Mulberry silk generates very little friction compared to cotton — it reduces sleep creases on skin and hair breakage. It is naturally thermoregulating, hypoallergenic, and creates no static electricity. These properties make it the material preferred by dermatologists for sleep accessories.</p>||
+Does the mask really block 100% of light?|<p>Yes. The density of 22 momme silk combined with the anatomical cut of the mask guarantees total darkness. The contoured shape leaves a slight cavity for the eyes, preventing any pressure on the eyelids while maintaining complete opacity.</p>||
+Is the Andromeda mask certified?|<p>Yes. The mask is OEKO-TEX® STANDARD 100 certified, the most globally recognized textile certification. It guarantees the absence of harmful substances: dyes, heavy metals, pesticides, formaldehyde. Safe for direct and prolonged contact with skin, including for sensitive individuals.</p>||
+How do I wash my silk mask?|<p>Hand wash in cold water with a mild soap, or machine wash on a delicate cycle at max 30°C in a mesh laundry bag. Dry flat in the air, away from direct heat. Do not wring. Silk is naturally antibacterial, so washing every 7–10 days is sufficient for daily use.</p>||
+Is the mask suitable for side sleepers?|<p>Yes. The adjustable silk elastic adapts to all head shapes without pressure or marks upon waking. The mask stays in place all night regardless of sleeping position — back, side, or mixed.</p>||
+Is the mask suitable for sensitive skin?|<p>Yes. Mulberry silk is naturally hypoallergenic. The OEKO-TEX® STANDARD 100 certification further guarantees the absence of irritating substances in the fabric. The mask is suitable for sensitive, reactive, or eczema-prone skin.</p>||
+What size is the mask? Is it adjustable?|<p>The Andromeda mask is one size, adjustable with a silk elastic strap. It fits all head sizes and face shapes — men, women, adults. The anatomical shape fully covers the eyes without pressing on the eyelids.</p>||
+What is the QR code included with my order?|<p>Every mask ships with a QR code giving access to the Andromeda ritual space — a curated selection of ambient sounds for falling asleep: rain, forest, ocean, binaural beats. Permanent access, exclusively for customers.</p>||
+What's the difference between mulberry silk and other types of silk?|<p>Mulberry silk (Bombyx mori) is the finest and most uniform of all silks. Unlike wild silks (tussah, eri), its filaments are continuous and uniform, resulting in a far smoother fabric. It is the only silk suitable for prolonged direct contact with skin — other silks are rougher and less hypoallergenic.</p>||
+How quickly will I receive my order?|<p>Delivery in mainland France: 2–4 business days. International delivery: 5–10 business days. Free shipping from €65. Every order ships in careful packaging, gift-ready.</p>||
+How does free shipping work?|<p>Free shipping applies to all orders of €65 or more in mainland France. It is automatically applied at checkout once the minimum is reached. Below this threshold, shipping costs €3.60 for France.</p>||
+What is Andromeda Paris's return policy?|<p>You have 30 days from receipt to return your mask if not satisfied. Returns are free. A full refund is processed within 5–7 business days after the item is received. To initiate a return, contact contact@andromedaparis.com.</p>||
+Is the mask available in multiple colors?|<p>Yes. The Andromeda mask comes in several colors: Crépuscule, Nébuleuse, Clair de lune, Nuit céleste, Douce lueur, and Poussière d'étoile. All colors are made with OEKO-TEX® certified dyes, free from harmful substances.</p>
+" | strip %}
+
+{% assign faq_items = faq_en | split: "||" %}
+{% for item in faq_items %}
+  {% assign item = item | strip %}
+  {% if item != "" %}
+    {% assign parts = item | split: "|" %}
+    {% assign q = parts[0] | strip %}
+    {% assign a = parts[1] | strip %}
+    <details class="accordeon-item" style="border-top:1px solid rgba(var(--color-foreground-rgb, 0,0,0), 0.12); padding:0;">
+      <summary class="accordeon-summary" style="cursor:pointer; padding:18px 0; list-style:none; display:flex; justify-content:space-between; align-items:center; font-size:0.95rem; letter-spacing:0.05em; text-transform:uppercase;">
+        {{ q }}
+        <span class="accordeon-icon" style="font-size:1.2rem; transition:transform 0.3s;">+</span>
+      </summary>
+      <div class="accordeon-content" style="padding:0 0 24px 0; font-size:0.92rem; line-height:1.8; opacity:0.85;">
+        {{ a }}
+      </div>
+    </details>
+  {% endif %}
+{% endfor %}

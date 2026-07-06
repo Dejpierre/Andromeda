@@ -104,67 +104,18 @@
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
                   "settings": {
-                    "custom_liquid": "<h1 class=\"hero-title hero-title--seo\">\n  Masque de Sommeil en Soie de Mûrier 22 Mommes\n</h1>\n<h2 class=\"hero-title hero-title--tagline\">\n  Dormez dans l'obscurité <span class=\"title-accent\">parfaite.</span> <br>Réveillez-vous\n  <span class=\"title-accent\">transformé</span>\n</h2>\n\n<style>\n\n@font-face {\n    font-family: 'Stellar';\n    src: url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/MirageStellar.ttf?v=1772405200') format('opentype');\n  }\n\n  .hero-title {\n    font-weight: 400 !important;\n    margin-bottom: 0.4rem;\n  }\n  .hero-title--seo {\n    font-size: 1rem;\n    letter-spacing: 0.12em;\n    text-transform: uppercase;\n    opacity: 0.75;\n  }\n  .hero-title--tagline {\n    font-size: 3rem;\n    margin-bottom: 1rem;\n  }\n  @media (max-width: 749px) {\n    .hero-title--tagline {\n      font-size: 2rem;\n    }\n  }\n  .title-accent {\n    font-family: 'Stellar', serif;\n    font-weight: 400;\n    font-style: normal;\n    font-display: swap;\n    margin-bottom: 0px;\n  }\n</style>"
-                  },
-                  "blocks": {}
-                },
-                "text_7ipHex": {
-                  "type": "text",
-                  "name": "t:names.text",
-                  "settings": {
-                    "text": "<p>Masque de sommeil en pure soie de mûrier 22 mommes, grade 6A. Douceur absolue, obscurité totale, thermorégulation naturelle — pour un réveil transformé.</p>",
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "slidein_enabled": false,
-                    "slidein_link_label": "En savoir plus",
-                    "slidein_title": "",
-                    "slidein_content": "",
-                    "slidein_cta_label": "",
-                    "slidein_cta_url": "",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "custom_liquid": "{%- if request.locale.iso_code == 'en' -%}\n<h1 class=\"hero-title hero-title--seo\">22 Momme Mulberry Silk Sleep Mask</h1>\n<h2 class=\"hero-title hero-title--tagline\">Sleep in perfect <span class=\"title-accent\">darkness.</span> <br>Wake up <span class=\"title-accent\">transformed.</span></h2>\n<p style=\"margin-bottom:0;opacity:0.85;font-size:1rem;line-height:1.6;max-width:420px;\">22 momme Grade 6A mulberry silk sleep mask. Absolute softness, total darkness, natural thermoregulation — for a transformed morning.</p>\n<a href=\"/products/masque-de-sommeil-en-soie-de-murier-22-mommes\" class=\"button\" style=\"margin-top:1.25rem;display:inline-block;text-decoration:none;\">Shop our mask</a>\n{%- else -%}\n<h1 class=\"hero-title hero-title--seo\">Masque de Sommeil en Soie de Mûrier 22 Mommes</h1>\n<h2 class=\"hero-title hero-title--tagline\">Dormez dans l'obscurité <span class=\"title-accent\">parfaite.</span> <br>Réveillez-vous <span class=\"title-accent\">transformé</span></h2>\n<p style=\"margin-bottom:0;opacity:0.85;font-size:1rem;line-height:1.6;max-width:420px;\">Masque de sommeil en pure soie de mûrier 22 mommes, grade 6A. Douceur absolue, obscurité totale, thermorégulation naturelle — pour un réveil transformé.</p>\n<a href=\"/products/masque-de-sommeil-en-soie-de-murier-22-mommes\" class=\"button\" style=\"margin-top:1.25rem;display:inline-block;text-decoration:none;\">Découvrir notre masque</a>\n{%- endif -%}\n\n<style>\n@font-face { font-family:'Stellar'; src:url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/MirageStellar.ttf?v=1772405200') format('opentype'); font-display:swap; }\n.hero-title { font-weight:400 !important; margin-bottom:0.4rem; }\n.hero-title--seo { font-size:1rem; letter-spacing:0.12em; text-transform:uppercase; opacity:0.75; }\n.hero-title--tagline { font-size:3rem; margin-bottom:1rem; }\n@media(max-width:749px){.hero-title--tagline{font-size:2rem;}}\n.title-accent { font-family:'Stellar',serif; font-weight:400; font-style:normal; font-display:swap; margin-bottom:0; }\n</style>"
                   },
                   "blocks": {}
                 }
               },
               "block_order": [
-                "custom_liquid_mV7GzM",
-                "text_7ipHex"
+                "custom_liquid_mV7GzM"
               ]
-            },
-            "button_KCWUCG": {
-              "type": "button",
-              "name": "t:names.button",
-              "settings": {
-                "label": "Découvrir notre masque",
-                "link": "shopify://products/masque-de-sommeil-en-soie-de-murier-22-mommes",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
             }
           },
           "block_order": [
-            "group_3wCzmd",
-            "button_KCWUCG"
+            "group_3wCzmd"
           ]
         }
       },
@@ -438,62 +389,13 @@
           "type": "custom-liquid",
           "name": "t:names.custom_liquid",
           "settings": {
-            "custom_liquid": "<h2 class=\"hero-title\">Le sommeil est <span class=\"title-accent\">un luxe.</span>\n<br>Offrez-vous <span class=\"title-accent\">le vôtre.</span></h2>"
-          },
-          "blocks": {}
-        },
-        "text_gnqTEY": {
-          "type": "text",
-          "name": "t:names.text",
-          "settings": {
-            "text": "<p>Nous participons à un sommeil plus performant et plus durable. Nos produits à l'étoffe noble vous accompagnent dans votre quotidien avec élégance.</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "slidein_enabled": false,
-            "slidein_link_label": "En savoir plus",
-            "slidein_title": "",
-            "slidein_content": "",
-            "slidein_cta_label": "",
-            "slidein_cta_url": "",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "button_P4zjrH": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Acheter maintenant",
-            "link": "shopify://products/masque-de-sommeil-en-soie-de-murier-22-mommes",
-            "open_in_new_tab": false,
-            "style_class": "button",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
+            "custom_liquid": "{%- if request.locale.iso_code == 'en' -%}\n<h2 class=\"hero-title\">Sleep is a <span class=\"title-accent\">luxury.</span><br>Make it <span class=\"title-accent\">yours.</span></h2>\n<p style=\"margin-bottom:0;opacity:0.85;font-size:1rem;line-height:1.6;max-width:440px;\">We help you sleep better and more sustainably. Our premium silk products accompany your everyday with elegance.</p>\n<a href=\"/products/masque-de-sommeil-en-soie-de-murier-22-mommes\" class=\"button\" style=\"margin-top:1.25rem;display:inline-block;text-decoration:none;\">Shop now</a>\n{%- else -%}\n<h2 class=\"hero-title\">Le sommeil est <span class=\"title-accent\">un luxe.</span><br>Offrez-vous <span class=\"title-accent\">le vôtre.</span></h2>\n<p style=\"margin-bottom:0;opacity:0.85;font-size:1rem;line-height:1.6;max-width:440px;\">Nous participons à un sommeil plus performant et plus durable. Nos produits à l'étoffe noble vous accompagnent dans votre quotidien avec élégance.</p>\n<a href=\"/products/masque-de-sommeil-en-soie-de-murier-22-mommes\" class=\"button\" style=\"margin-top:1.25rem;display:inline-block;text-decoration:none;\">Acheter maintenant</a>\n{%- endif -%}"
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "custom_liquid_pcANne",
-        "text_gnqTEY",
-        "button_P4zjrH"
+        "custom_liquid_pcANne"
       ],
       "name": "t:names.custom_section",
       "settings": {

@@ -1,6 +1,9 @@
 {% assign qr_image = section.settings.qr_image %}
 {% assign card_bg = section.settings.card_bg | default: '#1E2244' %}
 {% assign cta_url = section.settings.cta_url | default: '/pages/rituels' %}
+{%- assign _en = false -%}
+{%- if request.locale.iso_code == 'en' -%}{%- assign _en = true -%}{%- endif -%}
+{%- assign qr_features_en = 'Exclusive sounds|Relaxing atmospheres|Guided sleep journey' | split: '|' -%}
 
 <section class="qr-rituel">
   <div class="qr-rituel__wrapper page-width-normal">
@@ -9,10 +12,15 @@
     <div class="qr-rituel__card" style="background: {{ card_bg }};">
       <div class="qr-rituel__card-content">
         <h2 class="qr-rituel__title">
+          {%- if _en -%}
+          <span class="qr-rituel__title-line1">Ritual space QR code</span>
+          <span class="qr-rituel__title-line2">included with every order</span>
+          {%- else -%}
           <span class="qr-rituel__title-line1">{{ section.settings.title_line1 | default: "Qr code espace rituel" }}</span>
           <span class="qr-rituel__title-line2">{{ section.settings.title_line2 | default: "inclus dans chaque commande" }}</span>
+          {%- endif -%}
         </h2>
-        <p class="qr-rituel__desc">{{ section.settings.description | default: "Sons exclusifs pour trouver le sommeil en toute sérénité." }}</p>
+        <p class="qr-rituel__desc">{%- if _en -%}Exclusive sounds to find sleep in complete serenity.{%- else -%}{{ section.settings.description | default: "Sons exclusifs pour trouver le sommeil en toute sérénité." }}{%- endif -%}</p>
       </div>
 
       <!-- Image QR qui déborde -->
@@ -48,7 +56,7 @@
           {% else %}
             <span class="qr-rituel__feature-dot"></span>
           {% endif %}
-          <span class="qr-rituel__feature-label">{{ block.settings.label }}</span>
+          <span class="qr-rituel__feature-label">{%- if _en -%}{{ qr_features_en[forloop.index0] | default: block.settings.label }}{%- else -%}{{ block.settings.label }}{%- endif -%}</span>
         </li>
       {% endfor %}
     </ul>
