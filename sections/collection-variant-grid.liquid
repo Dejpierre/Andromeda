@@ -1,0 +1,151 @@
+{%- liquid
+  assign columns_desktop = section.settings.columns_desktop
+  assign columns_mobile = section.settings.columns_mobile
+-%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="section variant-grid-section color-{{ section.settings.color_scheme }}"
+  style="
+    --padding-block-start: {{ section.settings.padding-block-start }}px;
+    --padding-block-end: {{ section.settings.padding-block-end }}px;
+  "
+>
+  <ul
+    class="variant-grid page-width"
+    style="
+      --variant-grid-columns-mobile: {{ columns_mobile }};
+      --variant-grid-columns-desktop: {{ columns_desktop }};
+      --variant-grid-gap-horizontal: {{ section.settings.columns_gap_horizontal }}px;
+      --variant-grid-gap-vertical: {{ section.settings.columns_gap_vertical }}px;
+    "
+  >
+    {%- for product in collection.products -%}
+      {%- for variant in product.variants -%}
+        {%- unless section.settings.hide_unavailable and variant.available == false -%}
+          <li class="variant-grid__item">
+            {% render 'variant-grid-card', product: product, variant: variant, image_ratio: section.settings.image_ratio %}
+          </li>
+        {%- endunless -%}
+      {%- endfor -%}
+    {%- endfor -%}
+  </ul>
+</div>
+
+{% stylesheet %}
+  .variant-grid-section {
+    padding-block-start: var(--padding-block-start);
+    padding-block-end: var(--padding-block-end);
+  }
+
+  .variant-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--variant-grid-columns-mobile), 1fr);
+    column-gap: var(--variant-grid-gap-horizontal);
+    row-gap: var(--variant-grid-gap-vertical);
+    list-style: none;
+    margin: 0;
+    padding-inline: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .variant-grid {
+      grid-template-columns: repeat(var(--variant-grid-columns-desktop), 1fr);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Grille variantes couleur",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Format image",
+      "options": [
+        { "value": "square", "label": "Carré" },
+        { "value": "portrait", "label": "Portrait" },
+        { "value": "adapt", "label": "Naturel" }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_unavailable",
+      "label": "Masquer les variantes indisponibles",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Colonnes (ordinateur)",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Colonnes (mobile)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "columns_gap_horizontal",
+      "label": "Espacement horizontal",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "columns_gap_vertical",
+      "label": "Espacement vertical",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Palette de couleurs",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Marge haute",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Marge basse",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    }
+  ],
+  "presets": [
+    { "name": "Grille variantes couleur" }
+  ]
+}
+{% endschema %}

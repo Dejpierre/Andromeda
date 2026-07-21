@@ -46,3 +46,11 @@
   "
 >
 </span>
+
+{% stylesheet %}
+  /* Photo swatches are often not perfectly square (fabric/pattern crops); crop them to
+     fill the circle instead of stretching, which distorts non-square source images. */
+  .swatch:not(.swatch--variant-image) {
+    background-size: cover;
+  }
+{% endstylesheet %}

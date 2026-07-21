@@ -1,0 +1,135 @@
+{%- doc -%}
+  Renders one collection-grid card per variant instead of per product, so each color
+  option shows up as its own item on the collection page. Links to the product page
+  with that variant pre-selected via ?variant=; the product page itself is untouched.
+
+  @param {object} product
+  @param {object} variant
+  @param {string} [image_ratio] - 'square' | 'portrait' | 'adapt'
+{%- enddoc -%}
+
+{%- liquid
+  assign variant_image = variant.featured_image | default: product.featured_image
+  assign compare_at_price = variant.compare_at_price
+  assign price = variant.price
+  assign on_sale = false
+  if compare_at_price > price
+    assign on_sale = true
+  endif
+
+  case image_ratio
+    when 'portrait'
+      assign ratio = '4 / 5'
+    when 'adapt'
+      assign ratio = variant_image.aspect_ratio | default: '1'
+    else
+      assign ratio = '1'
+  endcase
+-%}
+
+<a href="{{ product.url }}?variant={{ variant.id }}" class="variant-card">
+  <span
+    class="variant-card__media"
+    style="--variant-card-ratio: {{ ratio }};"
+  >
+    {%- if variant_image -%}
+      {{
+        variant_image
+        | image_url: width: 800
+        | image_tag:
+          loading: 'lazy',
+          widths: '300, 500, 800',
+          sizes: '(min-width: 750px) 25vw, 50vw',
+          class: 'variant-card__image'
+      }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'variant-card__placeholder' }}
+    {%- endif -%}
+    {%- if on_sale -%}
+      <span class="variant-card__badge">Promotion</span>
+    {%- endif -%}
+  </span>
+  <span class="variant-card__info">
+    <span class="variant-card__title">{{ product.title }}</span>
+    <span class="variant-card__variant">{{ variant.title }}</span>
+    <span class="variant-card__price">
+      {%- if on_sale -%}
+        <s class="variant-card__compare-price">{{ compare_at_price | money }}</s>
+        {{ price | money }}
+      {%- else -%}
+        {{ price | money }}
+      {%- endif -%}
+    </span>
+  </span>
+</a>
+
+{% stylesheet %}
+  .variant-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: var(--color-foreground);
+    text-decoration: none;
+  }
+
+  .variant-card__media {
+    position: relative;
+    display: block;
+    aspect-ratio: var(--variant-card-ratio, 1);
+    overflow: hidden;
+    border-radius: var(--product-corner-radius, 0);
+    background: rgb(var(--color-foreground-rgb) / 0.04);
+  }
+
+  .variant-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .variant-card:hover .variant-card__image {
+    transform: scale(1.03);
+  }
+
+  .variant-card__placeholder {
+    width: 100%;
+    height: 100%;
+  }
+
+  .variant-card__badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    padding: 2px 10px;
+    font-size: var(--font-size--xs, 0.75rem);
+    background: var(--color-background, #fff);
+    border-radius: var(--style-border-radius-buttons, 999px);
+  }
+
+  .variant-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-block-start: 4px;
+  }
+
+  .variant-card__title {
+    font-size: 1rem;
+  }
+
+  .variant-card__variant {
+    font-size: var(--font-size--sm, 0.875rem);
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-40-60, 0.6));
+  }
+
+  .variant-card__price {
+    font-size: 1rem;
+  }
+
+  .variant-card__compare-price {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-40-60, 0.6));
+    margin-inline-end: 4px;
+  }
+{% endstylesheet %}

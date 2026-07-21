@@ -1,0 +1,2312 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product-information",
+      "blocks": {
+        "media-gallery": {
+          "type": "_product-media-gallery",
+          "static": true,
+          "settings": {
+            "media_presentation": "grid",
+            "media_columns": "two",
+            "image_gap": 4,
+            "large_first_image": true,
+            "icons_style": "none",
+            "slideshow_controls_style": "counter",
+            "slideshow_mobile_controls_style": "thumbnails",
+            "thumbnail_position": "right",
+            "thumbnail_width": 44,
+            "thumbnail_radius": 8,
+            "aspect_ratio": "adapt",
+            "constrain_to_viewport": true,
+            "media_fit": "contain",
+            "media_radius": 16,
+            "extend_media": false,
+            "zoom": true,
+            "video_loop": false,
+            "hide_variants": true,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "product-details": {
+          "type": "_product-details",
+          "static": true,
+          "settings": {
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "details_position": "flex-start",
+            "gap": 12,
+            "sticky_details_desktop": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "scheme-1",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 24,
+            "padding-block-end": 24,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "group_icgrde": {
+              "type": "group",
+              "name": "Header",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 8,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "judge_me_reviews_preview_badge_6TaTMh": {
+                  "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+                  "settings": {}
+                },
+                "text_xrnftG": {
+                  "type": "text",
+                  "name": "Product title",
+                  "settings": {
+                    "text": "<h1>{{ closest.product.title }}</h1>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "custom",
+                    "font": "var(--font-primary--family)",
+                    "font_size": "1.5rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "",
+                    "slidein_enabled": false,
+                    "slidein_link_label": "En savoir plus",
+                    "slidein_title": "",
+                    "slidein_content": "",
+                    "slidein_cta_label": "",
+                    "slidein_cta_url": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "price_tVjtKg": {
+                  "type": "price",
+                  "settings": {
+                    "show_sale_price_first": true,
+                    "show_installments": false,
+                    "show_tax_info": false,
+                    "type_preset": "custom",
+                    "width": "100%",
+                    "alignment": "left",
+                    "font": "var(--font-accent--family)",
+                    "font_size": "1.25rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "color": "var(--color-foreground)",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "judge_me_reviews_preview_badge_6TaTMh",
+                "text_xrnftG",
+                "price_tVjtKg"
+              ]
+            },
+            "benefits_group": {
+              "type": "group",
+              "name": "Avantages produit",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "flex-start",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 16,
+                "toggle_overlay": true,
+                "overlay_color": "#f7f7f7",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 16,
+                "padding-block-end": 16,
+                "padding-inline-start": 16,
+                "padding-inline-end": 16
+              },
+              "blocks": {
+                "text_wygLa9": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<h4>Les plus d'Andromeda</h4>",
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "slidein_enabled": false,
+                    "slidein_link_label": "En savoir plus",
+                    "slidein_title": "",
+                    "slidein_content": "",
+                    "slidein_cta_label": "",
+                    "slidein_cta_url": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "col_left": {
+                  "type": "group",
+                  "name": "Colonne gauche",
+                  "settings": {
+                    "content_direction": "column",
+                    "vertical_on_mobile": false,
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "flex-start",
+                    "align_baseline": false,
+                    "horizontal_alignment_flex_direction_column": "flex-start",
+                    "vertical_alignment_flex_direction_column": "center",
+                    "gap": 12,
+                    "width": "fill",
+                    "custom_width": 100,
+                    "width_mobile": "fill",
+                    "custom_width_mobile": 100,
+                    "height": "fit",
+                    "custom_height": 100,
+                    "inherit_color_scheme": true,
+                    "color_scheme": "",
+                    "background_media": "none",
+                    "video_position": "cover",
+                    "background_image_position": "cover",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "toggle_overlay": false,
+                    "overlay_color": "#00000026",
+                    "overlay_style": "solid",
+                    "gradient_direction": "to top",
+                    "link": "",
+                    "open_in_new_tab": false,
+                    "placeholder": "",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {
+                    "benefit_1": {
+                      "type": "group",
+                      "name": "Soie Grade 6A",
+                      "settings": {
+                        "content_direction": "row",
+                        "vertical_on_mobile": false,
+                        "horizontal_alignment": "flex-start",
+                        "vertical_alignment": "center",
+                        "align_baseline": false,
+                        "horizontal_alignment_flex_direction_column": "flex-start",
+                        "vertical_alignment_flex_direction_column": "center",
+                        "gap": 12,
+                        "width": "fill",
+                        "custom_width": 100,
+                        "width_mobile": "fill",
+                        "custom_width_mobile": 100,
+                        "height": "fit",
+                        "custom_height": 100,
+                        "inherit_color_scheme": true,
+                        "color_scheme": "",
+                        "background_media": "none",
+                        "video_position": "cover",
+                        "background_image_position": "cover",
+                        "border": "none",
+                        "border_width": 1,
+                        "border_opacity": 100,
+                        "border_radius": 0,
+                        "toggle_overlay": false,
+                        "overlay_color": "#00000026",
+                        "overlay_style": "solid",
+                        "gradient_direction": "to top",
+                        "link": "",
+                        "open_in_new_tab": false,
+                        "placeholder": "",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {
+                        "icon_wrnyjN": {
+                          "type": "icon",
+                          "name": "t:names.icon",
+                          "settings": {
+                            "icon": "price_tag",
+                            "image_upload": "shopify://shop_images/Vector-stars.svg",
+                            "width": 24,
+                            "link": "",
+                            "open_in_new_tab": false
+                          },
+                          "blocks": {}
+                        },
+                        "text_1": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<h6>Rituel de sommeil exclusif inclus</h6>",
+                            "width": "100%",
+                            "max_width": "normal",
+                            "alignment": "left",
+                            "type_preset": "custom",
+                            "font": "var(--font-body--family)",
+                            "font_size": "1.125rem",
+                            "line_height": "1.4",
+                            "letter_spacing": "normal",
+                            "case": "none",
+                            "wrap": "pretty",
+                            "color": "var(--color-foreground)",
+                            "slidein_enabled": true,
+                            "slidein_link_label": "",
+                            "slidein_title": "Rituels de sommeil exclusif",
+                            "slidein_content": "<p>Avec chaque commande, accèdez à nos rituels du soir exclusifs : sons apaisants pour vous aider à vous endormir dans des ambiances exclusives.</p>",
+                            "slidein_cta_label": "",
+                            "slidein_cta_url": "",
+                            "background": false,
+                            "background_color": "#00000026",
+                            "corner_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "icon_wrnyjN",
+                        "text_1"
+                      ]
+                    },
+                    "group_qhJTUP": {
+                      "type": "group",
+                      "name": "Soie Grade 6A",
+                      "settings": {
+                        "content_direction": "row",
+                        "vertical_on_mobile": false,
+                        "horizontal_alignment": "flex-start",
+                        "vertical_alignment": "center",
+                        "align_baseline": false,
+                        "horizontal_alignment_flex_direction_column": "flex-start",
+                        "vertical_alignment_flex_direction_column": "center",
+                        "gap": 12,
+                        "width": "fill",
+                        "custom_width": 100,
+                        "width_mobile": "fill",
+                        "custom_width_mobile": 100,
+                        "height": "fit",
+                        "custom_height": 100,
+                        "inherit_color_scheme": true,
+                        "color_scheme": "",
+                        "background_media": "none",
+                        "video_position": "cover",
+                        "background_image_position": "cover",
+                        "border": "none",
+                        "border_width": 1,
+                        "border_opacity": 100,
+                        "border_radius": 0,
+                        "toggle_overlay": false,
+                        "overlay_color": "#00000026",
+                        "overlay_style": "solid",
+                        "gradient_direction": "to top",
+                        "link": "",
+                        "open_in_new_tab": false,
+                        "placeholder": "",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {
+                        "icon_h7rwdi": {
+                          "type": "icon",
+                          "name": "t:names.icon",
+                          "settings": {
+                            "icon": "price_tag",
+                            "image_upload": "shopify://shop_images/Vector-stars.svg",
+                            "width": 24,
+                            "link": "",
+                            "open_in_new_tab": false
+                          },
+                          "blocks": {}
+                        },
+                        "text_DQkxC8": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<h6>Soie de mûrier 22 mommes</h6>",
+                            "width": "100%",
+                            "max_width": "normal",
+                            "alignment": "left",
+                            "type_preset": "custom",
+                            "font": "var(--font-body--family)",
+                            "font_size": "1.125rem",
+                            "line_height": "1.4",
+                            "letter_spacing": "normal",
+                            "case": "none",
+                            "wrap": "pretty",
+                            "color": "var(--color-foreground)",
+                            "slidein_enabled": true,
+                            "slidein_link_label": "",
+                            "slidein_title": "Soie premium 22 mommes",
+                            "slidein_content": "<p>Grade 6A, 22 mommes. La soie la plus douce au monde, directement sur votre peau.</p>",
+                            "slidein_cta_label": "",
+                            "slidein_cta_url": "",
+                            "background": false,
+                            "background_color": "#00000026",
+                            "corner_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "icon_h7rwdi",
+                        "text_DQkxC8"
+                      ]
+                    },
+                    "group_KTrKVP": {
+                      "type": "group",
+                      "name": "Soie Grade 6A",
+                      "settings": {
+                        "content_direction": "row",
+                        "vertical_on_mobile": false,
+                        "horizontal_alignment": "flex-start",
+                        "vertical_alignment": "center",
+                        "align_baseline": false,
+                        "horizontal_alignment_flex_direction_column": "flex-start",
+                        "vertical_alignment_flex_direction_column": "center",
+                        "gap": 12,
+                        "width": "fill",
+                        "custom_width": 100,
+                        "width_mobile": "fill",
+                        "custom_width_mobile": 100,
+                        "height": "fit",
+                        "custom_height": 100,
+                        "inherit_color_scheme": true,
+                        "color_scheme": "",
+                        "background_media": "none",
+                        "video_position": "cover",
+                        "background_image_position": "cover",
+                        "border": "none",
+                        "border_width": 1,
+                        "border_opacity": 100,
+                        "border_radius": 0,
+                        "toggle_overlay": false,
+                        "overlay_color": "#00000026",
+                        "overlay_style": "solid",
+                        "gradient_direction": "to top",
+                        "link": "",
+                        "open_in_new_tab": false,
+                        "placeholder": "",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {
+                        "icon_aVWCAn": {
+                          "type": "icon",
+                          "name": "t:names.icon",
+                          "settings": {
+                            "icon": "price_tag",
+                            "image_upload": "shopify://shop_images/Vector-stars.svg",
+                            "width": 24,
+                            "link": "",
+                            "open_in_new_tab": false
+                          },
+                          "blocks": {}
+                        },
+                        "text_rDxmez": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>Packaging premium</p>",
+                            "width": "100%",
+                            "max_width": "normal",
+                            "alignment": "left",
+                            "type_preset": "custom",
+                            "font": "var(--font-body--family)",
+                            "font_size": "1.125rem",
+                            "line_height": "1.4",
+                            "letter_spacing": "normal",
+                            "case": "none",
+                            "wrap": "pretty",
+                            "color": "var(--color-foreground)",
+                            "slidein_enabled": true,
+                            "slidein_link_label": "",
+                            "slidein_title": "Packaging premium",
+                            "slidein_content": "<p>Un écrin pensé comme un cadeau. <br/>Idéal pour s'offrir ou offrir.</p>",
+                            "slidein_cta_label": "",
+                            "slidein_cta_url": "",
+                            "background": false,
+                            "background_color": "#00000026",
+                            "corner_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "icon_aVWCAn",
+                        "text_rDxmez"
+                      ]
+                    },
+                    "group_FFeF9b": {
+                      "type": "group",
+                      "name": "Soie Grade 6A",
+                      "settings": {
+                        "content_direction": "row",
+                        "vertical_on_mobile": false,
+                        "horizontal_alignment": "flex-start",
+                        "vertical_alignment": "center",
+                        "align_baseline": false,
+                        "horizontal_alignment_flex_direction_column": "flex-start",
+                        "vertical_alignment_flex_direction_column": "center",
+                        "gap": 12,
+                        "width": "fill",
+                        "custom_width": 100,
+                        "width_mobile": "fill",
+                        "custom_width_mobile": 100,
+                        "height": "fit",
+                        "custom_height": 100,
+                        "inherit_color_scheme": true,
+                        "color_scheme": "",
+                        "background_media": "none",
+                        "video_position": "cover",
+                        "background_image_position": "cover",
+                        "border": "none",
+                        "border_width": 1,
+                        "border_opacity": 100,
+                        "border_radius": 0,
+                        "toggle_overlay": false,
+                        "overlay_color": "#00000026",
+                        "overlay_style": "solid",
+                        "gradient_direction": "to top",
+                        "link": "",
+                        "open_in_new_tab": false,
+                        "placeholder": "",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {
+                        "icon_daUV7T": {
+                          "type": "icon",
+                          "name": "t:names.icon",
+                          "settings": {
+                            "icon": "price_tag",
+                            "image_upload": "shopify://shop_images/Vector-stars.svg",
+                            "width": 24,
+                            "link": "",
+                            "open_in_new_tab": false
+                          },
+                          "blocks": {}
+                        },
+                        "text_B9wx97": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>Satisfaction client</p>",
+                            "width": "100%",
+                            "max_width": "normal",
+                            "alignment": "left",
+                            "type_preset": "custom",
+                            "font": "var(--font-body--family)",
+                            "font_size": "1.125rem",
+                            "line_height": "1.4",
+                            "letter_spacing": "normal",
+                            "case": "none",
+                            "wrap": "pretty",
+                            "color": "var(--color-foreground)",
+                            "slidein_enabled": false,
+                            "slidein_link_label": "",
+                            "slidein_title": "Nos clients adorent Andromeda",
+                            "slidein_content": "<p>Satisfaite ou remboursée. Notre équipe vous répond en moins de 24h.</p>",
+                            "slidein_cta_label": "",
+                            "slidein_cta_url": "",
+                            "background": false,
+                            "background_color": "#00000026",
+                            "corner_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "icon_daUV7T",
+                        "text_B9wx97"
+                      ]
+                    }
+                  },
+                  "block_order": [
+                    "benefit_1",
+                    "group_qhJTUP",
+                    "group_KTrKVP",
+                    "group_FFeF9b"
+                  ]
+                }
+              },
+              "block_order": [
+                "text_wygLa9",
+                "col_left"
+              ]
+            },
+            "group_tchpTP": {
+              "type": "group",
+              "name": "Avantages produit",
+              "disabled": true,
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "flex-start",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 8,
+                "padding-block-end": 8,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "group_NPhPNf": {
+                  "type": "group",
+                  "name": "Colonne gauche",
+                  "settings": {
+                    "content_direction": "row",
+                    "vertical_on_mobile": false,
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "flex-start",
+                    "align_baseline": false,
+                    "horizontal_alignment_flex_direction_column": "flex-start",
+                    "vertical_alignment_flex_direction_column": "center",
+                    "gap": 12,
+                    "width": "fill",
+                    "custom_width": 100,
+                    "width_mobile": "fill",
+                    "custom_width_mobile": 100,
+                    "height": "fit",
+                    "custom_height": 100,
+                    "inherit_color_scheme": true,
+                    "color_scheme": "",
+                    "background_media": "none",
+                    "video_position": "cover",
+                    "background_image_position": "cover",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "toggle_overlay": false,
+                    "overlay_color": "#00000026",
+                    "overlay_style": "solid",
+                    "gradient_direction": "to top",
+                    "link": "",
+                    "open_in_new_tab": false,
+                    "placeholder": "",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {
+                    "group_WhnnXF": {
+                      "type": "group",
+                      "name": "Soie Grade 6A",
+                      "settings": {
+                        "content_direction": "row",
+                        "vertical_on_mobile": true,
+                        "horizontal_alignment": "flex-start",
+                        "vertical_alignment": "center",
+                        "align_baseline": false,
+                        "horizontal_alignment_flex_direction_column": "flex-start",
+                        "vertical_alignment_flex_direction_column": "center",
+                        "gap": 12,
+                        "width": "fill",
+                        "custom_width": 100,
+                        "width_mobile": "fill",
+                        "custom_width_mobile": 100,
+                        "height": "fit",
+                        "custom_height": 100,
+                        "inherit_color_scheme": true,
+                        "color_scheme": "",
+                        "background_media": "none",
+                        "video_position": "cover",
+                        "background_image_position": "cover",
+                        "border": "none",
+                        "border_width": 1,
+                        "border_opacity": 100,
+                        "border_radius": 0,
+                        "toggle_overlay": false,
+                        "overlay_color": "#00000026",
+                        "overlay_style": "solid",
+                        "gradient_direction": "to top",
+                        "link": "",
+                        "open_in_new_tab": false,
+                        "placeholder": "",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {
+                        "image_Q7pGFW": {
+                          "type": "image",
+                          "settings": {
+                            "image": "shopify://shop_images/pictogramme-soie-c.svg",
+                            "link": "",
+                            "image_ratio": "adapt",
+                            "width": "custom",
+                            "custom_width": 15,
+                            "custom_width_raw": "",
+                            "width_mobile": "custom",
+                            "custom_width_mobile": 20,
+                            "custom_width_mobile_raw": "",
+                            "height": "fit",
+                            "border": "none",
+                            "border_width": 1,
+                            "border_opacity": 100,
+                            "border_radius": 100,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        },
+                        "text_aYHKPc": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p><strong>Soie Grade 6A</strong><br/>Moins de 5 % de la production mondiale.</p>",
+                            "width": "fill",
+                            "max_width": "normal",
+                            "alignment": "left",
+                            "type_preset": "paragraph",
+                            "font": "var(--font-body--family)",
+                            "font_size": "0.8rem",
+                            "line_height": "1.4",
+                            "letter_spacing": "normal",
+                            "case": "none",
+                            "wrap": "pretty",
+                            "color": "var(--color-foreground)",
+                            "slidein_enabled": false,
+                            "slidein_link_label": "En savoir plus",
+                            "slidein_title": "",
+                            "slidein_content": "",
+                            "slidein_cta_label": "",
+                            "slidein_cta_url": "",
+                            "background": false,
+                            "background_color": "#00000026",
+                            "corner_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "image_Q7pGFW",
+                        "text_aYHKPc"
+                      ]
+                    },
+                    "group_nR8Mp8": {
+                      "type": "group",
+                      "name": "22 mommes",
+                      "settings": {
+                        "content_direction": "row",
+                        "vertical_on_mobile": true,
+                        "horizontal_alignment": "flex-start",
+                        "vertical_alignment": "center",
+                        "align_baseline": false,
+                        "horizontal_alignment_flex_direction_column": "flex-start",
+                        "vertical_alignment_flex_direction_column": "center",
+                        "gap": 12,
+                        "width": "fill",
+                        "custom_width": 100,
+                        "width_mobile": "fill",
+                        "custom_width_mobile": 100,
+                        "height": "fit",
+                        "custom_height": 100,
+                        "inherit_color_scheme": true,
+                        "color_scheme": "",
+                        "background_media": "none",
+                        "video_position": "cover",
+                        "background_image_position": "cover",
+                        "border": "none",
+                        "border_width": 1,
+                        "border_opacity": 100,
+                        "border_radius": 0,
+                        "toggle_overlay": false,
+                        "overlay_color": "#00000026",
+                        "overlay_style": "solid",
+                        "gradient_direction": "to top",
+                        "link": "",
+                        "open_in_new_tab": false,
+                        "placeholder": "",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {
+                        "image_qPizh9": {
+                          "type": "image",
+                          "settings": {
+                            "image": "shopify://shop_images/pictogramme-22-c.svg",
+                            "link": "",
+                            "image_ratio": "adapt",
+                            "width": "custom",
+                            "custom_width": 15,
+                            "custom_width_raw": "",
+                            "width_mobile": "custom",
+                            "custom_width_mobile": 20,
+                            "custom_width_mobile_raw": "",
+                            "height": "fit",
+                            "border": "none",
+                            "border_width": 1,
+                            "border_opacity": 100,
+                            "border_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        },
+                        "text_pG3yH8": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p><strong>22 mommes</strong><br/>Grammage optimal pour la peau.</p>",
+                            "width": "fill",
+                            "max_width": "normal",
+                            "alignment": "left",
+                            "type_preset": "paragraph",
+                            "font": "var(--font-body--family)",
+                            "font_size": "0.8rem",
+                            "line_height": "1.4",
+                            "letter_spacing": "normal",
+                            "case": "none",
+                            "wrap": "pretty",
+                            "color": "var(--color-foreground)",
+                            "slidein_enabled": false,
+                            "slidein_link_label": "En savoir plus",
+                            "slidein_title": "",
+                            "slidein_content": "",
+                            "slidein_cta_label": "",
+                            "slidein_cta_url": "",
+                            "background": false,
+                            "background_color": "#00000026",
+                            "corner_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "image_qPizh9",
+                        "text_pG3yH8"
+                      ]
+                    }
+                  },
+                  "block_order": [
+                    "group_WhnnXF",
+                    "group_nR8Mp8"
+                  ]
+                },
+                "group_4NKnMa": {
+                  "type": "group",
+                  "name": "Colonne droite",
+                  "settings": {
+                    "content_direction": "row",
+                    "vertical_on_mobile": false,
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "flex-start",
+                    "align_baseline": false,
+                    "horizontal_alignment_flex_direction_column": "flex-start",
+                    "vertical_alignment_flex_direction_column": "center",
+                    "gap": 12,
+                    "width": "fill",
+                    "custom_width": 100,
+                    "width_mobile": "fill",
+                    "custom_width_mobile": 100,
+                    "height": "fit",
+                    "custom_height": 100,
+                    "inherit_color_scheme": true,
+                    "color_scheme": "",
+                    "background_media": "none",
+                    "video_position": "cover",
+                    "background_image_position": "cover",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "toggle_overlay": false,
+                    "overlay_color": "#00000026",
+                    "overlay_style": "solid",
+                    "gradient_direction": "to top",
+                    "link": "",
+                    "open_in_new_tab": false,
+                    "placeholder": "",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {
+                    "group_PTbUrG": {
+                      "type": "group",
+                      "name": "Obscurité totale",
+                      "settings": {
+                        "content_direction": "row",
+                        "vertical_on_mobile": true,
+                        "horizontal_alignment": "flex-start",
+                        "vertical_alignment": "center",
+                        "align_baseline": false,
+                        "horizontal_alignment_flex_direction_column": "flex-start",
+                        "vertical_alignment_flex_direction_column": "center",
+                        "gap": 12,
+                        "width": "fill",
+                        "custom_width": 100,
+                        "width_mobile": "fill",
+                        "custom_width_mobile": 100,
+                        "height": "fit",
+                        "custom_height": 100,
+                        "inherit_color_scheme": true,
+                        "color_scheme": "",
+                        "background_media": "none",
+                        "video_position": "cover",
+                        "background_image_position": "cover",
+                        "border": "none",
+                        "border_width": 1,
+                        "border_opacity": 100,
+                        "border_radius": 0,
+                        "toggle_overlay": false,
+                        "overlay_color": "#00000026",
+                        "overlay_style": "solid",
+                        "gradient_direction": "to top",
+                        "link": "",
+                        "open_in_new_tab": false,
+                        "placeholder": "",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {
+                        "image_fHhb9P": {
+                          "type": "image",
+                          "settings": {
+                            "image": "shopify://shop_images/pictogramme-nuit-c.svg",
+                            "link": "",
+                            "image_ratio": "adapt",
+                            "width": "custom",
+                            "custom_width": 15,
+                            "custom_width_raw": "",
+                            "width_mobile": "custom",
+                            "custom_width_mobile": 20,
+                            "custom_width_mobile_raw": "",
+                            "height": "fit",
+                            "border": "none",
+                            "border_width": 1,
+                            "border_opacity": 100,
+                            "border_radius": 100,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        },
+                        "text_MBYAwi": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p><strong>Obscurité totale</strong><br/>Blocage de 100 % de la lumière.</p>",
+                            "width": "fill",
+                            "max_width": "normal",
+                            "alignment": "left",
+                            "type_preset": "paragraph",
+                            "font": "var(--font-body--family)",
+                            "font_size": "0.8rem",
+                            "line_height": "1.4",
+                            "letter_spacing": "normal",
+                            "case": "none",
+                            "wrap": "pretty",
+                            "color": "var(--color-foreground)",
+                            "slidein_enabled": false,
+                            "slidein_link_label": "En savoir plus",
+                            "slidein_title": "",
+                            "slidein_content": "",
+                            "slidein_cta_label": "",
+                            "slidein_cta_url": "",
+                            "background": false,
+                            "background_color": "#00000026",
+                            "corner_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "image_fHhb9P",
+                        "text_MBYAwi"
+                      ]
+                    },
+                    "group_qDwAqY": {
+                      "type": "group",
+                      "name": "Peau & cheveux",
+                      "settings": {
+                        "content_direction": "row",
+                        "vertical_on_mobile": true,
+                        "horizontal_alignment": "flex-start",
+                        "vertical_alignment": "center",
+                        "align_baseline": false,
+                        "horizontal_alignment_flex_direction_column": "flex-start",
+                        "vertical_alignment_flex_direction_column": "center",
+                        "gap": 12,
+                        "width": "fill",
+                        "custom_width": 100,
+                        "width_mobile": "fill",
+                        "custom_width_mobile": 100,
+                        "height": "fit",
+                        "custom_height": 100,
+                        "inherit_color_scheme": true,
+                        "color_scheme": "",
+                        "background_media": "none",
+                        "video_position": "cover",
+                        "background_image_position": "cover",
+                        "border": "none",
+                        "border_width": 1,
+                        "border_opacity": 100,
+                        "border_radius": 0,
+                        "toggle_overlay": false,
+                        "overlay_color": "#00000026",
+                        "overlay_style": "solid",
+                        "gradient_direction": "to top",
+                        "link": "",
+                        "open_in_new_tab": false,
+                        "placeholder": "",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {
+                        "image_YMdKkN": {
+                          "type": "image",
+                          "settings": {
+                            "image": "shopify://shop_images/pictogramme-cheveux-c.svg",
+                            "link": "",
+                            "image_ratio": "adapt",
+                            "width": "custom",
+                            "custom_width": 15,
+                            "custom_width_raw": "",
+                            "width_mobile": "custom",
+                            "custom_width_mobile": 20,
+                            "custom_width_mobile_raw": "",
+                            "height": "fit",
+                            "border": "none",
+                            "border_width": 1,
+                            "border_opacity": 100,
+                            "border_radius": 100,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        },
+                        "text_hrFcQT": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p><strong>Peau & cheveux</strong><br/>Anti-friction, hydratation naturelle.</p>",
+                            "width": "fill",
+                            "max_width": "normal",
+                            "alignment": "left",
+                            "type_preset": "paragraph",
+                            "font": "var(--font-body--family)",
+                            "font_size": "0.8rem",
+                            "line_height": "1.4",
+                            "letter_spacing": "normal",
+                            "case": "none",
+                            "wrap": "pretty",
+                            "color": "var(--color-foreground)",
+                            "slidein_enabled": false,
+                            "slidein_link_label": "En savoir plus",
+                            "slidein_title": "",
+                            "slidein_content": "",
+                            "slidein_cta_label": "",
+                            "slidein_cta_url": "",
+                            "background": false,
+                            "background_color": "#00000026",
+                            "corner_radius": 0,
+                            "padding-block-start": 0,
+                            "padding-block-end": 0,
+                            "padding-inline-start": 0,
+                            "padding-inline-end": 0
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "image_YMdKkN",
+                        "text_hrFcQT"
+                      ]
+                    }
+                  },
+                  "block_order": [
+                    "group_PTbUrG",
+                    "group_qDwAqY"
+                  ]
+                }
+              },
+              "block_order": [
+                "group_NPhPNf",
+                "group_4NKnMa"
+              ]
+            },
+            "text_aEtTtq": {
+              "type": "text",
+              "name": "Product description",
+              "settings": {
+                "text": "{{ closest.product.description }}",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "slidein_enabled": false,
+                "slidein_link_label": "En savoir plus",
+                "slidein_title": "",
+                "slidein_content": "",
+                "slidein_cta_label": "",
+                "slidein_cta_url": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "divider_VJhene": {
+              "type": "_divider",
+              "name": "t:names.divider",
+              "settings": {
+                "thickness": 1,
+                "corner_radius": "square",
+                "width_percent": 100,
+                "padding-block-start": 0,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
+            "variant_picker_R3rGDr": {
+              "type": "variant-picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": true,
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "custom_liquid_4CdyVR": {
+              "type": "custom-liquid",
+              "name": "t:names.custom_liquid",
+              "disabled": true,
+              "settings": {
+                "custom_liquid": "{%- comment -%} ── Personnaliser ici ── {%- endcomment -%}\n{%- assign pb_label    = \"Solstice d'été\" -%}\n{%- assign pb_main     = \"Livraison offerte\" -%}\n{%- assign pb_sub      = \"Jusqu'au 21 juin minuit\" -%}\n{%- assign pb_end_date = \"2026-06-21T23:59:59+02:00\" -%}\n{%- assign pb_blur     = 4 -%}\n{%- assign pb_overlay  = 0.40 -%}\n{%- assign pb_bg_image = \"https://cdn.shopify.com/s/files/1/1000/9375/5727/files/background-soie.png?v=1781798658\" -%}\n{%- assign bid         = \"solstice\" -%}\n\n<div id=\"promo-banner-{{ bid }}\">\n  <div class=\"pb-inner-{{ bid }}\">\n\n    <div class=\"pb-bg-{{ bid }}\"></div>\n    <div class=\"pb-overlay-{{ bid }}\" style=\"background:rgba(235,220,200,{{ pb_overlay }});\"></div>\n\n    <div class=\"pb-content-{{ bid }}\">\n      <div class=\"pb-text-{{ bid }}\">\n        <div class=\"pb-text-top-{{ bid }}\">\n          <span class=\"pb-label-{{ bid }}\">{{ pb_label }}</span>\n          <span class=\"pb-sep-{{ bid }}\">—</span>\n          <span class=\"pb-sub-{{ bid }}\">{{ pb_sub }}</span>\n        </div>\n        <span class=\"pb-main-{{ bid }}\">{{ pb_main }}</span>\n      </div>\n      <div class=\"pb-cd-{{ bid }}\">\n        <div class=\"pb-cd-block-{{ bid }}\">\n          <span class=\"pb-cd-num-{{ bid }}\" id=\"cd-d-{{ bid }}\">--</span>\n          <span class=\"pb-cd-lbl-{{ bid }}\">Jours</span>\n        </div>\n        <span class=\"pb-cd-sep-{{ bid }}\">|</span>\n        <div class=\"pb-cd-block-{{ bid }}\">\n          <span class=\"pb-cd-num-{{ bid }}\" id=\"cd-h-{{ bid }}\">--</span>\n          <span class=\"pb-cd-lbl-{{ bid }}\">Heures</span>\n        </div>\n        <span class=\"pb-cd-sep-{{ bid }}\">|</span>\n        <div class=\"pb-cd-block-{{ bid }}\">\n          <span class=\"pb-cd-num-{{ bid }}\" id=\"cd-m-{{ bid }}\">--</span>\n          <span class=\"pb-cd-lbl-{{ bid }}\">Minutes</span>\n        </div>\n        <span class=\"pb-cd-sep-{{ bid }}\">|</span>\n        <div class=\"pb-cd-block-{{ bid }}\">\n          <span class=\"pb-cd-num-{{ bid }}\" id=\"cd-s-{{ bid }}\">--</span>\n          <span class=\"pb-cd-lbl-{{ bid }}\">Secondes</span>\n        </div>\n      </div>\n    </div>\n\n    <button class=\"pb-close-{{ bid }}\" id=\"pb-close-{{ bid }}\" aria-label=\"Fermer\">×</button>\n  </div>\n</div>\n\n<style>\n  @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700&display=swap');\n  #promo-banner-{{ bid }} { font-family:'Raleway',sans-serif; box-sizing:border-box; }\n  .pb-inner-{{ bid }} { position:relative; border-radius:12px; overflow:hidden; max-width:var(--page-width,1200px); margin:0 auto; }\n  .pb-bg-{{ bid }} {\n    position:absolute; inset:-20px;\n    background-color:#d8c9b0;\n    {% if pb_bg_image != blank %}background-image:url('{{ pb_bg_image }}');{% endif %}\n    background-size:cover; background-position:center;\n    filter:blur({{ pb_blur }}px); transform:scale(1.12);\n  }\n  .pb-overlay-{{ bid }} { position:absolute; inset:0; }\n  .pb-content-{{ bid }} { position:relative; z-index:1; padding:20px 52px 20px 28px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; }\n  .pb-text-{{ bid }} { display:flex; flex-direction:column; gap:4px; }\n  .pb-text-top-{{ bid }} { display:flex; flex-direction:row; align-items:center; gap:8px; }\n  .pb-label-{{ bid }} { color:#000; font-size:11px; letter-spacing:.2em; text-transform:uppercase; font-weight:400; }\n  .pb-sep-{{ bid }} { color:rgba(26,26,26,.35); font-size:12px; font-weight:300; }\n  .pb-sub-{{ bid }} { color:#1a1a1a; font-size:11px; letter-spacing:.06em; font-weight:300; }\n  .pb-main-{{ bid }} { color:#1a1a1a; font-size:18px; letter-spacing:.08em; font-weight:600; text-transform:uppercase; line-height:1.2; }\n  .pb-cd-{{ bid }} { display:flex; align-items:center; gap:6px; }\n  .pb-cd-block-{{ bid }} { display:flex; flex-direction:column; align-items:center; background:rgba(255,255,255,.75); border-radius:8px; padding:10px 0; width:72px; }\n  .pb-cd-num-{{ bid }} { font-size:28px; font-weight:700; color:#1a1a1a; line-height:1; font-variant-numeric:tabular-nums lining-nums; letter-spacing:.05em; }\n  .pb-cd-lbl-{{ bid }} { font-size:10px; color:rgba(26,26,26,.5); letter-spacing:.1em; text-transform:uppercase; margin-top:4px; }\n  .pb-cd-sep-{{ bid }} { color:rgba(26,26,26,.25); font-size:20px; font-weight:300; }\n  .pb-close-{{ bid }} { position:absolute; top:12px; right:14px; z-index:2; background:none; border:none; color:rgba(26,26,26,.3); font-size:22px; cursor:pointer; font-weight:300; padding:4px 8px; transition:color .2s; }\n  .pb-close-{{ bid }}:hover { color:#1a1a1a; }\n  @keyframes pb-cd-flip-{{ bid }} {\n    from { opacity:0; transform:translateY(6px); }\n    to   { opacity:1; transform:translateY(0); }\n  }\n  .pb-cd-num-{{ bid }}.pb-cd-anim-{{ bid }} {\n    animation: pb-cd-flip-{{ bid }} 0.2s ease-out;\n  }\n  @media(max-width:640px){\n    .pb-content-{{ bid }} { flex-direction:column; align-items:flex-start; gap:16px; padding:20px 44px 20px 20px; }\n    .pb-main-{{ bid }} { font-size:15px; }\n    .pb-cd-block-{{ bid }} { min-width:52px; padding:8px 12px; }\n    .pb-cd-num-{{ bid }} { font-size:22px; }\n  }\n</style>\n\n<script>\n(function(){\n  var bid='{{ bid }}',storageKey='promo-closed-'+bid;\n  var banner=document.getElementById('promo-banner-'+bid);\n  var btn=document.getElementById('pb-close-'+bid);\n  if(sessionStorage.getItem(storageKey)==='1'){if(banner)banner.style.display='none';return;}\n  if(btn)btn.addEventListener('click',function(){if(banner)banner.style.display='none';sessionStorage.setItem(storageKey,'1');});\n  var target=new Date('{{ pb_end_date }}');\n  function pad(n){return String(n).padStart(2,'0');}\n  function set(id,val){\n    var el=document.getElementById(id+'-'+bid);\n    if(!el)return;\n    var newVal=pad(val);\n    if(el.textContent===newVal)return;\n    el.textContent=newVal;\n    el.classList.remove('pb-cd-anim-'+bid);\n    void el.offsetWidth;\n    el.classList.add('pb-cd-anim-'+bid);\n  }\n  function tick(){\n    var d=target-new Date();\n    if(d<=0){set('cd-d',0);set('cd-h',0);set('cd-m',0);set('cd-s',0);clearInterval(t);return;}\n    set('cd-d',Math.floor(d/86400000));\n    set('cd-h',Math.floor((d%86400000)/3600000));\n    set('cd-m',Math.floor((d%3600000)/60000));\n    set('cd-s',Math.floor((d%60000)/1000));\n  }\n  tick();var t=setInterval(tick,1000);\n})();\n</script>"
+              },
+              "blocks": {}
+            },
+            "andromeda_bundle_picker_LDr6XN": {
+              "type": "andromeda-bundle-picker",
+              "name": "Bundle picker",
+              "settings": {
+                "options": "1,2",
+                "label_1": "1 chouchou",
+                "label_2": "2 chouchous",
+                "label_3": "3 chouchous",
+                "unit_label": "chouchous",
+                "image_1": "",
+                "image_2": "",
+                "popular_qty": 2,
+                "popular_label": "Populaire",
+                "shipping_qty": 2,
+                "shipping_label": "+ Livraison offerte",
+                "padding-block-start": 0,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
+            "buy_buttons_eYQEYi": {
+              "type": "buy-buttons",
+              "settings": {
+                "stacking": true,
+                "show_pickup_availability": false,
+                "gift_card_form": true,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "quantity": {
+                  "type": "quantity",
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                },
+                "add-to-cart": {
+                  "type": "add-to-cart",
+                  "static": true,
+                  "settings": {
+                    "style_class": "button"
+                  },
+                  "blocks": {}
+                },
+                "accelerated-checkout": {
+                  "type": "accelerated-checkout",
+                  "disabled": true,
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                }
+              },
+              "block_order": []
+            },
+            "accordion_desc_livraison": {
+              "type": "accordion",
+              "name": "Description & Livraison",
+              "settings": {
+                "icon": "plus",
+                "dividers": true,
+                "type_preset": "h5",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 8,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "row_description": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Description",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_desc": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<h2>Un masque de sommeil hors du commun</h2><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux masques synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h2>Obscurité totale pour un sommeil profond</h2><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre masque de sommeil bloque 100% de la lumière et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h2>Confort & élégance</h2><ul><li>Élastique qui s'adapte à toutes les morphologies</li><li>Thermorégulation naturelle — fraîche en été, douce en hiver</li><li>Hypoallergénique, idéal pour les peaux sensibles</li></ul><h2>Le rituel Andromeda</h2><p>Chaque masque est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement.</p>",
+                        "width": "fit-content",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "slidein_enabled": false,
+                        "slidein_link_label": "En savoir plus",
+                        "slidein_title": "",
+                        "slidein_content": "",
+                        "slidein_cta_label": "",
+                        "slidein_cta_url": "",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_desc"
+                  ]
+                },
+                "row_livraison": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Livraison & Retours",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_livraison": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p><strong>Livraison France</strong> — 2 à 4 jours ouvrés. Livraison offerte dès 65€ d'achat.</p><p><strong>Livraison internationale</strong> — disponible dans la plupart des pays. Délai : 5 à 10 jours ouvrés.</p><p><strong>Retours</strong> — satisfait ou remboursé sous 30 jours. Le produit doit être retourné dans son emballage d'origine. Contactez-nous à contact@andromedaparis.com pour initier un retour.</p>",
+                        "width": "fit-content",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "slidein_enabled": false,
+                        "slidein_link_label": "En savoir plus",
+                        "slidein_title": "",
+                        "slidein_content": "",
+                        "slidein_cta_label": "",
+                        "slidein_cta_url": "",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_livraison"
+                  ]
+                }
+              },
+              "block_order": [
+                "row_description",
+                "row_livraison"
+              ]
+            },
+            "rituel_banner": {
+              "type": "custom-liquid",
+              "name": "Bannière espace rituel",
+              "settings": {
+                "custom_liquid": "{% render 'product-rituel-banner' %}"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "group_icgrde",
+            "benefits_group",
+            "group_tchpTP",
+            "text_aEtTtq",
+            "divider_VJhene",
+            "variant_picker_R3rGDr",
+            "custom_liquid_4CdyVR",
+            "andromeda_bundle_picker_LDr6XN",
+            "buy_buttons_eYQEYi",
+            "accordion_desc_livraison",
+            "rituel_banner"
+          ]
+        }
+      },
+      "settings": {
+        "content_width": "content-center-aligned",
+        "desktop_media_position": "left",
+        "equal_columns": true,
+        "limit_details_width": false,
+        "gap": 48,
+        "enable_sticky_add_to_cart": true,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "marquee_HYpWxg": {
+      "type": "marquee",
+      "blocks": {
+        "icon_PwNeTE": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/61DFEC1B-9AD6-46C2-AA95-F8ACCBA6C225.png",
+            "width": 24,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
+        },
+        "icon_xi4JUw": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/Image_1_1.png",
+            "width": 24,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
+        },
+        "icon_XqV9Pz": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/Andromeda_Bedroom_Serene.png",
+            "width": 24,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "icon_PwNeTE",
+        "icon_xi4JUw",
+        "icon_XqV9Pz"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".marquee__repeated-items p {font-family: \"Stellar\", serif !important; font-weight: 400; font-style: normal;}",
+        ".marquee__repeated-items img {width: 200px !important; height: 200px !important; object-fit: cover; border-radius: 16px; display: block;}"
+      ],
+      "name": "t:names.marquee_section",
+      "settings": {
+        "movement_direction": "normal",
+        "color_scheme": "",
+        "padding-block-start": 24,
+        "padding-block-end": 24,
+        "gap_between_elements": 24
+      }
+    },
+    "1777960337a20780a9": {
+      "type": "_blocks",
+      "blocks": {
+        "instafeed_app_block_VyH76n": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "Rejoignez-nous sur instagram",
+            "title_color": "",
+            "title_size_v2": 32,
+            "alignment": "left",
+            "instafeed_margin_top": 0,
+            "instafeed_margin_bottom": 0,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": false,
+            "link_alignment": "left",
+            "link_color": "#000000",
+            "background_color": "",
+            "feed_id": "",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_VyH76n"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 16,
+        "padding-block-end": 64
+      }
+    },
+    "why_masque_produit": {
+      "type": "section-why-masque",
+      "blocks": {
+        "avantage_1": {
+          "type": "avantage",
+          "settings": {
+            "icon": "shopify://shop_images/pictogramme-soie-c.svg",
+            "title": "Soie Grade 6A",
+            "text": "Moins de 5% de la production mondiale. Filaments extra-longs pour une douceur incomparable."
+          }
+        },
+        "avantage_2": {
+          "type": "avantage",
+          "settings": {
+            "icon": "shopify://shop_images/pictogramme-22-c.svg",
+            "title": "22 mommes",
+            "text": "Le grammage parfait : opacité totale et légèreté pour une nuit reposante."
+          }
+        },
+        "avantage_3": {
+          "type": "avantage",
+          "settings": {
+            "icon": "shopify://shop_images/pictogramme-nuit-c.svg",
+            "title": "Obscurité totale",
+            "text": "Conçu pour bloquer 100% de la lumière et maximiser la production de mélatonine."
+          }
+        },
+        "avantage_4": {
+          "type": "avantage",
+          "settings": {
+            "icon": "shopify://shop_images/pictogramme-cheveux-c.svg",
+            "title": "Peau & cheveux",
+            "text": "Anti-friction, hydratant naturel. La soie préserve là où le coton absorbe."
+          }
+        }
+      },
+      "block_order": [
+        "avantage_1",
+        "avantage_2",
+        "avantage_3",
+        "avantage_4"
+      ],
+      "settings": {
+        "title": "Pourquoi choisir",
+        "title_accent": "nos masques ?",
+        "subtitle": "",
+        "image": "shopify://shop_images/Image_15.png",
+        "image_width": 36,
+        "image_ratio": "4/3",
+        "image_radius": 16,
+        "heading": "",
+        "icon_size": "48px",
+        "cta_label": "",
+        "cta_link": "",
+        "background_color": "#faf7f2",
+        "text_color": "#1c1a18",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "accordeon_produit": {
+      "type": "section-accordeon-seo",
+      "blocks": {
+        "desc": {
+          "type": "item",
+          "settings": {
+            "titre": "Description",
+            "contenu": "<h2>Un masque de sommeil hors du commun</h2><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux masques synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h2>Obscurité totale pour un sommeil profond</h2><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre masque de sommeil bloque 100% de la lumière et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h2>Confort &amp; élégance</h2><ul>\n<li>Élastique réglable pour s'adapter à toutes les morphologies</li>\n<li>Thermorégulation naturelle — fraîche en été, douce en hiver</li>\n<li>Hypoallergénique, idéal pour les peaux sensibles</li>\n</ul><h2>Le rituel Andromeda</h2><p>Chaque masque est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement. Méditation, nature, ondes delta — une expérience sensorielle complète pour transformer chaque nuit en véritable <strong>rituel de sommeil de luxe</strong>.</p>"
+          }
+        },
+        "livraison": {
+          "type": "item",
+          "settings": {
+            "titre": "Livraison & Retours",
+            "contenu": "<p><strong>Livraison France</strong> — 2 à 4 jours ouvrés. Livraison offerte dès 65€ d'achat.</p><p><strong>Livraison internationale</strong> — disponible dans la plupart des pays. Délai : 5 à 10 jours ouvrés.</p><p><strong>Retours</strong> — satisfait ou remboursé sous 30 jours. Le produit doit être retourné dans son emballage d'origine, non utilisé. Contactez-nous à contact@andromedaparis.com pour initier un retour.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "desc",
+        "livraison"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": ""
+      }
+    },
+    "section_comparatif": {
+      "type": "section-comparatif-soie",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "label": "Douceur",
+            "val_andromeda": "Soyeuse, zéro friction",
+            "val_other": "Rugeux, accroche la peau"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "label": "Crèmes de nuit",
+            "val_andromeda": "Restent sur vous",
+            "val_other": "Absorbées par le tissu"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "label": "Température",
+            "val_andromeda": "Thermorégulée naturellement",
+            "val_other": "Retient la chaleur"
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "label": "Peau au réveil",
+            "val_andromeda": "Aucune marque, aucun pli",
+            "val_other": "Marques et irritations"
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "label": "Cheveux",
+            "val_andromeda": "Glisse, préserve la fibre",
+            "val_other": "Friction, casse, frisottis"
+          }
+        },
+        "row_6": {
+          "type": "row",
+          "settings": {
+            "label": "Durabilité",
+            "val_andromeda": "Plusieurs années avec soin",
+            "val_other": "Se dégrade rapidement"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Pourquoi la soie ?",
+        "bg_color": "#ffffff",
+        "padding_top": 32,
+        "padding_bottom": 32
+      }
+    },
+    "product_recommendations_qggXJq": {
+      "type": "product-recommendations",
+      "blocks": {
+        "text_cbcgyb": {
+          "type": "text",
+          "name": "t:names.header",
+          "settings": {
+            "text": "<h3>You may also like </h3>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h4",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "slidein_enabled": false,
+            "slidein_link_label": "En savoir plus",
+            "slidein_title": "",
+            "slidein_content": "",
+            "slidein_cta_label": "",
+            "slidein_cta_url": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 8,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery_DNizbJ": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_M7MJkb": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_gLWgA6": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_gallery_DNizbJ",
+            "product_title_M7MJkb",
+            "price_gLWgA6"
+          ]
+        }
+      },
+      "block_order": [
+        "text_cbcgyb"
+      ],
+      "name": "t:names.product_recommendations",
+      "settings": {
+        "product": "{{ closest.product }}",
+        "recommendation_type": "related",
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "max_products": 4,
+        "columns": 4,
+        "mobile_columns": "2",
+        "columns_gap": 12,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "gap": 28,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "17772818659bf33857": {
+      "type": "_blocks",
+      "blocks": {
+        "judge_me_reviews_review_widget_JdwGek": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "real_data",
+            "max_width": 750,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_JdwGek"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "section_pX6aLk": {
+      "type": "section",
+      "blocks": {
+        "text_kPXt6y": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h3>Foire aux questions</h3>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "slidein_enabled": false,
+            "slidein_link_label": "En savoir plus",
+            "slidein_title": "",
+            "slidein_content": "",
+            "slidein_cta_label": "",
+            "slidein_cta_url": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "accordion_RLpVzU": {
+          "type": "accordion",
+          "name": "t:names.accordion",
+          "settings": {
+            "icon": "caret",
+            "dividers": true,
+            "type_preset": "h5",
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "accordion_row_andromeda_1": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Quelle est la différence entre soie 22 mommes et 19 mommes ?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_andromeda_1": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Les mommes désignent le poids du tissu. À 22 mommes, notre soie est plus dense, plus opaque et plus durable. Elle bloque 100% de la lumière et conserve sa douceur lavage après lavage.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "slidein_enabled": false,
+                    "slidein_link_label": "En savoir plus",
+                    "slidein_title": "",
+                    "slidein_content": "",
+                    "slidein_cta_label": "",
+                    "slidein_cta_url": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_andromeda_1"
+              ]
+            },
+            "accordion_row_andromeda_2": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Qu'est-ce que le grade 6A de la soie ?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_andromeda_2": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Le grade 6A est la classification la plus haute de la soie de mûrier. Moins de 5% de la production mondiale l'atteint. Les filaments extra-longs donnent une surface parfaitement lisse et douce.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "slidein_enabled": false,
+                    "slidein_link_label": "En savoir plus",
+                    "slidein_title": "",
+                    "slidein_content": "",
+                    "slidein_cta_label": "",
+                    "slidein_cta_url": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_andromeda_2"
+              ]
+            },
+            "accordion_row_andromeda_3": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Comment laver mon masque Andromeda ?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_andromeda_3": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Lavage à la main à l'eau froide avec un savon doux, ou en machine cycle délicat 30°C (filet de lavage recommandé). Séchage à plat, loin de toute chaleur.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "slidein_enabled": false,
+                    "slidein_link_label": "En savoir plus",
+                    "slidein_title": "",
+                    "slidein_content": "",
+                    "slidein_cta_label": "",
+                    "slidein_cta_url": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_andromeda_3"
+              ]
+            },
+            "accordion_row_andromeda_4": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "C'est quoi le QR code inclus dans ma commande ?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_andromeda_4": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Chaque masque est livré avec un QR code donnant accès à notre espace rituel exclusif — une sélection de sons d'ambiance conçus pour accompagner l'endormissement.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "slidein_enabled": false,
+                    "slidein_link_label": "En savoir plus",
+                    "slidein_title": "",
+                    "slidein_content": "",
+                    "slidein_cta_label": "",
+                    "slidein_cta_url": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_andromeda_4"
+              ]
+            },
+            "accordion_row_andromeda_5": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Le masque est-il adapté aux dormeurs sur le côté ?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_andromeda_5": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Oui. L'élastique réglable ne laisse aucune pression sur la tête ni marque sur la peau. Le masque reste en place toute la nuit quelle que soit votre position.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "slidein_enabled": false,
+                    "slidein_link_label": "En savoir plus",
+                    "slidein_title": "",
+                    "slidein_content": "",
+                    "slidein_cta_label": "",
+                    "slidein_cta_url": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_andromeda_5"
+              ]
+            },
+            "accordion_row_andromeda_6": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Sous combien de temps suis-je livré(e) ?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_andromeda_6": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Livraison en France sous 2 à 4 jours ouvrés. Livraison internationale sous 5 à 10 jours. Chaque commande est expédiée dans un emballage soigné, prête à offrir.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "slidein_enabled": false,
+                    "slidein_link_label": "En savoir plus",
+                    "slidein_title": "",
+                    "slidein_content": "",
+                    "slidein_cta_label": "",
+                    "slidein_cta_url": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_andromeda_6"
+              ]
+            }
+          },
+          "block_order": [
+            "accordion_row_andromeda_1",
+            "accordion_row_andromeda_2",
+            "accordion_row_andromeda_3",
+            "accordion_row_andromeda_4",
+            "accordion_row_andromeda_5",
+            "accordion_row_andromeda_6"
+          ]
+        }
+      },
+      "block_order": [
+        "text_kPXt6y",
+        "accordion_RLpVzU"
+      ],
+      "name": "t:names.faq_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    }
+  },
+  "order": [
+    "main",
+    "marquee_HYpWxg",
+    "1777960337a20780a9",
+    "why_masque_produit",
+    "accordeon_produit",
+    "section_comparatif",
+    "product_recommendations_qggXJq",
+    "17772818659bf33857",
+    "section_pX6aLk"
+  ]
+}
