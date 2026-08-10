@@ -22,15 +22,6 @@ class HeaderMenu extends Component {
    */
   #submenuMutationObserver = null;
 
-  /**
-   * Grace-period timer before actually closing the submenu, to absorb the brief
-   * moment where the submenu's height/clip-path is still being calculated right
-   * after opening (during which a fast pointer move can transiently land on
-   * content behind the header and trigger a premature close).
-   * @type {ReturnType<typeof setTimeout> | null}
-   */
-  #deactivateTimer = null;
-
   connectedCallback() {
     super.connectedCallback();
 
@@ -44,7 +35,6 @@ class HeaderMenu extends Component {
     window.removeEventListener('resize', this.#resizeListener);
     this.overflowMenu?.removeEventListener('pointerleave', this.#overflowSubmenuListener);
     this.#cleanupMutationObserver();
-    clearTimeout(this.#deactivateTimer ?? undefined);
   }
 
   /**
@@ -57,16 +47,6 @@ class HeaderMenu extends Component {
 
   #overflowSubmenuListener = () => {
     this.#deactivate();
-  };
-
-  /**
-   * Cancels any pending grace-period close. Bound to the submenu panel itself so that
-   * once the pointer is confirmed over the (now fully sized) submenu, a close queued up
-   * from a transient gap during the opening animation is called off.
-   */
-  cancelDeactivate = () => {
-    clearTimeout(this.#deactivateTimer ?? undefined);
-    this.#deactivateTimer = null;
   };
 
   /**
@@ -100,9 +80,6 @@ class HeaderMenu extends Component {
    * @param {PointerEvent | FocusEvent} event
    */
   activate = (event) => {
-    clearTimeout(this.#deactivateTimer ?? undefined);
-    this.#deactivateTimer = null;
-
     this.dispatchEvent(new MegaMenuHoverEvent());
 
     if (!(event.target instanceof Element) || !this.headerComponent) return;
@@ -200,11 +177,7 @@ class HeaderMenu extends Component {
 
     if (isMovingWithinMenu || isMovingToOverflowMenu || isMovingToSubmenu) return;
 
-    clearTimeout(this.#deactivateTimer ?? undefined);
-    this.#deactivateTimer = setTimeout(() => {
-      this.#deactivateTimer = null;
-      this.#deactivate();
-    }, 450);
+    this.#deactivate();
   }
 
   /**
