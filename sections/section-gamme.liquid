@@ -140,11 +140,6 @@
   inset: 0;
   z-index: 0;
 }
-.sgm--will-animate .sgm__heading,
-.sgm--will-animate .sgm__card,
-.sgm--will-animate .sgm__swatch {
-  opacity: 0;
-}
 .sgm__bg {
   position: absolute;
   inset: 0;
@@ -323,9 +318,6 @@
   var cards    = outer.querySelectorAll('.sgm__card');
   var swatches = outer.querySelectorAll('.sgm__swatch');
 
-  // ── Masquer immédiatement les éléments à animer ────────────
-  outer.classList.add('sgm--will-animate');
-
   // ── Swatch click ──────────────────────────────────────────
   swatches.forEach(function (swatch) {
     swatch.addEventListener('click', function () {
@@ -348,8 +340,7 @@
   // ── GSAP scroll animations ─────────────────────────────────
   function initGsap() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-      // Fallback si GSAP ne charge pas : tout afficher
-      outer.classList.remove('sgm--will-animate');
+      // GSAP n'a pas chargé : le contenu reste visible par défaut (CSS), rien à faire.
       return;
     }
 
@@ -377,7 +368,6 @@
     var tlBottom = gsap.timeline({
       scrollTrigger: { trigger: outer, start: isMobile ? 'top 60%' : 'bottom 90%', once: true },
       onComplete: function () {
-        outer.classList.remove('sgm--will-animate');
         if (heading)          gsap.set(heading,   { clearProps: 'opacity,transform,y' });
         if (card)             gsap.set(card,      { clearProps: 'opacity,transform,y' });
         if (swatchEls.length) gsap.set(swatchEls, { clearProps: 'opacity,transform,y' });
