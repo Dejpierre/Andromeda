@@ -8,6 +8,7 @@
 
 {% liquid
   assign block_settings = block.settings
+  assign effective_submenu_color = block_settings.background_color | default: settings.page_background_color
 %}
 
 {% case variant %}
@@ -18,13 +19,23 @@
       data-hydration-key="header-drawer-mobile"
       {{ block.shopify_attributes }}
     >
-      {% render 'header-drawer', linklist: block_settings.menu, data_header_drawer_type: 'mobile-drawer' %}
+      {% render 'header-drawer',
+        linklist: block_settings.menu,
+        data_header_drawer_type: 'mobile-drawer',
+        block: block,
+        section: section
+      %}
     </div>
 
   {% when 'navigation_bar' %}
     {% if block_settings.navigation_bar == true %}
+      {% render 'contrast-override',
+        background_color: block_settings.background_color_navigation_bar,
+        text_color: block_settings.text_color_navigation_bar,
+        section_id: block.id
+      %}
       <div
-        class="menu-list menu-list--mobile{% if transparent == blank %} color-{{ block_settings.color_scheme_navigation_bar }}{% endif %}"
+        class="menu-list menu-list--mobile{% if transparent == blank %} color-custom-{{ block.id }}{% endif %}"
         style="--menu-horizontal-gap: 15px; --mobile-nav-margin: auto;"
         data-hydration-key="header-menu-mobile-navigation-bar"
       >
@@ -56,18 +67,21 @@
       assign block_settings = block.settings
       assign menu_content_type = block_settings.menu_style | default: 'text'
       assign image_border_radius = block_settings.image_border_radius
-      assign color_scheme_classes = ''
-      assign color_scheme_setting_id = 'color_scheme_' | append: section.settings.menu_row
-      assign current_color_scheme = block_settings.color_scheme
-      assign parent_color_scheme = section.settings[color_scheme_setting_id]
 
-      if parent_color_scheme.id != current_color_scheme.id
-        assign color_scheme_classes = ' color-' | append: current_color_scheme
+      render 'contrast-override', background_color: block_settings.background_color, text_color: block_settings.text_color, section_id: block.id
+
+      assign background_color_classes = ''
+      assign background_color_setting_id = 'background_color_' | append: section.settings.menu_row
+      assign current_background_color = block_settings.background_color | default: settings.page_background_color
+      assign parent_background_color = section.settings[background_color_setting_id] | default: settings.page_background_color
+
+      if parent_background_color != current_background_color or block_settings.text_color != blank
+        assign background_color_classes = ' color-custom-' | append: block.id
       endif
 
       # Check if header and menu colors match. This is used to apply different padding styles in css
-      if parent_color_scheme.settings.background.rgb == current_color_scheme.settings.background.rgb
-        assign color_scheme_classes = color_scheme_classes | append: ' color-scheme-matches-parent'
+      if parent_background_color.rgb == current_background_color.rgb
+        assign background_color_classes = background_color_classes | append: ' background-matches-parent'
       endif
 
       if block_settings.menu_style == 'featured_collections'
@@ -80,22 +94,18 @@
     {% capture children %}
       {% for link in block_settings.menu.links %}
         <li
-          role="presentation"
           class="menu-list__list-item"
-          on:focus="/activate"
           on:blur="/deactivate"
           on:pointerenter="/activate"
           on:pointerleave="/deactivate"
         >
+          {%- if link.links != blank -%}
+            <span class="menu-list__trigger">
+          {%- endif -%}
           <a
             href="{{ link.url }}"
             data-skip-node-update="true"
             class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}"
-            {%- if link.links != blank -%}
-              aria-controls="submenu-{{ forloop.index }}"
-              aria-haspopup="true"
-              aria-expanded="false"
-            {%- endif -%}
             {% if link.current %}
               aria-current="page"
             {% endif %}
@@ -104,14 +114,43 @@
             <span class="menu-list__link-title">{{- link.title -}}</span>
           </a>
           {%- if link.links != blank -%}
-            <div class="menu-list__submenu{{ color_scheme_classes }}" ref="submenu[]">
+            <button
+              type="button"
+              class="menu-list__disclosure button-unstyled"
+              aria-controls="submenu-{{ forloop.index }}"
+              aria-expanded="false"
+              ref="disclosure[]"
+              on:click="/toggle"
+            >
+              <span class="visually-hidden">{{ 'accessibility.show_submenu' | t: title: link.title }}</span>
+              <svg
+                class="menu-list__disclosure-icon"
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 10 6"
+              >
+                {%- render 'icon', icon: 'caret' -%}
+              </svg>
+            </button>
+            </span>
+            {%- comment -%}
+              Collapsed by default via `inert`: keeps the submenu out of the tab order
+              and the accessibility tree until it is opened. Toggled in header-menu.js.
+            {%- endcomment -%}
+            <div class="menu-list__submenu{{ background_color_classes }}" ref="submenu[]" inert>
               <div
                 id="submenu-{{ forloop.index }}"
                 class="menu-list__submenu-inner"
                 style="{% render 'submenu-font-styles', settings: block_settings %}"
               >
-                {% assign list_id = 'MegaMenuList-' | append: forloop.index %}
-                <div class="mega-menu section section--full-width-margin section--{{ section.settings.section_width }}">
+                {% liquid
+                  assign list_id = 'MegaMenuList-' | append: forloop.index
+                  assign show_promo_tile = false
+                  if block_settings.promo_tile_enabled and block_settings.promo_tile_image != blank
+                    assign show_promo_tile = true
+                  endif
+                %}
+                <div class="mega-menu section section--full-width-margin section--{{ section.settings.section_width }}{% if show_promo_tile %} mega-menu--with-promo{% endif %}">
                   <div
                     class="mega-menu__grid"
                     data-menu-grid-id="{{ list_id }}"
@@ -128,6 +167,25 @@
                       image_border_radius: image_border_radius
                     %}
                   </div>
+                  {% if show_promo_tile %}
+                    <a
+                      href="{{ block_settings.promo_tile_button_link | default: '#' }}"
+                      class="mega-menu__promo-tile"
+                      style="border-radius: {{ image_border_radius }}px;"
+                    >
+                      {{
+                        block_settings.promo_tile_image
+                        | image_url: width: 600
+                        | image_tag: class: 'mega-menu__promo-tile-image', loading: 'lazy', alt: block_settings.promo_tile_title
+                      }}
+                      {% if block_settings.promo_tile_title != blank %}
+                        <span class="mega-menu__promo-tile-badge">{{ block_settings.promo_tile_title }}</span>
+                      {% endif %}
+                      {% if block_settings.promo_tile_button_label != blank %}
+                        <span class="mega-menu__promo-tile-cta">{{ block_settings.promo_tile_button_label }}</span>
+                      {% endif %}
+                    </a>
+                  {% endif %}
                 </div>
               </div>
             </div>
@@ -136,14 +194,19 @@
       {% endfor %}
       <li
         class="menu-list__list-item"
-        role="presentation"
         slot="more"
-        on:focus="/activate"
         on:blur="/deactivate"
         on:pointerenter="/activate"
         on:pointerleave="/deactivate"
       >
-        <button role="listitem" class="menu-list__link button-unstyled">
+        <button
+          class="menu-list__link button-unstyled"
+          aria-haspopup="true"
+          aria-expanded="false"
+          ref="menuitem"
+          on:click="/toggle"
+          data-testid="header-menu-more-button"
+        >
           <span class="menu-list__link-title">{{ 'actions.more' | t }}</span>
         </button>
       </li>
@@ -159,9 +222,9 @@
         <nav
           class="menu-list"
           aria-label="{{ 'accessibility.header_navigation_label' | t }}"
-          style="{% render 'menu-font-styles', settings: block_settings %}"
+          style="{% render 'menu-font-styles', settings: block_settings, menu_type: 'mega_menu' %}"
         >
-          {% assign class = 'overflow-menu' | append: color_scheme_classes %}
+          {% assign class = 'overflow-menu' | append: background_color_classes %}
           {% render 'overflow-list',
             class: class,
             ref: 'overflowMenu',
@@ -183,7 +246,7 @@
 
 {% style %}
   .header__underlay {
-    --color-submenu: rgb({{ block_settings.color_scheme.settings.background.rgba }});
+    --color-submenu: rgb({{effective_submenu_color.rgb}});
   }
 {% endstyle %}
 {% stylesheet %}
@@ -287,6 +350,20 @@
     height: 100%;
     margin-block: 0;
 
+    &::after {
+      content: '';
+      position: absolute;
+      display: none;
+      top: var(--header-padding);
+      height: var(--box-height);
+      left: 0;
+      right: 0;
+    }
+
+    &[data-safety-box='true']::after {
+      display: block;
+    }
+
     &:hover,
     &:focus {
       color: var(--menu-top-level-font-color);
@@ -297,8 +374,55 @@
     }
   }
 
+  /* Wraps a top-level link and its disclosure button. Positioned so the
+     absolutely-positioned button can sit in the gap after the link without
+     affecting the top-bar layout. */
+  .menu-list__trigger {
+    position: relative;
+    display: flex;
+    height: 100%;
+  }
+
+  .menu-list__disclosure {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: calc(100% - var(--gap-xs));
+    width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: var(--padding-3xs);
+    padding-block: var(--padding-sm);
+    color: var(--menu-top-level-font-color);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(-50%);
+    outline-offset: 0.1em;
+
+    /* Hidden control must not intercept pointer events; hover-open is driven by
+       the list item itself. */
+    pointer-events: none;
+
+    &:focus-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  .menu-list__disclosure-icon {
+    display: block;
+    width: var(--font-size--3xs);
+    aspect-ratio: 10 / 6;
+    fill: currentColor;
+    transition: transform var(--animation-speed) var(--animation-easing);
+  }
+
+  .menu-list__disclosure[aria-expanded='true'] .menu-list__disclosure-icon {
+    transform: rotate(180deg);
+  }
+
   .menu-list__link-title {
-    padding-inline: calc(var(--gap-xl) / 2);
+    padding-inline: var(--gap-sm);
   }
   [slot='overflow'] .menu-list__link-title {
     padding-inline: 0;
@@ -307,7 +431,7 @@
   .menu-list__list-item:not([slot='overflow']) {
     flex-direction: column;
   }
-  .menu-list__list-item:not([slot='overflow'])::after {
+  .menu-list__list-item[slot='more']:has(.menu-list__link[aria-expanded='true'])::after {
     content: '';
     width: 100%;
     height: var(--header-padding);
@@ -333,7 +457,7 @@
   /* stylelint-disable-next-line selector-max-specificity */
   .menu-list:not(:has(.menu-list__list-item:hover)) .menu-list__link--active,
   .menu-list .menu-list__list-item:where(:hover, :focus-within) .menu-list__link,
-  .menu-list .menu-list__list-item[slot='overflow'] .menu-list__link[aria-expanded='true'] {
+  .menu-list .menu-list__list-item:is([slot='more'], [slot='overflow']):has([aria-expanded='true']) .menu-list__link {
     color: var(--menu-top-level-font-color);
   }
 
@@ -346,7 +470,8 @@
   }
 
   .overflow-menu {
-    background-color: transparent;
+    /* stylelint-disable-next-line declaration-no-important */
+    background-color: transparent !important;
     padding: var(--focus-outline-size);
     margin: calc(-1 * var(--focus-outline-size));
   }
@@ -361,8 +486,8 @@
   }
 
   .header__row[style*='--border-bottom-width: 0px'] {
-    .menu-list__submenu.color-scheme-matches-parent,
-    .overflow-menu.color-scheme-matches-parent::part(overflow) {
+    .menu-list__submenu.background-matches-parent,
+    .overflow-menu.background-matches-parent::part(overflow) {
       --submenu-padding-block-start: 0px;
     }
   }
@@ -372,6 +497,11 @@
     --submenu-content-opacity: 0;
     --submenu-content-animation: opacity calc(var(--submenu-animation-speed) * 0.75) var(--animation-easing);
 
+    /* Bridge the gap (row bottom padding + border) so the pointer reaches the
+       submenu; collapses to 0 when the padding does. */
+    --submenu-gap: calc(var(--padding-block-end, var(--header-padding)) + var(--border-bottom-width, 0px));
+    --submenu-clip-top: calc(var(--header-height) - var(--submenu-gap));
+
     visibility: hidden;
     position: absolute;
     width: 100%;
@@ -379,15 +509,20 @@
     top: calc(100% - 1px + var(--border-bottom-width) - (var(--full-open-header-height) - var(--submenu-height)));
     z-index: var(--layer-header-menu);
     padding-inline: var(--padding-inline);
-    /* Clip path starts at header height so it doesn't mess with the pointer events in the header */
-    clip-path: rect(var(--header-height) 100% var(--full-open-header-height) 0); /* stylelint-disable-line */
+    clip-path: rect(var(--submenu-clip-top) 100% var(--full-open-header-height) 0); /* stylelint-disable-line */
     transition: clip-path var(--submenu-animation-speed) var(--ease-out-cubic); /* stylelint-disable-line */
+  }
+
+  /* Keep the submenu transparent (color-custom paints an opaque bg) so the
+     bridged band shows the header row; the underlay paints the dropdown. */
+  .menu-list__list-item > .menu-list__submenu {
+    background-color: transparent;
   }
 
   [data-submenu-overlap-bottom-row] {
     .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__submenu,
     .overflow-menu::part(overflow) {
-      clip-path: rect(var(--top-row-height) 100% var(--full-open-header-height) 0); /* stylelint-disable-line */
+      --submenu-clip-top: calc(var(--top-row-height) - var(--submenu-gap));
     }
   }
 
@@ -427,7 +562,34 @@
     display: contents;
     white-space: normal;
 
+    /* The trigger becomes the left-column grid item, laying the link and its
+       disclosure button out inline */
+
+    .menu-list__trigger {
+      grid-area: left;
+      grid-row: auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: var(--gap-2xs);
+    }
+
+    .menu-list__disclosure {
+      position: static;
+      flex-shrink: 0;
+      transform: none;
+    }
+
+    /* Point the chevron toward the content that opens to the right. */
+    .menu-list__disclosure-icon,
+    .menu-list__disclosure[aria-expanded='true'] .menu-list__disclosure-icon {
+      transform: rotate(-90deg);
+    }
+
     .menu-list__link {
+      /* Bare leaf links (no children) have no `.menu-list__trigger` wrapper, so
+         they need explicit left-column placement themselves. On parent items the
+         link is inside the trigger and this is simply ignored. */
       grid-area: left;
       grid-row: auto;
       height: min-content;
@@ -449,7 +611,9 @@
       padding-block: 0;
     }
 
-    .menu-list__link[aria-expanded='true'] + .menu-list__submenu {
+    /* The disclosure button owns the expanded state; reveal the submenu when it
+       is expanded (via the inline chevron, hover, or the More trigger). */
+    &:has(.menu-list__disclosure[aria-expanded='true']) .menu-list__submenu {
       visibility: visible;
     }
   }
@@ -666,6 +830,82 @@
     /* preserves the inherited grid layout when this submenu wrapper is used */
     display: contents;
   }
+
+  /* Hide product cards in collapsed submenus from the IntersectionObserver that fires product view events */
+  .menu-list__list-item:not(:has([aria-expanded='true'])) > .menu-list__submenu product-component {
+    display: none;
+  }
+
+  /* Mega-menu promo tile: sits alongside the existing grid as a flex sibling
+     so the grid's own column math (in mega-menu-list.liquid) stays untouched. */
+  .mega-menu--with-promo {
+    display: flex;
+    align-items: stretch;
+    gap: var(--menu-horizontal-gap);
+  }
+
+  .mega-menu--with-promo .mega-menu__grid {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .mega-menu__promo-tile {
+    position: relative;
+    flex: 0 0 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    overflow: hidden;
+    min-height: 320px;
+    padding: var(--padding-lg);
+    color: var(--color-background);
+    text-decoration: none;
+    background-color: var(--color-foreground);
+
+    @media screen and (min-width: 1200px) {
+      flex-basis: 320px;
+    }
+  }
+
+  .mega-menu__promo-tile-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mega-menu__promo-tile-badge,
+  .mega-menu__promo-tile-cta {
+    position: relative;
+    z-index: 1;
+  }
+
+  .mega-menu__promo-tile-badge {
+    padding: var(--padding-2xs) var(--padding-sm);
+    font-family: var(--font-heading--family);
+    font-size: var(--font-size--sm);
+    background-color: rgb(var(--color-background-rgb) / 0.9);
+    color: var(--color-foreground);
+    border-radius: var(--style-border-radius-buttons-primary);
+  }
+
+  .mega-menu__promo-tile-cta {
+    padding: var(--padding-sm) var(--padding-lg);
+    font-family: var(--font-heading--family);
+    font-size: var(--font-size--sm);
+    text-align: center;
+    background-color: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
+    border-radius: var(--style-border-radius-buttons-primary);
+    transition: opacity var(--animation-speed) var(--animation-easing);
+  }
+
+  .mega-menu__promo-tile:hover .mega-menu__promo-tile-cta {
+    opacity: 0.85;
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -680,10 +920,24 @@
       "default": "main-menu"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "primary"
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:content.menu_appearance_paragraph"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "default": "{{ settings.color_palette.background }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
     },
     {
       "type": "header",
@@ -861,6 +1115,44 @@
     },
     {
       "type": "header",
+      "content": "Tuile promotionnelle (méga-menu)"
+    },
+    {
+      "type": "checkbox",
+      "id": "promo_tile_enabled",
+      "label": "Afficher une tuile promotionnelle",
+      "info": "Ajoute une tuile image + CTA à côté des produits/collections vedettes.",
+      "default": false,
+      "visible_if": "{{ block.settings.menu_style == 'featured_products' or block.settings.menu_style == 'featured_collections' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "promo_tile_image",
+      "label": "Image",
+      "visible_if": "{{ block.settings.promo_tile_enabled }}"
+    },
+    {
+      "type": "text",
+      "id": "promo_tile_title",
+      "label": "Titre (badge)",
+      "default": "Rituel de sommeil inclus",
+      "visible_if": "{{ block.settings.promo_tile_enabled }}"
+    },
+    {
+      "type": "text",
+      "id": "promo_tile_button_label",
+      "label": "Texte du bouton",
+      "default": "Découvrir",
+      "visible_if": "{{ block.settings.promo_tile_enabled }}"
+    },
+    {
+      "type": "url",
+      "id": "promo_tile_button_link",
+      "label": "Lien du bouton",
+      "visible_if": "{{ block.settings.promo_tile_enabled }}"
+    },
+    {
+      "type": "header",
       "content": "t:content.mobile_layout"
     },
     {
@@ -869,10 +1161,17 @@
       "label": "t:settings.navigation_bar"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme_navigation_bar",
-      "label": "t:settings.navigation_bar_color_scheme",
-      "default": "primary",
+      "type": "color",
+      "id": "background_color_navigation_bar",
+      "label": "t:settings.navigation_bar_background_color",
+      "default": "{{ settings.color_palette.background }}",
+      "visible_if": "{{ block.settings.navigation_bar }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color_navigation_bar",
+      "label": "t:settings.navigation_bar_text_color",
+      "placeholder": "t:settings.default",
       "visible_if": "{{ block.settings.navigation_bar }}"
     },
     {

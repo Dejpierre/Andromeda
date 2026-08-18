@@ -35,7 +35,7 @@
       "settings": {
         "speed": 5,
         "section_width": "page-width",
-        "color_scheme": "scheme-5",
+        "background_color": "#191a2e",
         "divider_width": 1,
         "padding-block-start": 15,
         "padding-block-end": 15
@@ -50,9 +50,7 @@
           "settings": {
             "hide_logo_on_home_page": false,
             "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-block-end": 0
           },
           "blocks": {}
         },
@@ -60,8 +58,7 @@
           "type": "_header-menu",
           "static": true,
           "settings": {
-            "menu": "main-menu",
-            "color_scheme": "",
+            "menu": "main-menu-test",
             "type_font_primary_size": "0.875rem",
             "menu_font_style": "inverse",
             "type_font_primary_link": "body",
@@ -71,10 +68,14 @@
             "featured_collections_aspect_ratio": "16 / 9",
             "image_border_radius": 0,
             "navigation_bar": false,
-            "color_scheme_navigation_bar": "",
             "drawer_accordion": false,
             "drawer_accordion_expand_first": false,
-            "drawer_dividers": false
+            "drawer_dividers": false,
+            "promo_tile_enabled": true,
+            "promo_tile_image": "shopify://shop_images/principal-img-Clair-de-lune.png",
+            "promo_tile_title": "Rituel de sommeil inclus",
+            "promo_tile_button_label": "Découvrir",
+            "promo_tile_button_link": "/pages/rituels"
           },
           "blocks": {}
         }
@@ -105,15 +106,14 @@
         "actions_font_size": "0.875rem",
         "actions_font": "body",
         "actions_text_case": "none",
-        "color_scheme_top": "scheme-1",
-        "color_scheme_bottom": "",
-        "color_scheme_transparent": "scheme-6",
+        "background_color_top": "#ffffff",
+        "text_color_top": "#000000cf",
         "enable_transparent_header_home": true,
-        "home_color_scheme": "inverse",
+        "text_color_transparent_home": "#000000",
         "enable_transparent_header_product": false,
-        "product_color_scheme": "default",
+        "text_color_transparent_product": "#ffffff",
         "enable_transparent_header_collection": false,
-        "collection_color_scheme": "default"
+        "text_color_transparent_collection": "#ffffff"
       }
     },
     "header_announcements_NT6g9J": {
@@ -141,7 +141,7 @@
       "settings": {
         "speed": 5,
         "section_width": "page-width",
-        "color_scheme": "scheme-5",
+        "background_color": "#191a2e",
         "divider_width": 0,
         "padding-block-start": 8,
         "padding-block-end": 8

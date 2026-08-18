@@ -192,6 +192,12 @@
   }
 
   function openSlidein(panel, trigger) {
+    // Move to a direct child of <body> so the fixed overlay/panel always
+    // paints above the header, even if an ancestor section (e.g. one with
+    // a scroll-reveal transform) traps it in a lower stacking context.
+    if (panel.parentElement !== document.body) {
+      document.body.appendChild(panel);
+    }
     panel.hidden = false;
     requestAnimationFrame(function () {
       panel.classList.add('is-open');

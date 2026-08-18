@@ -7,26 +7,50 @@
   @param {string} [text_fallback] - text to display if image is blank
   @param {boolean} [unset_image_tag] - if true, ignores the image focal point
   @param {string} [style] - additional styles
+  @param {string} [alt_text_fallback] - Optional text to display if image alt text is blank
 
   @example
   {% render 'image', image: product.featured_image, height: 300, class: 'product-image' %}
 {%- enddoc -%}
 {% if image != blank %}
-  {% assign image_height = height | default: image.height %}
-  {% assign image_height_2x = height | default: image_height | times: 2 %}
-  {% assign image_height_3x = height | default: image_height | times: 3 %}
-
-  {% capture image_srcset -%}
-    {{ image | image_url: height: image_height }} 1x, {{ image | image_url: height: image_height_2x }} 2x, {{ image | image_url: height: image_height_3x }} 3x
-  {%- endcapture %}
-
+  {% assign image_alt_text = image.alt | default: alt_text_fallback | default: '' %}
   {% assign style_value = style | default: '' %}
 
   {% if unset_image_tag %}
     {% assign style_value = style_value | append: 'object-position: inherit;' %}
   {% endif %}
 
-  {{ image | image_url: height: image_height | image_tag: class: class, srcset: image_srcset, style: style_value }}
+  {% if image.src contains '.svg' %}
+    {%- comment -%}
+      SVGs must not go through image_url's height/width params — Shopify
+      rasterizes the vector into a fixed-size PNG, which then looks
+      pixelated once scaled (most visible on high-DPI mobile screens).
+      Serving the raw SVG lets the browser render it natively at any size.
+    {%- endcomment -%}
+    <img
+      src="{{ image | image_url }}"
+      class="{{ class }}"
+      style="{{ style_value }}"
+      alt="{{ image_alt_text }}"
+      width="{{ image.width }}"
+      height="{{ image.height }}"
+      loading="lazy"
+    >
+  {% else %}
+    {% assign image_height = height | default: image.height %}
+    {% assign image_height_2x = height | default: image_height | times: 2 %}
+    {% assign image_height_3x = height | default: image_height | times: 3 %}
+
+    {% capture image_srcset -%}
+      {{ image | image_url: height: image_height }} 1x, {{ image | image_url: height: image_height_2x }} 2x, {{ image | image_url: height: image_height_3x }} 3x
+    {%- endcapture %}
+
+    {{
+      image
+      | image_url: height: image_height
+      | image_tag: class: class, srcset: image_srcset, style: style_value, alt: image_alt_text
+    }}
+  {% endif %}
 {% elsif text_fallback %}
   {{ text_fallback }}
 {% endif %}
