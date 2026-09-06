@@ -1,9 +1,18 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-page",
       "settings": {
-        "color_scheme": "scheme-1",
+        "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 40,
         "padding-block-end": 40
       }
@@ -92,14 +101,14 @@
           "type": "item",
           "settings": {
             "titre": "Sous combien de temps suis-je livré(e) ?",
-            "contenu": "<p>Livraison en France métropolitaine sous 2 à 4 jours ouvrés. Livraison internationale sous 5 à 10 jours ouvrés. La livraison est offerte dès 65 € d'achat. Chaque commande est expédiée dans un emballage soigné, prête à offrir.</p>"
+            "contenu": "<p>Livraison en France métropolitaine sous 2 à 4 jours ouvrés. Livraison internationale sous 5 à 10 jours ouvrés. La livraison est offerte dès 55 € d'achat. Chaque commande est expédiée dans un emballage soigné, prête à offrir.</p>"
           }
         },
         "faq_13": {
           "type": "item",
           "settings": {
             "titre": "Comment fonctionne la livraison offerte ?",
-            "contenu": "<p>La livraison est offerte pour toute commande de 65 € ou plus, en France métropolitaine. Elle est automatiquement appliquée dans le panier dès que le montant minimum est atteint. En dessous de ce seuil, les frais de port sont de 3,60 € pour la France.</p>"
+            "contenu": "<p>La livraison est offerte pour toute commande de 55 € ou plus, en France métropolitaine. Elle est automatiquement appliquée dans le panier dès que le montant minimum est atteint. En dessous de ce seuil, les frais de port sont de 3,60 € pour la France.</p>"
           }
         },
         "faq_14": {
@@ -118,9 +127,21 @@
         }
       },
       "block_order": [
-        "faq_1", "faq_2", "faq_3", "faq_4", "faq_5",
-        "faq_6", "faq_7", "faq_8", "faq_9", "faq_10",
-        "faq_11", "faq_12", "faq_13", "faq_14", "faq_15"
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8",
+        "faq_9",
+        "faq_10",
+        "faq_11",
+        "faq_12",
+        "faq_13",
+        "faq_14",
+        "faq_15"
       ],
       "settings": {}
     }

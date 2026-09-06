@@ -1,3 +1,9 @@
+{% doc %}
+  Renders all meta tags for the page including Open Graph, Twitter Cards, and SEO tags.
+
+  @param {object} [product] - The product object, available on product pages for price meta tags.
+{% enddoc %}
+
 {%- render 'seo-content' -%}
 <meta charset="utf-8">
 <meta
@@ -7,10 +13,6 @@
 <meta
   name="viewport"
   content="width=device-width,initial-scale=1"
->
-<meta
-  name="view-transition"
-  content="same-origin"
 >
 <meta
   name="theme-color"
@@ -120,7 +122,7 @@
 {%- if request.page_type == 'product' -%}
 <meta
   name="description"
-  content="Masque de nuit 100% soie de mûrier Grade 6A, 22 mommes — 5★ | 35,99€ | Livraison offerte dès 65€. Andromeda Paris."
+  content="{{ seo_description | default: page_description | default: product.description | strip_html | truncate: 160 | escape }}"
 >
 {%- elsif request.page_type == 'article' -%}
 <meta

@@ -54,7 +54,7 @@
                     aria-current="page"
                   {% endif %}
                 >
-                  {{- link.title -}}
+                  {%- render 'localized-menu-title', title: link.title -%}
                 </a>
               </li>
             {% endfor %}
@@ -99,6 +99,7 @@
           on:pointerenter="/activate"
           on:pointerleave="/deactivate"
         >
+          {%- capture localized_link_title -%}{%- render 'localized-menu-title', title: link.title -%}{%- endcapture -%}
           {%- if link.links != blank -%}
             <span class="menu-list__trigger">
           {%- endif -%}
@@ -111,7 +112,7 @@
             {% endif %}
             ref="menuitem"
           >
-            <span class="menu-list__link-title">{{- link.title -}}</span>
+            <span class="menu-list__link-title">{{- localized_link_title -}}</span>
           </a>
           {%- if link.links != blank -%}
             <button
@@ -122,7 +123,7 @@
               ref="disclosure[]"
               on:click="/toggle"
             >
-              <span class="visually-hidden">{{ 'accessibility.show_submenu' | t: title: link.title }}</span>
+              <span class="visually-hidden">{{ 'accessibility.show_submenu' | t: title: localized_link_title }}</span>
               <svg
                 class="menu-list__disclosure-icon"
                 aria-hidden="true"
@@ -159,7 +160,7 @@
                       parent_link: link,
                       id: list_id,
                       section: section,
-                      grid_columns_count: 6,
+                      grid_columns_count: 8,
                       grid_columns_count_tablet: 4,
                       grid_columns_count_collection_images: 8,
                       menu_content_type: menu_content_type,
@@ -171,18 +172,20 @@
                     <a
                       href="{{ block_settings.promo_tile_button_link | default: '#' }}"
                       class="mega-menu__promo-tile"
-                      style="border-radius: {{ image_border_radius }}px;"
+                      style="--promo-tile-radius: {{ image_border_radius }}px;"
                     >
-                      {{
-                        block_settings.promo_tile_image
-                        | image_url: width: 600
-                        | image_tag: class: 'mega-menu__promo-tile-image', loading: 'lazy', alt: block_settings.promo_tile_title
-                      }}
-                      {% if block_settings.promo_tile_title != blank %}
-                        <span class="mega-menu__promo-tile-badge">{{ block_settings.promo_tile_title }}</span>
-                      {% endif %}
+                      <span class="mega-menu__promo-tile-media">
+                        {{
+                          block_settings.promo_tile_image
+                          | image_url: width: 600
+                          | image_tag: class: 'mega-menu__promo-tile-image', loading: 'lazy', alt: block_settings.promo_tile_title
+                        }}
+                        {% if block_settings.promo_tile_title != blank %}
+                          <span class="mega-menu__promo-tile-badge">{{ block_settings.promo_tile_title }}</span>
+                        {% endif %}
+                      </span>
                       {% if block_settings.promo_tile_button_label != blank %}
-                        <span class="mega-menu__promo-tile-cta">{{ block_settings.promo_tile_button_label }}</span>
+                        <span class="mega-menu__promo-tile-cta">{{ block_settings.promo_tile_button_label }} →</span>
                       {% endif %}
                     </a>
                   {% endif %}
@@ -241,6 +244,73 @@
         type="module"
         fetchpriority="low"
       ></script>
+      <script>
+        (function () {
+          // This block's script tag can re-execute across section hydration
+          // cycles — guard so the click listener is only ever attached once.
+          if (window.__megaMenuQuickAddBound) return;
+          window.__megaMenuQuickAddBound = true;
+
+          function cartUrl(path) {
+            var root = window.Shopify && window.Shopify.routes && window.Shopify.routes.root;
+            return (root || '/') + path;
+          }
+
+          document.addEventListener('click', function (e) {
+            var btn = e.target.closest('[data-mega-quick-add]');
+            if (!btn || btn.disabled || btn.hasAttribute('data-loading')) return;
+            e.preventDefault();
+
+            var variantId = btn.dataset.variantId;
+            if (!variantId) return;
+
+            btn.setAttribute('data-loading', '');
+
+            fetch(cartUrl('cart/add.js'), {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              body: JSON.stringify({
+                items: [{ id: variantId, quantity: 1 }],
+                sections: 'cart-drawer-section',
+                sections_url: window.location.pathname,
+              }),
+            })
+              .then(function (res) {
+                if (!res.ok) {
+                  return res.json().then(function (err) {
+                    throw new Error((err && err.description) || 'add failed');
+                  });
+                }
+                return res.json();
+              })
+              .then(function (result) {
+                var freshHtml = result.sections && result.sections['cart-drawer-section'];
+                if (freshHtml) {
+                  var wrapper = document.getElementById('shopify-section-cart-drawer-section');
+                  if (wrapper) {
+                    var temp = document.createElement('div');
+                    temp.innerHTML = freshHtml;
+                    var freshWrapper = temp.querySelector('#shopify-section-cart-drawer-section');
+                    if (freshWrapper) wrapper.replaceWith(freshWrapper);
+                  }
+                }
+                document.dispatchEvent(new CustomEvent('cart:update', { bubbles: true }));
+                var drawer = document.getElementById('cart-drawer');
+                if (drawer && typeof drawer.open === 'function') {
+                  try {
+                    drawer.open();
+                  } catch (err) {}
+                }
+              })
+              .catch(function (err) {
+                console.error('mega-menu quick add failed', err);
+              })
+              .finally(function () {
+                btn.removeAttribute('data-loading');
+              });
+          });
+        })();
+      </script>
     </header-menu>
 {% endcase %}
 
@@ -250,6 +320,15 @@
   }
 {% endstyle %}
 {% stylesheet %}
+  @font-face {
+    font-family: 'GC Amelie Promised';
+    src: url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/GC_Amelie_Promised.woff2?v=1786960246') format('woff2');
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&display=swap');
+
   .header__drawer {
     --header-drawer-min-height: 60px;
     display: flex;
@@ -738,6 +817,23 @@
     }
   }
 
+  /* When a submenu has featured collections/products, drop the plain-text link
+     list and let the cards take the full width of the grid. */
+  .mega-menu__grid:has(.mega-menu__content) .mega-menu__list {
+    display: none;
+  }
+
+  .mega-menu__grid:has(.mega-menu__content) .mega-menu__content {
+    grid-column: 1 / -1;
+  }
+
+  /* Grid rows size to content height by default (auto), even when the grid
+     box itself is taller (stretched by the flex promo-tile row) — stretch
+     the row itself so the cards can actually reach that full height. */
+  .mega-menu__grid:has(.mega-menu__content) {
+    align-content: stretch;
+  }
+
   .mega-menu__column {
     grid-column: span 1;
   }
@@ -768,7 +864,7 @@
 
   .mega-menu__content-list {
     display: grid;
-    justify-content: end;
+    justify-content: start;
     gap: var(--menu-vertical-gap) var(--menu-horizontal-gap);
   }
 
@@ -781,11 +877,119 @@
   }
 
   .mega-menu__content-list--collections {
-    grid-template-columns: repeat(var(--menu-content-columns-tablet), minmax(0, 300px));
+    grid-template-columns: repeat(var(--menu-content-columns-tablet), minmax(0, 1fr));
 
     @media screen and (min-width: 990px) {
-      grid-template-columns: repeat(var(--menu-content-columns-desktop), minmax(0, 300px));
+      grid-template-columns: repeat(var(--menu-content-columns-desktop), minmax(0, 1fr));
     }
+  }
+
+  /* Cards fill the full height of the row too, not just their natural
+     (aspect-ratio-based) content height, so there's no leftover gap below
+     them when the row is stretched to match the promo tile's height. */
+  .mega-menu__content-list {
+    height: 100%;
+  }
+
+  .mega-menu__content-list-item {
+    height: 100%;
+  }
+
+  .mega-menu__content-list-item .resource-card {
+    height: 100%;
+  }
+
+  /* Title + description now sit below the image in normal flow (not
+     overlaid on it) — let the image grow to absorb any leftover height
+     instead of leaving a gap below the text. */
+  .mega-menu__content-list-item .resource-card__media {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .mega-menu__content-list-item .resource-card__image {
+    height: 100%;
+  }
+
+  .mega-menu__content-list-item .resource-card__title {
+    font-family: 'GC Amelie Promised', var(--font-heading--family);
+    font-size: var(--font-size--xl);
+  }
+
+  .mega-menu__content-list-item .resource-card__subtext {
+    font-family: 'Raleway', sans-serif;
+  }
+
+  /* Badge + quick-add overlay on mega-menu collection cards. Sized via the
+     same aspect-ratio as the card's own image so it lands exactly over the
+     photo (the first flex child) regardless of the card's rendered width —
+     without needing to reach inside the shared resource-card markup. */
+  .mega-menu__content-list-item {
+    position: relative;
+  }
+
+  .mega-menu-card__overlay {
+    position: absolute;
+    /* `inset: 0` would pin all 4 edges, leaving aspect-ratio nothing free to
+       compute — stretching this to the full card height (image + text)
+       instead of just the image, which pushed the quick-add button to the
+       bottom of the whole card. Pinning only the top 3 edges lets the
+       height follow the aspect-ratio, matching the image exactly. */
+    top: 0;
+    left: 0;
+    right: 0;
+    aspect-ratio: var(--resource-card-aspect-ratio, 16 / 9);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .mega-menu-card__badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: #191A2E;
+    color: #FFFFFF;
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    pointer-events: auto;
+  }
+
+  .mega-menu-card__quick-add {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: #C8B89A;
+    color: #191A2E;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.15s ease;
+  }
+
+  .mega-menu-card__quick-add:hover {
+    background: #b9a689;
+    transform: scale(1.08);
+  }
+
+  .mega-menu-card__quick-add:disabled {
+    opacity: 0.4;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .mega-menu-card__quick-add[data-loading] {
+    pointer-events: none;
+    opacity: 0.7;
   }
 
   .mega-menu__list {
@@ -836,6 +1040,23 @@
     display: none;
   }
 
+  /* Side margins so the mega-menu content doesn't touch the panel edges —
+     `.section--full-width-margin` only adds this padding when the section is
+     also `.section--full-width`, which this isn't (it's page-width). */
+  .mega-menu {
+    padding-inline: var(--page-margin, 24px);
+    /* Scoped to the dropdown panel only (not the top-level nav bar) — the
+       panel has its own solid white background regardless of the header's
+       transparent/scrolled state, so its text must always stay dark.
+       Overriding the --color-foreground custom property too, not just the
+       `color` shorthand: cards (e.g. .resource-card) set their own color via
+       `color: var(--color-foreground)`, which otherwise keeps inheriting the
+       header's transparent-state white value straight through this rule. */
+    --color-foreground: #191A2E;
+    --color-foreground-rgb: 25 26 46;
+    color: #191A2E;
+  }
+
   /* Mega-menu promo tile: sits alongside the existing grid as a flex sibling
      so the grid's own column math (in mega-menu-list.liquid) stays untouched. */
   .mega-menu--with-promo {
@@ -850,22 +1071,25 @@
   }
 
   .mega-menu__promo-tile {
-    position: relative;
     flex: 0 0 260px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    overflow: hidden;
-    min-height: 320px;
-    padding: var(--padding-lg);
-    color: var(--color-background);
+    gap: var(--padding-sm);
     text-decoration: none;
-    background-color: var(--color-foreground);
+    color: var(--color-foreground);
 
     @media screen and (min-width: 1200px) {
       flex-basis: 320px;
     }
+  }
+
+  .mega-menu__promo-tile-media {
+    position: relative;
+    display: block;
+    flex: 1 1 auto;
+    min-height: 280px;
+    overflow: hidden;
+    border-radius: var(--promo-tile-radius, 0);
   }
 
   .mega-menu__promo-tile-image {
@@ -877,13 +1101,11 @@
     object-fit: cover;
   }
 
-  .mega-menu__promo-tile-badge,
-  .mega-menu__promo-tile-cta {
-    position: relative;
-    z-index: 1;
-  }
-
   .mega-menu__promo-tile-badge {
+    position: absolute;
+    top: var(--padding-sm);
+    left: var(--padding-sm);
+    z-index: 1;
     padding: var(--padding-2xs) var(--padding-sm);
     font-family: var(--font-heading--family);
     font-size: var(--font-size--sm);
@@ -893,13 +1115,15 @@
   }
 
   .mega-menu__promo-tile-cta {
+    display: block;
+    width: 100%;
     padding: var(--padding-sm) var(--padding-lg);
     font-family: var(--font-heading--family);
     font-size: var(--font-size--sm);
     text-align: center;
     background-color: var(--color-primary-button-background);
     color: var(--color-primary-button-text);
-    border-radius: var(--style-border-radius-buttons-primary);
+    border-radius: 999px;
     transition: opacity var(--animation-speed) var(--animation-easing);
   }
 
@@ -930,8 +1154,7 @@
     {
       "type": "color",
       "id": "background_color",
-      "label": "t:settings.background_color",
-      "default": "{{ settings.color_palette.background }}"
+      "label": "t:settings.background_color"
     },
     {
       "type": "color",
@@ -1164,7 +1387,6 @@
       "type": "color",
       "id": "background_color_navigation_bar",
       "label": "t:settings.navigation_bar_background_color",
-      "default": "{{ settings.color_palette.background }}",
       "visible_if": "{{ block.settings.navigation_bar }}"
     },
     {

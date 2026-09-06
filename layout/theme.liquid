@@ -30,6 +30,7 @@
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
+    {%- render 'color-palette' -%}
     {%- render 'color-schemes' -%}
 
     {% if request.design_mode %}
@@ -52,10 +53,6 @@
       >
     {%- endif -%}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
-    
 
   <!-- JSON-LD Structured Data — Andromeda -->
 
@@ -133,7 +130,7 @@
   {%- endif -%}
 
   {%- if request.page_type == 'product' -%}
-  {%- assign jm = product.metafields.judgeme -%}
+  {%- assign jm = product.metafields.judgeme.review_widget_data.value -%}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org/",
@@ -160,11 +157,11 @@
       "url": {{ shop.url | append: product.url | json }}
     },
     "url": {{ shop.url | append: product.url | json }}
-    {%- if jm.rating and jm.rating_count -%}
+    {%- if jm.average_rating and jm.number_of_reviews > 0 -%}
     ,"aggregateRating": {
       "@type": "AggregateRating",
-      "ratingValue": "{{ jm.rating }}",
-      "reviewCount": "{{ jm.rating_count }}",
+      "ratingValue": "{{ jm.average_rating }}",
+      "reviewCount": "{{ jm.number_of_reviews }}",
       "bestRating": "5",
       "worstRating": "1"
     }
@@ -278,7 +275,7 @@
         "name": "Sous combien de temps suis-je livré(e) ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Livraison en France métropolitaine sous 2 à 4 jours ouvrés. Livraison internationale (Europe, monde) sous 5 à 10 jours ouvrés. Chaque commande est expédiée dans un emballage soigné, prête à offrir. La livraison est offerte dès 65 € d'achat."
+          "text": "Livraison en France métropolitaine sous 2 à 4 jours ouvrés. Livraison internationale (Europe, monde) sous 5 à 10 jours ouvrés. Chaque commande est expédiée dans un emballage soigné, prête à offrir. La livraison est offerte dès 55 € d'achat."
         }
       },
       {
@@ -393,7 +390,7 @@
         "name": "Sous combien de temps suis-je livré(e) ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Livraison en France métropolitaine sous 2 à 4 jours ouvrés. Livraison internationale sous 5 à 10 jours ouvrés. La livraison est offerte dès 65 € d'achat. Chaque commande est expédiée dans un emballage soigné, prête à offrir."
+          "text": "Livraison en France métropolitaine sous 2 à 4 jours ouvrés. Livraison internationale sous 5 à 10 jours ouvrés. La livraison est offerte dès 55 € d'achat. Chaque commande est expédiée dans un emballage soigné, prête à offrir."
         }
       },
       {
@@ -401,7 +398,7 @@
         "name": "Comment fonctionne la livraison offerte ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "La livraison est offerte pour toute commande de 65 € ou plus, en France métropolitaine. Elle est automatiquement appliquée dans le panier dès que le montant minimum est atteint. En dessous de ce seuil, les frais de port sont de 3,60 € pour la France."
+          "text": "La livraison est offerte pour toute commande de 55 € ou plus, en France métropolitaine. Elle est automatiquement appliquée dans le panier dès que le montant minimum est atteint. En dessous de ce seuil, les frais de port sont de 3,60 € pour la France."
         }
       },
       {
@@ -540,14 +537,29 @@
     }
   </style>
 
+  <style>
+    @font-face {
+      font-family: 'GC Amelie Promised';
+      src: url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/GC_Amelie_Promised.woff2?v=1786960246') format('woff2');
+      font-style: normal;
+      font-display: swap;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'GC Amelie Promised', var(--font-heading--family, serif) !important;
+    }
+  </style>
+
 </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
     <!-- Google Tag Manager (noscript) --><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MKZJPWP2" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><!-- End Google Tag Manager (noscript) -->
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
-    <div id="header-group">
-      {% sections 'header-group' %}
-    </div>
+    {% render 'chat-drawer' %}
+    <div class="page-wrapper">
+      <div id="header-group">
+        {% sections 'header-group' %}
+      </div>
 
     <script>
       // Inline header height and menu style calculations to prevent layout shift
@@ -631,6 +643,10 @@
     <footer>
       {% sections 'footer-group' %}
     </footer>
+    </div>
+
+    {% render 'cart-drawer', render_wrapper: true %}
+    {% render 'theme-drawer' %}
 
     {% render 'search-modal' %}
 

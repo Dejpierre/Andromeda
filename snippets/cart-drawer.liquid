@@ -47,10 +47,14 @@
   >
     <dialog
       ref="panel"
-      class="theme-drawer__dialog color-custom-drawer"
+      class="theme-drawer__dialog color-custom-drawer cart-drawer__dialog--with-upsell"
       aria-labelledby="cart-drawer-heading"
       cart-summary-sticky="true"
     >
+      <div class="cart-drawer__upsell-panel">
+        {% render 'cart-upsell' %}
+      </div>
+
       <cart-drawer-component
         {% if settings.auto_open_cart_drawer and template.name != 'cart' %}
           auto-open
@@ -112,11 +116,26 @@
                 aria-label="{{ 'accessibility.cart' | t }}"
               >
                 <scroll-hint class="cart-drawer__items">
+                  {% render 'cart-shipping-bar' %}
                   {% render 'cart-products', context: 'drawer' %}
                 </scroll-hint>
 
-                <div class="cart-drawer__summary">
-                  {% render 'cart-summary', section_id: 'cart-drawer-section' %}
+                <div class="cart-drawer__bottom-group">
+                  {% comment %}
+                    Mobile-only: sits right above the discount-code field in
+                    cart-summary, glued to it as one bottom block. Desktop
+                    keeps its own copy rendered as a left sidebar further up
+                    (.cart-drawer__upsell-panel), kept hidden here via CSS
+                    instead of the other way round, so neither placement
+                    needs to fight the other's layout.
+                  {% endcomment %}
+                  <div class="cart-drawer__upsell-panel cart-drawer__upsell-panel--inline">
+                    {% render 'cart-upsell' %}
+                  </div>
+
+                  <div class="cart-drawer__summary">
+                    {% render 'cart-summary', section_id: 'cart-drawer-section' %}
+                  </div>
                 </div>
               </scroll-hint>
             {%- endif -%}
@@ -148,6 +167,61 @@
     flex-direction: column;
     height: 100%;
     overflow: hidden;
+
+    @media screen and (min-width: 990px) {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+  }
+
+  /* Two separate renders, each hidden on the viewport where it isn't
+     wanted, rather than reordering one shared element: the desktop sidebar
+     copy (--inline modifier absent) and the mobile inline copy
+     (--inline), placed right above the discount field in the markup. */
+  .cart-drawer__upsell-panel {
+    display: none;
+  }
+
+  .cart-drawer__upsell-panel--inline {
+    display: block;
+  }
+
+  /* Upsell panel + summary/discount block glued together as one bottom
+     group, pinned to the bottom of .cart-drawer__content via
+     justify-content: space-between rather than the summary's own
+     margin-top: auto, so the added product stays visible above without
+     extra empty space. */
+  .cart-drawer__bottom-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media screen and (min-width: 990px) {
+    .cart-drawer__upsell-panel--inline {
+      display: none;
+    }
+
+    #cart-drawer {
+      --theme-drawer-width: 56rem;
+    }
+
+    /* #cart-drawer-scoped (id specificity) so this reliably beats the base
+       .theme-drawer__dialog { flex-direction: column } rule regardless of
+       which file's stylesheet gets bundled last. */
+    #cart-drawer .theme-drawer__dialog.cart-drawer__dialog--with-upsell {
+      display: flex;
+      flex-direction: row;
+    }
+
+    #cart-drawer .cart-drawer__upsell-panel:not(.cart-drawer__upsell-panel--inline) {
+      display: block;
+      flex: 0 0 20rem;
+      order: -1;
+    }
+
+    #cart-drawer .cart-drawer__inner {
+      order: 1;
+    }
   }
 
   .cart-drawer__inner > .cart-items-component {
@@ -159,6 +233,7 @@
   .cart-drawer__content {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     padding: 0;
     background-color: var(--color-background);
     flex-grow: 1;
@@ -204,7 +279,7 @@
     align-items: center;
     gap: var(--gap-xl);
     padding: var(--cart-drawer-summary-padding);
-    margin-top: auto;
+    padding-top: 0px !important;
     background-color: var(--color-background);
     /* stylelint-disable-next-line color-named */
     mask-image: linear-gradient(to bottom, transparent, black var(--cart-drawer-summary-padding));

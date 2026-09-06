@@ -277,6 +277,18 @@
   {% endif %}
 {% endcapture %}
 
+{% comment %}
+  Rendered BEFORE <header-component>, with no explicit z-index, on purpose:
+  that element has `contain: layout style`, which (a) makes it the containing
+  block for any position:fixed descendant — trapping a fixed overlay inside
+  the header's own small box instead of covering the viewport — and (b)
+  establishes its own stacking context. Any sibling with an explicit z-index,
+  placed after it, paints ABOVE that whole context regardless of the z-index
+  value (contain-without-z-index competes as if z-index:0). Keeping this
+  auto-z-index and placing it earlier in the DOM lets normal paint order put
+  it behind <header-component> instead.
+{% endcomment %}
+<div class="header__page-overlay" aria-hidden="true"></div>
 <header-component
   id="header-component"
   class="{{ class }}"
@@ -382,6 +394,33 @@
     </div>
   {% endif %}
 </header-component>
+<script type="module">
+  (function () {
+    var headerComponent = document.getElementById('header-component');
+    var overlay = document.querySelector('.header__page-overlay');
+    if (!headerComponent || !overlay) return;
+
+    // `--full-open-header-height` is the same custom property header-menu.js
+    // already sets (via style.setProperty) to animate the submenu panel's
+    // height open/closed — reusing it here instead of trying to re-derive
+    // "is a submenu open" from aria-expanded/:hover in CSS, which proved
+    // unreliable (encapsulated by `contain` and hover-chain timing issues).
+    function sync() {
+      var value = getComputedStyle(headerComponent).getPropertyValue('--full-open-header-height').trim();
+      var isOpen = value !== '' && value !== '0px' && value !== '0';
+      // Custom properties only inherit to descendants, and this overlay is a
+      // sibling of #header-component (moved out on purpose, see comment
+      // below) — so it can't see this variable via CSS inheritance. Copy the
+      // live value onto the overlay's own inline style instead of relying on
+      // the fallback, which was always the (wrong, too-small) closed height.
+      overlay.style.setProperty('--full-open-header-height', value || '0px');
+      overlay.classList.toggle('header__page-overlay--visible', isOpen);
+    }
+
+    new MutationObserver(sync).observe(headerComponent, { attributes: true, attributeFilter: ['style'] });
+    sync();
+  })();
+</script>
 
 <script
   src="{{ 'header.js' | asset_url }}"
@@ -457,8 +496,13 @@
     &:has(.menu-list__link:not([aria-haspopup]):hover) {
       --header-logo-display: unset;
       --header-logo-inverse-display: unset;
-      --color-foreground: inherit;
-      --color-foreground-rgb: inherit;
+      /* Was `inherit` — climbs past .header-section (no color-scheme class
+         of its own) straight to body/root, picking up the global page text
+         color instead of this header's own non-transparent scheme, which is
+         what made nav text turn white-on-white here. Hardcoded to match
+         color_scheme_top (scheme-2) directly instead. */
+      --color-foreground: #191A2E;
+      --color-foreground-rgb: 25 26 46;
       --color-background: inherit;
       --color-background-rgb: inherit;
       --color-border: inherit;
@@ -476,14 +520,21 @@
       --color-primary-button-text: inherit;
     }
 
-    /* Multiple selectors for performance: each simple :has() check is faster than one complex selector with multiple conditions */
-    &:has(.mega-menu__list:hover),
+    /* Multiple selectors for performance: each simple :has() check is faster than one complex selector with multiple conditions.
+       .menu-list__submenu:hover covers the WHOLE open dropdown panel (cards,
+       promo tile, and any gap/padding between them) in one go — the earlier
+       piecemeal .mega-menu__list/.mega-menu__content checks missed the promo
+       tile (a sibling of .mega-menu__content, not inside it) and any hover
+       on the panel's own background. */
+    &:has(.menu-list__submenu:hover),
     &:has(.menu-list__link:is(:hover, [aria-expanded='true'])),
     &:has(.menu-list__list-item[slot='overflow'] .menu-list__link:is(:hover, [aria-expanded='true'])) {
       --header-logo-display: unset;
       --header-logo-inverse-display: unset;
-      --color-foreground: inherit;
-      --color-foreground-rgb: inherit;
+      /* Hardcoded for the same reason as the block above — `inherit` here
+         skipped past this header's own non-transparent scheme. */
+      --color-foreground: #191A2E;
+      --color-foreground-rgb: 25 26 46;
       --color-background: inherit;
       --color-background-rgb: inherit;
       --color-border: inherit;
@@ -597,6 +648,33 @@
     box-shadow: var(--shadow-popover);
     clip-path: inset(var(--header-height) 0 -100px 0); /* stylelint-disable-line */
     transition: height var(--submenu-animation-speed) var(--ease-out-cubic);
+  }
+
+  /* Dims the rest of the page while a mega-menu submenu is open, so the
+     open menu stands out — mirrors the same "submenu open" condition used
+     to reveal .menu-list__submenu itself. */
+  .header__page-overlay {
+    position: fixed;
+    inset: 0;
+    /* Must track the OPEN header height, not the closed one — otherwise this
+       overlay overlaps the open submenu panel itself and steals the hover
+       target as the pointer moves from the trigger link down into the
+       dropdown, closing the menu before it can be used. */
+    top: var(--full-open-header-height, var(--header-height));
+    /* No explicit z-index on purpose — see the comment where this element is
+       placed in the markup: it needs to stay at z-index:auto and rely on DOM
+       order (rendered before <header-component>) to paint underneath the
+       header/menu, while .header-section's own z-index (--layer-sticky)
+       still lifts this whole overlay above ordinary page content. */
+    background: rgb(0 0 0 / 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--submenu-animation-speed) var(--ease-out-cubic);
+  }
+
+  .header__page-overlay--visible {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   /* When top row has transparent background, make underlay inherit colors from header component */

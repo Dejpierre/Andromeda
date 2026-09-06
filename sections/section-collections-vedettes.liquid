@@ -51,7 +51,7 @@
                   muted
                   loop
                   playsinline
-                  preload="none"
+                  preload="metadata"
                 >
                   {% for source in block.settings.hover_video.sources %}
                     <source
@@ -88,7 +88,38 @@
             class="collections-showcase__tile collections-showcase__tile--promo"
             {{ block.shopify_attributes }}
           >
-            {% if block.settings.image != blank %}
+            {% if block.settings.video != blank %}
+              {% comment %}
+                Hiding the video on mobile (perf) only makes sense when a
+                fallback image exists to replace it with — otherwise mobile
+                would be left with a blank tile.
+              {% endcomment %}
+              <video
+                class="collections-showcase__image collections-showcase__promo-image{% if block.settings.image != blank %} collections-showcase__promo-video{% endif %}"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="none"
+                {% if block.settings.image != blank %}
+                  poster="{{ block.settings.image | image_url: width: 700 }}"
+                {% endif %}
+              >
+                {% for source in block.settings.video.sources %}
+                  <source
+                    src="{{ source.url }}"
+                    type="{{ source.mime_type }}"
+                  >
+                {% endfor %}
+              </video>
+              {% if block.settings.image != blank %}
+                {{
+                  block.settings.image
+                  | image_url: width: 700
+                  | image_tag: class: 'collections-showcase__image collections-showcase__promo-image collections-showcase__promo-image-mobile', loading: 'lazy', alt: block.settings.title
+                }}
+              {% endif %}
+            {% elsif block.settings.image != blank %}
               {{
                 block.settings.image
                 | image_url: width: 700
@@ -261,6 +292,22 @@
     object-fit: cover;
   }
 
+  /* Mobile: static poster image only, no video download/autoplay (perf).
+     Desktop: the animated video, image kept out of the layout. */
+  .collections-showcase__promo-video {
+    display: none;
+
+    @media screen and (min-width: 750px) {
+      display: block;
+    }
+  }
+
+  .collections-showcase__promo-image-mobile {
+    @media screen and (min-width: 750px) {
+      display: none;
+    }
+  }
+
   .collections-showcase__promo-content {
     position: relative;
     z-index: 1;
@@ -307,7 +354,13 @@
       if (!video) return;
 
       var play = function () {
-        video.currentTime = 0;
+        // Resetting currentTime before metadata has finished loading can
+        // throw in some browsers, which silently aborts the play() call
+        // right after it on the same line — safe to just play from wherever
+        // it left off since it loops anyway.
+        try {
+          video.currentTime = 0;
+        } catch (e) {}
         video.play().catch(function () {});
       };
       var stop = function () {
@@ -423,7 +476,14 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Image"
+          "label": "Image",
+          "info": "Utilisée comme image d'attente tant que la vidéo charge, si une vidéo est renseignée ci-dessous."
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Vidéo (en boucle, muette)",
+          "info": "Prioritaire sur l'image si renseignée."
         },
         {
           "type": "text",

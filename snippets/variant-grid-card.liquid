@@ -64,6 +64,13 @@
 </a>
 
 {% stylesheet %}
+  @font-face {
+    font-family: 'GC Amelie Promised';
+    src: url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/GC_Amelie_Promised.woff2?v=1786960246') format('woff2');
+    font-style: normal;
+    font-display: swap;
+  }
+
   .variant-card {
     display: flex;
     flex-direction: column;
@@ -77,7 +84,7 @@
     display: block;
     aspect-ratio: var(--variant-card-ratio, 1);
     overflow: hidden;
-    border-radius: var(--product-corner-radius, 0);
+    border-radius: 8px;
     background: rgb(var(--color-foreground-rgb) / 0.04);
   }
 
@@ -116,6 +123,7 @@
   }
 
   .variant-card__title {
+    font-family: 'GC Amelie Promised', var(--font-heading--family) !important;
     font-size: 1rem;
   }
 
@@ -125,6 +133,7 @@
   }
 
   .variant-card__price {
+    font-family: 'GC Amelie Promised', var(--font-heading--family) !important;
     font-size: 1rem;
   }
 

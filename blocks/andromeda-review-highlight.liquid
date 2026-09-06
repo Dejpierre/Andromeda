@@ -1,0 +1,252 @@
+{% doc %}
+  Carrousel d'avis clients (nom, étoiles, badge "achat vérifié", extrait) basé
+  sur les avis Judge.me du produit. Prévu pour être placé juste sous le titre
+  produit. Ne s'affiche rien si le produit n'a pas d'avis.
+{% enddoc %}
+
+{% liquid
+  assign jm = product.metafields.judgeme.review_widget_data.value
+  assign reviews = jm.reviews
+  assign max_reviews = block.settings.max_reviews | default: 5
+%}
+
+{% if reviews.size > 0 %}
+  <div
+    class="review-highlight"
+    {{ block.shopify_attributes }}
+  >
+    <ul
+      class="review-highlight__list list-unstyled"
+      data-review-highlight-list
+    >
+      {% for review in reviews limit: max_reviews %}
+        <li class="review-highlight__item" data-review-highlight-item>
+          <div class="review-highlight__card">
+            <div class="review-highlight__header">
+              <span class="review-highlight__name">{{ review.reviewer_name }}</span>
+              <span
+                class="review-highlight__stars"
+                aria-label="{{ review.rating }} sur 5 étoiles"
+              >
+                {% for i in (1..5) %}
+                  {% if i <= review.rating %}
+                    <span class="review-highlight__star review-highlight__star--filled">★</span>
+                  {% else %}
+                    <span class="review-highlight__star">★</span>
+                  {% endif %}
+                {% endfor %}
+              </span>
+            </div>
+            <p class="review-highlight__text">
+              {% if review.verified_buyer %}
+                <span
+                  class="review-highlight__verified-badge"
+                  aria-label="Achat vérifié"
+                >
+                  {{- 'icon-checkmark.svg' | inline_asset_content -}}
+                </span>
+              {% endif %}
+              {{- review.body | strip_html | truncate: 160 -}}
+            </p>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+
+    {% if reviews.size > 1 %}
+      <div
+        class="review-highlight__dots"
+        data-review-highlight-dots
+      >
+        {% for review in reviews limit: max_reviews %}
+          <button
+            type="button"
+            class="review-highlight__dot{% if forloop.first %} is-active{% endif %}"
+            aria-label="Avis {{ forloop.index }}"
+            data-review-highlight-dot
+            data-index="{{ forloop.index0 }}"
+          ></button>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .review-highlight {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xs);
+    width: 100%;
+  }
+
+  .review-highlight__list {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: var(--gap-sm);
+    scrollbar-width: none;
+  }
+
+  .review-highlight__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .review-highlight__item {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    min-width: 0;
+  }
+
+  .review-highlight__card {
+    background-color: rgb(var(--color-foreground-rgb) / 0.04);
+    border-radius: var(--style-border-radius-lg, 16px);
+    padding: var(--padding-md, 16px);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .review-highlight__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-sm);
+  }
+
+  .review-highlight__name {
+    font-size: var(--font-size--sm);
+    font-weight: 600;
+    color: var(--color-foreground);
+  }
+
+  .review-highlight__stars {
+    display: inline-flex;
+    gap: 1px;
+    font-size: 0.85rem;
+    line-height: 1;
+    color: rgb(var(--color-foreground-rgb) / 0.25);
+  }
+
+  .review-highlight__star--filled {
+    color: #f5a623;
+  }
+
+  .review-highlight__text {
+    margin: 0;
+    font-size: var(--font-size--sm);
+    line-height: 1.4;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  }
+
+  .review-highlight__verified-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    margin-bottom: -2px;
+    border-radius: 50%;
+    background-color: #1877f2;
+    color: #fff;
+  }
+
+  .review-highlight__verified-badge svg {
+    width: 9px;
+    height: 9px;
+  }
+
+  .review-highlight__dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .review-highlight__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background-color: rgb(var(--color-foreground-rgb) / 0.2);
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .review-highlight__dot.is-active {
+    background-color: var(--color-foreground);
+    transform: scale(1.2);
+  }
+{% endstylesheet %}
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-review-highlight-list]').forEach(function (list) {
+      if (list.dataset.reviewHighlightBound) return;
+      list.dataset.reviewHighlightBound = 'true';
+
+      var wrapper = list.closest('.review-highlight');
+      var dots = wrapper ? wrapper.querySelectorAll('[data-review-highlight-dot]') : [];
+      var items = list.querySelectorAll('[data-review-highlight-item]');
+      if (!dots.length || !items.length) return;
+
+      dots.forEach(function (dot) {
+        dot.addEventListener('click', function () {
+          var index = parseInt(dot.dataset.index, 10);
+          var target = items[index];
+          if (target) {
+            list.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+          }
+        });
+      });
+
+      var setActiveDot = function () {
+        var closestIndex = 0;
+        var closestDistance = Infinity;
+        items.forEach(function (item, index) {
+          var distance = Math.abs(item.offsetLeft - list.scrollLeft);
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestIndex = index;
+          }
+        });
+        dots.forEach(function (dot, index) {
+          dot.classList.toggle('is-active', index === closestIndex);
+        });
+      };
+
+      var scrollTimeout;
+      list.addEventListener('scroll', function () {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(setActiveDot, 100);
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Avis clients (carrousel)",
+  "tag": null,
+  "settings": [
+    {
+      "type": "range",
+      "id": "max_reviews",
+      "label": "Nombre d'avis affichés",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 5
+    }
+  ],
+  "presets": [
+    {
+      "name": "Avis clients (carrousel)",
+      "category": "Produit"
+    }
+  ]
+}
+{% endschema %}

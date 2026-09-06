@@ -12,9 +12,9 @@
     assign seo_description = 'Masque de sommeil en pure soie de mûrier 22 mommes grade 6A. Certifié OEKO-TEX. Douceur absolue, obscurité parfaite et sons exclusifs pour un rituel du soir élégant.'
 
   elsif request.page_type == 'product'
-    if product.handle == 'masque-pure-soie-de-murier-22-mommes' or product.handle == 'masque-de-sommeil-en-soie'
+    if product.handle == 'masque-de-sommeil-en-soie-de-murier-22-mommes'
       assign seo_title = 'Masque Sommeil Soie de Mûrier 22 Mommes — Andromeda'
-      assign seo_description = 'Masque de sommeil en pure soie de mûrier 22 mommes grade 6A. Hypoallergénique, anti-friction, certifié OEKO-TEX. Livraison offerte dès 40€.'
+      assign seo_description = 'Masque de sommeil en pure soie de mûrier 22 mommes grade 6A. Hypoallergénique, anti-friction, certifié OEKO-TEX. Livraison offerte dès 55€.'
     else
       assign seo_title = product.title | append: ' — Andromeda'
       assign seo_description = product.description | strip_html | truncate: 155

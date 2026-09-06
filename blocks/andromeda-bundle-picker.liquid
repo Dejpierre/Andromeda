@@ -11,6 +11,8 @@
   data-block-id="{{ block.id }}"
   data-price="{{ price_cents }}"
   data-compare="{{ compare_cents }}"
+  data-discount-qty="{{ block.settings.discount_qty }}"
+  data-discount-percent="{{ block.settings.discount_percent }}"
   style="{% render 'spacing-style', settings: block.settings %}"
   {{ block.shopify_attributes }}
 >
@@ -23,6 +25,14 @@
 
     {%- assign total_price = price_cents | times: qty -%}
     {%- assign total_compare = compare_cents | times: qty -%}
+    {%- assign total_compare = total_compare | at_least: total_price -%}
+
+    {%- if block.settings.discount_qty > 0 and qty >= block.settings.discount_qty -%}
+      {%- assign total_compare = total_price -%}
+      {%- assign discount_multiplier = 100 | minus: block.settings.discount_percent -%}
+      {%- assign total_price = total_price | times: discount_multiplier | divided_by: 100.0 | round -%}
+    {%- endif -%}
+
     {%- assign has_free_shipping = false -%}
     {%- if block.settings.shipping_qty == qty -%}
       {%- assign has_free_shipping = true -%}
@@ -224,11 +234,54 @@
   @media (max-width: 480px) {
     .andromeda-bundle { gap: 8px; }
     .ab-card { padding: 12px 8px 10px; }
-    .ab-card__img { width: 40px; height: 40px; }
+    .ab-card__image { min-height: 64px; }
+    .ab-card__img { width: 64px; height: 64px; }
     .ab-card__price { font-size: 13px; }
+  }
+
+  /* Prix affiché dans le bouton ATC (voir add-to-cart-button.liquid pour le
+     markup) — placé ici car le bloc de style d'un snippet rendu à plusieurs
+     endroits de la page ne se chargeait pas de façon fiable. */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+  @font-face {
+    font-family: 'GC Amelie Promised';
+    src: url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/GC_Amelie_Promised.woff2?v=1786960246') format('woff2');
+    font-style: normal;
+    font-display: swap;
+  }
+
+  .atc-bundle-price {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-inline-start: 8px;
+    line-height: 1;
+    font-variant-numeric: normal;
+    font-feature-settings: normal;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .atc-bundle-price__current {
+    font-family: 'GC Amelie Promised', 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.15em;
+    line-height: 1;
+  }
+
+  .atc-bundle-price__compare {
+    display: inline-block;
+    font-size: 0.7em;
+    line-height: 1;
+    opacity: 0.55;
+  }
+
+  .atc-bundle-price__compare[hidden] {
+    display: none;
   }
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script>
 (function () {
   var bundle = document.getElementById('andromeda-bundle-{{ block.id }}');
@@ -239,9 +292,46 @@
     return (cents / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
   }
 
+  /* Même animation lettre par lettre (fade + slide) que le nom de variante
+     dans le sélecteur de couleur, réutilisée ici pour le prix du bouton ATC. */
+  function animatePriceText(el, newText) {
+    if (!el || el.textContent === newText) return;
+    if (!window.gsap) {
+      el.textContent = newText;
+      return;
+    }
+    el.textContent = newText;
+    var text = el.textContent;
+    el.innerHTML = text.split('').map(function (ch) {
+      return '<span style="display:inline-block;will-change:transform,opacity">' + (ch === ' ' ? '&nbsp;' : ch) + '</span>';
+    }).join('');
+    gsap.fromTo(el.querySelectorAll('span'),
+      { opacity: 0, y: -6 },
+      { opacity: 1, y: 0, duration: 0.18, stagger: 0.025, ease: 'power2.out' }
+    );
+  }
+
   function currentQty() {
+    var input = getQtyInput();
+    if (input) {
+      var val = parseInt(input.value, 10);
+      if (val > 0) return val;
+    }
     var sel = bundle.querySelector('.ab-card--selected');
     return sel ? parseInt(sel.dataset.qty, 10) : 1;
+  }
+
+  /* Mirrors the liquid-side discount math so the JS-driven updates (variant
+     change, ATC button price) stay consistent with the server-rendered
+     cards, which already apply the discount at initial render. */
+  function discountedTotal(qty, price) {
+    var total = price * qty;
+    var discountQty = parseInt(bundle.dataset.discountQty, 10) || 0;
+    var discountPercent = parseInt(bundle.dataset.discountPercent, 10) || 0;
+    if (discountQty > 0 && qty >= discountQty) {
+      total = Math.round((total * (100 - discountPercent)) / 100);
+    }
+    return total;
   }
 
   /* ── Totaux ── */
@@ -254,10 +344,25 @@
 
   /* ── Prix dans le bouton ATC ── */
   function updateAtcPrice(qty, price, compare) {
-    var sp = document.querySelector('.atc-bundle-price');
-    if (!sp) return;
-    var total = price * qty;
-    sp.textContent = ' • ' + fmt(total);
+    var wrap = document.querySelector('.atc-bundle-price');
+    if (!wrap) return;
+    var currentEl = wrap.querySelector('[data-atc-price-current]');
+    var compareEl = wrap.querySelector('[data-atc-price-compare]');
+
+    var total = discountedTotal(qty, price);
+    var fullTotal = price * qty;
+    var compareTotal = Math.max(compare * qty, fullTotal);
+
+    wrap.hidden = false;
+    if (currentEl) animatePriceText(currentEl, fmt(total));
+    if (compareEl) {
+      if (compareTotal > total) {
+        animatePriceText(compareEl, fmt(compareTotal));
+        compareEl.hidden = false;
+      } else {
+        compareEl.hidden = true;
+      }
+    }
   }
 
   /* Init : retry pour attendre que add-to-cart-component soit prêt */
@@ -289,6 +394,11 @@
     });
   });
 
+  /* ── Changement de quantité via le sélecteur natif (+/- ou saisie) ── */
+  document.addEventListener('quantity-selector:update', function () {
+    updateTotals();
+  });
+
   /* ── Changement de variante ── */
   document.addEventListener('variant:change', function (e) {
     if (!e.detail || !e.detail.variant) return;
@@ -299,8 +409,10 @@
     /* Mise à jour des prix dans chaque carte */
     bundle.querySelectorAll('.ab-card').forEach(function (card) {
       var qty  = parseInt(card.dataset.qty, 10);
-      var tot  = v.price * qty;
-      var comp = (v.compare_at_price || v.price) * qty;
+      var fullTotal = v.price * qty;
+      var tot  = discountedTotal(qty, v.price);
+      var comp = Math.max((v.compare_at_price || v.price) * qty, fullTotal);
+      if (tot < fullTotal) comp = fullTotal;
       var pEl  = card.querySelector('.ab-card__price');
       var cEl  = card.querySelector('.ab-card__compare');
       if (pEl) pEl.textContent = fmt(tot);
@@ -389,6 +501,30 @@
       "id": "popular_label",
       "label": "Texte du badge mise en avant",
       "default": "Plus populaire"
+    },
+    {
+      "type": "header",
+      "content": "Réduction quantité"
+    },
+    {
+      "type": "range",
+      "id": "discount_qty",
+      "label": "Appliquer une réduction à partir de la quantité",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 2,
+      "info": "0 = désactivé. Doit correspondre à la remise automatique configurée dans Shopify (Réductions) pour que le prix affiché ici corresponde à celui payé au paiement."
+    },
+    {
+      "type": "range",
+      "id": "discount_percent",
+      "label": "Pourcentage de réduction",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 5,
+      "unit": "%"
     },
     {
       "type": "header",

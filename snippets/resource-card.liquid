@@ -9,6 +9,8 @@
   @param {string} [image_aspect_ratio] - The aspect ratio to display the image. Defaults to image's natural ratio
   @param {boolean} [image_hover] - Whether to show a secondary image on hover and focus
   @param {string} [image_sizes] - The sizes attribute for responsive images. Defaults to 'auto'
+  @param {string} [image_widths] - The widths list used to build the srcset. Defaults to '240, 352, 832, 1200'
+  @param {string} [image_loading] - The loading attribute for the image. Defaults to 'lazy'
 {%- enddoc -%}
 
 {% liquid
@@ -18,7 +20,8 @@
     assign ratio = image_aspect_ratio
   endif
   assign image_width = image_width | default: 1200
-  assign widths = '240, 352, 832, 1200'
+  assign widths = image_widths | default: '240, 352, 832, 1200'
+  assign image_loading = image_loading | default: 'lazy'
   assign image_sizes = image_sizes | default: 'auto'
   assign single_thumbnail_collection = false
   if resource_type == 'collection' and collection_thumbnails != 'multiple'
@@ -86,7 +89,7 @@
           featured_image
           | image_url: width: image_width
           | image_tag:
-            loading: 'lazy',
+            loading: image_loading,
             class: 'resource-card__image',
             widths: widths,
             sizes: image_sizes,
@@ -106,7 +109,7 @@
             resource.media[1]
             | image_url: width: image_width
             | image_tag:
-              loading: 'lazy',
+              loading: image_loading,
               class: 'resource-card__image resource-card__image--secondary',
               widths: widths,
               sizes: image_sizes,
@@ -132,7 +135,7 @@
             {{
               product.featured_image
               | image_url: width: image_width
-              | image_tag: loading: 'lazy', class: 'resource-card__collection-image', sizes: image_sizes, widths: widths, alt: product.featured_image.alt | default: product.title
+              | image_tag: loading: image_loading, class: 'resource-card__collection-image', sizes: image_sizes, widths: widths, alt: product.featured_image.alt | default: product.title
             }}
           {% endfor %}
         </div>

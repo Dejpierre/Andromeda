@@ -50,12 +50,20 @@
   endif
 
   if menu_content_type == 'featured_collections'
+    assign collection_links = parent_link.links | where: 'type', 'collection_link'
+    assign parent_is_catalog = false
+    if parent_link.type == 'catalog_link' or parent_link.type == 'collections_link'
+      assign parent_is_catalog = true
+    endif
+
     if parent_link.type == 'collection_link'
       assign collection_handles = parent_link.object.handle | append: ','
-    elsif parent_link.type == 'catalog_link' or parent_link.type == 'collections_link'
+    elsif parent_is_catalog and collection_links.size == 0
+      # Only fall back to the full catalog when the parent has no child
+      # collection links of its own — otherwise "all" competes with the
+      # real curated collections for the same limited display slots.
       assign collection_handles = 'all' | append: ','
     endif
-    assign collection_links = parent_link.links | where: 'type', 'collection_link'
     for collection_link in collection_links
       assign collection_handles = collection_handles | append: collection_link.object.handle | append: ','
     endfor
@@ -295,7 +303,8 @@
                   resource_type: 'product',
                   image_hover: true,
                   image_aspect_ratio: content_aspect_ratio,
-                  image_sizes: image_sizes
+                  image_sizes: image_sizes,
+                  image_widths: '160, 240, 320, 480'
                 %}
               </li>
             {% endfor %}
@@ -331,12 +340,16 @@
             {% assign collection_object = collections[handle] %}
           {% endif %}
           <li class="mega-menu__content-list-item{% if forloop.index > max_featured_collections_tablet %} mega-menu__content-list-item--hidden-tablet{% endif %}">
+            <div class="mega-menu-card__overlay" aria-hidden="true">
+              <span class="mega-menu-card__badge">100% Pure Soie</span>
+              {% comment %} Quick-add button removed for now, per request. {% endcomment %}
+            </div>
             {% render 'resource-card',
               resource: collection_object,
               resource_type: 'collection',
-              style: 'overlay',
               image_aspect_ratio: content_aspect_ratio,
-              image_sizes: image_sizes
+              image_sizes: image_sizes,
+              image_widths: '160, 240, 320, 480'
             %}
           </li>
         {% endfor %}

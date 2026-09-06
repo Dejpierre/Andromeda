@@ -1,0 +1,362 @@
+{% doc %}
+  Panneau de suggestions ("Craquez aussi pour...") affiché à côté du panier
+  sur desktop, pour augmenter le panier moyen.
+
+  Recommandation croisée simple entre masque et bandeau de sommeil : un
+  masque dans le panier fait suggérer le bandeau (et inversement), avec le
+  chouchou en complément. Produits déjà dans le panier jamais suggérés.
+  Aucun des deux dans le panier → liste par défaut.
+{% enddoc %}
+
+{% liquid
+  assign masque_handle = 'masque-de-sommeil-en-soie-de-murier-22-mommes'
+  assign bandeau_handle = 'bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus'
+  assign chouchou_handle = 'chouchou-pour-cheveux-en-soie-de-murier-22-mommes'
+
+  assign cart_handles = ''
+  for cart_item in cart.items
+    assign cart_handles = cart_handles | append: cart_item.product.handle | append: ','
+  endfor
+
+  assign cart_has_masque = false
+  assign cart_has_bandeau = false
+  if cart_handles contains masque_handle
+    assign cart_has_masque = true
+  endif
+  if cart_handles contains bandeau_handle
+    assign cart_has_bandeau = true
+  endif
+
+  if cart_has_masque and cart_has_bandeau == false
+    assign upsell_handles = bandeau_handle | append: ',' | append: chouchou_handle | append: ',' | append: masque_handle
+  elsif cart_has_bandeau and cart_has_masque == false
+    assign upsell_handles = masque_handle | append: ',' | append: chouchou_handle | append: ',' | append: bandeau_handle
+  else
+    assign upsell_handles = bandeau_handle | append: ',' | append: masque_handle | append: ',' | append: chouchou_handle
+  endif
+  assign upsell_handles = upsell_handles | split: ','
+
+  assign has_visible_upsell = false
+  for handle in upsell_handles
+    assign candidate_product = all_products[handle]
+    assign candidate_already_in_cart = false
+    if cart_handles contains handle
+      assign candidate_already_in_cart = true
+    endif
+    if candidate_product != blank and candidate_already_in_cart == false
+      assign has_visible_upsell = true
+    endif
+  endfor
+%}
+
+{% if has_visible_upsell %}
+<div class="cart-upsell">
+  <h3 class="cart-upsell__heading">
+    {%- if request.locale.iso_code == 'en' -%}
+      You might also like...
+    {%- else -%}
+      Craquez aussi pour...
+    {%- endif -%}
+  </h3>
+
+  <ul class="cart-upsell__list list-unstyled">
+    {% for handle in upsell_handles %}
+      {% liquid
+        assign upsell_product = all_products[handle]
+        assign upsell_variant = upsell_product.selected_or_first_available_variant
+        assign upsell_display_title = upsell_product.metafields.custom.titre_court_panier | default: upsell_product.title
+        assign upsell_already_in_cart = false
+        if cart_handles contains handle
+          assign upsell_already_in_cart = true
+        endif
+      %}
+      {% if upsell_product != blank and upsell_already_in_cart == false %}
+        <li class="cart-upsell__item">
+          <a
+            href="{{ upsell_product.url }}"
+            class="cart-upsell__media"
+          >
+            {% if upsell_product.featured_image != blank %}
+              {{
+                upsell_product.featured_image
+                | image_url: width: 300
+                | image_tag: loading: 'lazy', alt: upsell_display_title, class: 'cart-upsell__image'
+              }}
+            {% endif %}
+          </a>
+
+          <div class="cart-upsell__info">
+            <a
+              href="{{ upsell_product.url }}"
+              class="cart-upsell__title"
+            >
+              {{ upsell_display_title }}
+            </a>
+
+            <span class="cart-upsell__price">
+              {% render 'price', product_resource: upsell_product %}
+            </span>
+
+            <button
+              type="button"
+              class="cart-upsell__add"
+              data-cart-upsell-add
+              data-variant-id="{{ upsell_variant.id }}"
+              {% unless upsell_variant.available %}
+                disabled
+              {% endunless %}
+            >
+              <span data-cart-upsell-add-label>
+                {%- if request.locale.iso_code == 'en' -%}
+                  {%- if upsell_variant.available -%}Add{%- else -%}Sold out{%- endif -%}
+                {%- else -%}
+                  {%- if upsell_variant.available -%}Ajouter{%- else -%}Épuisé{%- endif -%}
+                {%- endif -%}
+              </span>
+            </button>
+          </div>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+{% stylesheet %}
+  .cart-upsell {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: var(--theme-drawer-padding);
+    overflow-y: auto;
+    background-color: #FEF9F0;
+    border-right: var(--style-border-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
+  }
+
+  .cart-upsell__heading {
+    margin: 0 0 var(--margin-lg);
+    font-size: var(--font-size--sm);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .cart-upsell__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xl);
+  }
+
+  .cart-upsell__item {
+    display: flex;
+    gap: var(--gap-md);
+  }
+
+  .cart-upsell__media {
+    flex-shrink: 0;
+    display: block;
+    width: 5.5rem;
+    aspect-ratio: 1;
+    border-radius: var(--style-border-radius-md);
+    overflow: hidden;
+    background-color: rgb(var(--color-foreground-rgb) / 0.05);
+  }
+
+  .cart-upsell__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cart-upsell__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-3xs);
+    min-width: 0;
+  }
+
+  .cart-upsell__title {
+    font-size: var(--font-size--sm);
+    color: var(--color-foreground);
+    text-decoration: none;
+  }
+
+  .cart-upsell__price {
+    font-size: var(--font-size--sm);
+    color: var(--color-foreground);
+  }
+
+  .cart-upsell__add {
+    margin-top: var(--margin-2xs);
+    padding: 6px 16px;
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.25);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-foreground);
+    font-size: var(--font-size--xs);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .cart-upsell__add:hover:not(:disabled) {
+    background: var(--color-foreground);
+    color: var(--color-background);
+  }
+
+  .cart-upsell__add:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  .cart-upsell__add[data-loading] {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  /* Below 990px this panel sits under the cart items as a horizontal
+     scroll strip instead of a left sidebar (see cart-drawer.liquid). Each
+     card keeps the same row layout as desktop (image left, text right).
+     Items are narrower than the viewport on purpose, so the next card
+     peeks in at the edge — that's the cue there's more to scroll to. */
+  @media screen and (max-width: 989px) {
+    .cart-upsell {
+      height: auto;
+      max-height: none;
+      padding: var(--padding-xs) 0 var(--padding-xs) var(--theme-drawer-padding, var(--padding-md));
+      border-right: none;
+      border-top: var(--style-border-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
+    }
+
+    .cart-upsell__heading {
+      margin-bottom: var(--margin-xs);
+      padding-inline-end: var(--theme-drawer-padding, var(--padding-md));
+    }
+
+    .cart-upsell__list {
+      flex-direction: row;
+      gap: var(--gap-sm);
+      padding-inline-end: var(--theme-drawer-padding, var(--padding-md));
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .cart-upsell__item {
+      flex: 0 0 78%;
+      width: 78%;
+      min-width: 0;
+      gap: var(--gap-2xs, 6px);
+      scroll-snap-align: start;
+    }
+
+    .cart-upsell__media {
+      width: 3rem;
+      flex-shrink: 0;
+    }
+
+    .cart-upsell__info {
+      min-width: 0;
+    }
+
+    .cart-upsell__title {
+      font-size: var(--font-size--xs);
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .cart-upsell__price {
+      font-size: var(--font-size--xs);
+    }
+
+    .cart-upsell__add {
+      margin-top: 0;
+      padding: 4px 10px;
+      font-size: 0.65rem;
+    }
+  }
+{% endstylesheet %}
+
+<script>
+  (function () {
+    if (window.__cartUpsellAddBound) return;
+    window.__cartUpsellAddBound = true;
+
+    var isEnglish = {{ request.locale.iso_code == 'en' | json }};
+    var strings = isEnglish
+      ? { adding: 'Adding...', added: 'Added ✓', error: 'Error' }
+      : { adding: 'Ajout...', added: 'Ajouté ✓', error: 'Erreur' };
+
+    function cartUrl(path) {
+      var root = window.Shopify && window.Shopify.routes && window.Shopify.routes.root;
+      return (root || '/') + path;
+    }
+
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-cart-upsell-add]');
+      if (!btn || btn.disabled || btn.hasAttribute('data-loading')) return;
+
+      var variantId = btn.dataset.variantId;
+      if (!variantId) return;
+
+      var labelEl = btn.querySelector('[data-cart-upsell-add-label]');
+      var originalLabel = labelEl ? labelEl.textContent : '';
+      btn.setAttribute('data-loading', '');
+      if (labelEl) labelEl.textContent = strings.adding;
+
+      fetch(cartUrl('cart/add.js'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          items: [{ id: variantId, quantity: 1 }],
+          sections: 'cart-drawer-section',
+          sections_url: window.location.pathname,
+        }),
+      })
+        .then(function (res) {
+          if (!res.ok) {
+            return res.json().then(function (err) {
+              throw new Error((err && err.description) || 'add failed');
+            });
+          }
+          return res.json();
+        })
+        .then(function (result) {
+          if (labelEl) labelEl.textContent = strings.added;
+
+          var freshHtml = result.sections && result.sections['cart-drawer-section'];
+          if (freshHtml) {
+            var wrapper = document.getElementById('shopify-section-cart-drawer-section');
+            if (wrapper) {
+              var temp = document.createElement('div');
+              temp.innerHTML = freshHtml;
+              var freshWrapper = temp.querySelector('#shopify-section-cart-drawer-section');
+              if (freshWrapper) wrapper.replaceWith(freshWrapper);
+            }
+          }
+
+          document.dispatchEvent(new CustomEvent('cart:update', { bubbles: true }));
+          var drawer = document.getElementById('cart-drawer');
+          if (drawer && typeof drawer.open === 'function') {
+            try {
+              drawer.open();
+            } catch (err) {}
+          }
+        })
+        .catch(function (err) {
+          console.error('cart-upsell add failed', err);
+          if (labelEl) labelEl.textContent = strings.error;
+        })
+        .finally(function () {
+          setTimeout(function () {
+            btn.removeAttribute('data-loading');
+            if (labelEl) labelEl.textContent = originalLabel;
+          }, 1800);
+        });
+    });
+  })();
+</script>

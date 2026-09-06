@@ -1,0 +1,81 @@
+{% doc %}
+  Barre de progression "livraison offerte" affichée en haut du panier.
+  Seuil fixé en dur (pas de règle de remise automatique correspondante
+  actuellement configurée sur la boutique) — modifiable via la variable
+  `shipping_threshold` ci-dessous.
+{% enddoc %}
+
+{% liquid
+  assign shipping_threshold = 5500
+  assign cart_total = cart.total_price
+  assign remaining = shipping_threshold | minus: cart_total
+
+  assign progress_percent = cart_total | times: 100.0 | divided_by: shipping_threshold
+  if progress_percent > 100
+    assign progress_percent = 100
+  endif
+%}
+
+<div class="cart-shipping-bar">
+  <p class="cart-shipping-bar__message">
+    {% if request.locale.iso_code == 'en' %}
+      {% if remaining > 0 %}
+        Only <strong>{{ remaining | money }}</strong> away from free shipping.
+      {% else %}
+        Free shipping unlocked!
+      {% endif %}
+    {% else %}
+      {% if remaining > 0 %}
+        Plus que <strong>{{ remaining | money }}</strong> pour la livraison offerte.
+      {% else %}
+        Livraison offerte débloquée !
+      {% endif %}
+    {% endif %}
+  </p>
+
+  <div class="cart-shipping-bar__track">
+    <div
+      class="cart-shipping-bar__fill"
+      style="width: {{ progress_percent }}%;"
+    ></div>
+  </div>
+
+  <div class="cart-shipping-bar__threshold">{{ shipping_threshold | money }}</div>
+</div>
+
+{% stylesheet %}
+  .cart-shipping-bar {
+    padding-bottom: var(--padding-lg);
+    margin-bottom: var(--padding-lg);
+    border-bottom: var(--style-border-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
+  }
+
+  .cart-shipping-bar__track {
+    position: relative;
+    height: 6px;
+    border-radius: var(--style-border-radius-pills, 999px);
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
+    overflow: visible;
+  }
+
+  .cart-shipping-bar__fill {
+    height: 100%;
+    border-radius: var(--style-border-radius-pills, 999px);
+    background-color: var(--color-foreground);
+    transition: width 0.4s ease;
+  }
+
+  .cart-shipping-bar__threshold {
+    margin-top: var(--margin-3xs);
+    text-align: right;
+    font-size: var(--font-size--xs);
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  }
+
+  .cart-shipping-bar__message {
+    margin: 0 0 var(--margin-xs);
+    text-align: left;
+    font-size: var(--font-size--sm);
+    color: var(--color-foreground);
+  }
+{% endstylesheet %}

@@ -1,0 +1,22 @@
+{% doc %}
+  Outputs a menu item's title, translated to English when the current
+  request locale is 'en'. Menu items aren't natively translatable via
+  Shopify's per-resource translation system (only the menu's own internal
+  name is) — this is a stopgap until the menu itself is duplicated per
+  market, matched here by exact French title.
+
+  @param {string} title - The menu item's (French) title.
+{% enddoc %}
+
+{%- liquid
+  assign output_title = title
+  if request.locale.iso_code == 'en'
+    case title
+      when 'Accueil'
+        assign output_title = 'Home'
+      when 'Nos produits'
+        assign output_title = 'Products'
+    endcase
+  endif
+-%}
+{{- output_title | escape -}}
