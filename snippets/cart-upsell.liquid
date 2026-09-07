@@ -79,8 +79,8 @@
             {% if upsell_product.featured_image != blank %}
               {{
                 upsell_product.featured_image
-                | image_url: width: 300
-                | image_tag: loading: 'lazy', alt: upsell_display_title, class: 'cart-upsell__image'
+                | image_url: width: 300, height: 300, crop: 'center'
+                | image_tag: loading: 'lazy', alt: upsell_display_title, class: 'cart-upsell__image', width: 300, height: 300
               }}
             {% endif %}
           </a>
@@ -94,7 +94,7 @@
             </a>
 
             <span class="cart-upsell__price">
-              {% render 'price', product_resource: upsell_product %}
+              {% render 'price', product_resource: upsell_product, hide_low_stock: true %}
             </span>
 
             <button
@@ -149,6 +149,7 @@
 
   .cart-upsell__item {
     display: flex;
+    align-items: flex-start;
     gap: var(--gap-md);
   }
 
@@ -262,11 +263,13 @@
 
     .cart-upsell__title {
       font-size: var(--font-size--xs);
-      display: block;
+      display: -webkit-box;
       width: 100%;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
+      white-space: normal;
     }
 
     .cart-upsell__price {
@@ -286,7 +289,7 @@
     if (window.__cartUpsellAddBound) return;
     window.__cartUpsellAddBound = true;
 
-    var isEnglish = {{ request.locale.iso_code == 'en' | json }};
+    var isEnglish = {{ request.locale.iso_code | json }} === 'en';
     var strings = isEnglish
       ? { adding: 'Adding...', added: 'Added ✓', error: 'Error' }
       : { adding: 'Ajout...', added: 'Ajouté ✓', error: 'Erreur' };

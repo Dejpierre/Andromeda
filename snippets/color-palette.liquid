@@ -1,0 +1,16 @@
+{%- doc -%}
+  Exposes the theme's `color_palette` setting (background, foreground, and the
+  5 auto-generated accent colors) as global CSS custom properties.
+{%- enddoc -%}
+
+{% style %}
+  :root {
+    --color-palette-background: {{ settings.color_palette.background }};
+    --color-palette-foreground: {{ settings.color_palette.foreground }};
+    --color-palette-color1: {{ settings.color_palette.color1 }};
+    --color-palette-color2: {{ settings.color_palette.color2 }};
+    --color-palette-color3: {{ settings.color_palette.color3 }};
+    --color-palette-color4: {{ settings.color_palette.color4 }};
+    --color-palette-color5: {{ settings.color_palette.color5 }};
+  }
+{% endstyle %}

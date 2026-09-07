@@ -5134,3 +5134,20 @@ product-recommendations:has([data-has-recommendations='false']) {
   font-weight: 500 !important;
   color: #1C1A18 !important;
 }
+
+/* ── H3 description accordéon produit (même logique que H2) ── */
+[data-template="product"] accordion-custom .details-content h3 {
+  font-family: 'Raleway', sans-serif !important;
+  --font-h3--size: 17px;
+  font-size: 17px !important;
+  font-weight: 500 !important;
+  color: #1C1A18 !important;
+}
+
+/* ── Prix produit (sous le titre) — police GC Amelie ──── */
+/* The "font" setting on this price block only offers the 4 generic theme
+   font roles (body/subheading/heading/accent) — GC Amelie isn't selectable
+   through it, so it's forced here instead. */
+[data-template="product"] product-price.custom-typography .price {
+  font-family: 'GC Amelie Promised', var(--font-accent--family) !important;
+}

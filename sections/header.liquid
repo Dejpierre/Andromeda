@@ -618,6 +618,10 @@
   .header__underlay {
     position: absolute;
     inset: 0;
+    /* Purely decorative background — must not intercept pointer events, or it
+       steals the hover target as the pointer moves from the trigger link down
+       into the open mega-menu submenu/collections, closing the menu early. */
+    pointer-events: none;
   }
 
   .header__underlay-closed {

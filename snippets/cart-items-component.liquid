@@ -1,0 +1,19 @@
+{% doc %}
+  Wraps cart line-item markup in a <cart-items-component>, which wires up
+  AJAX quantity/discount updates (assets/component-cart-items.js) against
+  the given section id.
+
+  @param {string} children - The cart items markup to render inside.
+  @param {string} section_id - Section id used for cart/change.js + section rendering updates.
+  @param {boolean} [is_drawer] - Whether this instance lives inside the cart drawer.
+{% enddoc %}
+
+<cart-items-component
+  class="cart-items-component"
+  data-section-id="{{ section_id }}"
+  {% if is_drawer %}
+    data-drawer
+  {% endif %}
+>
+  {{ children }}
+</cart-items-component>

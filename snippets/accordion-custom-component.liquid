@@ -1,0 +1,22 @@
+{%- doc -%}
+  Wraps a <details>/<summary> block in the <accordion-custom> custom element
+  (assets/accordion-custom.js), which handles default-open-state per breakpoint
+  and closing with Escape.
+
+  @param {string} children - The <details>...</details> markup to wrap.
+  @param {string} [class] - Extra class(es) for the wrapping element.
+  @param {boolean} [open_by_default_on_desktop] - Whether the accordion starts open on desktop.
+  @param {boolean} [open_by_default_on_mobile] - Whether the accordion starts open on mobile.
+{%- enddoc -%}
+
+<accordion-custom
+  class="accordion-custom{% if class %} {{ class }}{% endif %}"
+  {% if open_by_default_on_desktop %}
+    open-by-default-on-desktop
+  {% endif %}
+  {% if open_by_default_on_mobile %}
+    open-by-default-on-mobile
+  {% endif %}
+>
+  {{ children }}
+</accordion-custom>

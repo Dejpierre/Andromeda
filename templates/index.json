@@ -155,6 +155,7 @@
         "section_height_custom": 100,
         "background_color": "",
         "custom_text_color": "{{ settings.color_palette.background }}",
+        "color_scheme": "scheme-3",
         "toggle_overlay": false,
         "overlay_color": "#12121266",
         "overlay_style": "solid",

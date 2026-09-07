@@ -113,6 +113,11 @@ class HeaderMenu extends Component {
       // Mark submenu as active for content-visibility optimization
       submenu.dataset.active = '';
 
+      // Submenus are `inert` by default (out of tab order / hit-testing while
+      // closed) — must be lifted while open, or pointer events over its
+      // content fall through to whatever is behind it, closing the menu.
+      submenu.removeAttribute('inert');
+
       // Cleanup any existing mutation observer from previous menu activations
       this.#cleanupMutationObserver();
 
@@ -204,6 +209,7 @@ class HeaderMenu extends Component {
     // Remove active state from submenu after animation completes
     if (submenu) {
       delete submenu.dataset.active;
+      submenu.setAttribute('inert', '');
     }
   };
 
@@ -293,6 +299,8 @@ function findMenuItem(element) {
  * @returns {HTMLElement | null}
  */
 function findSubmenu(element) {
-  const submenu = element?.parentElement?.querySelector('[ref="submenu[]"]');
+  // The submenu is a sibling of the item's `.menu-list__trigger` wrapper, not a
+  // descendant of it — look up to the containing list item instead.
+  const submenu = element?.closest('.menu-list__list-item')?.querySelector('[ref="submenu[]"]');
   return submenu instanceof HTMLElement ? submenu : null;
 }

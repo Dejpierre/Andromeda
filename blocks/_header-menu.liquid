@@ -912,12 +912,24 @@
   }
 
   .mega-menu__content-list-item .resource-card__title {
-    font-family: 'GC Amelie Promised', var(--font-heading--family);
+    /* !important: ties on specificity against .resource-card__title.paragraph
+       (from resource-card.liquid) are broken by source order in the compiled
+       bundle, and that rule was winning. */
+    font-family: 'GC Amelie Promised', var(--font-heading--family) !important;
     font-size: var(--font-size--xl);
   }
 
   .mega-menu__content-list-item .resource-card__subtext {
     font-family: 'Raleway', sans-serif;
+  }
+
+  /* Hover feedback on collection cards: small title shift. */
+  .mega-menu__content-list-item .resource-card__title {
+    transition: translate var(--animation-speed-slow, 0.2s) var(--ease-out-cubic, ease-out);
+  }
+
+  .mega-menu__content-list-item:hover .resource-card__title {
+    translate: 0 -2px;
   }
 
   /* Badge + quick-add overlay on mega-menu collection cards. Sized via the

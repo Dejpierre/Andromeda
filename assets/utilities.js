@@ -331,6 +331,41 @@ export function isPointWithinElement(x, y, element) {
   return x >= left && x <= right && y >= top && y <= bottom;
 }
 
+/** @type {number} Number of active scroll locks, so nested/stacked drawers don't unlock each other's lock early. */
+let scrollLockCount = 0;
+
+/** @type {number} Scroll position saved when the first lock is applied, restored when the last lock is released. */
+let scrollLockPreviousY = 0;
+
+/**
+ * Locks page scroll (e.g. while a modal drawer is open), preserving scroll position.
+ * Reference-counted so multiple simultaneously open drawers don't unlock scroll prematurely.
+ */
+export function lockScroll() {
+  if (scrollLockCount === 0) {
+    scrollLockPreviousY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollLockPreviousY}px`;
+    document.body.style.width = '100%';
+  }
+  scrollLockCount++;
+}
+
+/**
+ * Releases one page scroll lock acquired via `lockScroll`. Restores scroll position once
+ * every lock has been released.
+ */
+export function unlockScroll() {
+  if (scrollLockCount === 0) return;
+  scrollLockCount--;
+  if (scrollLockCount === 0) {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo({ top: scrollLockPreviousY, behavior: 'instant' });
+  }
+}
+
 /**
  * A media query for large screens
  * @type {MediaQueryList}

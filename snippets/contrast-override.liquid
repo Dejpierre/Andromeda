@@ -1,0 +1,37 @@
+{%- doc -%}
+  Scopes a `.color-custom-{{ section_id }}` class to a custom background/text/border
+  color combination, computing a readable foreground automatically when text_color
+  is left blank.
+
+  @param {string} background_color - The custom background color.
+  @param {string} [text_color] - The custom text color. Computed from background_color when blank.
+  @param {string} [border_color] - The custom border color.
+  @param {string} section_id - Unique id used to scope the generated class.
+  @param {string} [preset] - Reserved for future variants. Currently unused.
+{%- enddoc -%}
+
+{%- if background_color != blank and section_id != blank -%}
+  {%- liquid
+    assign resolved_text_color = text_color
+    if resolved_text_color == blank
+      assign brightness = background_color | color_brightness
+      if brightness < 128
+        assign resolved_text_color = '#ffffff'
+      else
+        assign resolved_text_color = '#000000'
+      endif
+    endif
+  -%}
+  {% style %}
+    .color-custom-{{ section_id }} {
+      --color-background: {{ background_color }};
+      --color-background-rgb: {{ background_color | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+      --color-foreground: {{ resolved_text_color }};
+      --color-foreground-rgb: {{ resolved_text_color | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+      {%- if border_color != blank %}
+        --color-border: {{ border_color }};
+        --color-border-rgb: {{ border_color | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+      {%- endif %}
+    }
+  {% endstyle %}
+{%- endif -%}

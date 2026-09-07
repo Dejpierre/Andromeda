@@ -251,6 +251,18 @@
     font-display: swap;
   }
 
+  /* .button defaults to display:grid with a single implicit column, which
+     blockifies .atc-bundle-price into its own grid row (stretched full-width,
+     left-aligned) instead of sitting inline next to the button text. Force
+     flex here so text + price stay on one centered line. */
+  .add-to-cart-button:has(.atc-bundle-price) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: 2px;
+  }
+
   .atc-bundle-price {
     display: inline-flex;
     align-items: center;

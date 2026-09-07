@@ -1,0 +1,32 @@
+{%- doc -%}
+  Renders a theme-drawer's header bar: a heading (with optional appended content,
+  e.g. an item-count badge) and a close button. Mirrors the inline empty-cart
+  header markup in cart-drawer.liquid.
+
+  @param {string} title - The heading text.
+  @param {string} drawer_id - The id of the `<theme-drawer>` element to close.
+  @param {string} [heading_id] - The id to put on the heading element (for aria-labelledby).
+  @param {string} [title_append] - Extra markup appended after the title (e.g. a badge).
+{%- enddoc -%}
+
+<div class="theme-drawer__header">
+  <h2
+    class="theme-drawer__title h4"
+    {% if heading_id %}
+      id="{{ heading_id }}"
+    {% endif %}
+  >
+    {{ title }}
+    {{ title_append }}
+  </h2>
+  <button
+    on:click="#{{ drawer_id }}/close"
+    class="theme-drawer__close-button"
+    type="button"
+    aria-label="{{ 'actions.close' | t }}"
+  >
+    <span class="svg-wrapper">
+      {{- 'icon-close.svg' | inline_asset_content -}}
+    </span>
+  </button>
+</div>

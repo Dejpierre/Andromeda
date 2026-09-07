@@ -1,0 +1,15 @@
+{%- doc -%}
+  Static section wrapper around snippets/cart-drawer.liquid, so the drawer's content
+  is addressable as a real section via the Section Rendering API (cart AJAX endpoints'
+  `sections` param, and `?section_id=cart-drawer-section`). Without this, requesting
+  "cart-drawer-section" resolves to nothing, and the drawer never refreshes after an
+  item is added — it just shows whatever it looked like on the initial page load.
+{%- enddoc -%}
+
+{%- render 'cart-drawer', render_wrapper: false -%}
+
+{% schema %}
+{
+  "name": "Cart drawer"
+}
+{% endschema %}
