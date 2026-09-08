@@ -9,8 +9,8 @@
  */
 {
   "current": {
-    "logo": "shopify://shop_images/Logo-andromeda-blue-dark.svg",
-    "logo_inverse": "shopify://shop_images/Logo-andromeda.svg",
+    "logo": "shopify://shop_images/Logo-andromeda-blue-dark-clean.svg",
+    "logo_inverse": "shopify://shop_images/Logo-andromeda-clean.svg",
     "logo_height": 30,
     "logo_height_mobile": 24,
     "favicon": "shopify://shop_images/Favicon-andromeda.png",
