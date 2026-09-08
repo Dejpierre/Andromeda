@@ -8,6 +8,9 @@
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
 </button>
 
+<template id="ag-faq-icon-plus">{{ 'icon-plus.svg' | inline_asset_content }}</template>
+<template id="ag-faq-icon-minus">{{ 'icon-minus.svg' | inline_asset_content }}</template>
+
 <div class="ag" id="ag">
 
   <!-- HERO dark -->
@@ -414,22 +417,124 @@
   .ag__plus-label { font-size: 10px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: #B8975A; margin-bottom: 12px; }
   .ag__plus p { font-size: 14px !important; color: #5A5450 !important; line-height: 1.8 !important; margin: 0 !important; }
 
-  /* ── FAQ ─────────────────────────────────────────────── */
-  .ag__faq { margin: 28px 0 52px; }
-  .ag__faq-item { padding: 28px 0; border-bottom: 1px solid rgba(184,151,90,0.12); }
-  .ag__faq-item:first-child { border-top: 1px solid rgba(184,151,90,0.12); }
-  .ag__faq-q {
-    font-size: 16px; font-weight: 500; color: #1C1A18;
-    line-height: 1.4; margin: 0 0 12px;
-    display: flex; align-items: flex-start; gap: 10px;
+  /* ── FAQ (accordéon, cohérent avec la page FAQ du site) ─ */
+  .ag__faq {
+    margin: 28px 0 52px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
-  .ag__faq-q::before {
-    content: '✦';
+
+  .ag__faq-item {
+    border: 1px solid rgba(184, 151, 90, 0.25);
+    border-radius: 8px;
+    padding: 24px 28px;
+    transition: border-color 0.2s ease-in-out;
+  }
+
+  .ag__faq-item[data-open='true'] {
+    border-color: rgba(184, 151, 90, 0.5);
+  }
+
+  .ag__faq-summary {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+  }
+
+  .ag__faq-number {
+    font-size: 14px;
+    font-family: inherit;
+    color: #B8975A;
+    padding-top: 4px;
     flex-shrink: 0;
-    font-size: 8px; color: #B8975A;
-    margin-top: 0.35em;
   }
-  .ag__faq-a { font-size: 15px; font-weight: 300; color: #5A5450; line-height: 1.85; margin: 0; padding-left: 18px; }
+
+  .ag__faq-q {
+    font-family: 'GC Amelie Promised', serif;
+    font-size: clamp(17px, 1.6vw, 20px);
+    font-weight: normal;
+    line-height: 1.3;
+    color: #1C1A18;
+    margin: 0;
+    flex: 1;
+  }
+
+  .ag__faq-icon {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    flex-shrink: 0;
+    border: 1px solid rgba(184, 151, 90, 0.3);
+    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  }
+
+  .ag__faq-icon-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+
+  .ag__faq-icon-face svg { width: 16px; height: 16px; }
+
+  .ag__faq-icon-face--plus { color: #1C1A18; }
+
+  .ag__faq-icon-face--minus {
+    color: #FAF7F2;
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.5);
+  }
+
+  .ag__faq-item[data-open='true'] .ag__faq-icon {
+    border-color: #191A2E;
+    background: #191A2E;
+  }
+
+  .ag__faq-item[data-open='true'] .ag__faq-icon-face--plus {
+    opacity: 0;
+    transform: rotate(45deg) scale(0.5);
+  }
+
+  .ag__faq-item[data-open='true'] .ag__faq-icon-face--minus {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
+  .ag__faq-collapse {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease-in-out;
+  }
+
+  .ag__faq-item[data-open='true'] .ag__faq-collapse {
+    grid-template-rows: 1fr;
+  }
+
+  .ag__faq-collapse-inner { overflow: hidden; }
+
+  .ag__faq-a {
+    font-size: 15px; font-weight: 300; color: #5A5450; line-height: 1.85;
+    margin: 0; padding-top: 16px; margin-left: 36px; max-width: 640px;
+  }
+
+  @media (max-width: 640px) {
+    .ag__faq-item { padding: 20px; }
+    .ag__faq-a { margin-left: 0; }
+  }
 
   /* ── Progress bar ────────────────────────────────────── */
   .ag__progress-bar {
@@ -531,10 +636,73 @@
     s.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": entities });
     document.head.appendChild(s);
   }
+  function enhanceFAQAccordion() {
+    var items = document.querySelectorAll('.ag__faq-item');
+    if (!items.length) return;
+
+    var plusTpl = document.getElementById('ag-faq-icon-plus');
+    var minusTpl = document.getElementById('ag-faq-icon-minus');
+
+    items.forEach(function (item, index) {
+      var q = item.querySelector('.ag__faq-q');
+      var a = item.querySelector('.ag__faq-a');
+      if (!q || !a) return;
+
+      var num = String(index + 1).padStart(3, '0');
+
+      var summary = document.createElement('button');
+      summary.type = 'button';
+      summary.className = 'ag__faq-summary';
+      summary.setAttribute('aria-expanded', 'false');
+
+      var numberEl = document.createElement('span');
+      numberEl.className = 'ag__faq-number';
+      numberEl.textContent = num;
+
+      var icon = document.createElement('span');
+      icon.className = 'ag__faq-icon';
+      var plusFace = document.createElement('span');
+      plusFace.className = 'ag__faq-icon-face ag__faq-icon-face--plus';
+      if (plusTpl) plusFace.innerHTML = plusTpl.innerHTML;
+      var minusFace = document.createElement('span');
+      minusFace.className = 'ag__faq-icon-face ag__faq-icon-face--minus';
+      if (minusTpl) minusFace.innerHTML = minusTpl.innerHTML;
+      icon.appendChild(plusFace);
+      icon.appendChild(minusFace);
+
+      summary.appendChild(numberEl);
+      summary.appendChild(q);
+      summary.appendChild(icon);
+
+      var collapseInner = document.createElement('div');
+      collapseInner.className = 'ag__faq-collapse-inner';
+      collapseInner.appendChild(a);
+
+      var collapse = document.createElement('div');
+      collapse.className = 'ag__faq-collapse';
+      collapse.appendChild(collapseInner);
+
+      item.innerHTML = '';
+      item.appendChild(summary);
+      item.appendChild(collapse);
+      item.dataset.open = 'false';
+
+      summary.addEventListener('click', function () {
+        var isOpen = item.dataset.open === 'true';
+        item.dataset.open = isOpen ? 'false' : 'true';
+        summary.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      });
+    });
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', buildFAQSchema);
+    document.addEventListener('DOMContentLoaded', function () {
+      buildFAQSchema();
+      enhanceFAQAccordion();
+    });
   } else {
     buildFAQSchema();
+    enhanceFAQAccordion();
   }
 
   var progressBar = document.getElementById('ag-progress');
