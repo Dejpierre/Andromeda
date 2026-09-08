@@ -113,15 +113,13 @@
         <div class="footer-hero__brand">
           {%- if settings.logo != blank -%}
             {%- comment -%}
-              Not using the shared 'image' snippet here: it would reuse the
-              exact same <img src> as the header logo, and Safari/iOS
-              sometimes reuses the header's cached raster of that SVG
-              (decoded small) instead of re-rendering the vector at the
-              footer's larger size — the "#footer-logo" fragment forces a
-              distinct cache entry so it decodes crisp at this size.
+              Explicit integer width/height (not width:auto, which resolves
+              to a fractional CSS px) — iOS Safari has a known SVG <img>
+              rasterization artifact (soft halo/fringe around glyphs) when
+              the rendered size isn't a whole pixel.
             {%- endcomment -%}
             <img
-              src="{{ settings.logo | image_url }}#footer-logo"
+              src="{{ settings.logo | image_url }}"
               class="footer-hero__logo"
               width="{{ settings.logo.width }}"
               height="{{ settings.logo.height }}"
@@ -415,7 +413,7 @@
 
   .footer-hero__logo {
     height: 28px;
-    width: auto;
+    width: 181px;
     object-fit: contain;
   }
 
