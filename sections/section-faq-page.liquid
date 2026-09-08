@@ -1,0 +1,754 @@
+{%- doc -%}
+  Dedicated FAQ page section — big sticky intro column (title, intro, CTAs,
+  "by theme" nav) next to a numbered accordion list, grouped by the
+  "categorie" field on consecutive blocks. Only used on the FAQ page
+  template — does not touch header/footer or the generic accordéon-seo
+  section shared with product pages.
+
+  @param {string} [heading]
+  @param {string} [eyebrow_suffix]
+  @param {richtext} [intro]
+  @param {string} [cta_1_label]
+  @param {url} [cta_1_link]
+  @param {string} [cta_2_label]
+  @param {url} [cta_2_link]
+  @param {string} [nav_label]
+  @param {string} [contact_heading]
+  @param {string} [contact_subtext]
+  @param {string} [contact_email]
+  @param {string} [contact_instagram_handle]
+  @param {url} [contact_instagram_link]
+{%- enddoc -%}
+
+{%- liquid
+  assign total = section.blocks.size
+  assign is_en = false
+  if request.locale.iso_code == 'en'
+    assign is_en = true
+  endif
+
+  # Chrome strings (heading, CTAs, nav/contact labels) are brand-new schema
+  # settings with no Shopify translation registered yet, so on /en/ they'd
+  # otherwise fall back to the French default value. Branch here instead —
+  # same pattern used elsewhere in this theme (e.g. cart-upsell.liquid).
+  assign heading = section.settings.heading
+  assign eyebrow_suffix = section.settings.eyebrow_suffix
+  assign intro = section.settings.intro
+  assign cta_1_label = section.settings.cta_1_label
+  assign cta_2_label = section.settings.cta_2_label
+  assign nav_label = section.settings.nav_label
+  assign contact_heading = section.settings.contact_heading
+  assign contact_subtext = section.settings.contact_subtext
+  if is_en
+    assign heading = 'Your questions'
+    assign eyebrow_suffix = 'questions'
+    assign intro = '<p>Material, care, sizing and shipping. If your question isn' | append: "'" | append: 't here, write to us — we reply within 24 business hours.</p>'
+    assign cta_1_label = 'Contact us'
+    assign cta_2_label = 'Shop now'
+    assign nav_label = 'By topic'
+    assign contact_heading = "Don't see your question?"
+    assign contact_subtext = 'Write to us, we reply within 24 business hours.'
+  endif
+
+  assign cats = ''
+  for block in section.blocks
+    assign c = block.settings.categorie | strip | default: 'questions'
+    unless cats contains c
+      assign cats = cats | append: c | append: '||'
+    endunless
+  endfor
+  assign cat_list = cats | split: '||'
+-%}
+
+<div
+  class="faq-page color-{{ section.settings.color_scheme }}"
+  style="
+    --faq-accent: {{ section.settings.accent_color }};
+    --faq-dark: {{ section.settings.dark_color }};
+    --faq-heading: {{ section.settings.heading_color }};
+    --faq-muted: {{ section.settings.muted_color }};
+    --faq-body: {{ section.settings.body_color }};
+  "
+>
+  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+  <div class="section faq-page__inner">
+    <div class="faq-page__layout">
+      <aside class="faq-page__aside">
+        {%- if eyebrow_suffix != blank -%}
+          <span class="faq-page__eyebrow">{{ total }} {{ eyebrow_suffix }}</span>
+        {%- endif -%}
+        {%- if heading != blank -%}
+          <h1 class="faq-page__title">{{ heading }}</h1>
+        {%- endif -%}
+        {%- if intro != blank -%}
+          <div class="faq-page__intro">{{ intro }}</div>
+        {%- endif -%}
+
+        {%- if cta_1_label != blank or cta_2_label != blank -%}
+          <div class="faq-page__ctas">
+            {%- if cta_1_label != blank -%}
+              <a href="{{ section.settings.cta_1_link | default: '#' }}" class="faq-page__cta faq-page__cta--primary">
+                {{ cta_1_label }}
+              </a>
+            {%- endif -%}
+            {%- if cta_2_label != blank -%}
+              <a href="{{ section.settings.cta_2_link | default: '#' }}" class="faq-page__cta faq-page__cta--secondary">
+                {{ cta_2_label }}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if cat_list.size > 1 -%}
+          <nav class="faq-page__nav" aria-label="{{ nav_label | default: 'Par thème' }}">
+            {%- if nav_label != blank -%}
+              <span class="faq-page__nav-label">{{ nav_label }}</span>
+            {%- endif -%}
+            {%- for cat in cat_list -%}
+              {%- liquid
+                assign start_i = 0
+                assign end_i = 0
+                assign found_start = false
+                for block in section.blocks
+                  assign block_cat = block.settings.categorie | strip | default: 'questions'
+                  if block_cat == cat
+                    if found_start == false
+                      assign start_i = forloop.index
+                      assign found_start = true
+                    endif
+                    assign end_i = forloop.index
+                  endif
+                endfor
+                assign start_num = start_i | prepend: '00' | slice: -3, 3
+                assign end_num = end_i | prepend: '00' | slice: -3, 3
+
+                # Category values are language-neutral keys (see block schema
+                # info text) so the display label can be localized here
+                # without depending on Shopify's translation backend.
+                assign cat_label = cat
+                case cat
+                  when 'matiere'
+                    assign cat_label = 'La matière'
+                    if is_en
+                      assign cat_label = 'The silk'
+                    endif
+                  when 'produit-entretien'
+                    assign cat_label = 'Le produit & entretien'
+                    if is_en
+                      assign cat_label = 'The mask & care'
+                    endif
+                  when 'livraison-retours'
+                    assign cat_label = 'Livraison & retours'
+                    if is_en
+                      assign cat_label = 'Shipping & returns'
+                    endif
+                  when 'univers'
+                    assign cat_label = 'Mon univers'
+                    if is_en
+                      assign cat_label = 'My universe'
+                    endif
+                  when 'questions'
+                    assign cat_label = 'Questions'
+                endcase
+              -%}
+              <a
+                href="#faq-cat-{{ forloop.index }}"
+                class="faq-page__nav-item{% if forloop.first %} faq-page__nav-item--active{% endif %}"
+              >
+                <span>{{ cat_label }}</span>
+                <span class="faq-page__nav-range">
+                  {%- if start_i == end_i -%}
+                    {{ start_num }}
+                  {%- else -%}
+                    {{ start_num }}–{{ end_num }}
+                  {%- endif -%}
+                </span>
+              </a>
+            {%- endfor -%}
+          </nav>
+        {%- endif -%}
+      </aside>
+
+      <div class="faq-page__list">
+        {%- assign prev_cat = '' -%}
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign cat = block.settings.categorie | strip | default: 'questions'
+            assign num = forloop.index | prepend: '00' | slice: -3, 3
+          -%}
+          {%- if cat != prev_cat -%}
+            <div class="faq-page__anchor" id="faq-cat-{{ forloop.index }}"></div>
+            {%- assign prev_cat = cat -%}
+          {%- endif -%}
+          <accordion-custom
+            class="faq-page__item-wrap"
+            {% if forloop.first %}
+              open-by-default-on-desktop
+              open-by-default-on-mobile
+            {% endif %}
+            {{ block.shopify_attributes }}
+          >
+            <details class="faq-page__item">
+              <summary class="faq-page__summary">
+                <span class="faq-page__number">{{ num }}</span>
+                <span class="faq-page__question">{{ block.settings.titre }}</span>
+                <span class="faq-page__icon">
+                  <span class="faq-page__icon-face faq-page__icon-face--plus">
+                    {{- 'icon-plus.svg' | inline_asset_content -}}
+                  </span>
+                  <span class="faq-page__icon-face faq-page__icon-face--minus">
+                    {{- 'icon-minus.svg' | inline_asset_content -}}
+                  </span>
+                </span>
+              </summary>
+              <div class="faq-page__answer details-content">{{ block.settings.contenu }}</div>
+            </details>
+          </accordion-custom>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- if contact_heading != blank -%}
+      <div class="faq-page__contact">
+        <div class="faq-page__contact-text">
+          <h2>{{ contact_heading }}</h2>
+          {%- if contact_subtext != blank -%}
+            <p>{{ contact_subtext }}</p>
+          {%- endif -%}
+        </div>
+        <div class="faq-page__contact-links">
+          {%- if section.settings.contact_email != blank -%}
+            <a href="mailto:{{ section.settings.contact_email }}">{{ section.settings.contact_email }}</a>
+          {%- endif -%}
+          {%- if section.settings.contact_instagram_handle != blank -%}
+            <a href="{{ section.settings.contact_instagram_link | default: '#' }}">
+              {{- section.settings.contact_instagram_handle -}}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- if section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          {%- assign q = block.settings.titre | strip_html | escape -%}
+          {%- assign a = block.settings.contenu | strip_html | escape -%}
+          {
+            "@type": "Question",
+            "name": {{ q | json }},
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": {{ a | json }}
+            }
+          }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .faq-page {
+    position: relative;
+  }
+
+  .faq-page__inner {
+    padding-block: 64px 96px;
+  }
+
+  .faq-page__layout {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .faq-page__aside {
+    position: sticky;
+    top: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .faq-page__eyebrow {
+    font-size: 14px;
+    color: var(--faq-accent);
+  }
+
+  .faq-page__title {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: clamp(40px, 5vw, 64px);
+    line-height: 1.1;
+    color: var(--faq-heading);
+    margin: 0;
+  }
+
+  .faq-page__intro {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--faq-muted);
+    max-width: 380px;
+    text-wrap: pretty;
+  }
+
+  .faq-page__intro p {
+    margin: 0;
+  }
+
+  .faq-page__ctas {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .faq-page__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .faq-page__cta--primary {
+    background: var(--faq-dark);
+    color: #ffffff;
+    padding: 14px 28px;
+  }
+
+  .faq-page__cta--primary:hover {
+    background: color-mix(in srgb, var(--faq-dark) 82%, black);
+  }
+
+  .faq-page__cta--secondary {
+    background: transparent;
+    color: var(--faq-heading);
+    border: 1px solid var(--faq-heading);
+    padding: 13px 27px;
+  }
+
+  .faq-page__cta--secondary:hover {
+    background: rgba(20, 22, 31, 0.06);
+  }
+
+  .faq-page__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(20, 22, 31, 0.12);
+    margin-top: 16px;
+  }
+
+  .faq-page__nav-label {
+    font-size: 14px;
+    color: var(--faq-muted);
+  }
+
+  .faq-page__nav-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--faq-body);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    padding-left: 12px;
+    transition: border-color 0.2s ease, color 0.2s ease, font-weight 0.2s ease;
+  }
+
+  .faq-page__nav-item:hover,
+  .faq-page__nav-item--active {
+    border-left-color: var(--faq-accent);
+    color: var(--faq-heading);
+    font-weight: 400;
+  }
+
+  .faq-page__nav-range {
+    color: var(--faq-muted);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .faq-page__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .faq-page__anchor {
+    scroll-margin-top: 100px;
+  }
+
+  .faq-page__item-wrap {
+    display: block;
+  }
+
+  .faq-page__item {
+    border: 1px solid rgba(20, 22, 31, 0.12);
+    border-radius: 8px;
+    padding: 24px 28px;
+    transition: border-color var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out);
+  }
+
+  .faq-page__item[open] {
+    border-color: rgba(20, 22, 31, 0.22);
+  }
+
+  .faq-page__summary {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq-page__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-page__number {
+    font-size: 16px;
+    color: var(--faq-accent);
+    padding-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .faq-page__question {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: clamp(20px, 2vw, 28px);
+    line-height: 1.1;
+    color: var(--faq-heading);
+    flex: 1;
+  }
+
+  .faq-page__icon {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    flex-shrink: 0;
+    border: 1px solid rgba(20, 22, 31, 0.12);
+    transition: border-color var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out),
+      background-color var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out);
+  }
+
+  .faq-page__icon-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    transition: opacity var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out),
+      transform var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out);
+  }
+
+  .faq-page__icon-face svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .faq-page__icon-face--plus {
+    color: var(--faq-heading);
+  }
+
+  .faq-page__icon-face--minus {
+    color: #ffffff;
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.5);
+  }
+
+  .faq-page__item[open] .faq-page__icon {
+    border-color: var(--faq-dark);
+    background: var(--faq-dark);
+  }
+
+  .faq-page__item[open] .faq-page__icon-face--plus {
+    opacity: 0;
+    transform: rotate(45deg) scale(0.5);
+  }
+
+  .faq-page__item[open] .faq-page__icon-face--minus {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
+  .faq-page__answer {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--faq-body);
+    margin: 0 0 0 36px;
+    padding-block-start: 16px;
+    max-width: 640px;
+    text-wrap: pretty;
+  }
+
+  .faq-page__answer > :first-child {
+    margin-top: 0;
+  }
+
+  .faq-page__answer > :last-child {
+    margin-bottom: 0;
+  }
+
+  .faq-page__contact {
+    border-top: 1px solid rgba(20, 22, 31, 0.12);
+    margin-top: 64px;
+    padding-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .faq-page__contact-text h2 {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: 36px;
+    line-height: 1.1;
+    color: var(--faq-heading);
+    margin: 0 0 12px;
+  }
+
+  .faq-page__contact-text p {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--faq-muted);
+    margin: 0;
+    max-width: 480px;
+  }
+
+  .faq-page__contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-end;
+  }
+
+  .faq-page__contact-links a {
+    font-size: 18px;
+    color: var(--faq-heading);
+    text-decoration-color: rgba(20, 22, 31, 0.25);
+    text-underline-offset: 3px;
+  }
+
+  .faq-page__contact-links a:hover {
+    text-decoration-color: currentColor;
+  }
+
+  @media screen and (max-width: 989px) {
+    .faq-page__layout {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .faq-page__aside {
+      position: static;
+    }
+
+    .faq-page__intro {
+      max-width: none;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .faq-page__inner {
+      padding-block: 40px 64px;
+    }
+
+    .faq-page__item {
+      padding: 20px;
+    }
+
+    .faq-page__answer {
+      margin-left: 0;
+    }
+
+    .faq-page__contact {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .faq-page__contact-links {
+      align-items: flex-start;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FAQ (page dédiée)",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Palette (fond de section)",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titre",
+      "default": "Vos questions"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_suffix",
+      "label": "Texte après le nombre de questions",
+      "default": "questions"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Texte d'intro",
+      "default": "<p>La matière, l'entretien, les tailles et la livraison. Si votre question n'y figure pas, écrivez-nous : nous répondons sous 24 heures ouvrées.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Boutons"
+    },
+    {
+      "type": "text",
+      "id": "cta_1_label",
+      "label": "Bouton 1 — texte",
+      "default": "Nous écrire"
+    },
+    {
+      "type": "url",
+      "id": "cta_1_link",
+      "label": "Bouton 1 — lien"
+    },
+    {
+      "type": "text",
+      "id": "cta_2_label",
+      "label": "Bouton 2 — texte",
+      "default": "Nos produits"
+    },
+    {
+      "type": "url",
+      "id": "cta_2_link",
+      "label": "Bouton 2 — lien"
+    },
+    {
+      "type": "header",
+      "content": "Navigation par thème"
+    },
+    {
+      "type": "text",
+      "id": "nav_label",
+      "label": "Label",
+      "default": "Par thème",
+      "info": "La navigation se construit automatiquement à partir du champ « Thème » de chaque question. Laissez ce champ vide sur toutes les questions pour la masquer."
+    },
+    {
+      "type": "header",
+      "content": "Bloc contact (bas de page)"
+    },
+    {
+      "type": "text",
+      "id": "contact_heading",
+      "label": "Titre",
+      "default": "Votre question n'y figure pas ?"
+    },
+    {
+      "type": "text",
+      "id": "contact_subtext",
+      "label": "Sous-texte",
+      "default": "Écrivez-nous, nous répondons sous 24 heures ouvrées."
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Email",
+      "default": "contact@andromedaparis.com"
+    },
+    {
+      "type": "text",
+      "id": "contact_instagram_handle",
+      "label": "Handle Instagram",
+      "default": "@andromeda_paris"
+    },
+    {
+      "type": "url",
+      "id": "contact_instagram_link",
+      "label": "Lien Instagram"
+    },
+    {
+      "type": "header",
+      "content": "Couleurs"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (numéros, thème actif)",
+      "default": "#B06A47"
+    },
+    {
+      "type": "color",
+      "id": "dark_color",
+      "label": "Foncé (bouton principal, icône moins)",
+      "default": "#191A2E"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Titres",
+      "default": "#14161F"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Texte secondaire",
+      "default": "#6E6A63"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Corps de texte",
+      "default": "#3A3A42"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "titre", "label": "Question" },
+        { "type": "html", "id": "contenu", "label": "Réponse" },
+        {
+          "type": "select",
+          "id": "categorie",
+          "label": "Thème",
+          "options": [
+            { "value": "questions", "label": "(aucun)" },
+            { "value": "matiere", "label": "La matière" },
+            { "value": "produit-entretien", "label": "Le produit & entretien" },
+            { "value": "livraison-retours", "label": "Livraison & retours" },
+            { "value": "univers", "label": "Mon univers" }
+          ],
+          "default": "questions",
+          "info": "Les questions consécutives du même thème sont regroupées dans la navigation « Par thème »."
+        }
+      ]
+    }
+  ],
+  "presets": [{ "name": "FAQ (page dédiée)" }]
+}
+{% endschema %}

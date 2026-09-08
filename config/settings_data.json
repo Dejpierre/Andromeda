@@ -105,6 +105,12 @@
     "variant_button_border_width": 1,
     "variant_button_radius": 14,
     "variant_button_width": "equal-width-buttons",
+    "sections": {
+      "cart-drawer-section": {
+        "type": "cart-drawer-section",
+        "settings": {}
+      }
+    },
     "content_for_index": [],
     "blocks": {
       "4015264832934714879": {
@@ -157,6 +163,28 @@
       },
       "16160716078332068383": {
         "type": "shopify://apps/rubik-variant-images/blocks/rubik-variant-images/e684282e-1343-4a60-8fa2-6393aded15f6",
+        "disabled": true,
+        "settings": {}
+      },
+      "16225679183443353566": {
+        "type": "shopify://apps/pixiehog/blocks/posthog_js_web/3bc10c13-7b55-491e-8df6-d5677acf3250",
+        "disabled": false,
+        "settings": {}
+      },
+      "13047258039897440615": {
+        "type": "shopify://apps/judge-me-reviews/blocks/cart_drawer_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {
+          "widget_type": "review-widget"
+        }
+      },
+      "7539343560218715217": {
+        "type": "shopify://apps/lucky-orange-heatmaps-replay/blocks/lucky_orange_tracking/019b2899-e426-7dbd-b9e7-ff9f0bb0d0f3",
+        "disabled": false,
+        "settings": {}
+      },
+      "2200952712151285029": {
+        "type": "shopify://apps/microsoft-clarity/blocks/brandAgents_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
         "disabled": true,
         "settings": {}
       }
