@@ -734,6 +734,10 @@
     justify-content: center;
     box-shadow: none;
     padding: 0;
+    /* Fallback in case flexbox `gap` isn't honored (older Safari/iOS) —
+       keeps this button from crowding the quantity selector next to it. */
+    margin-inline-start: var(--gap-xs);
+    flex-shrink: 0;
   }
 
   .cart-items__media {
