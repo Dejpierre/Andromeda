@@ -1,0 +1,599 @@
+{%- doc -%}
+  Pied de page personnalisé — bannière newsletter sur photo + grande carte
+  logo/réseaux/quatre colonnes de liens + barre de copyright. Remplace les
+  blocs natifs "footer" + "footer-utilities" (toujours définis dans
+  footer-group.json, juste retirés de "order" pour rester réversible).
+  Formulaire d'inscription et liens (produits, pages, politiques) branchés
+  sur les vraies données du site.
+{%- enddoc -%}
+
+{%- liquid
+  assign is_en = false
+  if request.locale.iso_code == 'en'
+    assign is_en = true
+  endif
+
+  assign newsletter_heading = section.settings.newsletter_heading
+  assign newsletter_text = section.settings.newsletter_text
+  assign cta_heading = section.settings.cta_heading
+  assign col_shop_title = section.settings.col_shop_title
+  assign col_brand_title = section.settings.col_brand_title
+  assign col_contact_title = section.settings.col_contact_title
+  assign col_info_title = section.settings.col_info_title
+  assign bottom_tagline = section.settings.bottom_tagline
+
+  if is_en
+    assign newsletter_heading = 'Join our newsletter'
+    assign newsletter_text = 'A monthly letter: new colors, silk care tips and limited editions.'
+    assign cta_heading = 'Sleep is a luxury. Give it to yourself.'
+    assign col_shop_title = 'Shop'
+    assign col_brand_title = 'The brand'
+    assign col_contact_title = 'Write to us'
+    assign col_info_title = 'Information'
+    assign bottom_tagline = 'Andromeda Paris — grade 6A mulberry silk, 22 momme, OEKO-TEX® certified.'
+  endif
+-%}
+
+<div
+  class="footer-hero color-{{ section.settings.color_scheme }}"
+  style="
+    --ftr-accent: {{ section.settings.accent_color }};
+    --ftr-dark: {{ section.settings.dark_color }};
+    --ftr-heading: {{ section.settings.heading_color }};
+    --ftr-muted: {{ section.settings.muted_color }};
+    --ftr-body: {{ section.settings.body_color }};
+  "
+>
+  {%- if section.settings.background_image != blank -%}
+    {{
+      section.settings.background_image
+      | image_url: width: 2600
+      | image_tag:
+        loading: 'lazy',
+        sizes: '100vw',
+        widths: '750,1100,1500,2000,2600',
+        class: 'footer-hero__bg',
+        alt: ''
+    }}
+  {%- endif -%}
+
+  <div class="section footer-hero__inner">
+   <div class="footer-hero__stack">
+
+    <div class="footer-hero__newsletter">
+      <div class="footer-hero__newsletter-copy">
+        <h2 class="footer-hero__newsletter-heading">{{ newsletter_heading }}</h2>
+        <p class="footer-hero__newsletter-text">{{ newsletter_text }}</p>
+      </div>
+
+      {%- form 'customer', class: 'footer-hero__form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="footer-hero__form-row">
+          <label for="FooterNewsletter-{{ section.id }}" class="visually-hidden">
+            {{ 'blocks.email_signup.label' | t }}
+          </label>
+          <input
+            id="FooterNewsletter-{{ section.id }}"
+            class="footer-hero__form-input"
+            type="email"
+            name="contact[email]"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            placeholder="{{ 'blocks.email_signup.placeholder' | t }}"
+            required
+            {% if form.errors %}
+              autofocus
+              aria-invalid="true"
+              aria-describedby="FooterNewsletter-error-{{ section.id }}"
+            {% endif %}
+          >
+          <button type="submit" class="footer-hero__form-button">
+            {{ 'actions.sign_up' | t }}
+          </button>
+        </div>
+
+        {%- if form.errors -%}
+          <p id="FooterNewsletter-error-{{ section.id }}" class="footer-hero__form-message" tabindex="-1">
+            {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+          </p>
+        {%- endif -%}
+
+        {%- if form.posted_successfully? -%}
+          <p class="footer-hero__form-message" tabindex="-1">
+            {{ 'blocks.email_signup.success' | t }}
+          </p>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+
+    <div class="footer-hero__card">
+      <div class="footer-hero__card-top">
+        <h2 class="footer-hero__cta-heading">{{ cta_heading }}</h2>
+        <div class="footer-hero__brand">
+          {%- if settings.logo != blank -%}
+            {%- render 'image', image: settings.logo, class: 'footer-hero__logo', height: 28, text_fallback: shop.name -%}
+          {%- else -%}
+            <span class="footer-hero__logo-text">{{ shop.name }}</span>
+          {%- endif -%}
+          <div class="footer-hero__socials">
+            <a href="https://www.instagram.com/andromeda_paris/" class="footer-hero__social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                {%- render 'icon', icon: 'instagram' -%}
+              </svg>
+            </a>
+            <a href="mailto:{{ shop.email }}" class="footer-hero__social-link" aria-label="{{ 'general.contact_form.email' | t }}">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <rect x="3" y="5" width="14" height="10" rx="2"></rect>
+                <path d="M3.6 6.2L10 11l6.4-4.8"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-hero__columns">
+        <div class="footer-hero__col">
+          <span class="footer-hero__col-title">{{ col_shop_title }}</span>
+          {%- assign footer_product_handles = 'masque-de-sommeil-en-soie-de-murier-22-mommes,bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus,chouchou-pour-cheveux-en-soie-de-murier-22-mommes' | split: ',' -%}
+          {%- for product_handle in footer_product_handles -%}
+            {%- assign p = all_products[product_handle] -%}
+            {%- if p != blank -%}
+              <a href="{{ p.url }}" class="footer-hero__link">{{ p.title }}</a>
+            {%- endif -%}
+          {%- endfor -%}
+          <a href="{{ routes.all_products_collection_url }}" class="footer-hero__link">
+            {%- if is_en -%}All products{%- else -%}Toute la collection{%- endif -%}
+          </a>
+        </div>
+
+        <div class="footer-hero__col">
+          <span class="footer-hero__col-title">{{ col_brand_title }}</span>
+          {%- assign histoire = pages['notre-histoire'] -%}
+          {%- if histoire != blank -%}
+            <a href="{{ histoire.url }}" class="footer-hero__link">{{ histoire.title }}</a>
+          {%- endif -%}
+          <a href="{{ pages['faq'].url | default: '/pages/faq' }}" class="footer-hero__link">FAQ</a>
+          {%- if blogs['actualites'] != blank -%}
+            <a href="{{ blogs['actualites'].url }}" class="footer-hero__link">
+              {%- if is_en -%}Blog{%- else -%}Blog{%- endif -%}
+            </a>
+          {%- endif -%}
+        </div>
+
+        <div class="footer-hero__col">
+          <span class="footer-hero__col-title">{{ col_contact_title }}</span>
+          <a href="mailto:{{ shop.email }}" class="footer-hero__link">{{ shop.email }}</a>
+          <a href="https://www.instagram.com/andromeda_paris/" class="footer-hero__link" target="_blank" rel="noopener noreferrer">@andromeda_paris</a>
+        </div>
+
+        <div class="footer-hero__col">
+          <span class="footer-hero__col-title">{{ col_info_title }}</span>
+          {%- for policy in shop.policies -%}
+            <a href="{{ policy.url }}" class="footer-hero__link">{{ policy.title }}</a>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="footer-hero__bottom">
+        <span class="footer-hero__copyright">
+          &copy; {{ 'now' | date: '%Y' }} {{ bottom_tagline }}
+        </span>
+        {%- if section.settings.signature != blank -%}
+          <span class="footer-hero__signature">{{ section.settings.signature }}</span>
+        {%- endif -%}
+      </div>
+    </div>
+
+   </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .footer-hero {
+    position: relative;
+    overflow: hidden;
+    margin-block-start: 64px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .footer-hero {
+      margin-block-start: 40px;
+    }
+  }
+
+  .footer-hero__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .footer-hero__inner {
+    position: relative;
+    padding-block: 160px 48px;
+  }
+
+  .footer-hero__stack {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .footer-hero__inner {
+      padding-block: 96px 32px;
+    }
+  }
+
+  .footer-hero__newsletter,
+  .footer-hero__card {
+    background: #ffffff;
+    border-radius: 8px;
+  }
+
+  .footer-hero__newsletter {
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .footer-hero__newsletter-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 480px;
+  }
+
+  .footer-hero__newsletter-heading {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: clamp(24px, 2.4vw, 32px);
+    line-height: 1.15;
+    color: var(--ftr-heading);
+    margin: 0;
+  }
+
+  .footer-hero__newsletter-text {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--ftr-body);
+    margin: 0;
+  }
+
+  .footer-hero__form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-hero__form-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .footer-hero__form-input {
+    width: 280px;
+    max-width: 100%;
+    font-family: var(--font-body--family, sans-serif);
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--ftr-heading);
+    background: #ffffff;
+    border: 1px solid rgba(20, 22, 31, 0.12);
+    border-radius: 4px;
+    padding: 14px 16px;
+  }
+
+  .footer-hero__form-input:focus-visible {
+    outline: 2px solid var(--ftr-dark);
+    outline-offset: 1px;
+    border-color: var(--ftr-dark);
+  }
+
+  .footer-hero__form-button {
+    font-family: var(--font-body--family, sans-serif);
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    color: #ffffff;
+    background: var(--ftr-dark);
+    border: none;
+    border-radius: 4px;
+    padding: 14px 28px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out);
+  }
+
+  .footer-hero__form-button:hover {
+    opacity: 0.85;
+  }
+
+  .footer-hero__form-message {
+    font-size: 13px;
+    color: var(--ftr-muted);
+    margin: 0;
+  }
+
+  .footer-hero__card {
+    padding: 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .footer-hero__card {
+      padding: 40px 24px;
+      gap: 40px;
+    }
+  }
+
+  .footer-hero__card-top {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 64px;
+    align-items: start;
+  }
+
+  @media screen and (max-width: 749px) {
+    .footer-hero__card-top {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  .footer-hero__cta-heading {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: clamp(28px, 3.2vw, 48px);
+    line-height: 1.1;
+    color: var(--ftr-heading);
+    margin: 0;
+    max-width: 520px;
+  }
+
+  .footer-hero__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-end;
+  }
+
+  @media screen and (max-width: 749px) {
+    .footer-hero__brand {
+      align-items: flex-start;
+    }
+  }
+
+  .footer-hero__logo {
+    height: 28px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .footer-hero__logo-text {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: 22px;
+    color: var(--ftr-heading);
+  }
+
+  .footer-hero__socials {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .footer-hero__social-link {
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(20, 22, 31, 0.12);
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ftr-heading);
+    transition: border-color var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out);
+  }
+
+  .footer-hero__social-link:hover {
+    border-color: var(--ftr-accent);
+  }
+
+  .footer-hero__social-link svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .footer-hero__columns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .footer-hero__columns {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px 16px;
+    }
+  }
+
+  .footer-hero__col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer-hero__col-title {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: 21px;
+    color: var(--ftr-heading);
+  }
+
+  .footer-hero__link {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--ftr-body);
+    text-decoration: none;
+  }
+
+  a.footer-hero__link:hover {
+    color: var(--ftr-accent);
+  }
+
+  .footer-hero__link--static {
+    color: var(--ftr-body);
+  }
+
+  .footer-hero__bottom {
+    padding-top: 24px;
+    border-top: 1px solid rgba(20, 22, 31, 0.12);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer-hero__copyright,
+  .footer-hero__signature {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--ftr-muted);
+  }
+{% endstylesheet %}
+
+{%- comment -%}
+  Shopify requires the native "footer" and "footer-utilities" sections to
+  stay in footer-group.json's "order" array, but their content (newsletter,
+  policy links, social icons) is now fully covered by this section — hide
+  their rendered output instead of deleting them, so the requirement is met
+  without a duplicate bar under the page.
+{%- endcomment -%}
+<style>
+  [id$="__footer_m9NzUG"],
+  [id$="__footer_utilities_jLGE8U"] {
+    display: none !important;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Footer personnalisé",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Couleur de fond",
+      "default": "scheme-1"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Image de fond"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Titre",
+      "default": "Rejoindre notre newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_text",
+      "label": "Texte",
+      "default": "Une lettre par mois : nouveaux coloris, conseils d'entretien de la soie et éditions limitées."
+    },
+    {
+      "type": "header",
+      "content": "Bloc principal"
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "Titre",
+      "default": "Le sommeil est un luxe. Offrez-vous le vôtre."
+    },
+    {
+      "type": "text",
+      "id": "col_shop_title",
+      "label": "Titre colonne Boutique",
+      "default": "Boutique"
+    },
+    {
+      "type": "text",
+      "id": "col_brand_title",
+      "label": "Titre colonne Marque",
+      "default": "La marque"
+    },
+    {
+      "type": "text",
+      "id": "col_contact_title",
+      "label": "Titre colonne Contact",
+      "default": "Nous écrire"
+    },
+    {
+      "type": "text",
+      "id": "col_info_title",
+      "label": "Titre colonne Informations",
+      "default": "Informations"
+    },
+    {
+      "type": "text",
+      "id": "bottom_tagline",
+      "label": "Texte copyright",
+      "default": "Andromeda Paris — soie de mûrier grade 6A, 22 mommes, certifiée OEKO-TEX®."
+    },
+    {
+      "type": "text",
+      "id": "signature",
+      "label": "Signature (bas de page)",
+      "default": "Marion & Pierre Dejonghe"
+    },
+    {
+      "type": "header",
+      "content": "Couleurs"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#B06A47"
+    },
+    {
+      "type": "color",
+      "id": "dark_color",
+      "label": "Foncé (bouton)",
+      "default": "#191A2E"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Titres",
+      "default": "#14161F"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Texte secondaire",
+      "default": "#6E6A63"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Corps de texte",
+      "default": "#3A3A42"
+    }
+  ]
+}
+{% endschema %}

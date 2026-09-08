@@ -648,9 +648,16 @@
         "padding-block-start": 20,
         "padding-block-end": 48
       }
+    },
+    "footer_custom_9x2Kq7": {
+      "type": "section-footer-custom",
+      "settings": {
+        "background_image": "shopify://shop_images/footer-mur-terracotta-ombre-plante.png"
+      }
     }
   },
   "order": [
+    "footer_custom_9x2Kq7",
     "section_CmqAMM",
     "footer_m9NzUG",
     "footer_utilities_jLGE8U"
