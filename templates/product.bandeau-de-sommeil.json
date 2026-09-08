@@ -1534,6 +1534,15 @@
         "gap_between_elements": 24
       }
     },
+    "section_texte_reveal_scroll_n3wr7W": {
+      "type": "section-texte-reveal-scroll",
+      "name": "Texte reveal au scroll",
+      "settings": {
+        "text": "Née de la soie de mûrier la plus pure, chaque création Andromeda effleure la peau comme une caresse nocturne. Douce, hypoallergénique et bienveillante, notre soie enveloppe vos nuits d'un cocon céleste.",
+        "background_image": "shopify://shop_images/bg-scroll-reveal.png",
+        "color_scheme": ""
+      }
+    },
     "1777960337a20780a9": {
       "type": "_blocks",
       "blocks": {
@@ -2245,6 +2254,7 @@
   "order": [
     "main",
     "marquee_HYpWxg",
+    "section_texte_reveal_scroll_n3wr7W",
     "1777960337a20780a9",
     "accordeon_produit",
     "section_comparatif",

@@ -1,0 +1,167 @@
+{%- doc -%}
+  Bandeau plein largeur avec texte qui s'illumine mot par mot au fil du
+  scroll (image de fond + effet de reveal scrubbed via GSAP ScrollTrigger).
+  Reconstruit à l'identique des réglages retrouvés (texte, image, couleur) —
+  le fichier original avait disparu du thème sans être versionné dans git.
+{%- enddoc -%}
+
+{%- liquid
+  assign words = section.settings.text | strip | split: ' '
+-%}
+
+<div
+  class="trs color-{{ section.settings.color_scheme }}"
+  id="trs-{{ section.id }}"
+>
+  {%- if section.settings.background_image != blank -%}
+    {{
+      section.settings.background_image
+      | image_url: width: 2000
+      | image_tag:
+        loading: 'lazy',
+        sizes: '100vw',
+        widths: '750,1100,1500,2000',
+        class: 'trs__bg',
+        alt: ''
+    }}
+  {%- endif -%}
+
+  <div class="trs__overlay"></div>
+
+  {%- if words.size > 0 -%}
+    <p class="trs__text">
+      {%- for word in words -%}
+        <span class="trs__word">{{ word }}</span>{% unless forloop.last %} {% endunless %}
+      {%- endfor -%}
+    </p>
+  {%- endif -%}
+</div>
+
+<style>
+  .trs {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 64px 24px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .trs {
+      min-height: 50vh;
+      padding: 48px 20px;
+    }
+  }
+
+  .trs__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .trs__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.32);
+  }
+
+  .trs__text {
+    position: relative;
+    z-index: 1;
+    max-width: 820px;
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: clamp(22px, 3vw, 34px);
+    line-height: 1.45;
+    color: #ffffff;
+  }
+
+  .trs__word {
+    opacity: 0.28;
+    transition: opacity 0.2s linear;
+  }
+
+  /* If GSAP fails to load, the .trs__word opacity above still leaves text
+     legible; this rule fully restores it once no-js/no-gsap is confirmed
+     via the script below toggling this class off. */
+  .trs.trs--static .trs__word {
+    opacity: 1;
+  }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script>
+(function () {
+  var outer = document.getElementById('trs-{{ section.id }}');
+  if (!outer) return;
+
+  var words = outer.querySelectorAll('.trs__word');
+  if (!words.length) return;
+
+  function initGsap() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+      // GSAP n'a pas chargé : le texte reste visible par défaut (CSS), rien à faire.
+      outer.classList.add('trs--static');
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.to(words, {
+      opacity: 1,
+      stagger: 0.05,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: outer,
+        start: 'top 75%',
+        end: 'bottom 55%',
+        scrub: true
+      }
+    });
+  }
+
+  if (document.readyState === 'complete') {
+    initGsap();
+  } else {
+    window.addEventListener('load', initGsap);
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Texte reveal au scroll",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Texte",
+      "default": "Née de la soie de mûrier la plus pure, chaque création Andromeda effleure la peau comme une caresse nocturne."
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Image de fond"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Couleur de fond",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Texte reveal au scroll"
+    }
+  ]
+}
+{% endschema %}
