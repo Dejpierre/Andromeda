@@ -108,6 +108,7 @@
 
   <!-- ── Corps ─────────────────────────────────────────────────────────── -->
   <div class="section ae__body-section">
+   <div class="ae__body-stack">
     <div class="ae__grid">
       <div class="ae__body-margin" aria-hidden="true"></div>
       <div class="ae__content rte">{{ article.content }}</div>
@@ -240,11 +241,13 @@
         </div>
       </div>
     {%- endif -%}
+   </div>
   </div>
 
   <!-- ── Article suivant ───────────────────────────────────────────────── -->
   {%- if blog.next_article or blog.previous_article -%}
     <div class="section ae__next-section">
+     <div class="ae__next-stack">
       {%- if blog.next_article -%}
         <a href="{{ blog.next_article.url }}" class="ae__next-row">
           <span class="ae__eyebrow">{{ next_label }}</span>
@@ -269,6 +272,7 @@
           {%- endif -%}
         </a>
       {%- endif -%}
+     </div>
     </div>
   {%- endif -%}
 
@@ -492,6 +496,9 @@
   /* ── Corps ─────────────────────────────────────────────────────── */
   .ae__body-section {
     padding-block: 96px 0;
+  }
+
+  .ae__body-stack {
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -928,6 +935,9 @@
   /* ── Article suivant ───────────────────────────────────────────── */
   .ae__next-section {
     padding-block: 96px;
+  }
+
+  .ae__next-stack {
     display: flex;
     flex-direction: column;
   }
