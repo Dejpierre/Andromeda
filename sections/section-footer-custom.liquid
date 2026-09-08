@@ -112,7 +112,22 @@
         <h2 class="footer-hero__cta-heading">{{ cta_heading }}</h2>
         <div class="footer-hero__brand">
           {%- if settings.logo != blank -%}
-            {%- render 'image', image: settings.logo, class: 'footer-hero__logo', height: 28, text_fallback: shop.name -%}
+            {%- comment -%}
+              Not using the shared 'image' snippet here: it would reuse the
+              exact same <img src> as the header logo, and Safari/iOS
+              sometimes reuses the header's cached raster of that SVG
+              (decoded small) instead of re-rendering the vector at the
+              footer's larger size — the "#footer-logo" fragment forces a
+              distinct cache entry so it decodes crisp at this size.
+            {%- endcomment -%}
+            <img
+              src="{{ settings.logo | image_url }}#footer-logo"
+              class="footer-hero__logo"
+              width="{{ settings.logo.width }}"
+              height="{{ settings.logo.height }}"
+              alt="{{ shop.name }}"
+              loading="lazy"
+            >
           {%- else -%}
             <span class="footer-hero__logo-text">{{ shop.name }}</span>
           {%- endif -%}
