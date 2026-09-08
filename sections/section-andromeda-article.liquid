@@ -1,392 +1,877 @@
-{% comment %} Article — Andromeda style — dark hero / light body / dark CTA {% endcomment %}
+{%- doc -%}
+  Template d'article "Journal" — refonte éditoriale : barre de lecture
+  persistante, titre en grille (colonne méta + titre), image plein-cadre,
+  corps de texte avec sections numérotées, modules optionnels (citation,
+  chiffres clés, comparatif, encart produit) ajoutables en blocs, tags,
+  article suivant. Ne touche pas le header/footer du thème — la barre de
+  lecture est un second bandeau sticky qui se cale sous le header réel via
+  --header-height.
+{%- enddoc -%}
 
-<!-- Barre de lecture -->
-<div class="aa__progress-bar" id="aa-progress" aria-hidden="true"></div>
+{%- liquid
+  assign is_en = false
+  if request.locale.iso_code == 'en'
+    assign is_en = true
+  endif
 
-<!-- Scroll to top -->
-<button class="aa__scroll-top" id="aa-scroll-top" aria-label="Retour en haut" hidden>
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
-</button>
+  assign save_label = 'Enregistrer'
+  assign share_label = 'Partager'
+  assign author_name = "L'équipe Andromeda Paris"
+  assign author_bio = 'Spécialistes du sommeil et de la soie de mûrier'
+  assign view_label = 'Découvrir'
+  assign next_label = 'Article suivant'
+  assign previous_label = 'Puis'
+  if is_en
+    assign save_label = 'Save'
+    assign share_label = 'Share'
+    assign author_name = 'The Andromeda Paris team'
+    assign author_bio = 'Sleep and mulberry silk specialists'
+    assign view_label = 'Discover'
+    assign next_label = 'Next article'
+    assign previous_label = 'Then'
+  endif
 
-<div class="aa" id="aa">
+  assign word_count = article.content | strip_html | split: ' ' | size
+  assign read_time = word_count | divided_by: 200 | plus: 1
+  assign eyebrow = article.tags.first | default: blog.title
+-%}
 
-  <!-- ── HERO (dark) ──────────────────────────────────────────────────── -->
-  <header class="aa__hero">
-    <div class="aa__hero-bg" aria-hidden="true">
-      <div class="aa__stars aa__stars--1"></div>
-      <div class="aa__stars aa__stars--2"></div>
-    </div>
+<div class="ae" id="ae-{{ section.id }}" style="--ae-accent: #B06A47; --ae-dark: #191A2E; --ae-heading: #14161F; --ae-muted: #6E6A63; --ae-body: #3A3A42;">
 
-    <div class="aa__hero-inner">
-      {%- render 'breadcrumbs', color: 'light' -%}
-      <a href="{{ blog.url }}" class="aa__back">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <path d="M9 3L4 7L9 11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        {{ blog.title }}
+  <!-- ── Barre de lecture persistante ─────────────────────────────────── -->
+  <div class="ae__bar" id="ae-bar-{{ section.id }}">
+    <div class="ae__bar-inner">
+      <a href="{{ routes.root_url }}" class="ae__bar-logo" aria-label="{{ shop.name }}">
+        {%- if settings.logo != blank -%}
+          <img src="{{ settings.logo | image_url }}" width="{{ settings.logo.width }}" height="{{ settings.logo.height }}" alt="{{ shop.name }}">
+        {%- else -%}
+          <span>{{ shop.name }}</span>
+        {%- endif -%}
       </a>
-
-      <div class="aa__meta">
-        <span>
-          <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
-            {{ article.published_at | date: '%d %B %Y' }}
-          </time>
-        </span>
-        {% assign word_count = article.content | strip_html | split: ' ' | size %}
-        {% assign read_time = word_count | divided_by: 200 | plus: 1 %}
-        <span>{{ read_time }} min de lecture</span>
-        {% if article.tags.size > 0 %}
-          {% for tag in article.tags %}
-            <span class="aa__tag">{{ tag }}</span>
-          {% endfor %}
-        {% endif %}
+      <span class="ae__bar-title">{{ article.title }}</span>
+      <div class="ae__bar-actions">
+        <span class="ae__bar-time">{{ read_time }} min</span>
+        <button class="ae__bar-btn" type="button" data-ae-bookmark aria-label="{{ save_label }}" aria-pressed="false">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h8v13l-4-3-4 3z"></path></svg>
+        </button>
+        <button class="ae__bar-btn" type="button" data-ae-share aria-label="{{ share_label }}">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="10" r="2"></circle><circle cx="14" cy="5.5" r="2"></circle><circle cx="14" cy="14.5" r="2"></circle><path d="M7.8 9l4.4-2.4"></path><path d="M7.8 11l4.4 2.4"></path></svg>
+        </button>
       </div>
+    </div>
+    <div class="ae__bar-track" aria-hidden="true"><div class="ae__bar-fill" id="ae-fill-{{ section.id }}"></div></div>
+  </div>
 
-      <h1 class="aa__title">{{ article.title }}</h1>
-
-      {% if article.excerpt != blank %}
-        <p class="aa__excerpt">{{ article.excerpt | strip_html }}</p>
-      {% endif %}
-
-      <div class="aa__author">
-        <span class="aa__author-avatar" aria-hidden="true">A</span>
-        <div>
-          <span class="aa__author-name">L'équipe Andromeda Paris</span>
-          <span class="aa__author-bio">Spécialistes du sommeil &amp; de la soie de mûrier</span>
+  <!-- ── Titre ─────────────────────────────────────────────────────────── -->
+  <div class="section ae__title-section">
+    <div class="ae__grid">
+      <div class="ae__meta-col">
+        <span class="ae__eyebrow">{{ eyebrow }}</span>
+        <span class="ae__meta-line">{{ article.published_at | date: '%-d %B %Y' }}</span>
+        <span class="ae__meta-line">{{ read_time }} min de lecture</span>
+      </div>
+      <div class="ae__title-col">
+        <h1 class="ae__title">{{ article.title }}</h1>
+        {%- if article.excerpt != blank -%}
+          <p class="ae__excerpt">{{ article.excerpt | strip_html }}</p>
+        {%- endif -%}
+        <div class="ae__byline">
+          <span class="ae__byline-avatar" aria-hidden="true">A</span>
+          <span class="ae__byline-text">
+            <span class="ae__byline-name">{{ author_name }}</span>
+            <span class="ae__byline-bio">{{ author_bio }}</span>
+          </span>
         </div>
       </div>
     </div>
-  </header>
+  </div>
 
-  <!-- ── BODY (light) ─────────────────────────────────────────────────── -->
-  <div class="aa__body">
+  <!-- ── Image plein cadre ─────────────────────────────────────────────── -->
+  {%- if article.image -%}
+    <div class="ae__hero-img-wrap">
+      {{
+        article.image
+        | image_url: width: 2400
+        | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          sizes: '100vw',
+          widths: '750,1100,1500,2000,2400',
+          class: 'ae__hero-img',
+          alt: article.image.alt | default: article.title
+      }}
+    </div>
+  {%- endif -%}
 
-    {% if article.image %}
-      <div class="aa__img-wrap">
-        <img
-          src="{{ article.image | image_url: width: 1400 }}"
-          alt="{{ article.image.alt | default: article.title | escape }}"
-          class="aa__img"
-          loading="eager"
-          width="{{ article.image.width }}"
-          height="{{ article.image.height }}"
-        >
-      </div>
-    {% endif %}
-
-    <!-- Ornement séparateur -->
-    <div class="aa__ornament" aria-hidden="true">
-      <span class="aa__ornament-line"></span>
-      <span class="aa__ornament-star">✦</span>
-      <span class="aa__ornament-line"></span>
+  <!-- ── Corps ─────────────────────────────────────────────────────────── -->
+  <div class="section ae__body-section">
+    <div class="ae__grid">
+      <div class="ae__body-margin" aria-hidden="true"></div>
+      <div class="ae__content rte">{{ article.content }}</div>
     </div>
 
-    <div class="aa__content rte">
-      {{ article.content }}
-    </div>
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
 
-    {% if article.tags.size > 0 %}
-      <div class="aa__tags-footer">
-        <span class="aa__tags-label">Tags</span>
-        <div class="aa__tags-list">
-          {% for tag in article.tags %}
-            <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="aa__tag-link">{{ tag }}</a>
-          {% endfor %}
+        {%- when 'pull_quote' -%}
+          <div class="ae__grid ae__module" {{ block.shopify_attributes }}>
+            <div></div>
+            <blockquote class="ae__pull-quote">{{ block.settings.quote }}</blockquote>
+          </div>
+
+        {%- when 'stat_row' -%}
+          <div class="ae__grid ae__module" {{ block.shopify_attributes }}>
+            <div></div>
+            <div class="ae__stats">
+              {%- for i in (1..3) -%}
+                {%- assign stat_value_key = 'stat_' | append: i | append: '_value' -%}
+                {%- assign stat_label_key = 'stat_' | append: i | append: '_label' -%}
+                {%- assign stat_value = block.settings[stat_value_key] -%}
+                {%- assign stat_label = block.settings[stat_label_key] -%}
+                {%- if stat_value != blank -%}
+                  <div class="ae__stat">
+                    <span class="ae__stat-value">{{ stat_value }}</span>
+                    <span class="ae__stat-label">{{ stat_label }}</span>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+
+        {%- when 'comparison' -%}
+          <div class="ae__grid ae__module" {{ block.shopify_attributes }}>
+            <div class="ae__comparison-label">
+              <span class="ae__eyebrow">{{ block.settings.label | default: 'En un regard' }}</span>
+            </div>
+            <div class="ae__comparison">
+              <div class="ae__comparison-row ae__comparison-row--head">
+                <span>{{ block.settings.criteria_label | default: 'Critère' }}</span>
+                <span>{{ block.settings.col_1_title }}</span>
+                <span>{{ block.settings.col_2_title }}</span>
+              </div>
+              {%- for i in (1..5) -%}
+                {%- assign row_label_key = 'row_' | append: i | append: '_label' -%}
+                {%- assign row_1_key = 'row_' | append: i | append: '_col1' -%}
+                {%- assign row_2_key = 'row_' | append: i | append: '_col2' -%}
+                {%- assign row_label = block.settings[row_label_key] -%}
+                {%- if row_label != blank -%}
+                  <div class="ae__comparison-row">
+                    <span class="ae__comparison-criteria">{{ row_label }}</span>
+                    <span class="ae__comparison-value">{{ block.settings[row_1_key] }}</span>
+                    <span class="ae__comparison-value">{{ block.settings[row_2_key] }}</span>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+
+        {%- when 'product_insert' -%}
+          {%- assign insert_product = block.settings.product -%}
+          {%- if insert_product != blank -%}
+            <div class="ae__grid ae__module" {{ block.shopify_attributes }}>
+              <div class="ae__comparison-label">
+                <span class="ae__eyebrow">{{ block.settings.label | default: 'Le choix Andromeda' }}</span>
+              </div>
+              <a href="{{ insert_product.url }}" class="ae__product-insert">
+                {%- if insert_product.featured_image -%}
+                  {{ insert_product.featured_image | image_url: width: 500 | image_tag: class: 'ae__product-insert-img', loading: 'lazy', alt: insert_product.title }}
+                {%- endif -%}
+                <span class="ae__product-insert-body">
+                  <span class="ae__product-insert-title">{{ insert_product.title }}</span>
+                  {%- if insert_product.selected_or_first_available_variant.title != 'Default Title' -%}
+                    <span class="ae__product-insert-variant">{{ insert_product.selected_or_first_available_variant.title }}</span>
+                  {%- endif -%}
+                </span>
+                <span class="ae__product-insert-cta">
+                  <span class="ae__product-insert-price">{{ insert_product.price | money }}</span>
+                  <span class="ae__product-insert-btn">{{ view_label }}</span>
+                </span>
+              </a>
+            </div>
+          {%- endif -%}
+      {%- endcase -%}
+    {%- endfor -%}
+
+    {%- if article.tags.size > 0 -%}
+      <div class="ae__grid">
+        <div></div>
+        <div class="ae__tags">
+          <span class="ae__tags-label">Tags</span>
+          {%- for tag in article.tags -%}
+            <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="ae__tag">{{ tag }}</a>
+          {%- endfor -%}
         </div>
       </div>
-    {% endif %}
-
+    {%- endif -%}
   </div>
 
-  <!-- ── CTA (dark) ───────────────────────────────────────────────────── -->
-  <div class="aa__cta">
-    <div class="aa__cta-bg" aria-hidden="true">
-      <div class="aa__stars aa__stars--1"></div>
-      <div class="aa__stars aa__stars--2"></div>
+  <!-- ── Article suivant ───────────────────────────────────────────────── -->
+  {%- if blog.next_article or blog.previous_article -%}
+    <div class="section ae__next-section">
+      {%- if blog.next_article -%}
+        <a href="{{ blog.next_article.url }}" class="ae__next-row">
+          <span class="ae__eyebrow">{{ next_label }}</span>
+          <span class="ae__next-body">
+            <span class="ae__next-title">{{ blog.next_article.title }}</span>
+            <span class="ae__next-meta">{{ blog.next_article.published_at | date: '%-d %b %Y' }}</span>
+          </span>
+          {%- if blog.next_article.image -%}
+            {{ blog.next_article.image | image_url: width: 800 | image_tag: class: 'ae__next-img', loading: 'lazy', alt: blog.next_article.title }}
+          {%- endif -%}
+        </a>
+      {%- endif -%}
+      {%- if blog.previous_article -%}
+        <a href="{{ blog.previous_article.url }}" class="ae__next-row">
+          <span class="ae__meta-line">{{ previous_label }}</span>
+          <span class="ae__next-body">
+            <span class="ae__next-title">{{ blog.previous_article.title }}</span>
+            <span class="ae__next-meta">{{ blog.previous_article.published_at | date: '%-d %b %Y' }}</span>
+          </span>
+          {%- if blog.previous_article.image -%}
+            {{ blog.previous_article.image | image_url: width: 800 | image_tag: class: 'ae__next-img', loading: 'lazy', alt: blog.previous_article.title }}
+          {%- endif -%}
+        </a>
+      {%- endif -%}
     </div>
-    <div class="aa__cta-inner">
-      <p class="aa__cta-label">Journal Andromeda</p>
-      <a href="{{ blog.url }}" class="aa__cta-btn">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <path d="M9 3L4 7L9 11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Retour au journal
-      </a>
-    </div>
-  </div>
+  {%- endif -%}
 
 </div>
 
-<style>
-  @font-face {
-    font-family: 'GC Amelie Promised';
-    src: url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/GC_Amelie_Promised.woff2?v=1786960246') format('woff2');
-    font-weight: normal; font-style: normal; font-display: swap;
+{% stylesheet %}
+  .ae {
+    background: #ffffff;
   }
 
-  /* ── Stars ─────────────────────────────────────────────── */
-  .aa__stars { position: absolute; inset: 0; }
-  .aa__stars--1 {
-    background-image:
-      radial-gradient(1.2px 1.2px at 8% 15%, rgba(255,255,255,0.65) 0%, transparent 100%),
-      radial-gradient(1px 1px at 22% 72%, rgba(255,255,255,0.5) 0%, transparent 100%),
-      radial-gradient(1.5px 1.5px at 38% 28%, rgba(255,255,255,0.7) 0%, transparent 100%),
-      radial-gradient(1px 1px at 52% 85%, rgba(255,255,255,0.45) 0%, transparent 100%),
-      radial-gradient(1.3px 1.3px at 67% 10%, rgba(255,255,255,0.6) 0%, transparent 100%),
-      radial-gradient(0.9px 0.9px at 78% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
-      radial-gradient(1.4px 1.4px at 91% 38%, rgba(255,255,255,0.7) 0%, transparent 100%),
-      radial-gradient(1px 1px at 14% 90%, rgba(255,255,255,0.4) 0%, transparent 100%),
-      radial-gradient(1.2px 1.2px at 45% 50%, rgba(255,255,255,0.55) 0%, transparent 100%),
-      radial-gradient(1.1px 1.1px at 85% 80%, rgba(255,255,255,0.6) 0%, transparent 100%),
-      radial-gradient(1.4px 1.4px at 55% 5%, rgba(255,255,255,0.65) 0%, transparent 100%),
-      radial-gradient(1.2px 1.2px at 95% 20%, rgba(255,255,255,0.6) 0%, transparent 100%);
-    animation: aa-drift-1 35s ease-in-out infinite;
-  }
-  .aa__stars--2 {
-    background-image:
-      radial-gradient(1px 1px at 12% 25%, rgba(255,255,255,0.4) 0%, transparent 100%),
-      radial-gradient(1.3px 1.3px at 35% 60%, rgba(255,255,255,0.55) 0%, transparent 100%),
-      radial-gradient(0.9px 0.9px at 58% 18%, rgba(255,255,255,0.45) 0%, transparent 100%),
-      radial-gradient(1.2px 1.2px at 74% 42%, rgba(255,255,255,0.6) 0%, transparent 100%),
-      radial-gradient(0.8px 0.8px at 48% 75%, rgba(255,255,255,0.4) 0%, transparent 100%);
-    animation: aa-drift-2 50s ease-in-out infinite; opacity: 0.7;
-  }
-  @keyframes aa-drift-1 {
-    0%, 100% { transform: translate(0,0); } 33% { transform: translate(-10px,-7px); } 66% { transform: translate(7px,-12px); }
-  }
-  @keyframes aa-drift-2 {
-    0%, 100% { transform: translate(0,0); } 40% { transform: translate(9px,-5px); } 70% { transform: translate(-7px,9px); }
+  /* ── Barre de lecture ──────────────────────────────────────────── */
+  .ae__bar {
+    position: sticky;
+    top: var(--header-height, 0px);
+    z-index: 5;
+    background: #ffffff;
+    border-bottom: 1px solid rgba(20, 22, 31, 0.12);
   }
 
-  /* ── Progress bar ───────────────────────────────────────── */
-  .aa__progress-bar {
-    position: fixed; top: 0; left: 0;
-    height: 2px; width: 0%;
-    background: linear-gradient(to right, #C8B89A, #B8975A);
-    z-index: 9999; transition: width 0.1s linear;
+  .ae__bar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 56px;
+    padding-inline: 24px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 24px;
+    align-items: center;
   }
 
-  /* ── Scroll to top ──────────────────────────────────────── */
-  .aa__scroll-top {
-    position: fixed; bottom: 32px; right: 24px;
-    width: 40px; height: 40px; border-radius: 50%;
-    background: #1C1A18; border: 1px solid rgba(200,184,154,0.3);
-    color: #C8B89A; display: flex; align-items: center; justify-content: center;
-    cursor: pointer; z-index: 999;
-    opacity: 0; transform: translateY(12px);
-    transition: opacity 0.3s, transform 0.3s;
-  }
-  .aa__scroll-top.is-visible { opacity: 1; transform: translateY(0); }
-  .aa__scroll-top[hidden] { display: none; }
-
-  /* ── Hero ──────────────────────────────────────────────── */
-  .aa__hero {
-    position: relative; background: #191A2E; overflow: hidden;
-    padding-bottom: 80px;
-  }
-  .aa__hero-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-  .aa__hero > *:not(.aa__hero-bg) { position: relative; z-index: 1; }
-  .aa__hero-inner { max-width: 700px; margin: 0 auto; padding: 48px 24px 0; text-align: center; }
-  .aa__hero-inner .andromeda-bc { margin-block-end: 0; }
-
-  .aa__back {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 10px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase;
-    color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s;
-    margin-bottom: 40px;
-  }
-  .aa__back:hover { color: #C8B89A; }
-
-  .aa__meta {
-    display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 16px;
-    font-size: 11px; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase;
-    color: rgba(255,255,255,0.35); margin-bottom: 20px;
-  }
-  .aa__meta span { display: flex; align-items: center; gap: 8px; }
-  .aa__meta span::before {
-    content: ''; display: inline-block; width: 4px; height: 4px;
-    border-radius: 50%; background: #C8B89A; opacity: 0.6;
-  }
-  .aa__tag {
-    color: #C8B89A; border: 1px solid rgba(200,184,154,0.3);
-    border-radius: 20px; padding: 2px 10px; font-size: 9px;
-  }
-  .aa__tag::before { display: none !important; }
-
-  #aa .aa__title, .aa__title {
-    font-family: 'GC Amelie Promised', serif !important;
-    font-size: clamp(32px, 5vw, 56px) !important;
-    font-weight: normal !important; color: #FFFFFF !important;
-    word-spacing: -0.22em !important; letter-spacing: 0 !important;
-    line-height: 1.1 !important; margin-bottom: 20px;
-  }
-  .aa__excerpt {
-    font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.5);
-    line-height: 1.75; max-width: 500px; margin: 0 auto 28px;
-  }
-  .aa__author {
-    display: inline-flex; align-items: center; gap: 10px;
-    margin-top: 4px;
-  }
-  .aa__author-avatar {
-    width: 32px; height: 32px; border-radius: 50%;
-    background: rgba(200,184,154,0.15); border: 1px solid rgba(200,184,154,0.3);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 600; color: #C8B89A;
-    flex-shrink: 0;
-  }
-  .aa__author-name {
-    display: block; font-size: 11px; font-weight: 500;
-    color: rgba(255,255,255,0.7); letter-spacing: 0.04em;
-  }
-  .aa__author-bio {
-    display: block; font-size: 10px; font-weight: 300;
-    color: rgba(255,255,255,0.3); letter-spacing: 0.04em; margin-top: 2px;
+  .ae__bar-logo {
+    display: flex;
+    align-items: center;
+    height: 18px;
   }
 
-  /* ── Body ──────────────────────────────────────────────── */
-  .aa__body {
-    background: #FAF7F2; color: #3A3733;
-    max-width: 720px; margin: 0 auto;
-    padding: 56px 24px 72px;
-  }
-
-  .aa__img-wrap {
-    border-radius: 16px; overflow: hidden; margin-bottom: 0; aspect-ratio: 16/9;
-  }
-  .aa__img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-  /* ── Ornement ───────────────────────────────────────────── */
-  .aa__ornament {
-    display: flex; align-items: center; justify-content: center;
-    gap: 16px; margin: 40px 0;
-  }
-  .aa__ornament-line {
-    flex: 1; height: 1px;
-    background: linear-gradient(to right, transparent, rgba(184,151,90,0.3), transparent);
-  }
-  .aa__ornament-star { font-size: 10px; color: #B8975A; opacity: 0.7; }
-
-  /* ── RTE content ────────────────────────────────────────── */
-  .aa__content.rte {
-    font-size: 15px; font-weight: 300; line-height: 1.85; color: #3A3733;
-    counter-reset: aa-h2;
-  }
-  .aa__content.rte > p:first-of-type {
-    font-size: 18px; color: #3A3733; line-height: 1.75;
-  }
-  .aa__content.rte h2 {
-    color: #1C1A18; font-weight: 500; margin-top: 48px; margin-bottom: 16px; line-height: 1.3;
-    font-size: 22px; counter-increment: aa-h2;
-  }
-  .aa__content.rte h2::before {
-    content: counter(aa-h2, decimal-leading-zero);
+  .ae__bar-logo img {
+    height: 18px;
+    width: auto;
     display: block;
-    font-size: 10px; font-weight: 500; letter-spacing: 0.25em;
-    color: #B8975A; margin-bottom: 8px; font-family: inherit;
   }
-  .aa__content.rte h3,
-  .aa__content.rte h4 {
-    color: #1C1A18; font-weight: 500; margin-top: 48px; margin-bottom: 16px; line-height: 1.3;
+
+  .ae__bar-title {
+    font-size: 14px;
+    color: var(--ae-heading);
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  .aa__content.rte h3 {
-    font-size: 16px;
-    display: flex; align-items: flex-start; gap: 10px;
-    padding-top: 28px;
-    border-top: 1px solid rgba(184,151,90,0.12);
-    margin-top: 0;
+
+  .ae__bar-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--ae-heading);
   }
-  .aa__content.rte h3::before {
-    content: '✦';
+
+  .ae__bar-time {
+    font-size: 13px;
+    color: var(--ae-muted);
+    white-space: nowrap;
+  }
+
+  .ae__bar-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--ae-heading);
+    cursor: pointer;
+    display: flex;
+    transition: color var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out);
+  }
+
+  .ae__bar-btn:hover,
+  .ae__bar-btn[aria-pressed='true'] {
+    color: var(--ae-accent);
+  }
+
+  .ae__bar-track {
+    height: 2px;
+    background: rgba(20, 22, 31, 0.08);
+  }
+
+  .ae__bar-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--ae-accent);
+    transition: width 0.1s linear;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ae__bar-title {
+      display: none;
+    }
+  }
+
+  /* ── Grille commune ────────────────────────────────────────────── */
+  .ae__grid {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 48px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ae__grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+
+  .ae__eyebrow {
+    font-size: 14px;
+    color: var(--ae-accent);
+  }
+
+  .ae__meta-line {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ae-muted);
+  }
+
+  /* ── Titre ─────────────────────────────────────────────────────── */
+  .ae__title-section {
+    padding-block: 96px 48px;
+  }
+
+  .ae__meta-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 14px;
+  }
+
+  .ae__title-col {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .ae__title {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: clamp(32px, 5vw, 64px);
+    line-height: 1.1;
+    color: var(--ae-heading);
+    margin: 0;
+    max-width: 900px;
+    text-wrap: pretty;
+  }
+
+  .ae__excerpt {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--ae-muted);
+    margin: 0;
+    max-width: 640px;
+    text-wrap: pretty;
+  }
+
+  .ae__byline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(20, 22, 31, 0.14);
+    max-width: 640px;
+  }
+
+  .ae__byline-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid rgba(20, 22, 31, 0.2);
+    color: var(--ae-heading);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: 18px;
     flex-shrink: 0;
-    font-size: 8px; color: #B8975A;
-    margin-top: 0.35em;
-  }
-  .aa__content.rte h3 + p {
-    padding-left: 18px;
-  }
-  .aa__content.rte h4 { font-size: 15px; }
-  .aa__content.rte p { margin-bottom: 22px; }
-  .aa__content.rte a { color: #B8975A; text-decoration: underline; text-underline-offset: 3px; }
-  .aa__content.rte a:hover { color: #1C1A18; }
-  .aa__content.rte img { width: 100%; border-radius: 12px; margin: 32px 0; display: block; }
-  .aa__content.rte blockquote {
-    border-left: 2px solid #B8975A; padding-left: 20px; margin: 32px 0;
-    font-style: italic; color: #8A837A;
-  }
-  .aa__content.rte ul,
-  .aa__content.rte ol { padding-left: 20px; margin-bottom: 22px; }
-  .aa__content.rte li { margin-bottom: 8px; }
-  .aa__content.rte ul li::marker { color: #B8975A; }
-  .aa__content.rte hr {
-    border: none; border-top: 1px solid rgba(184,151,90,0.2); margin: 40px 0;
   }
 
-  /* Tags footer */
-  .aa__tags-footer {
-    margin-top: 56px; padding-top: 28px;
-    border-top: 1px solid rgba(184,151,90,0.15);
-    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  .ae__byline-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
   }
-  .aa__tags-label {
-    font-size: 10px; font-weight: 400; letter-spacing: 0.2em;
-    text-transform: uppercase; color: #AAA49E;
-  }
-  .aa__tags-list { display: flex; flex-wrap: wrap; gap: 8px; }
-  .aa__tag-link {
-    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-    color: #AAA49E; text-decoration: none;
-    border: 1px solid rgba(184,151,90,0.2); border-radius: 20px; padding: 4px 12px;
-    transition: color 0.2s, border-color 0.2s;
-  }
-  .aa__tag-link:hover { color: #B8975A; border-color: rgba(184,151,90,0.5); }
 
-  /* ── CTA ───────────────────────────────────────────────── */
-  .aa__cta {
-    position: relative; background: #191A2E; overflow: hidden;
-    text-align: center; padding: 80px 24px;
+  .ae__byline-name {
+    font-size: 16px;
+    color: var(--ae-heading);
   }
-  .aa__cta-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-  .aa__cta > *:not(.aa__cta-bg) { position: relative; z-index: 1; }
-  .aa__cta-inner { max-width: 480px; margin: 0 auto; }
 
-  .aa__cta-label {
-    font-size: 10px; font-weight: 400; letter-spacing: 0.4em; text-transform: uppercase;
-    color: #C8B89A; margin-bottom: 24px;
+  .ae__byline-bio {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--ae-muted);
   }
-  .aa__cta-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 11px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase;
-    color: #C8B89A; text-decoration: none;
-    border: 1px solid rgba(200,184,154,0.3); padding: 14px 28px; border-radius: 40px;
-    transition: background 0.2s, gap 0.2s;
-  }
-  .aa__cta-btn:hover { background: rgba(200,184,154,0.08); gap: 12px; }
 
-  /* ── Responsive ────────────────────────────────────────── */
-  @media (max-width: 640px) {
-    .aa__hero-inner { padding-top: 36px; }
-    .aa__body { padding: 40px 20px 56px; }
+  /* ── Image plein cadre ─────────────────────────────────────────── */
+  .ae__hero-img-wrap {
+    width: 100%;
   }
-</style>
+
+  .ae__hero-img {
+    width: 100%;
+    aspect-ratio: 21 / 9;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ae__hero-img {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  /* ── Corps ─────────────────────────────────────────────────────── */
+  .ae__body-section {
+    padding-block: 96px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .ae__content.rte {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--ae-body);
+    max-width: 640px;
+    counter-reset: ae-h2;
+  }
+
+  .ae__content.rte > p:first-of-type {
+    font-size: 20px;
+    color: var(--ae-heading);
+  }
+
+  .ae__content.rte h2 {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: 36px;
+    line-height: 1.1;
+    color: var(--ae-heading);
+    font-weight: normal;
+    margin: 48px 0 16px;
+    counter-increment: ae-h2;
+  }
+
+  .ae__content.rte h2::before {
+    content: counter(ae-h2, decimal-leading-zero);
+    display: block;
+    font-family: var(--font-body--family, sans-serif);
+    font-size: 14px;
+    color: var(--ae-accent);
+    margin-bottom: 8px;
+  }
+
+  .ae__content.rte h3,
+  .ae__content.rte h4 {
+    color: var(--ae-heading);
+    font-weight: 500;
+    margin: 32px 0 16px;
+    line-height: 1.3;
+  }
+
+  .ae__content.rte p {
+    margin: 0 0 22px;
+  }
+
+  .ae__content.rte a {
+    color: var(--ae-accent);
+    text-decoration-color: rgba(176, 106, 71, 0.35);
+    text-underline-offset: 3px;
+  }
+
+  .ae__content.rte a:hover {
+    color: var(--ae-heading);
+  }
+
+  .ae__content.rte img {
+    width: 100%;
+    border-radius: 8px;
+    margin: 32px 0;
+    display: block;
+  }
+
+  .ae__content.rte blockquote {
+    border-left: 2px solid var(--ae-accent);
+    padding-left: 20px;
+    margin: 32px 0;
+    font-style: italic;
+    color: var(--ae-muted);
+  }
+
+  .ae__content.rte ul,
+  .ae__content.rte ol {
+    padding-left: 20px;
+    margin: 0 0 22px;
+  }
+
+  .ae__content.rte li {
+    margin-bottom: 8px;
+  }
+
+  .ae__content.rte hr {
+    border: none;
+    border-top: 1px solid rgba(20, 22, 31, 0.12);
+    margin: 40px 0;
+  }
+
+  /* ── Modules optionnels ────────────────────────────────────────── */
+  .ae__module {
+    padding-top: 32px;
+  }
+
+  .ae__pull-quote {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: 36px;
+    line-height: 1.1;
+    color: var(--ae-heading);
+    margin: 0;
+    max-width: 720px;
+    text-wrap: pretty;
+    padding-left: 32px;
+    border-left: 2px solid var(--ae-accent);
+  }
+
+  .ae__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid rgba(20, 22, 31, 0.2);
+  }
+
+  .ae__stat {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-right: 1px solid rgba(20, 22, 31, 0.12);
+  }
+
+  .ae__stat:first-child {
+    padding-left: 0;
+  }
+
+  .ae__stat:last-child {
+    padding-right: 0;
+    border-right: none;
+  }
+
+  .ae__stat-value {
+    font-size: 64px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--ae-heading);
+  }
+
+  .ae__stat-label {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ae-muted);
+  }
+
+  @media screen and (max-width: 749px) {
+    .ae__stats {
+      grid-template-columns: 1fr;
+    }
+
+    .ae__stat {
+      border-right: none;
+      border-bottom: 1px solid rgba(20, 22, 31, 0.12);
+      padding-inline: 0;
+    }
+
+    .ae__stat:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .ae__comparison-label {
+    padding-top: 10px;
+  }
+
+  .ae__comparison {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ae__comparison-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr;
+    gap: 32px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(20, 22, 31, 0.12);
+  }
+
+  @media screen and (max-width: 749px) {
+    .ae__comparison-row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+
+  .ae__comparison-row--head {
+    border-top: 1px solid rgba(20, 22, 31, 0.2);
+    border-bottom: 1px solid rgba(20, 22, 31, 0.2);
+    font-size: 16px;
+    color: var(--ae-heading);
+  }
+
+  .ae__comparison-row--head span:first-child {
+    font-size: 14px;
+    color: var(--ae-muted);
+  }
+
+  .ae__comparison-criteria {
+    font-size: 16px;
+    color: var(--ae-muted);
+  }
+
+  .ae__comparison-value {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--ae-body);
+  }
+
+  .ae__product-insert {
+    display: grid;
+    grid-template-columns: 140px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 32px 0;
+    border-top: 1px solid rgba(20, 22, 31, 0.2);
+    border-bottom: 1px solid rgba(20, 22, 31, 0.2);
+    text-decoration: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ae__product-insert {
+      grid-template-columns: 100px 1fr;
+    }
+  }
+
+  .ae__product-insert-img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: contain;
+    border-radius: 4px;
+    display: block;
+  }
+
+  .ae__product-insert-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ae__product-insert-title {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: 24px;
+    line-height: 1.1;
+    color: var(--ae-heading);
+  }
+
+  .ae__product-insert-variant {
+    font-size: 14px;
+    color: var(--ae-muted);
+  }
+
+  .ae__product-insert-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-end;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ae__product-insert-cta {
+      grid-column: 1 / -1;
+      align-items: flex-start;
+    }
+  }
+
+  .ae__product-insert-price {
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--ae-heading);
+  }
+
+  .ae__product-insert-btn {
+    background: var(--ae-dark);
+    color: #ffffff;
+    border-radius: 4px;
+    padding: 12px 24px;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    transition: opacity var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out);
+  }
+
+  .ae__product-insert:hover .ae__product-insert-btn {
+    opacity: 0.85;
+  }
+
+  /* ── Tags ──────────────────────────────────────────────────────── */
+  .ae__tags {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-top: 24px;
+    border-top: 1px solid rgba(20, 22, 31, 0.12);
+    max-width: 640px;
+  }
+
+  .ae__tags-label {
+    font-size: 14px;
+    color: var(--ae-muted);
+    margin-right: 8px;
+  }
+
+  .ae__tag {
+    font-size: 14px;
+    color: var(--ae-accent);
+    background: rgba(176, 106, 71, 0.1);
+    border-radius: 2px;
+    padding: 4px 8px;
+    text-decoration: none;
+  }
+
+  /* ── Article suivant ───────────────────────────────────────────── */
+  .ae__next-section {
+    padding-block: 96px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ae__next-row {
+    display: grid;
+    grid-template-columns: 160px 1fr 280px;
+    gap: 48px;
+    align-items: center;
+    padding: 32px 0;
+    border-bottom: 1px solid rgba(20, 22, 31, 0.14);
+    text-decoration: none;
+  }
+
+  .ae__next-row:first-child {
+    border-top: 1px solid rgba(20, 22, 31, 0.2);
+  }
+
+  @media screen and (max-width: 749px) {
+    .ae__next-row {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+
+  .ae__next-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ae__next-title {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: 36px;
+    line-height: 1.1;
+    color: var(--ae-heading);
+  }
+
+  .ae__next-meta {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--ae-muted);
+  }
+
+  .ae__next-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ae__next-img {
+      display: none;
+    }
+  }
+{% endstylesheet %}
 
 <script>
-(function() {
-  var progressBar = document.getElementById('aa-progress');
-  var scrollTop = document.getElementById('aa-scroll-top');
-  if (progressBar || scrollTop) {
-    window.addEventListener('scroll', function() {
+(function () {
+  var section = document.getElementById('ae-{{ section.id }}');
+  if (!section) return;
+  var fill = document.getElementById('ae-fill-{{ section.id }}');
+  var bookmarkBtn = section.querySelector('[data-ae-bookmark]');
+  var shareBtn = section.querySelector('[data-ae-share]');
+  var storageKey = 'ae-bookmark-{{ article.id }}';
+
+  if (fill) {
+    var onScroll = function () {
       var doc = document.documentElement;
       var scrolled = doc.scrollTop || document.body.scrollTop;
       var total = doc.scrollHeight - doc.clientHeight;
-      if (progressBar) progressBar.style.width = (total > 0 ? (scrolled / total * 100) : 0) + '%';
-      if (scrollTop) scrollTop.classList.toggle('is-visible', scrolled > 400);
-    }, { passive: true });
-    if (scrollTop) {
-      scrollTop.addEventListener('click', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    }
+      fill.style.width = (total > 0 ? (scrolled / total * 100) : 0) + '%';
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  if (bookmarkBtn) {
+    var setBookmarkState = function (on) {
+      bookmarkBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    };
+    try {
+      setBookmarkState(window.localStorage.getItem(storageKey) === '1');
+    } catch (e) {}
+    bookmarkBtn.addEventListener('click', function () {
+      var isOn = bookmarkBtn.getAttribute('aria-pressed') === 'true';
+      setBookmarkState(!isOn);
+      try {
+        if (isOn) window.localStorage.removeItem(storageKey);
+        else window.localStorage.setItem(storageKey, '1');
+      } catch (e) {}
+    });
+  }
+
+  if (shareBtn) {
+    shareBtn.addEventListener('click', function () {
+      var shareData = { title: {{ article.title | json }}, url: window.location.href };
+      if (navigator.share) {
+        navigator.share(shareData).catch(function () {});
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(window.location.href).catch(function () {});
+      }
+    });
   }
 })();
 </script>
@@ -395,6 +880,61 @@
 {
   "name": "Article Andromeda",
   "settings": [],
+  "blocks": [
+    {
+      "type": "pull_quote",
+      "name": "Citation",
+      "settings": [
+        { "type": "richtext", "id": "quote", "label": "Citation" }
+      ]
+    },
+    {
+      "type": "stat_row",
+      "name": "Chiffres clés",
+      "settings": [
+        { "type": "text", "id": "stat_1_value", "label": "Valeur 1", "default": "6A" },
+        { "type": "text", "id": "stat_1_label", "label": "Label 1", "default": "Grade de soie" },
+        { "type": "text", "id": "stat_2_value", "label": "Valeur 2", "default": "22" },
+        { "type": "text", "id": "stat_2_label", "label": "Label 2", "default": "Mommes" },
+        { "type": "text", "id": "stat_3_value", "label": "Valeur 3", "default": "100 %" },
+        { "type": "text", "id": "stat_3_label", "label": "Label 3", "default": "Soie, rembourrage inclus" }
+      ]
+    },
+    {
+      "type": "comparison",
+      "name": "Tableau comparatif",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Étiquette", "default": "En un regard" },
+        { "type": "text", "id": "criteria_label", "label": "Titre colonne critère", "default": "Critère" },
+        { "type": "text", "id": "col_1_title", "label": "Titre colonne 1" },
+        { "type": "text", "id": "col_2_title", "label": "Titre colonne 2" },
+        { "type": "header", "content": "Lignes" },
+        { "type": "text", "id": "row_1_label", "label": "Critère 1" },
+        { "type": "text", "id": "row_1_col1", "label": "Colonne 1" },
+        { "type": "text", "id": "row_1_col2", "label": "Colonne 2" },
+        { "type": "text", "id": "row_2_label", "label": "Critère 2" },
+        { "type": "text", "id": "row_2_col1", "label": "Colonne 1" },
+        { "type": "text", "id": "row_2_col2", "label": "Colonne 2" },
+        { "type": "text", "id": "row_3_label", "label": "Critère 3" },
+        { "type": "text", "id": "row_3_col1", "label": "Colonne 1" },
+        { "type": "text", "id": "row_3_col2", "label": "Colonne 2" },
+        { "type": "text", "id": "row_4_label", "label": "Critère 4" },
+        { "type": "text", "id": "row_4_col1", "label": "Colonne 1" },
+        { "type": "text", "id": "row_4_col2", "label": "Colonne 2" },
+        { "type": "text", "id": "row_5_label", "label": "Critère 5" },
+        { "type": "text", "id": "row_5_col1", "label": "Colonne 1" },
+        { "type": "text", "id": "row_5_col2", "label": "Colonne 2" }
+      ]
+    },
+    {
+      "type": "product_insert",
+      "name": "Encart produit",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Étiquette", "default": "Le choix Andromeda" },
+        { "type": "product", "id": "product", "label": "Produit" }
+      ]
+    }
+  ],
   "presets": [{ "name": "Article Andromeda" }]
 }
 {% endschema %}
