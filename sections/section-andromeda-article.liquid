@@ -36,6 +36,9 @@
   assign eyebrow = article.tags.first | default: blog.title
 -%}
 
+<template id="ae-faq-icon-plus">{{ 'icon-plus.svg' | inline_asset_content }}</template>
+<template id="ae-faq-icon-minus">{{ 'icon-minus.svg' | inline_asset_content }}</template>
+
 <div class="ae" id="ae-{{ section.id }}" style="--ae-accent: #B06A47; --ae-dark: #191A2E; --ae-heading: #14161F; --ae-muted: #6E6A63; --ae-body: #3A3A42;">
 
   <!-- ── Barre de lecture persistante ─────────────────────────────────── -->
@@ -1033,6 +1036,98 @@
       }
     });
   }
+
+  // ── FAQ existantes dans le corps de l'article → accordéon ──────────
+  // Le contenu de nombreux articles contient déjà de vraies questions/
+  // réponses écrites à la main dans le RTE, sous des balisages qui
+  // varient selon l'article (div.ap-faq-item, ou simplement un <h2>
+  // "Questions fréquentes" suivi de <h3>/<p>). On les repère et on les
+  // transforme au chargement en accordéon (même habillage que la page
+  // FAQ), sans toucher au contenu stocké côté Shopify.
+  var plusTpl = document.getElementById('ae-faq-icon-plus');
+  var minusTpl = document.getElementById('ae-faq-icon-minus');
+  var plusSvg = plusTpl ? plusTpl.innerHTML : '';
+  var minusSvg = minusTpl ? minusTpl.innerHTML : '';
+  var faqCounter = 0;
+
+  function buildFaqItem(questionHtml, answerHtml) {
+    faqCounter += 1;
+    var num = String(faqCounter).padStart(3, '0');
+    var wrap = document.createElement('accordion-custom');
+    wrap.className = 'ae__faq-item-wrap';
+    wrap.innerHTML =
+      '<details class="ae__faq-item">' +
+        '<summary class="ae__faq-summary">' +
+          '<span class="ae__faq-number">' + num + '</span>' +
+          '<span class="ae__faq-question">' + questionHtml + '</span>' +
+          '<span class="ae__faq-icon">' +
+            '<span class="ae__faq-icon-face ae__faq-icon-face--plus">' + plusSvg + '</span>' +
+            '<span class="ae__faq-icon-face ae__faq-icon-face--minus">' + minusSvg + '</span>' +
+          '</span>' +
+        '</summary>' +
+        '<div class="ae__faq-answer details-content">' + answerHtml + '</div>' +
+      '</details>';
+    return wrap;
+  }
+
+  function enhanceClassBasedFaq() {
+    var containers = section.querySelectorAll('.ap-faq, .ag__faq');
+    containers.forEach(function (container) {
+      var items = container.querySelectorAll(':scope > div');
+      var list = document.createElement('div');
+      list.className = 'ae__faq-list';
+      var found = false;
+      items.forEach(function (item) {
+        var q = item.querySelector('.ap-faq-q, .ag__faq-q');
+        if (!q) return;
+        found = true;
+        var answerHtml = '';
+        Array.prototype.forEach.call(item.children, function (child) {
+          if (child === q) return;
+          answerHtml += child.outerHTML;
+        });
+        list.appendChild(buildFaqItem(q.innerHTML, answerHtml));
+      });
+      if (found) container.replaceWith(list);
+    });
+  }
+
+  function enhanceHeadingBasedFaq() {
+    var content = section.querySelector('.ae__content.rte');
+    if (!content) return;
+    var headings = Array.prototype.filter.call(content.querySelectorAll('h2'), function (h2) {
+      return /question/i.test(h2.textContent);
+    });
+    headings.forEach(function (h2) {
+      var pairs = [];
+      var node = h2.nextElementSibling;
+      while (node && node.tagName === 'H3') {
+        var answerParts = [];
+        var next = node.nextElementSibling;
+        while (next && next.tagName !== 'H3' && next.tagName !== 'H2' && next.tagName !== 'HR') {
+          answerParts.push(next);
+          next = next.nextElementSibling;
+        }
+        pairs.push({ q: node, answerParts: answerParts });
+        node = next;
+      }
+      if (!pairs.length) return;
+      var list = document.createElement('div');
+      list.className = 'ae__faq-list';
+      pairs.forEach(function (pair) {
+        var answerHtml = pair.answerParts.map(function (el) { return el.outerHTML; }).join('');
+        list.appendChild(buildFaqItem(pair.q.innerHTML, answerHtml));
+      });
+      pairs.forEach(function (pair) {
+        pair.answerParts.forEach(function (el) { el.remove(); });
+        pair.q.remove();
+      });
+      h2.insertAdjacentElement('afterend', list);
+    });
+  }
+
+  enhanceClassBasedFaq();
+  enhanceHeadingBasedFaq();
 })();
 </script>
 
