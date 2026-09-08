@@ -183,12 +183,46 @@
                   {%- endif -%}
                 </span>
                 <span class="ae__product-insert-cta">
-                  <span class="ae__product-insert-price">{{ insert_product.price | money }}</span>
                   <span class="ae__product-insert-btn">{{ view_label }}</span>
                 </span>
               </a>
             </div>
           {%- endif -%}
+
+        {%- when 'faq' -%}
+          <div class="ae__grid ae__module" {{ block.shopify_attributes }}>
+            <div class="ae__comparison-label">
+              <span class="ae__eyebrow">{{ block.settings.label | default: 'Questions fréquentes' }}</span>
+            </div>
+            <div class="ae__faq-list">
+              {%- for i in (1..5) -%}
+                {%- assign faq_q_key = 'question_' | append: i -%}
+                {%- assign faq_a_key = 'answer_' | append: i -%}
+                {%- assign faq_q = block.settings[faq_q_key] -%}
+                {%- assign faq_a = block.settings[faq_a_key] -%}
+                {%- if faq_q != blank -%}
+                  {%- assign faq_num = i | prepend: '00' | slice: -3, 3 -%}
+                  <accordion-custom class="ae__faq-item-wrap">
+                    <details class="ae__faq-item">
+                      <summary class="ae__faq-summary">
+                        <span class="ae__faq-number">{{ faq_num }}</span>
+                        <span class="ae__faq-question">{{ faq_q }}</span>
+                        <span class="ae__faq-icon">
+                          <span class="ae__faq-icon-face ae__faq-icon-face--plus">
+                            {{- 'icon-plus.svg' | inline_asset_content -}}
+                          </span>
+                          <span class="ae__faq-icon-face ae__faq-icon-face--minus">
+                            {{- 'icon-minus.svg' | inline_asset_content -}}
+                          </span>
+                        </span>
+                      </summary>
+                      <div class="ae__faq-answer details-content">{{ faq_a }}</div>
+                    </details>
+                  </accordion-custom>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
       {%- endcase -%}
     {%- endfor -%}
 
@@ -708,22 +742,13 @@
 
   .ae__product-insert-cta {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-end;
+    align-items: center;
   }
 
   @media screen and (max-width: 749px) {
     .ae__product-insert-cta {
       grid-column: 1 / -1;
-      align-items: flex-start;
     }
-  }
-
-  .ae__product-insert-price {
-    font-size: 28px;
-    font-weight: 300;
-    color: var(--ae-heading);
   }
 
   .ae__product-insert-btn {
@@ -738,6 +763,137 @@
 
   .ae__product-insert:hover .ae__product-insert-btn {
     opacity: 0.85;
+  }
+
+  /* ── FAQ (même habillage que la page FAQ) ─────────────────────── */
+  .ae__faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ae__faq-item-wrap {
+    display: block;
+  }
+
+  .ae__faq-item {
+    border: 1px solid rgba(20, 22, 31, 0.12);
+    border-radius: 8px;
+    padding: 24px 28px;
+    transition: border-color var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out);
+  }
+
+  .ae__faq-item[open] {
+    border-color: rgba(20, 22, 31, 0.22);
+  }
+
+  .ae__faq-summary {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .ae__faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .ae__faq-number {
+    font-size: 16px;
+    color: var(--ae-accent);
+    padding-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .ae__faq-question {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: clamp(18px, 1.6vw, 22px);
+    line-height: 1.2;
+    color: var(--ae-heading);
+    flex: 1;
+  }
+
+  .ae__faq-icon {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    flex-shrink: 0;
+    border: 1px solid rgba(20, 22, 31, 0.12);
+    transition: border-color var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out),
+      background-color var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out);
+  }
+
+  .ae__faq-icon-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    transition: opacity var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out),
+      transform var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out);
+  }
+
+  .ae__faq-icon-face svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .ae__faq-icon-face--plus {
+    color: var(--ae-heading);
+  }
+
+  .ae__faq-icon-face--minus {
+    color: #ffffff;
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.5);
+  }
+
+  .ae__faq-item[open] .ae__faq-icon {
+    border-color: var(--ae-dark);
+    background: var(--ae-dark);
+  }
+
+  .ae__faq-item[open] .ae__faq-icon-face--plus {
+    opacity: 0;
+    transform: rotate(45deg) scale(0.5);
+  }
+
+  .ae__faq-item[open] .ae__faq-icon-face--minus {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
+  .ae__faq-answer {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--ae-body);
+    margin: 0 0 0 36px;
+    padding-block-start: 16px;
+    max-width: 640px;
+    text-wrap: pretty;
+  }
+
+  .ae__faq-answer > :first-child {
+    margin-top: 0;
+  }
+
+  .ae__faq-answer > :last-child {
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ae__faq-item {
+      padding: 20px;
+    }
+
+    .ae__faq-answer {
+      margin-left: 0;
+    }
   }
 
   /* ── Tags ──────────────────────────────────────────────────────── */
@@ -936,6 +1092,24 @@
       "settings": [
         { "type": "text", "id": "label", "label": "Étiquette", "default": "Le choix Andromeda" },
         { "type": "product", "id": "product", "label": "Produit" }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Questions fréquentes",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Étiquette", "default": "Questions fréquentes" },
+        { "type": "header", "content": "Questions" },
+        { "type": "text", "id": "question_1", "label": "Question 1" },
+        { "type": "html", "id": "answer_1", "label": "Réponse 1" },
+        { "type": "text", "id": "question_2", "label": "Question 2" },
+        { "type": "html", "id": "answer_2", "label": "Réponse 2" },
+        { "type": "text", "id": "question_3", "label": "Question 3" },
+        { "type": "html", "id": "answer_3", "label": "Réponse 3" },
+        { "type": "text", "id": "question_4", "label": "Question 4" },
+        { "type": "html", "id": "answer_4", "label": "Réponse 4" },
+        { "type": "text", "id": "question_5", "label": "Question 5" },
+        { "type": "html", "id": "answer_5", "label": "Réponse 5" }
       ]
     }
   ],

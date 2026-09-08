@@ -11,6 +11,26 @@
   "sections": {
     "main": {
       "type": "section-andromeda-article",
+      "blocks": {
+        "product_test": {
+          "type": "product_insert",
+          "settings": {
+            "label": "Le choix Andromeda",
+            "product": "masque-de-sommeil-en-soie-de-murier-22-mommes"
+          }
+        },
+        "faq_test": {
+          "type": "faq",
+          "settings": {
+            "label": "Questions fréquentes",
+            "question_1": "Qu'est-ce que le grade 6A de la soie de mûrier ?",
+            "answer_1": "<p>Le grade 6A est la plus haute classification mondiale de la soie de mûrier. Moins de 5 % de la production mondiale atteint ce niveau. Les filaments sont extra-longs, uniformes, sans nœuds ni irrégularités.</p>",
+            "question_2": "Comment laver mon masque en soie ?",
+            "answer_2": "<p>Lavage à la main à l'eau froide avec un savon doux, ou en machine sur cycle délicat à 30 °C maximum dans un filet de lavage. Séchage à plat à l'air libre, loin de toute chaleur directe.</p>"
+          }
+        }
+      },
+      "block_order": ["product_test", "faq_test"],
       "settings": {}
     }
   },
