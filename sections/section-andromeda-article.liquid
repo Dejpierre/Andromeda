@@ -14,7 +14,6 @@
     assign is_en = true
   endif
 
-  assign save_label = 'Enregistrer'
   assign share_label = 'Partager'
   assign author_name = "L'équipe Andromeda Paris"
   assign author_bio = 'Spécialistes du sommeil et de la soie de mûrier'
@@ -22,7 +21,6 @@
   assign next_label = 'Article suivant'
   assign previous_label = 'Puis'
   if is_en
-    assign save_label = 'Save'
     assign share_label = 'Share'
     assign author_name = 'The Andromeda Paris team'
     assign author_bio = 'Sleep and mulberry silk specialists'
@@ -54,9 +52,6 @@
       <span class="ae__bar-title">{{ article.title }}</span>
       <div class="ae__bar-actions">
         <span class="ae__bar-time">{{ read_time }} min</span>
-        <button class="ae__bar-btn" type="button" data-ae-bookmark aria-label="{{ save_label }}" aria-pressed="false">
-          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h8v13l-4-3-4 3z"></path></svg>
-        </button>
         <button class="ae__bar-btn" type="button" data-ae-share aria-label="{{ share_label }}">
           <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="10" r="2"></circle><circle cx="14" cy="5.5" r="2"></circle><circle cx="14" cy="14.5" r="2"></circle><path d="M7.8 9l4.4-2.4"></path><path d="M7.8 11l4.4 2.4"></path></svg>
         </button>
@@ -1004,9 +999,7 @@
   var section = document.getElementById('ae-{{ section.id }}');
   if (!section) return;
   var fill = document.getElementById('ae-fill-{{ section.id }}');
-  var bookmarkBtn = section.querySelector('[data-ae-bookmark]');
   var shareBtn = section.querySelector('[data-ae-share]');
-  var storageKey = 'ae-bookmark-{{ article.id }}';
 
   if (fill) {
     var onScroll = function () {
@@ -1017,23 +1010,6 @@
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
-  }
-
-  if (bookmarkBtn) {
-    var setBookmarkState = function (on) {
-      bookmarkBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
-    };
-    try {
-      setBookmarkState(window.localStorage.getItem(storageKey) === '1');
-    } catch (e) {}
-    bookmarkBtn.addEventListener('click', function () {
-      var isOn = bookmarkBtn.getAttribute('aria-pressed') === 'true';
-      setBookmarkState(!isOn);
-      try {
-        if (isOn) window.localStorage.removeItem(storageKey);
-        else window.localStorage.setItem(storageKey, '1');
-      } catch (e) {}
-    });
   }
 
   if (shareBtn) {
