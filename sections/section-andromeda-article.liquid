@@ -42,13 +42,7 @@
   <!-- ── Barre de lecture persistante ─────────────────────────────────── -->
   <div class="ae__bar" id="ae-bar-{{ section.id }}">
     <div class="ae__bar-inner">
-      <a href="{{ routes.root_url }}" class="ae__bar-logo" aria-label="{{ shop.name }}">
-        {%- if settings.logo != blank -%}
-          <img src="{{ settings.logo | image_url }}" width="{{ settings.logo.width }}" height="{{ settings.logo.height }}" alt="{{ shop.name }}">
-        {%- else -%}
-          <span>{{ shop.name }}</span>
-        {%- endif -%}
-      </a>
+      <a href="{{ blog.url }}" class="ae__bar-journal">Journal</a>
       <span class="ae__bar-title">{{ article.title }}</span>
       <div class="ae__bar-actions">
         <span class="ae__bar-time">{{ read_time }} min</span>
@@ -298,16 +292,16 @@
     align-items: center;
   }
 
-  .ae__bar-logo {
-    display: flex;
-    align-items: center;
-    height: 18px;
+  .ae__bar-journal {
+    font-size: 14px;
+    color: var(--ae-heading);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out);
   }
 
-  .ae__bar-logo img {
-    height: 18px;
-    width: auto;
-    display: block;
+  .ae__bar-journal:hover {
+    color: var(--ae-accent);
   }
 
   .ae__bar-title {
