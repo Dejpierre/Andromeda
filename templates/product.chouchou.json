@@ -2020,7 +2020,7 @@
             "accordion_row_andromeda_3": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "Comment laver mon masque Andromeda ?",
+                "heading": "Comment laver mon chouchou Andromeda ?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -2029,7 +2029,7 @@
                 "text_andromeda_3": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Lavage à la main à l'eau froide avec un savon doux, ou en machine cycle délicat 30°C (filet de lavage recommandé). Séchage à plat, loin de toute chaleur.</p>",
+                    "text": "<p>Lavage à la main à l'eau froide avec un savon doux, ou en machine cycle délicat 30°C dans un filet de lavage. Séchage à plat, loin de toute chaleur directe.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -2074,7 +2074,7 @@
                 "text_andromeda_4": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Chaque masque est livré avec un QR code donnant accès à notre espace rituel exclusif — une sélection de sons d'ambiance conçus pour accompagner l'endormissement.</p>",
+                    "text": "<p>Chaque commande est livrée avec un QR code donnant accès à notre espace rituel exclusif — une sélection de sons d'ambiance conçus pour accompagner l'endormissement.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -2110,7 +2110,7 @@
             "accordion_row_andromeda_5": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "Le masque est-il adapté aux dormeurs sur le côté ?",
+                "heading": "Les chouchous marquent-ils les cheveux ?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -2119,7 +2119,7 @@
                 "text_andromeda_5": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Oui. L'élastique réglable ne laisse aucune pression sur la tête ni marque sur la peau. Le masque reste en place toute la nuit quelle que soit votre position.</p>",
+                    "text": "<p>Non, c'est justement leur rôle : la soie glisse au lieu d'accrocher, ce qui évite le pli et la casse de la fibre. Ils se portent la nuit comme la journée, et sont vendus par deux.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
