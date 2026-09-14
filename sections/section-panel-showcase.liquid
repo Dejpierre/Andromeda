@@ -1,6 +1,8 @@
 {% doc %}
-  Rangée de volets image plein écran qui s'ouvrent au survol (desktop),
-  empilés en cartes sur mobile. Chaque volet pointe vers une fiche produit.
+  Rangée de volets image qui s'ouvrent au survol (desktop, coins arrondis).
+  Sur mobile : slider horizontal, chaque carte toujours ouverte (coins
+  arrondis), on scrolle pour voir la carte suivante qui dépasse en aperçu.
+  Chaque carte pointe vers une fiche produit.
 {% enddoc %}
 
 <div
@@ -31,7 +33,7 @@
       -%}
       <a
         href="{{ panel_url }}"
-        class="panel-showcase__item{% if forloop.first %} is-active{% endif %}"
+        class="panel-showcase__item"
         {{ block.shopify_attributes }}
       >
         {%- if panel_image -%}
@@ -113,6 +115,7 @@
     flex: 1;
     min-width: 0;
     overflow: hidden;
+    border-radius: 20px;
     text-decoration: none;
     background-color: var(--ps-dark);
     transition: flex 0.7s cubic-bezier(0.65, 0, 0.35, 1);
@@ -218,10 +221,11 @@
   @media (max-width: 749px) {
     .panel-showcase__row {
       height: clamp(380px, 92vw, 480px);
-      gap: 8px;
+      gap: 12px;
       padding-inline: 16px;
       overflow-x: auto;
-      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scroll-snap-type: x proximity;
       scroll-padding-inline: 16px;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
@@ -232,20 +236,11 @@
     }
 
     .panel-showcase__item {
-      flex: 0 0 64px;
-      scroll-snap-align: center;
-    }
-
-    .panel-showcase__item.is-active {
-      flex: 0 0 82vw;
+      flex: 0 0 84vw;
+      scroll-snap-align: start;
     }
 
     .panel-showcase__content {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-
-    .panel-showcase__item.is-active .panel-showcase__content {
       opacity: 1;
       transform: none;
     }
@@ -263,67 +258,6 @@
     }
   }
 </style>
-
-<script>
-  (function () {
-    var root = document.getElementById('panel-showcase-{{ section.id }}');
-    if (!root) return;
-    var row = root.querySelector('.panel-showcase__row');
-    var items = Array.prototype.slice.call(row.querySelectorAll('.panel-showcase__item'));
-    var ticking = false;
-
-    function isMobile() {
-      return window.matchMedia('(max-width: 749px)').matches;
-    }
-
-    function updateActive() {
-      ticking = false;
-      if (!isMobile()) return;
-      var rowRect = row.getBoundingClientRect();
-      var rowCenter = rowRect.left + rowRect.width / 2;
-      var closest = null;
-      var closestDist = Infinity;
-      items.forEach(function (el) {
-        var r = el.getBoundingClientRect();
-        var center = r.left + r.width / 2;
-        var dist = Math.abs(center - rowCenter);
-        if (dist < closestDist) {
-          closestDist = dist;
-          closest = el;
-        }
-      });
-      if (closest) {
-        items.forEach(function (el) {
-          el.classList.toggle('is-active', el === closest);
-        });
-      }
-    }
-
-    row.addEventListener(
-      'scroll',
-      function () {
-        if (!ticking) {
-          ticking = true;
-          requestAnimationFrame(updateActive);
-        }
-      },
-      { passive: true }
-    );
-
-    window.addEventListener('resize', updateActive);
-    updateActive();
-
-    items.forEach(function (el) {
-      el.addEventListener('click', function (e) {
-        if (!isMobile()) return;
-        if (!el.classList.contains('is-active')) {
-          e.preventDefault();
-          el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-        }
-      });
-    });
-  })();
-</script>
 
 {% schema %}
 {
