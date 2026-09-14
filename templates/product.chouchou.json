@@ -1051,7 +1051,7 @@
                         "text_MBYAwi": {
                           "type": "text",
                           "settings": {
-                            "text": "<p><strong>Obscurité totale</strong><br/>Blocage de 100 % de la lumière.</p>",
+                            "text": "<p><strong>Cheveux protégés</strong><br/>Réduit frisottis et casse.</p>",
                             "width": "fill",
                             "max_width": "normal",
                             "alignment": "left",
@@ -1939,7 +1939,7 @@
                 "text_andromeda_1": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Les mommes désignent le poids du tissu. À 22 mommes, notre soie est plus dense, plus opaque et plus durable. Elle bloque 100% de la lumière et conserve sa douceur lavage après lavage.</p>",
+                    "text": "<p>Les mommes désignent le poids du tissu. À 22 mommes, notre soie est plus dense et plus durable qu'une soie 19 mommes standard, tout en conservant sa douceur lavage après lavage — idéal pour un chouchou porté au quotidien.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",

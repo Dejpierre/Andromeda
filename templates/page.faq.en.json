@@ -32,7 +32,7 @@
           "type": "item",
           "settings": {
             "titre": "What's the difference between 22 momme and 19 momme silk?",
-            "contenu": "<p>Momme measures the density of silk fabric. At 22 momme, Andromeda silk is 15–20% denser than a standard 19 momme silk. It blocks 100% of light, holds up better through washing, and maintains its softness over time. 19 momme silk, being lighter, loses its properties more quickly.</p>",
+            "contenu": "<p>Momme measures the density of silk fabric. At 22 momme, Andromeda silk is 15–20% denser than a standard 19 momme silk: total blackout thanks to the 22 momme density, better resistance through washing, and softness that lasts over time. 19 momme silk, being lighter, loses its properties more quickly.</p>",
             "categorie": "matiere"
           }
         },
@@ -56,15 +56,15 @@
           "type": "item",
           "settings": {
             "titre": "Is the mask suitable for sensitive skin?",
-            "contenu": "<p>Yes. Mulberry silk is naturally hypoallergenic. The OEKO-TEX® STANDARD 100 certification further guarantees the absence of irritating substances in the fabric. The mask is suitable for sensitive, reactive, or eczema-prone skin.</p>",
+            "contenu": "<p>Yes. Mulberry silk is naturally hypoallergenic. The mask is suitable for sensitive, reactive, or eczema-prone skin.</p>",
             "categorie": "matiere"
           }
         },
         "faq_5": {
           "type": "item",
           "settings": {
-            "titre": "Is the Andromeda mask certified?",
-            "contenu": "<p>Yes. The mask is OEKO-TEX® STANDARD 100 certified, the most globally recognized textile certification. It guarantees the absence of harmful substances: dyes, heavy metals, pesticides, formaldehyde. Safe for direct and prolonged contact with skin, including for sensitive individuals.</p>",
+            "titre": "Is the Andromeda mask safe for skin?",
+            "contenu": "<p>Yes. Mulberry silk is naturally hypoallergenic and contains no known irritating substances. Safe for direct and prolonged contact with skin, including for sensitive individuals.</p>",
             "categorie": "matiere"
           }
         },
@@ -79,8 +79,8 @@
         "faq_4": {
           "type": "item",
           "settings": {
-            "titre": "Does the mask really block 100% of light?",
-            "contenu": "<p>Yes. The density of 22 momme silk combined with the anatomical cut of the mask guarantees total darkness. The contoured shape leaves a slight cavity for the eyes, preventing any pressure on the eyelids while maintaining complete opacity.</p>",
+            "titre": "Does the mask guarantee a total blackout?",
+            "contenu": "<p>Yes, total blackout thanks to the 22 momme density combined with the anatomical cut of the mask. The contoured shape leaves a slight cavity for the eyes, preventing any pressure on the eyelids while maintaining this blackout.</p>",
             "categorie": "produit-entretien"
           }
         },
@@ -96,7 +96,7 @@
           "type": "item",
           "settings": {
             "titre": "Is the mask available in multiple colors?",
-            "contenu": "<p>Yes. The Andromeda mask comes in several colors: Crépuscule, Nébuleuse, Clair de lune, Nuit céleste, Douce lueur, and Poussière d'étoile. All colors are made with OEKO-TEX® certified dyes, free from harmful substances.</p>",
+            "contenu": "<p>Yes. The Andromeda mask comes in several colors: Crépuscule, Nébuleuse, Clair de lune, Nuit céleste, Douce lueur, and Poussière d'étoile. All colors are made with gentle dyes, free from harmful substances.</p>",
             "categorie": "produit-entretien"
           }
         },
