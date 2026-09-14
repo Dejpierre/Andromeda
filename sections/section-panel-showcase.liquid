@@ -1,0 +1,316 @@
+{% doc %}
+  Rangée de volets image plein écran qui s'ouvrent au survol (desktop),
+  empilés en cartes sur mobile. Chaque volet pointe vers une fiche produit.
+{% enddoc %}
+
+<div
+  class="panel-showcase"
+  id="panel-showcase-{{ section.id }}"
+  style="--ps-accent: #B06A47; --ps-dark: #191A2E; --ps-heading: #14161F; --ps-muted: #6E6A63; --ps-body: #3A3A42;"
+>
+  {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
+    <div class="panel-showcase__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="panel-showcase__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="panel-showcase__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="panel-showcase__row">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign panel_product = block.settings.product
+        assign panel_url = block.settings.product.url | default: '#'
+        assign panel_title = block.settings.heading | default: panel_product.title
+        assign panel_tag = block.settings.tag
+        assign panel_price = panel_product.price | default: blank
+        assign panel_image = block.settings.image | default: panel_product.featured_image
+      -%}
+      <a
+        href="{{ panel_url }}"
+        class="panel-showcase__item"
+        {{ block.shopify_attributes }}
+      >
+        {%- if panel_image -%}
+          {{
+            panel_image
+            | image_url: width: 1400
+            | image_tag:
+              class: 'panel-showcase__img',
+              loading: 'lazy',
+              sizes: '(max-width: 749px) 100vw, 40vw',
+              widths: '600, 900, 1200, 1400'
+          }}
+        {%- endif -%}
+        <span class="panel-showcase__scrim" aria-hidden="true"></span>
+        <span class="panel-showcase__content">
+          {%- if panel_tag != blank or panel_price -%}
+            <span class="panel-showcase__meta">
+              {%- if panel_price -%}
+                <span class="panel-showcase__price">{{ panel_price | money }}</span>
+              {%- endif -%}
+              {%- if panel_tag != blank and panel_price -%}
+                <span class="panel-showcase__meta-sep">|</span>
+              {%- endif -%}
+              {%- if panel_tag != blank -%}
+                <span class="panel-showcase__tag">{{ panel_tag }}</span>
+              {%- endif -%}
+            </span>
+          {%- endif -%}
+          <span class="panel-showcase__title">{{ panel_title }}</span>
+          {%- if block.settings.description != blank -%}
+            <span class="panel-showcase__desc">{{ block.settings.description }}</span>
+          {%- endif -%}
+        </span>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+<style>
+  .panel-showcase {
+    padding-block: clamp(32px, 5vw, 64px);
+  }
+
+  .panel-showcase__header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto clamp(24px, 4vw, 40px);
+    padding-inline: 24px;
+  }
+
+  .panel-showcase__eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ps-accent);
+    margin: 0 0 10px;
+    font-weight: 600;
+  }
+
+  .panel-showcase__heading {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    color: var(--ps-heading);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .panel-showcase__row {
+    display: flex;
+    align-items: stretch;
+    height: clamp(420px, 60vw, 640px);
+    gap: 4px;
+    padding-inline: 4px;
+  }
+
+  .panel-showcase__item {
+    position: relative;
+    display: block;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-decoration: none;
+    background-color: var(--ps-dark);
+    transition: flex 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .panel-showcase__item:first-child {
+      flex: 3;
+    }
+
+    .panel-showcase__row:hover .panel-showcase__item {
+      flex: 1;
+    }
+
+    .panel-showcase__row:hover .panel-showcase__item:hover {
+      flex: 3;
+    }
+  }
+
+  .panel-showcase__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.04);
+    transition: transform 1.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .panel-showcase__item:hover .panel-showcase__img {
+      transform: scale(1);
+    }
+  }
+
+  .panel-showcase__scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(20, 22, 31, 0.75) 0%, rgba(20, 22, 31, 0.15) 45%, rgba(20, 22, 31, 0) 65%);
+    pointer-events: none;
+  }
+
+  .panel-showcase__content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: clamp(16px, 2.4vw, 32px);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.35s ease, transform 0.5s ease;
+    white-space: normal;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .panel-showcase__item:first-child .panel-showcase__content {
+      opacity: 1;
+      transform: none;
+    }
+
+    .panel-showcase__row:hover .panel-showcase__item .panel-showcase__content {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .panel-showcase__row:hover .panel-showcase__item:hover .panel-showcase__content {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .panel-showcase__meta {
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.92;
+  }
+
+  .panel-showcase__meta-sep {
+    opacity: 0.5;
+  }
+
+  .panel-showcase__title {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  .panel-showcase__desc {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    max-width: 32ch;
+    opacity: 0.9;
+  }
+
+  @media (max-width: 749px) {
+    .panel-showcase__row {
+      flex-direction: column;
+      height: auto;
+      gap: 12px;
+      padding-inline: 16px;
+    }
+
+    .panel-showcase__item,
+    .panel-showcase__item:first-child {
+      flex: none;
+      aspect-ratio: 4 / 5;
+    }
+
+    .panel-showcase__content,
+    .panel-showcase__item:first-child .panel-showcase__content {
+      opacity: 1;
+      transform: none;
+    }
+
+    .panel-showcase__img {
+      transform: scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .panel-showcase__item,
+    .panel-showcase__img,
+    .panel-showcase__content {
+      transition: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Volets produits",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Nos rituels"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titre",
+      "default": "Explorez la collection"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "panel",
+      "name": "Volet",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Produit"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (optionnel, sinon photo produit)"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Titre affiché (optionnel, sinon nom du produit)"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Étiquette (optionnel)",
+          "default": "Soie grade 6A"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description courte"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Volets produits",
+      "blocks": [
+        { "type": "panel" },
+        { "type": "panel" },
+        { "type": "panel" }
+      ]
+    }
+  ]
+}
+{% endschema %}

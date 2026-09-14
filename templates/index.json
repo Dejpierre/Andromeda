@@ -933,12 +933,51 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "section_panel_showcase_hV3xQ9": {
+      "type": "section-panel-showcase",
+      "blocks": {
+        "panel_masque": {
+          "type": "panel",
+          "settings": {
+            "product": "masque-de-sommeil-en-soie-de-murier-22-mommes",
+            "tag": "Masque de nuit",
+            "description": "100 % soie de mûrier 22 mommes, grade 6A, occultant, sangle ajustable."
+          }
+        },
+        "panel_bandeau": {
+          "type": "panel",
+          "settings": {
+            "product": "bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus",
+            "tag": "Bandeau de nuit",
+            "description": "100 % soie de mûrier 22 mommes, grade 6A, doux pour les cheveux et sans pression."
+          }
+        },
+        "panel_chouchou": {
+          "type": "panel",
+          "settings": {
+            "product": "chouchou-pour-cheveux-en-soie-de-murier-22-mommes",
+            "tag": "Chouchous",
+            "description": "Lot de 2, 100 % soie de mûrier 22 mommes, grade 6A, hypoallergénique."
+          }
+        }
+      },
+      "block_order": [
+        "panel_masque",
+        "panel_bandeau",
+        "panel_chouchou"
+      ],
+      "settings": {
+        "eyebrow": "Nos rituels",
+        "heading": "Explorez la collection"
+      }
     }
   },
   "order": [
     "hero_jVaWmY",
     "marquee_BX4UPp",
     "section_collections_vedettes_e4TYHn",
+    "section_panel_showcase_hV3xQ9",
     "section_R7Vhzp",
     "marquee_EYMzLt",
     "marquee_xLEVQF",
