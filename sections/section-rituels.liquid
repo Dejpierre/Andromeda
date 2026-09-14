@@ -51,44 +51,44 @@
 
       <div class="moona-player2__hero" id="moona-player-hero">
         <div class="moona-player2__hero-fade" aria-hidden="true"></div>
+      </div>
 
-        <div class="moona-player2__hero-top">
-          <button class="moona-player2__icon-btn" id="moona-back-btn" type="button" aria-label="{{ section.settings.back_to_moments | default: 'Choisir un autre rituel' }}">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <span class="moona-player2__wordmark">Andromeda</span>
-          <button class="moona-player2__icon-btn" id="moona-more-btn" type="button" aria-label="Plus d'options" aria-expanded="false">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/>
-            </svg>
-          </button>
-        </div>
+      <div class="moona-player2__topbar">
+        <button class="moona-player2__icon-btn" id="moona-back-btn" type="button" aria-label="{{ section.settings.back_to_moments | default: 'Choisir un autre rituel' }}">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <span class="moona-player2__wordmark">Andromeda</span>
+        <button class="moona-player2__icon-btn" id="moona-more-btn" type="button" aria-label="Plus d'options" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/>
+          </svg>
+        </button>
+      </div>
 
-        <div class="moona-player2__menu" id="moona-more-menu" hidden>
-          <button class="moona-player2__menu-item moona-rituel__playlist-btn--active" id="moona-playlist-btn" type="button" aria-label="Mode playlist activé">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="15" y2="18"/>
-              <polyline points="17 15 21 18 17 21"/>
-            </svg>
-            <span id="moona-playlist-label">Playlist</span>
-          </button>
-          <button class="moona-player2__menu-item" id="moona-offline-btn" type="button" aria-label="Sauvegarder hors-ligne" hidden>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="moona-offline-icon-dl" aria-hidden="true">
-              <path d="M12 3v12M7 11l5 5 5-5"/><path d="M4 19h16"/>
-            </svg>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="moona-offline-icon-ok" aria-hidden="true" hidden>
-              <path d="M20 6L9 17l-5-5"/>
-            </svg>
-            <span>Hors-ligne</span>
-          </button>
-        </div>
+      <div class="moona-player2__menu" id="moona-more-menu" hidden>
+        <button class="moona-player2__menu-item moona-rituel__playlist-btn--active" id="moona-playlist-btn" type="button" aria-label="Mode playlist activé">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="15" y2="18"/>
+            <polyline points="17 15 21 18 17 21"/>
+          </svg>
+          <span id="moona-playlist-label">Playlist</span>
+        </button>
+        <button class="moona-player2__menu-item" id="moona-offline-btn" type="button" aria-label="Sauvegarder hors-ligne" hidden>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="moona-offline-icon-dl" aria-hidden="true">
+            <path d="M12 3v12M7 11l5 5 5-5"/><path d="M4 19h16"/>
+          </svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="moona-offline-icon-ok" aria-hidden="true" hidden>
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+          <span>Hors-ligne</span>
+        </button>
+      </div>
 
-        <!-- Orbe visualiseur conservé (utilisé par la logique audio-réactive), non affiché dans ce visuel -->
-        <div class="moona-rituel__orb-wrap" aria-hidden="true" hidden>
-          <canvas id="moona-orb-canvas" width="560" height="560"></canvas>
-        </div>
+      <!-- Orbe visualiseur conservé (utilisé par la logique audio-réactive), non affiché dans ce visuel -->
+      <div class="moona-rituel__orb-wrap" aria-hidden="true" hidden>
+        <canvas id="moona-orb-canvas" width="560" height="560"></canvas>
       </div>
 
       <!-- Loader -->
@@ -97,7 +97,7 @@
       </div>
 
       <!-- Player custom -->
-      <div class="moona-player2__sheet" id="moona-player" hidden>
+      <div class="moona-player2__content" id="moona-player" hidden>
         <span class="moona-player2__moment" id="moona-player-moment" hidden></span>
 
         <h2 class="moona-player2__title" id="moona-track-title"></h2>
@@ -116,23 +116,23 @@
 
         <div class="moona-player2__controls">
           <button class="moona-player2__ctrl-btn" id="moona-prev" type="button" aria-label="Piste précédente">
-            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
             </svg>
           </button>
 
           <button class="moona-player2__play-btn" id="moona-play-btn" type="button" aria-label="Lecture">
-            <svg class="moona-rituel__icon-play" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <svg class="moona-rituel__icon-play" width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
               <path d="M8 5v14l11-7z"/>
             </svg>
-            <svg class="moona-rituel__icon-pause" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+            <svg class="moona-rituel__icon-pause" width="30" height="30" viewBox="0 0 24 24" fill="currentColor" style="display:none">
               <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
             </svg>
           </button>
 
           <button class="moona-player2__ctrl-btn" id="moona-next" type="button" aria-label="Piste suivante">
-            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M16 6h2v12h-2zM6 6l8.5 6L6 18z"/>
             </svg>
           </button>
         </div>
@@ -140,6 +140,16 @@
         <!-- Seek ±15s conservés pour le clavier/media session, non affichés dans ce visuel -->
         <button id="moona-rewind" type="button" aria-label="Reculer 15s" hidden></button>
         <button id="moona-forward" type="button" aria-label="Avancer 15s" hidden></button>
+
+        <div class="moona-player2__volume-row">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M4 9v6h4l5 5V4L8 9H4z"/>
+          </svg>
+          <input type="range" id="moona-volume" class="moona-player2__volume-slider" min="0" max="1" step="0.01" value="1" aria-label="Volume">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M4 9v6h4l5 5V4L8 9H4zm11.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 15.5 12zM13 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+          </svg>
+        </div>
 
         <div class="moona-player2__pills">
           <button class="moona-player2__pill" id="moona-sleep-btn" type="button">
@@ -1043,22 +1053,22 @@
 
   /* ── Player 2 : écran de lecture "photo + carte claire" ─── */
   .moona-rituel__player-wrap.moona-player2 {
-    background: transparent;
+    position: relative;
+    background: #0c0c10;
     border: none;
     padding: 0;
     border-radius: 28px;
     overflow: hidden;
+    min-height: 100dvh;
     box-shadow: 0 20px 60px rgba(0,0,0,0.4);
   }
 
-  /* Mode lecture : pas de fond bleu, interface pleine largeur, pleine hauteur
-     depuis le tout haut (plus de centrage flex ni de clipping overflow, qui
-     poussait le contenu vers le bas et rognait le panneau de la minuterie). */
+  /* Mode lecture : plein écran, fond sombre par défaut derrière l'image floutée. */
   .moona-rituel--player-mode {
     display: block;
     padding: 0;
     overflow: visible;
-    background: #FBF7F1;
+    background: #0c0c10;
   }
 
   .moona-rituel--player-mode .moona-rituel__bg {
@@ -1086,24 +1096,26 @@
     border-radius: 0;
   }
 
+  /* Fond plein écran : photo du rituel, floutée et assombrie façon vitre embuée. */
   .moona-player2__hero {
-    position: relative;
-    height: clamp(280px, 42vh, 380px);
+    position: absolute;
+    inset: 0;
+    z-index: 0;
     background-color: #2a2b40;
     background-size: cover;
     background-position: center;
-    border-radius: 28px 28px 0 0;
-    overflow: hidden;
+    filter: blur(18px) saturate(1.05);
+    transform: scale(1.15);
   }
 
   .moona-player2__hero-fade {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.05) 70%, rgba(0,0,0,0.25) 100%);
+    background: linear-gradient(to bottom, rgba(8,8,12,0.35) 0%, rgba(8,8,12,0.15) 22%, rgba(8,8,12,0.35) 55%, rgba(8,8,12,0.92) 100%);
     pointer-events: none;
   }
 
-  .moona-player2__hero-top {
+  .moona-player2__topbar {
     position: absolute;
     top: 0;
     left: 0;
@@ -1119,11 +1131,11 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.85);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background: rgba(255,255,255,0.14);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: none;
-    color: #1E2233;
+    color: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1133,7 +1145,7 @@
   }
 
   .moona-player2__icon-btn:hover {
-    background: #FFFFFF;
+    background: rgba(255,255,255,0.24);
     transform: scale(1.06);
   }
 
@@ -1154,9 +1166,9 @@
     right: 16px;
     z-index: 4;
     min-width: 172px;
-    background: #FFFFFF;
+    background: #1c1c22;
     border-radius: 14px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
     padding: 6px;
     display: flex;
     flex-direction: column;
@@ -1173,20 +1185,22 @@
     cursor: pointer;
     font-family: 'Raleway', sans-serif;
     font-size: 13px;
-    color: #1E2233;
+    color: #FFFFFF;
     text-align: left;
     transition: background 0.15s ease;
   }
 
   .moona-player2__menu-item:hover {
-    background: #F5F1E9;
+    background: rgba(255,255,255,0.08);
   }
 
   .moona-player2__menu-item.moona-rituel__playlist-btn--active {
-    color: #8a6d3b;
+    color: #C8B89A;
   }
 
   .moona-player2__loader {
+    position: relative;
+    z-index: 2;
     display: flex;
     justify-content: center;
     gap: 7px;
@@ -1204,47 +1218,46 @@
   .moona-player2__loader span:nth-child(2) { animation-delay: 0.2s; }
   .moona-player2__loader span:nth-child(3) { animation-delay: 0.4s; }
 
-  .moona-player2__sheet {
-    position: relative;
+  .moona-player2__content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 2;
-    margin-top: -28px;
-    background: #FBF7F1;
-    border-radius: 28px 28px 0 0;
-    padding: 34px 26px 30px;
-    box-shadow: 0 -12px 24px rgba(0,0,0,0.12);
+    min-height: 100dvh;
+    padding: 24px 22px calc(30px + env(safe-area-inset-bottom, 0px));
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    justify-content: flex-end;
   }
 
   .moona-player2__title {
     font-family: 'GC Amelie Promised', serif !important;
     font-weight: 400;
     font-size: clamp(23px, 5vw, 29px);
-    color: #1E2233;
-    margin: 0 0 6px;
+    color: #FFFFFF;
+    margin: 0 0 4px;
     line-height: 1.25;
     word-spacing: -0.18em;
   }
 
   .moona-player2__subtitle {
     font-family: 'Raleway', sans-serif;
-    font-size: 13px;
-    color: #a3957c;
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
     margin: 0 0 26px;
     letter-spacing: 0.01em;
   }
 
   .moona-player2__progress-wrap {
     width: 100%;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
   }
 
   .moona-player2__progress-track {
     width: 100%;
-    height: 5px;
-    background: #EBE1D2;
+    height: 4px;
+    background: rgba(255,255,255,0.25);
     border-radius: 4px;
     position: relative;
     cursor: pointer;
@@ -1253,7 +1266,7 @@
 
   .moona-player2__progress-fill {
     height: 100%;
-    background: #1E2233;
+    background: #FFFFFF;
     border-radius: 4px;
     width: 0%;
     pointer-events: none;
@@ -1264,14 +1277,14 @@
     top: 50%;
     left: 0%;
     transform: translate(-50%, -50%);
-    width: 13px;
-    height: 13px;
-    background: #1E2233;
+    width: 12px;
+    height: 12px;
+    background: #FFFFFF;
     border-radius: 50%;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.15s ease, left 0.1s linear;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.35);
   }
 
   .moona-player2__progress-track:hover .moona-player2__progress-thumb,
@@ -1285,7 +1298,7 @@
     margin-top: 8px;
     font-family: 'Raleway', sans-serif;
     font-size: 12px;
-    color: #a3957c;
+    color: rgba(255,255,255,0.55);
     font-variant-numeric: tabular-nums;
   }
 
@@ -1293,28 +1306,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 26px;
-    margin-bottom: 26px;
+    gap: 40px;
+    margin-bottom: 28px;
   }
 
   .moona-player2__ctrl-btn {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: #F1EADB;
-    border: 1px solid rgba(30,34,51,0.06);
-    color: #4a4536;
+    background: none;
+    border: none;
+    color: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     flex-shrink: 0;
-    transition: background 0.15s ease, transform 0.18s cubic-bezier(.34,1.56,.64,1);
+    transition: transform 0.18s cubic-bezier(.34,1.56,.64,1), opacity 0.15s ease;
   }
 
   .moona-player2__ctrl-btn:hover {
-    background: #E9DFC9;
-    transform: scale(1.06);
+    transform: scale(1.08);
+    opacity: 0.85;
   }
 
   .moona-player2__ctrl-btn:disabled {
@@ -1326,7 +1339,7 @@
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background: #1E2233;
+    background: none;
     border: none;
     color: #FFFFFF;
     display: flex;
@@ -1334,12 +1347,55 @@
     justify-content: center;
     cursor: pointer;
     flex-shrink: 0;
-    box-shadow: 0 10px 24px rgba(30,34,51,0.35);
     transition: transform 0.18s cubic-bezier(.34,1.56,.64,1);
   }
 
   .moona-player2__play-btn:hover {
-    transform: scale(1.06);
+    transform: scale(1.08);
+  }
+
+  .moona-player2__volume-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 22px;
+  }
+
+  .moona-player2__volume-slider {
+    flex: 1;
+    appearance: none;
+    -webkit-appearance: none;
+    height: 4px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.25);
+    cursor: pointer;
+    outline: none;
+  }
+
+  .moona-player2__volume-slider::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+  }
+
+  .moona-player2__volume-slider::-moz-range-thumb {
+    width: 13px;
+    height: 13px;
+    border: none;
+    border-radius: 50%;
+    background: #FFFFFF;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+  }
+
+  .moona-player2__volume-slider::-moz-range-progress {
+    height: 4px;
+    border-radius: 4px;
+    background: #FFFFFF;
   }
 
   .moona-player2__pills {
@@ -1355,9 +1411,11 @@
     gap: 6px;
     padding: 9px 16px;
     border-radius: 999px;
-    border: 1px solid rgba(30,34,51,0.1);
-    background: #FFFFFF;
-    color: #4a4536;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #FFFFFF;
     font-family: 'Raleway', sans-serif;
     font-size: 11px;
     font-weight: 600;
@@ -1368,13 +1426,13 @@
   }
 
   .moona-player2__pill:hover {
-    background: #F5F1E9;
+    background: rgba(255,255,255,0.16);
   }
 
   .moona-player2__pill.moona-rituel__sleep-btn--active {
-    background: #1E2233;
-    color: #FFFFFF;
-    border-color: #1E2233;
+    background: #FFFFFF;
+    color: #1E2233;
+    border-color: #FFFFFF;
   }
 
   .moona-player2__sleep-opts {
@@ -1386,19 +1444,19 @@
   }
 
   .moona-player2__sleep-opt {
-    background: #FFFFFF;
-    border: 1px solid rgba(30,34,51,0.1);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
     border-radius: 999px;
     padding: 6px 14px;
     font-family: 'Raleway', sans-serif;
     font-size: 12px;
-    color: #4a4536;
+    color: #FFFFFF;
     cursor: pointer;
     transition: background 0.15s ease;
   }
 
   .moona-player2__sleep-opt:hover {
-    background: #F5F1E9;
+    background: rgba(255,255,255,0.16);
   }
 </style>
 
@@ -1530,12 +1588,27 @@
     fillEl.style.width    = pct + '%';
     thumbEl.style.left    = pct + '%';
     currentEl.textContent = fmtTime(audioEl.currentTime);
+    durationEl.textContent = isFinite(audioEl.duration)
+      ? '-' + fmtTime(audioEl.duration - audioEl.currentTime)
+      : '—';
   }
 
   audioEl.addEventListener('timeupdate', updateProgress);
-  audioEl.addEventListener('loadedmetadata', () => {
-    durationEl.textContent = fmtTime(audioEl.duration);
-  });
+  audioEl.addEventListener('loadedmetadata', updateProgress);
+
+  /* ── Volume ──────────────────────────────────────────── */
+  const volumeSlider = document.getElementById('moona-volume');
+  if (volumeSlider) {
+    const savedVolume = parseFloat(localStorage.getItem('moona-volume'));
+    if (!isNaN(savedVolume)) {
+      audioEl.volume = savedVolume;
+      volumeSlider.value = savedVolume;
+    }
+    volumeSlider.addEventListener('input', () => {
+      audioEl.volume = parseFloat(volumeSlider.value);
+      localStorage.setItem('moona-volume', volumeSlider.value);
+    });
+  }
 
   audioEl.addEventListener('play', () => {
     iconPlay.style.display  = 'none';
