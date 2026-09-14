@@ -223,12 +223,11 @@
       height: clamp(380px, 92vw, 480px);
       gap: 12px;
       margin-inline: calc(var(--page-margin, 16px) * -1);
-      padding-inline-start: var(--page-margin, 16px);
-      padding-inline-end: 0;
+      padding-inline: calc((100vw - 84vw) / 2);
       overflow-x: auto;
       scroll-behavior: smooth;
-      scroll-snap-type: x proximity;
-      scroll-padding-inline-start: var(--page-margin, 16px);
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: calc((100vw - 84vw) / 2);
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
     }
@@ -239,7 +238,7 @@
 
     .panel-showcase__item {
       flex: 0 0 84vw;
-      scroll-snap-align: start;
+      scroll-snap-align: center;
     }
 
     .panel-showcase__content {
