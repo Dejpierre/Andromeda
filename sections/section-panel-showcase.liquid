@@ -31,7 +31,7 @@
       -%}
       <a
         href="{{ panel_url }}"
-        class="panel-showcase__item"
+        class="panel-showcase__item{% if forloop.first %} is-active{% endif %}"
         {{ block.shopify_attributes }}
       >
         {%- if panel_image -%}
@@ -217,20 +217,35 @@
 
   @media (max-width: 749px) {
     .panel-showcase__row {
-      flex-direction: column;
-      height: auto;
-      gap: 12px;
+      height: clamp(380px, 92vw, 480px);
+      gap: 8px;
       padding-inline: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 16px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
 
-    .panel-showcase__item,
-    .panel-showcase__item:first-child {
-      flex: none;
-      aspect-ratio: 4 / 5;
+    .panel-showcase__row::-webkit-scrollbar {
+      display: none;
     }
 
-    .panel-showcase__content,
-    .panel-showcase__item:first-child .panel-showcase__content {
+    .panel-showcase__item {
+      flex: 0 0 64px;
+      scroll-snap-align: center;
+    }
+
+    .panel-showcase__item.is-active {
+      flex: 0 0 82vw;
+    }
+
+    .panel-showcase__content {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .panel-showcase__item.is-active .panel-showcase__content {
       opacity: 1;
       transform: none;
     }
@@ -248,6 +263,67 @@
     }
   }
 </style>
+
+<script>
+  (function () {
+    var root = document.getElementById('panel-showcase-{{ section.id }}');
+    if (!root) return;
+    var row = root.querySelector('.panel-showcase__row');
+    var items = Array.prototype.slice.call(row.querySelectorAll('.panel-showcase__item'));
+    var ticking = false;
+
+    function isMobile() {
+      return window.matchMedia('(max-width: 749px)').matches;
+    }
+
+    function updateActive() {
+      ticking = false;
+      if (!isMobile()) return;
+      var rowRect = row.getBoundingClientRect();
+      var rowCenter = rowRect.left + rowRect.width / 2;
+      var closest = null;
+      var closestDist = Infinity;
+      items.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        var center = r.left + r.width / 2;
+        var dist = Math.abs(center - rowCenter);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closest = el;
+        }
+      });
+      if (closest) {
+        items.forEach(function (el) {
+          el.classList.toggle('is-active', el === closest);
+        });
+      }
+    }
+
+    row.addEventListener(
+      'scroll',
+      function () {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(updateActive);
+        }
+      },
+      { passive: true }
+    );
+
+    window.addEventListener('resize', updateActive);
+    updateActive();
+
+    items.forEach(function (el) {
+      el.addEventListener('click', function (e) {
+        if (!isMobile()) return;
+        if (!el.classList.contains('is-active')) {
+          e.preventDefault();
+          el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      });
+    });
+  })();
+</script>
 
 {% schema %}
 {
