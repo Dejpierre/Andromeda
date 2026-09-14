@@ -200,92 +200,22 @@
   </script>
   {%- endif -%}
 
-  {%- if request.page_type == 'product' -%}
+  {%- if request.page_type == 'product' and product.metafields.custom.faq.value.size > 0 -%}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
+      {%- for entry in product.metafields.custom.faq.value -%}
       {
         "@type": "Question",
-        "name": "Quelle est la différence entre soie 22 mommes et 19 mommes ?",
+        "name": {{ entry.question.value | json }},
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Les mommes mesurent la densité du tissu de soie. À 22 mommes, la soie Andromeda est 15 à 20 % plus dense qu'une soie 19 mommes standard. Elle bloque 100 % de la lumière, résiste mieux aux lavages répétés et conserve sa douceur au fil du temps. Une soie 19 mommes, plus fine, perd ses propriétés plus rapidement."
+          "text": {{ entry.answer.value | json }}
         }
-      },
-      {
-        "@type": "Question",
-        "name": "Qu'est-ce que le grade 6A de la soie ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Le grade 6A est la plus haute classification mondiale de la soie de mûrier. Moins de 5 % de la production mondiale atteint ce niveau. Les filaments sont extra-longs, uniformes, sans nœuds ni irrégularités. Le résultat : une surface parfaitement lisse et homogène, idéale pour le contact prolongé avec la peau et les cheveux pendant le sommeil."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "La soie est-elle bonne pour la peau et les cheveux ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Oui. La soie de mûrier génère très peu de friction comparée au coton ou au synthétique — elle réduit les marques de pression sur la peau et les cassures capillaires. Elle est naturellement thermorégulatrice (fraîche en été, douce en hiver), hypoallergénique, et ne crée pas d'électricité statique. Ces propriétés en font le matériau de référence pour les accessoires de sommeil haut de gamme."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Le masque bloque-t-il vraiment 100 % de la lumière ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Oui. Grâce à la densité de la soie 22 mommes et à la coupe anatomique du masque, l'obscurité est totale quelle que soit la source lumineuse. La forme enveloppante laisse une légère cavité pour les yeux, ce qui évite toute pression sur les paupières tout en garantissant une opacité complète."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Le masque est-il certifié ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Oui. Le masque Andromeda est certifié OEKO-TEX® STANDARD 100, ce qui garantit l'absence de substances nocives dans le tissu — colorants, métaux lourds, pesticides. C'est la certification textile la plus reconnue au monde pour la sécurité des produits en contact avec la peau."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Comment laver mon masque Andromeda ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Lavage à la main à l'eau froide avec un savon doux (type savon de Marseille ou shampoing délicat), ou en machine sur cycle délicat à 30 °C maximum dans un filet de lavage. Séchage à plat, à l'air libre, loin de toute source de chaleur directe. Ne pas essorer. La soie étant naturellement antibactérienne, un lavage tous les 7 à 10 jours est suffisant pour un usage quotidien."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Le masque est-il adapté aux dormeurs sur le côté ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Oui. L'élastique réglable en soie est conçu pour s'adapter à toutes les morphologies sans exercer de pression sur la tête ni laisser de marques sur la peau au réveil. Le masque reste en place toute la nuit quelle que soit la position de sommeil — sur le dos, sur le côté ou en position mixte."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "C'est quoi le QR code inclus dans ma commande ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Chaque masque Andromeda est livré avec un QR code donnant accès à l'espace rituel exclusif — une sélection de sons d'ambiance conçus pour accompagner l'endormissement : pluie, forêt, océan, sons binauraux. Cet accès est permanent et réservé aux clients Andromeda."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Sous combien de temps suis-je livré(e) ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Livraison en France métropolitaine sous 2 à 4 jours ouvrés. Livraison internationale (Europe, monde) sous 5 à 10 jours ouvrés. Chaque commande est expédiée dans un emballage soigné, prête à offrir. La livraison est offerte dès 55 € d'achat."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Quelle est la politique de retour ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Vous disposez de 30 jours à compter de la réception pour retourner votre masque si vous n'êtes pas entièrement satisfait(e). Le retour est gratuit. Le remboursement est effectué dans les 5 à 7 jours ouvrés après réception de l'article."
-        }
-      }
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
     ]
   }
   </script>
