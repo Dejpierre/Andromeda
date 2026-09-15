@@ -23,9 +23,8 @@
             <polyline points="15 5 8 12 15 19"></polyline>
           </svg>
         </a>
-        <span class="moona-hub__logo-pill">
-          {{ settings.logo | image_url: height: 32 | image_tag: alt: 'Andromeda Paris', height: 16, loading: 'lazy' }}
-        </span>
+        {{ settings.logo | image_url: height: 64 | image_tag: alt: 'Andromeda Paris', height: 24, loading: 'lazy', class: 'moona-hub__logo moona-hub__logo--for-light' }}
+        {{ settings.logo_inverse | image_url: height: 64 | image_tag: alt: 'Andromeda Paris', height: 24, loading: 'lazy', class: 'moona-hub__logo moona-hub__logo--for-dark' }}
         <button type="button" class="moona-hub__icon-btn" id="moona-hub-theme-btn" aria-label="Passer en version sombre" aria-pressed="false">
           <span id="moona-hub-theme-icon"></span>
         </button>
@@ -451,8 +450,6 @@
     --hub-list-rule: rgba(20,22,31,0.12);
     --hub-play-bg: #232A47;
     --hub-play-ink: #FFFFFF;
-    --hub-logo-pill: transparent;
-    --hub-logo-pad: 0px;
     --hub-focus: #4A2731;
     width: 100%;
     background: var(--hub-bg);
@@ -472,8 +469,6 @@
     --hub-list-rule: rgba(255,255,255,0.16);
     --hub-play-bg: #FFFFFF;
     --hub-play-ink: #14161F;
-    --hub-logo-pill: rgba(255,255,255,0.92);
-    --hub-logo-pad: 8px 16px;
     --hub-focus: #FFFFFF;
   }
 
@@ -516,24 +511,25 @@
     border-color: var(--hub-focus);
   }
 
-  .moona-hub__logo-pill {
-    display: flex;
-    justify-content: center;
-  }
-
-  .moona-hub__logo-pill > * {
-    display: flex;
-    align-items: center;
-    background: var(--hub-logo-pill);
-    border-radius: 999px;
-    padding: var(--hub-logo-pad);
-    transition: background-color 0.25s ease-out;
-  }
-
-  .moona-hub__logo-pill img {
+  .moona-hub__logo {
     display: block;
-    height: 16px;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+    height: 24px;
     width: auto;
+  }
+
+  .moona-hub__logo--for-dark {
+    display: none;
+  }
+
+  .moona-hub[data-theme="dark"] .moona-hub__logo--for-light {
+    display: none;
+  }
+
+  .moona-hub[data-theme="dark"] .moona-hub__logo--for-dark {
+    display: block;
   }
 
   .moona-hub__heading {
@@ -738,7 +734,6 @@
   @media (prefers-reduced-motion: reduce) {
     .moona-hub,
     .moona-hub__icon-btn,
-    .moona-hub__logo-pill > *,
     .moona-hub__track-play {
       transition: none;
     }
