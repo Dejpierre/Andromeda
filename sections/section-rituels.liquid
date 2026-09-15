@@ -1,22 +1,6 @@
 <div class="moona-rituel" id="moona-rituel">
 
-  <!-- Fond nuit -->
-  <div class="moona-rituel__bg" aria-hidden="true">
-    <div class="moona-rituel__moon-glow"></div>
-    <div class="moona-rituel__stars"></div>
-    <div class="moona-rituel__stars-2"></div>
-  </div>
-
   <div class="moona-rituel__wrap">
-
-    <div class="moona-rituel__greeting moona-anim-1" id="moona-greeting">
-      {%- if section.settings.title != blank -%}
-        <h1 class="moona-rituel__title">{{ section.settings.title }}</h1>
-      {%- endif -%}
-      {%- if section.settings.subtitle != blank -%}
-        <p class="moona-rituel__subtitle">{{ section.settings.subtitle }}</p>
-      {%- endif -%}
-    </div>
 
     <!-- État : pas de token -->
     <div class="moona-rituel__error moona-anim-3" id="moona-no-token" hidden>
@@ -30,20 +14,47 @@
       <p>{{ section.settings.invalid_msg | default: "Ce lien n'est pas valide ou a expiré. Contacte-nous si tu as besoin d'aide." }}</p>
     </div>
 
-    <!-- Dossiers -->
-    <div class="moona-rituel__folders-list" id="moona-folders"></div>
+    <!-- Hub sons d'ambiance -->
+    <div class="moona-hub" id="moona-hub" data-theme="light">
 
-    <!-- Pistes d'un dossier -->
-    <div class="moona-rituel__tracks-view" id="moona-tracks-view" hidden>
-      <div class="moona-rituel__tracks-header moona-anim-1">
-        <button class="moona-rituel__back-btn" id="moona-back-to-folders" type="button">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <div class="moona-hub__topbar">
+        <a href="{{ section.settings.back_url | default: '/' }}" class="moona-hub__icon-btn" aria-label="Retour">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 5 8 12 15 19"></polyline>
           </svg>
-          <span id="moona-folder-name">Retour</span>
+        </a>
+        <span class="moona-hub__logo-pill">
+          {{ settings.logo | image_url: height: 32 | image_tag: alt: 'Andromeda Paris', height: 16, loading: 'lazy' }}
+        </span>
+        <button type="button" class="moona-hub__icon-btn" id="moona-hub-theme-btn" aria-label="Passer en version sombre" aria-pressed="false">
+          <span id="moona-hub-theme-icon"></span>
         </button>
       </div>
-      <div class="moona-rituel__moments" id="moona-tracks"></div>
+
+      <div class="moona-hub__heading">
+        {%- if section.settings.title != blank -%}
+          <h1 class="moona-hub__title">{{ section.settings.title }}</h1>
+        {%- endif -%}
+        <p class="moona-hub__subtitle" id="moona-hub-subtitle" data-light="{{ section.settings.subtitle | escape }}" data-dark="{{ section.settings.subtitle_dark | escape }}">{{ section.settings.subtitle }}</p>
+      </div>
+
+      <div class="moona-hub__collections" id="moona-hub-collections"></div>
+
+      <div class="moona-hub__tracklist">
+        <div class="moona-hub__tracklist-header">
+          <span class="moona-hub__tracklist-title">Toutes les pistes</span>
+          <span class="moona-hub__tracklist-count" id="moona-hub-count"></span>
+        </div>
+        <div id="moona-hub-tracks"></div>
+      </div>
+
+      {%- if section.settings.upcoming_text != blank -%}
+        <div class="moona-hub__upcoming">
+          <span class="moona-hub__upcoming-title">{{ section.settings.upcoming_title | default: 'À venir' }}</span>
+          <span class="moona-hub__upcoming-text">{{ section.settings.upcoming_text }}</span>
+        </div>
+      {%- endif -%}
+
     </div>
 
     <!-- Player immersif -->
@@ -417,7 +428,300 @@
     text-transform: uppercase;
   }
 
-  /* ── Greeting ───────────────────────────────────────── */
+  /* ── Hub sons d'ambiance (index) ─────────────────────── */
+  .moona-hub {
+    --hub-bg: #FFFFFF;
+    --hub-ink: #14161F;
+    --hub-muted: #6E6A63;
+    --hub-accent: #B06A47;
+    --hub-rule: rgba(20,22,31,0.12);
+    --hub-list-rule: rgba(20,22,31,0.12);
+    --hub-play-bg: #232A47;
+    --hub-play-ink: #FFFFFF;
+    --hub-logo-pill: transparent;
+    --hub-logo-pad: 0px;
+    --hub-focus: #4A2731;
+    width: 100%;
+    max-width: 390px;
+    margin: 0 auto;
+    background: var(--hub-bg);
+    padding: 32px 24px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    transition: background-color 0.25s ease-out;
+  }
+
+  .moona-hub[data-theme="dark"] {
+    --hub-bg: #14161F;
+    --hub-ink: #FFFFFF;
+    --hub-muted: rgba(255,255,255,0.72);
+    --hub-accent: #D79B74;
+    --hub-rule: rgba(255,255,255,0.22);
+    --hub-list-rule: rgba(255,255,255,0.16);
+    --hub-play-bg: #FFFFFF;
+    --hub-play-ink: #14161F;
+    --hub-logo-pill: rgba(255,255,255,0.92);
+    --hub-logo-pad: 8px 16px;
+    --hub-focus: #FFFFFF;
+  }
+
+  .moona-hub__topbar {
+    display: grid;
+    grid-template-columns: 44px 1fr 44px;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .moona-hub__icon-btn {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--hub-rule);
+    border-radius: 999px;
+    color: var(--hub-ink);
+    cursor: pointer;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: border-color 0.25s ease-out, color 0.25s ease-out;
+  }
+
+  .moona-hub__icon-btn:hover {
+    border-color: var(--hub-focus);
+  }
+
+  .moona-hub__logo-pill {
+    display: flex;
+    justify-content: center;
+  }
+
+  .moona-hub__logo-pill > * {
+    display: flex;
+    align-items: center;
+    background: var(--hub-logo-pill);
+    border-radius: 999px;
+    padding: var(--hub-logo-pad);
+    transition: background-color 0.25s ease-out;
+  }
+
+  .moona-hub__logo-pill img {
+    display: block;
+    height: 16px;
+    width: auto;
+  }
+
+  .moona-hub__heading {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .moona-hub__title {
+    font-family: 'GC Amelie Promised', Georgia, serif !important;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 1.1;
+    color: var(--hub-ink);
+    margin: 0;
+  }
+
+  .moona-hub__subtitle {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--hub-muted);
+    margin: 0;
+  }
+
+  .moona-hub__collections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .moona-hub__collection {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .moona-hub__collection-visual {
+    position: relative;
+    display: block;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: var(--hub-rule);
+  }
+
+  .moona-hub__collection-visual img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    display: block;
+  }
+
+  .moona-hub__collection-play {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    border-radius: 999px;
+    color: #14161F;
+  }
+
+  .moona-hub__collection-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .moona-hub__collection-title {
+    font-family: 'GC Amelie Promised', Georgia, serif !important;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.15;
+    color: var(--hub-ink);
+  }
+
+  .moona-hub__collection-meta {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--hub-muted);
+  }
+
+  .moona-hub__tracklist {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .moona-hub__tracklist-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: baseline;
+  }
+
+  .moona-hub__tracklist-title {
+    font-size: 20px;
+    color: var(--hub-ink);
+  }
+
+  .moona-hub__tracklist-count {
+    font-size: 14px;
+    color: var(--hub-muted);
+    white-space: nowrap;
+  }
+
+  .moona-hub__track {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: 14px;
+    align-items: center;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid var(--hub-list-rule);
+    background: none;
+    margin: 0;
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .moona-hub__track-thumb {
+    width: 56px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    background-color: var(--hub-rule);
+  }
+
+  .moona-hub__track-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .moona-hub__track-title {
+    font-size: 16px;
+    color: var(--hub-ink);
+  }
+
+  .moona-hub__track-family {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--hub-accent);
+  }
+
+  .moona-hub__track-play {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--hub-play-bg);
+    color: var(--hub-play-ink);
+    border-radius: 999px;
+    flex-shrink: 0;
+    transition: background-color 0.25s ease-out, color 0.25s ease-out;
+  }
+
+  .moona-hub__upcoming {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .moona-hub__upcoming-title {
+    font-size: 20px;
+    color: var(--hub-ink);
+  }
+
+  .moona-hub__upcoming-text {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--hub-muted);
+  }
+
+  .moona-hub__icon-btn:focus-visible,
+  .moona-hub__collection:focus-visible,
+  .moona-hub__track:focus-visible {
+    outline: 2px solid var(--hub-focus);
+    outline-offset: 1px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .moona-hub,
+    .moona-hub__icon-btn,
+    .moona-hub__logo-pill > *,
+    .moona-hub__track-play {
+      transition: none;
+    }
+  }
+
+  /* ── Greeting (hérité, non utilisé par le hub) ───────── */
   .moona-rituel__greeting {
     text-align: center;
   }
@@ -1084,6 +1388,7 @@
   .moona-rituel--player-mode .moona-rituel__player-wrap.moona-player2 {
     position: fixed;
     inset: 0;
+    z-index: 20;
     width: 100vw;
     height: 100dvh;
     margin: 0;
@@ -1538,7 +1843,6 @@
   const currentEl     = document.getElementById('moona-current');
   const durationEl    = document.getElementById('moona-duration');
   const track         = document.getElementById('moona-track');
-  const greetingEl    = document.getElementById('moona-greeting');
   const offlineBtn    = document.getElementById('moona-offline-btn');
   const offlineIconDl = offlineBtn.querySelector('.moona-offline-icon-dl');
   const offlineIconOk = offlineBtn.querySelector('.moona-offline-icon-ok');
@@ -1625,6 +1929,7 @@
     folderMeta[{{ block.settings.folder_name | default: '' | json }}] = {
       image: {% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 800 | json }}{% else %}null{% endif %},
       imageAlt: {{ block.settings.image.alt | default: '' | json }},
+      shortName: {{ block.settings.short_name | default: '' | json }},
     };
     {% endif %}
   {% endfor %}
@@ -1727,90 +2032,123 @@
   rewindBtn.addEventListener('click',  () => { audioEl.currentTime = Math.max(0, audioEl.currentTime - 15); });
   forwardBtn.addEventListener('click', () => { audioEl.currentTime = Math.min(audioEl.duration || 0, audioEl.currentTime + 15); });
 
-  /* ── Éléments navigation ─────────────────────────────── */
-  const foldersEl       = document.getElementById('moona-folders');
-  const tracksViewEl    = document.getElementById('moona-tracks-view');
-  const tracksEl        = document.getElementById('moona-tracks');
-  const folderNameEl    = document.getElementById('moona-folder-name');
-  const backToFoldersBtn = document.getElementById('moona-back-to-folders');
+  /* ── Éléments du hub ──────────────────────────────────── */
+  const hubEl            = document.getElementById('moona-hub');
+  const hubCollectionsEl = document.getElementById('moona-hub-collections');
+  const hubTracksEl      = document.getElementById('moona-hub-tracks');
+  const hubCountEl       = document.getElementById('moona-hub-count');
+  const hubThemeBtn      = document.getElementById('moona-hub-theme-btn');
+  const hubThemeIconEl   = document.getElementById('moona-hub-theme-icon');
+  const hubSubtitleEl    = document.getElementById('moona-hub-subtitle');
 
   let currentFolder     = null;
   let currentTrack      = null;
   let currentTrackIndex = -1;
   let playlistMode      = true;
 
-  /* ── Afficher les dossiers ───────────────────────────── */
-  function showFolders() {
+  const PLAY_ICON_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="7 4 20 12 7 20 7 4"></polygon></svg>';
+  const MOON_ICON_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"></path></svg>';
+  const SUN_ICON_SVG  = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><line x1="12" y1="3" x2="12" y2="5"></line><line x1="12" y1="19" x2="12" y2="21"></line><line x1="3" y1="12" x2="5" y2="12"></line><line x1="19" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="7" y2="7"></line><line x1="17" y1="17" x2="18.4" y2="18.4"></line><line x1="5.6" y1="18.4" x2="7" y2="17"></line><line x1="17" y1="7" x2="18.4" y2="5.6"></line></svg>';
+
+  /* ── Afficher le hub (accueil) ────────────────────────── */
+  function showHub() {
     currentFolder            = null;
-    greetingEl.style.display = '';
-    foldersEl.hidden         = false;
-    tracksViewEl.hidden      = true;
+    hubEl.hidden             = false;
     playerWrap.hidden        = true;
     playerWrap.style.display = 'none';
     rituelRoot.classList.remove('moona-rituel--player-mode');
   }
 
-  function buildFolders() {
-    foldersEl.innerHTML = '';
-    let delay = 3;
-    Object.entries(folders).forEach(([name, tracks]) => {
-      const meta  = folderMeta[name] || {};
-      const count = `${tracks.length} son${tracks.length > 1 ? 's' : ''}`;
-      const btn   = document.createElement('button');
-      btn.type    = 'button';
+  function startTrack(track) {
+    initOrbAudio();
+    currentFolder = track.folder;
+    const idx = (folders[track.folder] || []).indexOf(track);
+    currentTrackIndex = idx;
+    hubEl.hidden = true;
+    loadRituel(track, idx);
+  }
 
-      if (meta.image) {
-        btn.className = `moona-rituel__folder-card moona-anim-${delay}`;
-        btn.innerHTML = `
-          <img class="moona-rituel__folder-img" src="${meta.image}" alt="${meta.imageAlt || name}" loading="lazy">
-          <div class="moona-rituel__folder-overlay"></div>
-          <div class="moona-rituel__folder-info">
-            <span class="moona-rituel__folder-name">${name}</span>
-            <span class="moona-rituel__folder-count">${count}</span>
-          </div>`;
-      } else {
-        btn.className = `moona-rituel__folder-card moona-rituel__folder-card--no-img moona-anim-${delay}`;
-        btn.innerHTML = `
-          <div class="moona-rituel__folder-info">
-            <span class="moona-rituel__folder-name">${name}</span>
-            <span class="moona-rituel__folder-count">${count}</span>
-          </div>`;
-      }
+  function buildHub() {
+    const folderNames = Object.keys(folders).slice(0, 2);
 
-      btn.addEventListener('click', () => showTracks(name));
-      foldersEl.appendChild(btn);
-      delay = Math.min(delay + 1, 6);
+    hubCollectionsEl.innerHTML = '';
+    folderNames.forEach((name) => {
+      const meta = folderMeta[name] || {};
+      const list = (folders[name] || []).filter(t => t.url);
+      if (!list.length) return;
+      const count = `${list.length} son${list.length > 1 ? 's' : ''}`;
+      const displayName = meta.shortName || name;
+
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'moona-hub__collection';
+      card.innerHTML = `
+        <span class="moona-hub__collection-visual">
+          ${meta.image ? `<img src="${meta.image}" alt="${meta.imageAlt || name}" loading="lazy">` : ''}
+          <span class="moona-hub__collection-play" aria-hidden="true">${PLAY_ICON_SVG}</span>
+        </span>
+        <span class="moona-hub__collection-text">
+          <span class="moona-hub__collection-title">${displayName}</span>
+          <span class="moona-hub__collection-meta">${count}</span>
+        </span>`;
+      card.addEventListener('click', () => startTrack(list[0]));
+      hubCollectionsEl.appendChild(card);
+    });
+
+    const allTracks = tracksData.filter(t => t.url);
+    hubCountEl.textContent = `${allTracks.length} son${allTracks.length > 1 ? 's' : ''}`;
+
+    hubTracksEl.innerHTML = '';
+    allTracks.forEach((track) => {
+      const meta = folderMeta[track.folder] || {};
+      const row = document.createElement('button');
+      row.type = 'button';
+      row.className = 'moona-hub__track';
+      row.innerHTML = `
+        ${meta.image
+          ? `<img class="moona-hub__track-thumb" src="${meta.image}" alt="" loading="lazy">`
+          : '<span class="moona-hub__track-thumb"></span>'}
+        <span class="moona-hub__track-text">
+          <span class="moona-hub__track-title">${track.label}</span>
+          <span class="moona-hub__track-family">${track.folder}</span>
+        </span>
+        <span class="moona-hub__track-play" aria-hidden="true">${PLAY_ICON_SVG}</span>`;
+      row.addEventListener('click', () => startTrack(track));
+      hubTracksEl.appendChild(row);
     });
   }
 
-  /* ── Afficher les pistes d'un dossier ───────────────── */
-  function showTracks(folderName) {
-    currentFolder            = folderName;
-    greetingEl.style.display = 'none';
-    foldersEl.hidden         = true;
-    tracksViewEl.hidden      = false;
-    playerWrap.hidden        = true;
-    playerWrap.style.display = 'none';
-    folderNameEl.textContent = folderName;
-    rituelRoot.classList.remove('moona-rituel--player-mode');
+  /* ── Bascule clair / sombre ───────────────────────────── */
+  const HUB_THEME_KEY = 'moona-hub-theme';
 
-    tracksEl.innerHTML = '';
-    (folders[folderName] || []).forEach((track, i) => {
-      const btn = document.createElement('button');
-      btn.className = `moona-rituel__moment moona-anim-${Math.min(i + 2, 6)}`;
-      btn.type = 'button';
-      btn.innerHTML = `
-        <div class="moona-rituel__moment-bg moona-rituel__moment-bg--sommeil"></div>
-        <div class="moona-rituel__moment-inner">
-          <div>
-            <span class="moona-rituel__moment-label">${track.label}</span>
-            ${track.desc ? `<span class="moona-rituel__moment-desc">${track.desc}</span>` : ''}
-          </div>
-        </div>`;
-      btn.addEventListener('click', () => { initOrbAudio(); currentTrackIndex = i; loadRituel(track, i); });
-      tracksEl.appendChild(btn);
-    });
+  function applyHubTheme(theme, persist) {
+    hubEl.dataset.theme = theme;
+    const isDark = theme === 'dark';
+    hubThemeBtn.setAttribute('aria-pressed', String(isDark));
+    hubThemeBtn.setAttribute('aria-label', isDark ? 'Passer en version claire' : 'Passer en version sombre');
+    hubThemeIconEl.innerHTML = isDark ? SUN_ICON_SVG : MOON_ICON_SVG;
+    if (hubSubtitleEl) {
+      hubSubtitleEl.textContent = isDark
+        ? (hubSubtitleEl.dataset.dark || hubSubtitleEl.dataset.light)
+        : hubSubtitleEl.dataset.light;
+    }
+    if (persist !== false) {
+      try { localStorage.setItem(HUB_THEME_KEY, theme); } catch (e) {}
+    }
   }
+
+  function initHubTheme() {
+    let theme = null;
+    try { theme = localStorage.getItem(HUB_THEME_KEY); } catch (e) {}
+    if (theme !== 'light' && theme !== 'dark') {
+      theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+    applyHubTheme(theme, false);
+  }
+
+  hubThemeBtn.addEventListener('click', () => {
+    applyHubTheme(hubEl.dataset.theme === 'dark' ? 'light' : 'dark');
+  });
 
   /* ── Retour depuis le player ─────────────────────────── */
   backBtn.addEventListener('click', () => {
@@ -1824,13 +2162,7 @@
     playerWrap.style.display = 'none';
     playerEl.hidden          = true;
     loaderEl.hidden          = true;
-    if (currentFolder) showTracks(currentFolder);
-    else showFolders();
-  });
-
-  /* ── Retour depuis les pistes vers les dossiers ──────── */
-  backToFoldersBtn.addEventListener('click', () => {
-    showFolders();
+    showHub();
   });
 
   /* ── IndexedDB (cache hors-ligne) ────────────────────── */
@@ -2030,8 +2362,7 @@
   function loadRituel(track, index) {
     currentTrack             = track;
     if (index !== undefined) currentTrackIndex = index;
-    tracksViewEl.hidden      = true;
-    greetingEl.style.display = 'none';
+    hubEl.hidden             = true;
     rituelRoot.classList.add('moona-rituel--player-mode');
     currentCacheKey   = track.label;
     currentRemoteUrl  = track.url || null;
@@ -2184,8 +2515,9 @@
   }
 
   /* ── Init ────────────────────────────────────────────── */
-  buildFolders();
-  showFolders();
+  buildHub();
+  initHubTheme();
+  showHub();
   drawOrb();
 })();
 </script>
@@ -2202,13 +2534,31 @@
       "type": "text",
       "id": "title",
       "label": "Titre",
-      "default": "Tes rituels Moona"
+      "default": "Sons d'ambiance"
     },
     {
       "type": "text",
       "id": "subtitle",
-      "label": "Sous-titre",
-      "default": "Choisis un moment de la journée pour lancer ton audio de développement personnel."
+      "label": "Sous-titre (thème clair)",
+      "default": "Deux familles de paysages sonores pour accompagner l'endormissement."
+    },
+    {
+      "type": "text",
+      "id": "subtitle_dark",
+      "label": "Sous-titre (thème sombre)",
+      "default": "Lumière éteinte, écran au plus bas. Choisissez une ambiance et posez le téléphone."
+    },
+    {
+      "type": "text",
+      "id": "upcoming_title",
+      "label": "Titre bloc \"à venir\"",
+      "default": "À venir"
+    },
+    {
+      "type": "text",
+      "id": "upcoming_text",
+      "label": "Texte bloc \"à venir\"",
+      "default": "Accompagnement vocal — une voix douce pour glisser vers le sommeil."
     },
     {
       "type": "image_picker",
@@ -2254,6 +2604,12 @@
           "label": "Nom du dossier",
           "info": "Doit correspondre exactement au champ Dossier des pistes",
           "default": "Ambiance situationnelle"
+        },
+        {
+          "type": "text",
+          "id": "short_name",
+          "label": "Nom court (affichage demi-largeur, optionnel)",
+          "info": "Sinon le nom complet est utilisé"
         },
         {
           "type": "image_picker",
