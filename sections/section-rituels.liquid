@@ -328,6 +328,10 @@
     overflow: hidden;
   }
 
+  .moona-rituel:has(#moona-hub:not([hidden])) {
+    padding: 0;
+  }
+
   /* ── Background animé ───────────────────────────────── */
   .moona-rituel__bg {
     position: fixed;
@@ -1385,10 +1389,6 @@
   }
 
   .moona-rituel--player-mode .moona-rituel__bg {
-    display: none;
-  }
-
-  body:has(.moona-rituel--player-mode) .moona-header {
     display: none;
   }
 
