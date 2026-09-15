@@ -332,6 +332,15 @@
     padding: 0;
   }
 
+  .moona-rituel:has(#moona-hub[data-theme="dark"]:not([hidden])) {
+    background: #14161F;
+    transition: background-color 0.25s ease-out;
+  }
+
+  .moona-rituel:has(#moona-hub[data-theme="dark"]:not([hidden])) .moona-rituel__bg {
+    display: none;
+  }
+
   /* ── Background animé ───────────────────────────────── */
   .moona-rituel__bg {
     position: fixed;
