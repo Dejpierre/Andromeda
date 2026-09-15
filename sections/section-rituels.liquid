@@ -57,6 +57,9 @@
             <polyline points="15 5 8 12 15 19"></polyline>
           </svg>
         </button>
+        <span class="moona-player2__logo-pill">
+          {{ settings.logo | image_url: height: 36 | image_tag: alt: 'Andromeda Paris', height: 18, loading: 'lazy' }}
+        </span>
         <span class="moona-player2__menu-anchor">
           <button class="moona-player2__icon-btn" id="moona-more-btn" type="button" aria-label="Plus d'options" aria-expanded="false" aria-haspopup="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -110,10 +113,6 @@
       <div class="moona-player2__card-wrap">
         <div class="moona-player2__content" id="moona-player" hidden>
           <span class="moona-player2__moment" id="moona-player-moment" hidden></span>
-
-          <div class="moona-player2__card-logo">
-            {{ settings.logo | image_url: height: 36 | image_tag: alt: 'Andromeda Paris', height: 18, loading: 'lazy' }}
-          </div>
 
           <div class="moona-player2__meta">
             <span class="moona-player2__category" id="moona-track-subtitle"></span>
@@ -1119,9 +1118,10 @@
     left: 0;
     right: 0;
     z-index: 3;
-    display: flex;
+    display: grid;
+    grid-template-columns: 44px 1fr 44px;
+    gap: 12px;
     align-items: center;
-    justify-content: space-between;
     padding: 20px;
     padding-top: calc(20px + env(safe-area-inset-top, 0px));
   }
@@ -1145,15 +1145,23 @@
     background: #FFFFFF;
   }
 
-  .moona-player2__card-logo {
+  .moona-player2__logo-pill {
     display: flex;
     justify-content: center;
   }
 
-  .moona-player2__card-logo img {
+  .moona-player2__logo-pill img {
     display: block;
     height: 18px;
     width: auto;
+  }
+
+  .moona-player2__logo-pill > * {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.92);
+    border-radius: 999px;
+    padding: 9px 18px;
   }
 
   .moona-player2__menu-anchor {
