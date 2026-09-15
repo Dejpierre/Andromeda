@@ -17,7 +17,8 @@
           "type": "audio_folder",
           "settings": {
             "folder_name": "Ambiance situationnelle",
-            "image": "shopify://shop_images/Couverture_dossier_ambiance.png"
+            "short_name": "",
+            "image": "shopify://shop_images/ElevenLabs_image_gpt-image-2_Editorial_album_2026-09-15T13_18_30.png"
           }
         },
         "audio_folder_9LQFiK": {
@@ -25,7 +26,7 @@
           "settings": {
             "folder_name": "S'endormir aux quatre coins du monde",
             "short_name": "Quatre coins du monde",
-            "image": "shopify://shop_images/ChatGPT_Image_18_juin_2026_13_11_00.png"
+            "image": "shopify://shop_images/ElevenLabs_image_gpt-image-2_Editorial_album_2026-09-15T13_20_06.png"
           }
         },
         "track_1": {
@@ -34,7 +35,8 @@
             "folder": "Ambiance situationnelle",
             "label": "Nuit pluvieuse",
             "desc": "Pluie intense sur les toits",
-            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/chanson_2026-06-18T113620.mp3?v=1781782657"
+            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/chanson_2026-06-18T113620.mp3?v=1781782657",
+            "image": "shopify://shop_images/Editorial_album_2026-09-15T12_57_36.png"
           }
         },
         "track_3": {
@@ -43,7 +45,8 @@
             "folder": "Ambiance situationnelle",
             "label": "Vagues de l'océan",
             "desc": "Au bord de l'eau",
-            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/Calm_Seaside_Ambience_2026-06-05T161028.mp3?v=1781779191"
+            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/Calm_Seaside_Ambience_2026-06-05T161028.mp3?v=1781779191",
+            "image": "shopify://shop_images/Editorial_album_2026-09-15T13_03_20.png"
           }
         },
         "audio_track_Ja9UAJ": {
@@ -52,7 +55,8 @@
             "folder": "Ambiance situationnelle",
             "label": "Nuit au coin du feu",
             "desc": "Installez-vous dans une forêt calme, bercé par le crépitement doux d’un feu de bois",
-            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/Au_Coin_du_Feu_2026-06-18T112644.mp3?v=1781782345"
+            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/Au_Coin_du_Feu_2026-06-18T112644.mp3?v=1781782345",
+            "image": "shopify://shop_images/Editorial_album_2026-09-15T13_05_25.png"
           }
         },
         "audio_track_ePDk4U": {
@@ -61,7 +65,8 @@
             "folder": "S'endormir aux quatre coins du monde",
             "label": "Pluie sur les rizières d’Ubud",
             "desc": "Rizières apaisantes et atmosphère tropicale.",
-            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/Echoes_of_Ubud_2026-06-18T105058.mp3?v=1781780093"
+            "audio_url": "https://cdn.shopify.com/s/files/1/1000/9375/5727/files/Echoes_of_Ubud_2026-06-18T105058.mp3?v=1781780093",
+            "image": "shopify://shop_images/Editorial_album_2026-09-15T13_09_46.png"
           }
         },
         "audio_track_dM3jh8": {
