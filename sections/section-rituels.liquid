@@ -49,7 +49,8 @@
     <!-- Player immersif -->
     <div class="moona-rituel__player-wrap moona-player2" id="moona-player-wrap" hidden>
 
-      <img class="moona-player2__hero" id="moona-player-hero" alt="">
+      <img class="moona-player2__hero is-active" id="moona-player-hero" alt="">
+      <img class="moona-player2__hero" id="moona-player-hero-b" alt="">
 
       <div class="moona-player2__topbar">
         <button class="moona-player2__icon-btn" id="moona-back-btn" type="button" aria-label="{{ section.settings.back_to_moments | default: 'Choisir un autre rituel' }}">
@@ -1105,11 +1106,25 @@
   .moona-player2__hero {
     position: absolute;
     inset: 0;
+    z-index: 0;
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
     background-color: #14161F;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+  }
+
+  .moona-player2__hero.is-active {
+    z-index: 1;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .moona-player2__hero {
+      transition: none;
+    }
   }
 
   .moona-player2__topbar {
@@ -1432,7 +1447,8 @@
   }
 
   .moona-player2__sleep-section {
-    padding-top: 16px;
+    margin-top: 8px;
+    padding-top: 20px;
     border-top: 1px solid rgba(20,22,31,0.12);
     display: flex;
     flex-direction: column;
@@ -1535,7 +1551,24 @@
   const playlistSwitch = document.getElementById('moona-playlist-switch');
   const offlineTitleEl = document.getElementById('moona-offline-title');
   const offlineHintEl  = document.getElementById('moona-offline-hint');
-  const heroEl        = document.getElementById('moona-player-hero');
+  let heroActive      = document.getElementById('moona-player-hero');
+  let heroStandby     = document.getElementById('moona-player-hero-b');
+
+  function setHeroImage(url, alt) {
+    if (!url || url === heroActive.src) {
+      if (alt !== undefined) heroActive.alt = alt;
+      return;
+    }
+    heroStandby.onload = () => {
+      heroStandby.classList.add('is-active');
+      heroActive.classList.remove('is-active');
+      const tmp = heroActive;
+      heroActive = heroStandby;
+      heroStandby = tmp;
+    };
+    heroStandby.alt = alt || '';
+    heroStandby.src = url;
+  }
   const trackTitleEl  = document.getElementById('moona-track-title');
   const trackSubEl    = document.getElementById('moona-track-subtitle');
   const moreBtn       = document.getElementById('moona-more-btn');
@@ -1605,6 +1638,7 @@
       label:  {{ block.settings.label      | default: 'Audio'     | json }},
       desc:   {{ block.settings.desc       | default: ''          | json }},
       url:    {{ block.settings.audio_url  | default: ''          | json }},
+      image:  {% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 1200 | json }}{% else %}null{% endif %},
     },
     {% endif %}
     {% endfor %}
@@ -2007,10 +2041,9 @@
     trackTitleEl.textContent = track.label;
     trackSubEl.textContent   = currentFolder || '';
     const heroMeta = folderMeta[currentFolder] || {};
-    if (heroMeta.image) {
-      heroEl.src = heroMeta.image;
-      heroEl.alt = track.label ? `Ambiance ${currentFolder || ''} — ${track.label}` : '';
-    }
+    const heroImageUrl = track.image || heroMeta.image;
+    const heroAlt = track.label ? `Ambiance ${currentFolder || ''} — ${track.label}` : '';
+    setHeroImage(heroImageUrl, heroAlt);
     startSleepTimer(selectedSleepMinutes);
     fillEl.style.width      = '0%';
     thumbEl.style.left      = '0%';
@@ -2256,6 +2289,12 @@
           "id": "audio_url",
           "label": "URL audio",
           "info": "URL CDN du fichier mp3/wav"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo de fond (optionnel)",
+          "info": "Sinon, l'image du dossier est utilisée."
         }
       ]
     }
