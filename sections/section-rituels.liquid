@@ -68,9 +68,7 @@
             <polyline points="15 5 8 12 15 19"></polyline>
           </svg>
         </button>
-        <span class="moona-player2__logo-pill">
-          {{ settings.logo | image_url: height: 36 | image_tag: alt: 'Andromeda Paris', height: 18, loading: 'lazy' }}
-        </span>
+        {{ settings.logo_inverse | image_url: height: 72 | image_tag: alt: 'Andromeda Paris', height: 26, loading: 'lazy', class: 'moona-player2__logo' }}
         <span class="moona-player2__menu-anchor">
           <button class="moona-player2__icon-btn" id="moona-more-btn" type="button" aria-label="Plus d'options" aria-expanded="false" aria-haspopup="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -1479,23 +1477,14 @@
     background: #FFFFFF;
   }
 
-  .moona-player2__logo-pill {
-    display: flex;
-    justify-content: center;
-  }
-
-  .moona-player2__logo-pill img {
+  .moona-player2__logo {
     display: block;
-    height: 18px;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+    height: 26px;
     width: auto;
-  }
-
-  .moona-player2__logo-pill > * {
-    display: flex;
-    align-items: center;
-    background: rgba(255,255,255,0.92);
-    border-radius: 999px;
-    padding: 9px 18px;
+    filter: drop-shadow(0 1px 4px rgba(0,0,0,0.35));
   }
 
   .moona-player2__menu-anchor {
