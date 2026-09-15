@@ -2104,12 +2104,13 @@
     hubTracksEl.innerHTML = '';
     allTracks.forEach((track) => {
       const meta = folderMeta[track.folder] || {};
+      const thumbImage = track.image || meta.image;
       const row = document.createElement('button');
       row.type = 'button';
       row.className = 'moona-hub__track';
       row.innerHTML = `
-        ${meta.image
-          ? `<img class="moona-hub__track-thumb" src="${meta.image}" alt="" loading="lazy">`
+        ${thumbImage
+          ? `<img class="moona-hub__track-thumb" src="${thumbImage}" alt="" loading="lazy">`
           : '<span class="moona-hub__track-thumb"></span>'}
         <span class="moona-hub__track-text">
           <span class="moona-hub__track-title">${track.label}</span>
