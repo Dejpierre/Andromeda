@@ -2058,7 +2058,6 @@
     } else {
       audioEl.currentTime = 0;
       audioEl.play().catch(() => {});
-      startSleepTimer(selectedSleepMinutes);
     }
   });
 
@@ -2218,6 +2217,7 @@
     sleepTimerId = null;
     sleepDeadline = null;
     sleepFadeStarted = false;
+    sleepTimerArmed = false;
     offlineBtn.hidden = true;
     if (currentBlobUrl) { URL.revokeObjectURL(currentBlobUrl); currentBlobUrl = null; }
     playerWrap.hidden        = true;
@@ -2307,6 +2307,7 @@
   let sleepTimerId = null;
   let sleepDeadline = null;
   let sleepFadeStarted = false;
+  let sleepTimerArmed = false;
   let selectedSleepMinutes = 30;
   const SLEEP_FADE_MS = 25000;
 
@@ -2509,7 +2510,10 @@
     const heroImageUrl = track.image || heroMeta.image;
     const heroAlt = track.label ? `Ambiance ${currentFolder || ''} — ${track.label}` : '';
     setHeroImage(heroImageUrl, heroAlt);
-    startSleepTimer(selectedSleepMinutes);
+    if (!sleepTimerArmed) {
+      sleepTimerArmed = true;
+      startSleepTimer(selectedSleepMinutes);
+    }
     fillEl.style.width      = '0%';
     thumbEl.style.left      = '0%';
     currentEl.textContent   = '0:00';
