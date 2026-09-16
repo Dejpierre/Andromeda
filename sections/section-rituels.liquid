@@ -104,8 +104,25 @@
                 <span class="moona-player2__switch-knob"></span>
               </span>
             </button>
+
+            <span class="moona-player2__menu-sep" id="moona-install-sep" hidden></span>
+
+            <button class="moona-player2__menu-item" id="moona-install-btn" type="button" hidden>
+              <span class="moona-player2__menu-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"></rect><line x1="12" y1="9" x2="12" y2="15"></line><line x1="9" y1="12" x2="15" y2="12"></line></svg>
+              </span>
+              <span class="moona-player2__menu-text">
+                <span class="moona-player2__menu-title">Ajouter à l'écran d'accueil</span>
+                <span class="moona-player2__menu-hint" id="moona-install-hint">Accédez-y en un geste</span>
+              </span>
+            </button>
           </div>
         </span>
+      </div>
+
+      <div class="moona-player2__install-tip" id="moona-install-tip" hidden>
+        <p id="moona-install-tip-text"></p>
+        <button type="button" id="moona-install-tip-close">Compris</button>
       </div>
 
       <!-- Orbe visualiseur conservé (utilisé par la logique audio-réactive), non affiché dans ce visuel -->
@@ -1560,6 +1577,42 @@
     background: rgba(20,22,31,0.12);
   }
 
+  .moona-player2__install-tip {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    z-index: 6;
+    background: #FFFFFF;
+    border-radius: 14px;
+    box-shadow: 0 12px 32px rgba(20,22,31,0.25);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .moona-player2__install-tip p {
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #14161F;
+  }
+
+  .moona-player2__install-tip button {
+    align-self: flex-end;
+    background: #232A47;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
   .moona-player2__switch {
     width: 38px;
     height: 22px;
@@ -2354,6 +2407,59 @@
     playlistHint.textContent = playlistMode ? 'Enchaîne les sons automatiquement' : 'Répète le son en cours';
     playlistBtn.setAttribute('aria-label', playlistMode ? 'Mode playlist activé' : 'Mode son seul activé');
   });
+
+  /* ── Ajouter à l'écran d'accueil ──────────────────────
+     Android/Chrome : capture beforeinstallprompt et déclenche le
+     prompt natif. iOS Safari n'expose aucune API pour ça : on
+     affiche des instructions (Partager > Sur l'écran d'accueil). */
+  const installSep     = document.getElementById('moona-install-sep');
+  const installBtn     = document.getElementById('moona-install-btn');
+  const installHint    = document.getElementById('moona-install-hint');
+  const installTip     = document.getElementById('moona-install-tip');
+  const installTipText = document.getElementById('moona-install-tip-text');
+  const installTipClose = document.getElementById('moona-install-tip-close');
+  let deferredInstallPrompt = null;
+
+  function isStandaloneDisplay() {
+    return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+  }
+
+  function isIOSDevice() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  }
+
+  function showInstallOption(hintText) {
+    installBtn.hidden = false;
+    installSep.hidden = false;
+    installHint.textContent = hintText;
+  }
+
+  if (!isStandaloneDisplay()) {
+    if (isIOSDevice()) {
+      showInstallOption("Accédez-y en un geste, comme une app");
+    }
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      showInstallOption('Accédez-y en un geste, comme une app');
+    });
+  }
+
+  installBtn.addEventListener('click', async () => {
+    if (deferredInstallPrompt) {
+      const promptEvent = deferredInstallPrompt;
+      deferredInstallPrompt = null;
+      promptEvent.prompt();
+      try { await promptEvent.userChoice; } catch (e) {}
+      installBtn.hidden = true;
+      installSep.hidden = true;
+    } else if (isIOSDevice()) {
+      installTipText.textContent = "Appuyez sur le bouton Partager de Safari, puis sur « Sur l'écran d'accueil ».";
+      installTip.hidden = false;
+    }
+  });
+
+  installTipClose.addEventListener('click', () => { installTip.hidden = true; });
 
   /* ── Menu "•••" (playlist / hors-ligne) ──────────────── */
   function closeMoreMenu() {
