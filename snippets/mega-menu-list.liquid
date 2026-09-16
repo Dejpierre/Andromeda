@@ -340,10 +340,6 @@
             {% assign collection_object = collections[handle] %}
           {% endif %}
           <li class="mega-menu__content-list-item{% if forloop.index > max_featured_collections_tablet %} mega-menu__content-list-item--hidden-tablet{% endif %}">
-            <div class="mega-menu-card__overlay" aria-hidden="true">
-              <span class="mega-menu-card__badge">100% Pure Soie</span>
-              {% comment %} Quick-add button removed for now, per request. {% endcomment %}
-            </div>
             {% render 'resource-card',
               resource: collection_object,
               resource_type: 'collection',

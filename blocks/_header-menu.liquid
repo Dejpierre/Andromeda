@@ -940,36 +940,6 @@
     position: relative;
   }
 
-  .mega-menu-card__overlay {
-    position: absolute;
-    /* `inset: 0` would pin all 4 edges, leaving aspect-ratio nothing free to
-       compute — stretching this to the full card height (image + text)
-       instead of just the image, which pushed the quick-add button to the
-       bottom of the whole card. Pinning only the top 3 edges lets the
-       height follow the aspect-ratio, matching the image exactly. */
-    top: 0;
-    left: 0;
-    right: 0;
-    aspect-ratio: var(--resource-card-aspect-ratio, 16 / 9);
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  .mega-menu-card__badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    padding: 5px 12px;
-    border-radius: 999px;
-    background: #191A2E;
-    color: #FFFFFF;
-    font-family: 'Raleway', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    pointer-events: auto;
-  }
-
   .mega-menu-card__quick-add {
     position: absolute;
     bottom: 10px;
