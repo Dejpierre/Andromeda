@@ -1,0 +1,158 @@
+{% liquid
+  assign has_link = false
+  if block.settings.link != blank
+    assign has_link = true
+  endif
+%}
+
+<li
+  class="variant-grid__item collection-promo-tile color-{{ block.settings.color_scheme }}"
+  {{ block.shopify_attributes }}
+>
+  {% if has_link %}<a href="{{ block.settings.link }}" class="collection-promo-tile__link">{% endif %}
+  <div class="collection-promo-tile__media">
+    {% if block.settings.image != blank %}
+      {{
+        block.settings.image
+        | image_url: width: 800
+        | image_tag:
+          widths: '400, 600, 800',
+          sizes: '(min-width: 750px) 25vw, 50vw',
+          class: 'collection-promo-tile__image',
+          loading: 'lazy'
+      }}
+    {% else %}
+      <div class="collection-promo-tile__placeholder"></div>
+    {% endif %}
+    <div class="collection-promo-tile__overlay">
+      {% if block.settings.heading != blank %}
+        <p class="collection-promo-tile__heading">{{ block.settings.heading }}</p>
+      {% endif %}
+      {% if block.settings.text != blank %}
+        <p class="collection-promo-tile__text">{{ block.settings.text }}</p>
+      {% endif %}
+      {% if block.settings.button_label != blank %}
+        <span class="collection-promo-tile__button">{{ block.settings.button_label }}</span>
+      {% endif %}
+    </div>
+  </div>
+  {% if has_link %}</a>{% endif %}
+</li>
+
+{% stylesheet %}
+  .collection-promo-tile {
+    height: 100%;
+  }
+
+  .collection-promo-tile__link {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .collection-promo-tile__media {
+    position: relative;
+    height: 100%;
+    min-height: 260px;
+    border-radius: var(--product-card-corner-radius, 0);
+    overflow: hidden;
+    background: rgb(var(--color-foreground-rgb, 20 22 31) / 0.06);
+  }
+
+  .collection-promo-tile__image,
+  .collection-promo-tile__placeholder {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .collection-promo-tile__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 6px;
+    padding: 20px;
+    background: linear-gradient(to top, rgb(0 0 0 / 0.55) 0%, rgb(0 0 0 / 0.05) 55%, transparent 100%);
+    color: #FFFFFF;
+  }
+
+  .collection-promo-tile__heading {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .collection-promo-tile__text {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 300;
+    opacity: 0.92;
+  }
+
+  .collection-promo-tile__button {
+    display: inline-flex;
+    align-self: flex-start;
+    margin-top: 8px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: #FFFFFF;
+    color: #14161F;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Tuile promo grille",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titre"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Texte"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texte du bouton (facultatif)"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Lien"
+    },
+    {
+      "type": "header",
+      "content": "Apparence"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Palette de couleurs",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tuile promo grille",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

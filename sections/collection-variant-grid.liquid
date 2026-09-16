@@ -1,6 +1,8 @@
 {%- liquid
   assign columns_desktop = section.settings.columns_desktop
   assign columns_mobile = section.settings.columns_mobile
+  assign promo_tile_position = section.settings.promo_tile_position
+  assign item_index = 0
 -%}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
@@ -11,6 +13,10 @@
     --padding-block-end: {{ section.settings.padding-block-end }}px;
   "
 >
+  {%- capture promo_tiles_html -%}
+    {% content_for 'blocks' %}
+  {%- endcapture -%}
+
   <ul
     class="variant-grid page-width"
     style="
@@ -20,12 +26,19 @@
       --variant-grid-gap-vertical: {{ section.settings.columns_gap_vertical }}px;
     "
   >
+    {%- if promo_tile_position == 0 -%}
+      {{ promo_tiles_html }}
+    {%- endif -%}
     {%- for product in collection.products -%}
       {%- for variant in product.variants -%}
         {%- unless section.settings.hide_unavailable and variant.available == false -%}
+          {%- assign item_index = item_index | plus: 1 -%}
           <li class="variant-grid__item">
             {% render 'variant-grid-card', product: product, variant: variant, image_ratio: section.settings.image_ratio %}
           </li>
+          {%- if item_index == promo_tile_position -%}
+            {{ promo_tiles_html }}
+          {%- endif -%}
         {%- endunless -%}
       {%- endfor -%}
     {%- endfor -%}
@@ -61,7 +74,19 @@
   "enabled_on": {
     "templates": ["collection"]
   },
+  "blocks": [
+    {
+      "type": "collection-promo-tile"
+    }
+  ],
   "settings": [
+    {
+      "type": "number",
+      "id": "promo_tile_position",
+      "label": "Position des tuiles promo",
+      "info": "Insère les tuiles promo ajoutées ci-dessous après le produit n°X de la grille (0 = tout au début)",
+      "default": 4
+    },
     {
       "type": "select",
       "id": "image_ratio",
