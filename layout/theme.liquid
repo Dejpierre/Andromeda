@@ -498,20 +498,12 @@
       z-index: 2147483647 !important;
     }
 
-    /* Fond assombri derrière la bannière, visible uniquement tant qu'elle est affichée.
-       Safari iOS ne couvre pas tout l'écran avec inset:0/100dvh à cause de la barre
-       d'adresse dynamique (rétractable au scroll) : on surdimensionne largement le
-       fond au-delà du viewport pour garantir une couverture totale quoi qu'il arrive. */
-    body:has(#shopify-pc__banner[style*="display: block"]):not(:has(#shopify-pc__prefs))::before {
-      content: '';
+    #moona-cookie-overlay {
       position: fixed;
-      top: -20vh;
-      left: -20vw;
-      width: 140vw;
-      height: 140vh;
       background: rgba(20, 22, 31, 0.55);
       z-index: 2147483646;
       pointer-events: auto;
+      display: none;
     }
 
     /* Masque notre carte quand le panneau détaillé "Personnaliser mes choix" est ouvert */
@@ -654,6 +646,57 @@
       relabelCookieBanner();
       var observer = new MutationObserver(relabelCookieBanner);
       observer.observe(document.documentElement, { childList: true, subtree: true });
+
+      /* Fond assombri derrière la bannière : géré en JS via l'API visualViewport
+         plutôt qu'en CSS (dvh/vh), car Safari iOS ne recalcule pas correctement
+         inset:0 ou les unités de viewport quand sa barre d'adresse dynamique se
+         rétracte/réapparaît au scroll. visualViewport donne les dimensions et le
+         décalage réellement visibles à l'instant présent. */
+      var overlay = document.createElement('div');
+      overlay.id = 'moona-cookie-overlay';
+      document.addEventListener('DOMContentLoaded', function () {
+        document.body.appendChild(overlay);
+        sizeOverlay();
+      });
+
+      function sizeOverlay() {
+        var vv = window.visualViewport;
+        var w = vv ? vv.width : window.innerWidth;
+        var h = vv ? vv.height : window.innerHeight;
+        var left = vv ? vv.offsetLeft : 0;
+        var top = vv ? vv.offsetTop : 0;
+        overlay.style.left = left + 'px';
+        overlay.style.top = top + 'px';
+        overlay.style.width = w + 'px';
+        overlay.style.height = h + 'px';
+      }
+
+      function updateOverlayVisibility() {
+        var banner = document.getElementById('shopify-pc__banner');
+        var prefs = document.getElementById('shopify-pc__prefs');
+        var bannerVisible = !!banner && getComputedStyle(banner).display !== 'none';
+        overlay.style.display = bannerVisible && !prefs ? 'block' : 'none';
+      }
+
+      window.addEventListener('resize', sizeOverlay);
+      window.addEventListener('scroll', sizeOverlay, { passive: true });
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', sizeOverlay);
+        window.visualViewport.addEventListener('scroll', sizeOverlay);
+      }
+
+      var overlayObserver = new MutationObserver(function () {
+        sizeOverlay();
+        updateOverlayVisibility();
+      });
+      overlayObserver.observe(document.documentElement, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['style']
+      });
+
+      updateOverlayVisibility();
     })();
   </script>
 
