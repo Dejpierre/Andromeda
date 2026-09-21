@@ -495,6 +495,17 @@
       border-radius: 20px !important;
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3) !important;
       padding: 0 !important;
+      z-index: 2147483647 !important;
+    }
+
+    /* Fond assombri derrière la bannière, visible uniquement tant qu'elle est affichée */
+    body:has(#shopify-pc__banner[style*="display: block"])::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 22, 31, 0.55);
+      z-index: 2147483646;
+      pointer-events: auto;
     }
 
     #shopify-pc__banner .shopify-pc__banner__wrapper {
