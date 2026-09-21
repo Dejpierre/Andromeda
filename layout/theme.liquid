@@ -499,18 +499,16 @@
     }
 
     /* Fond assombri derrière la bannière, visible uniquement tant qu'elle est affichée.
-       Safari iOS ne recalcule pas inset:0 quand la barre d'adresse dynamique se
-       rétracte/réapparaît au scroll : on force width/height en unités dvh/dvw pour
-       que le fond couvre bien tout le viewport visible, y compris en haut et en bas. */
+       Safari iOS ne couvre pas tout l'écran avec inset:0/100dvh à cause de la barre
+       d'adresse dynamique (rétractable au scroll) : on surdimensionne largement le
+       fond au-delà du viewport pour garantir une couverture totale quoi qu'il arrive. */
     body:has(#shopify-pc__banner[style*="display: block"]):not(:has(#shopify-pc__prefs))::before {
       content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      width: 100dvw;
-      height: 100vh;
-      height: 100dvh;
+      top: -20vh;
+      left: -20vw;
+      width: 140vw;
+      height: 140vh;
       background: rgba(20, 22, 31, 0.55);
       z-index: 2147483646;
       pointer-events: auto;
