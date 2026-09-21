@@ -499,13 +499,18 @@
     }
 
     /* Fond assombri derrière la bannière, visible uniquement tant qu'elle est affichée */
-    body:has(#shopify-pc__banner[style*="display: block"])::before {
+    body:has(#shopify-pc__banner[style*="display: block"]):not(:has(#shopify-pc__prefs))::before {
       content: '';
       position: fixed;
       inset: 0;
       background: rgba(20, 22, 31, 0.55);
       z-index: 2147483646;
       pointer-events: auto;
+    }
+
+    /* Masque notre carte quand le panneau détaillé "Personnaliser mes choix" est ouvert */
+    body:has(#shopify-pc__prefs) #shopify-pc__banner {
+      display: none !important;
     }
 
     #shopify-pc__banner .shopify-pc__banner__wrapper {
