@@ -479,13 +479,87 @@
       font-family: 'GC Amelie Promised', var(--font-heading--family, serif) !important;
     }
 
-    /* Bannière de consentement cookies : met en avant "Accepter" */
+    /* Bannière de consentement cookies : carte centrée, boutons pleine largeur */
+    #shopify-pc__banner {
+      position: fixed !important;
+      top: 50% !important;
+      left: 50% !important;
+      right: auto !important;
+      bottom: auto !important;
+      transform: translate(-50%, -50%) !important;
+      width: calc(100% - 40px) !important;
+      max-width: 640px !important;
+      max-height: calc(100vh - 40px) !important;
+      overflow-y: auto !important;
+      background: #FFFFFF !important;
+      border-radius: 20px !important;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3) !important;
+      padding: 0 !important;
+    }
+
+    #shopify-pc__banner .shopify-pc__banner__wrapper {
+      position: relative;
+      padding: 40px;
+    }
+
+    #shopify-pc__banner__body-title {
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: #14161F;
+      margin: 0 0 20px;
+      padding-right: 140px;
+    }
+
+    #shopify-pc__banner .shopify-pc__banner__body p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #14161F;
+      margin: 0 0 28px;
+    }
+
+    #shopify-pc__banner__btn-decline {
+      position: absolute !important;
+      top: 40px;
+      right: 40px;
+      background: transparent !important;
+      border: none !important;
+      color: #6E6A63 !important;
+      text-decoration: underline;
+      font-size: 0.9rem !important;
+      font-weight: 400 !important;
+      padding: 0 !important;
+    }
+
+    #shopify-pc__banner .shopify-pc__banner__btns {
+      display: flex !important;
+      flex-direction: row !important;
+      gap: 16px !important;
+    }
+
+    #shopify-pc__banner__btn-manage-prefs,
     #shopify-pc__banner__btn-accept {
-      background: #191A2E !important;
+      flex: 1 1 0;
+      padding: 16px !important;
+      border-radius: 4px !important;
+      font-size: 1rem !important;
+      font-weight: 500 !important;
+    }
+
+    #shopify-pc__banner__btn-manage-prefs {
+      background: #FFFFFF !important;
+      border: 1px solid #14161F !important;
+      color: #14161F !important;
+      text-decoration: none !important;
+    }
+
+    #shopify-pc__banner__btn-manage-prefs span {
+      text-decoration: none !important;
+    }
+
+    #shopify-pc__banner__btn-accept {
+      background: #14161F !important;
+      border: 1px solid #14161F !important;
       color: #FFFFFF !important;
-      border: 1px solid #191A2E !important;
-      font-weight: 600 !important;
-      padding: 10px 32px !important;
     }
 
     #shopify-pc__banner__btn-accept:hover {
@@ -493,15 +567,78 @@
       border-color: #0F1020 !important;
     }
 
-    #shopify-pc__banner__btn-decline,
-    #shopify-pc__banner__btn-manage-prefs {
-      background: transparent !important;
-      border: none !important;
-      color: #6E6A63 !important;
-      text-decoration: underline;
-      font-weight: 400 !important;
+    @media screen and (max-width: 600px) {
+      #shopify-pc__banner .shopify-pc__banner__wrapper {
+        padding: 28px 24px;
+      }
+
+      #shopify-pc__banner__body-title {
+        font-size: 1.4rem;
+        padding-right: 0;
+      }
+
+      #shopify-pc__banner__btn-decline {
+        position: static !important;
+        display: block;
+        margin: 0 0 16px;
+      }
+
+      #shopify-pc__banner .shopify-pc__banner__btns {
+        flex-direction: column !important;
+      }
+
+      #shopify-pc__banner__btn-accept {
+        order: 1;
+      }
+
+      #shopify-pc__banner__btn-decline {
+        order: 2;
+      }
+
+      #shopify-pc__banner__btn-manage-prefs {
+        order: 3;
+      }
     }
   </style>
+
+  <script>
+    (function () {
+      function relabelCookieBanner() {
+        var banner = document.getElementById('shopify-pc__banner');
+        if (!banner || banner.dataset.relabelled) return;
+
+        var title = document.getElementById('shopify-pc__banner__body-title');
+        if (title) title.textContent = 'Vos préférences en matières de cookies';
+
+        var bodyP = banner.querySelector('.shopify-pc__banner__body p');
+        if (bodyP) {
+          var link = bodyP.querySelector('a');
+          var linkHtml = link ? link.outerHTML : '';
+          bodyP.innerHTML =
+            "Nous utilisons des cookies afin de vous proposer une navigation optimale, des offres publicitaires adaptées et nous permettre d'analyser la fréquentation du site. " +
+            linkHtml;
+        }
+
+        var manageBtn = document.getElementById('shopify-pc__banner__btn-manage-prefs');
+        if (manageBtn) {
+          var span = manageBtn.querySelector('span');
+          (span || manageBtn).textContent = 'Personnaliser mes choix';
+        }
+
+        var acceptBtn = document.getElementById('shopify-pc__banner__btn-accept');
+        if (acceptBtn) acceptBtn.textContent = 'Tout accepter';
+
+        var declineBtn = document.getElementById('shopify-pc__banner__btn-decline');
+        if (declineBtn) declineBtn.textContent = 'Continuer sans accepter';
+
+        banner.dataset.relabelled = 'true';
+      }
+
+      relabelCookieBanner();
+      var observer = new MutationObserver(relabelCookieBanner);
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    })();
+  </script>
 
 </head>
 
