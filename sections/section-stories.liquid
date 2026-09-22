@@ -78,7 +78,6 @@
   <div class="stories-viewer__heading" id="stories-heading-{{ section.id }}" hidden></div>
 
   <div class="stories-viewer__product" id="stories-product-{{ section.id }}" hidden>
-    <div class="stories-viewer__swatches" id="stories-swatches-{{ section.id }}" hidden></div>
     <div class="stories-viewer__product-row">
       <a class="stories-viewer__product-media" id="stories-product-link-{{ section.id }}">
         <img id="stories-product-image-{{ section.id }}" alt="" class="stories-viewer__product-image">
@@ -86,6 +85,7 @@
       <div class="stories-viewer__product-info">
         <span class="stories-viewer__product-title" id="stories-product-title-{{ section.id }}"></span>
         <span class="stories-viewer__product-price" id="stories-product-price-{{ section.id }}"></span>
+        <div class="stories-viewer__swatches" id="stories-swatches-{{ section.id }}" hidden></div>
       </div>
       <button type="button" class="stories-viewer__add-btn" id="stories-add-btn-{{ section.id }}">
         <span id="stories-add-btn-label-{{ section.id }}">Ajouter au panier</span>
@@ -897,22 +897,19 @@
     background: #FFFFFF;
     border-radius: 16px;
     padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
   }
 
   .stories-viewer__swatches {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     overflow-x: auto;
-    padding: 0 2px;
+    margin-top: 4px;
   }
 
   .stories-viewer__swatch {
-    width: 28px;
-    height: 28px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     border: 2px solid transparent;
     outline: 1px solid rgba(20, 22, 31, 0.15);
@@ -921,9 +918,10 @@
     background-position: center;
     flex-shrink: 0;
     cursor: pointer;
-    font-size: 0.6rem;
+    font-size: 0.5rem;
     color: #14161F;
     text-transform: uppercase;
+    padding: 0;
   }
 
   .stories-viewer__swatch--active {
