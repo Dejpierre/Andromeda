@@ -24,10 +24,10 @@
             endif
           endfor
         -%}
-        {%- if has_slides -%}
+        {%- if has_slides or request.design_mode -%}
           <button
             type="button"
-            class="stories-bubble"
+            class="stories-bubble{% unless has_slides %} stories-bubble--empty{% endunless %}"
             data-story-group="{{ block.settings.group_name | escape }}"
             {{ block.shopify_attributes }}
           >
@@ -43,6 +43,9 @@
               </span>
             </span>
             <span class="stories-bubble__label">{{ block.settings.label }}</span>
+            {%- unless has_slides -%}
+              <span class="stories-bubble__warning" title="Aucun slide associé — ajoutez un bloc &quot;Slide&quot; avec le même identifiant de groupe ({{ block.settings.group_name | escape }})">⚠ Aucun slide</span>
+            {%- endunless -%}
           </button>
         {%- endif -%}
       {%- endif -%}
@@ -228,8 +231,9 @@
     }
 
     function openViewer(storyKey) {
-      currentStoryIndex = storyOrder.indexOf(storyKey);
-      if (currentStoryIndex === -1) currentStoryIndex = 0;
+      var idx = storyOrder.indexOf(storyKey);
+      if (idx === -1) return;
+      currentStoryIndex = idx;
       currentSlideIndex = 0;
       viewer.hidden = false;
       document.body.style.overflow = 'hidden';
@@ -571,6 +575,23 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .stories-bubble--empty {
+    cursor: default;
+  }
+
+  .stories-bubble--empty .stories-bubble__ring {
+    background: none;
+    border: 2px dashed rgb(var(--color-foreground-rgb, 20 22 31) / 0.3);
+  }
+
+  .stories-bubble__warning {
+    font-size: 0.65rem;
+    color: #B3261E;
+    text-align: center;
+    max-width: 76px;
+    line-height: 1.2;
   }
 
   .stories-viewer {
