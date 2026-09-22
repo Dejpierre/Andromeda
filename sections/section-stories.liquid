@@ -250,6 +250,36 @@
       mediaEl.innerHTML = '';
     }
 
+    var VIEWED_KEY = 'moona-stories-viewed';
+
+    function getViewedStories() {
+      try {
+        return JSON.parse(localStorage.getItem(VIEWED_KEY)) || {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function markStoryViewed(storyKey) {
+      var viewed = getViewedStories();
+      if (viewed[storyKey]) return;
+      viewed[storyKey] = true;
+      try {
+        localStorage.setItem(VIEWED_KEY, JSON.stringify(viewed));
+      } catch (e) {}
+      var bubble = tray.querySelector('[data-story-group="' + CSS.escape(storyKey) + '"]');
+      if (bubble) bubble.classList.add('stories-bubble--viewed');
+    }
+
+    function applyViewedState() {
+      var viewed = getViewedStories();
+      tray.querySelectorAll('.stories-bubble').forEach(function (bubble) {
+        if (viewed[bubble.dataset.storyGroup]) {
+          bubble.classList.add('stories-bubble--viewed');
+        }
+      });
+    }
+
     function openViewer(storyKey) {
       var idx = storyOrder.indexOf(storyKey);
       if (idx === -1) return;
@@ -258,6 +288,7 @@
       viewer.hidden = false;
       backdrop.hidden = false;
       document.body.style.overflow = 'hidden';
+      markStoryViewed(storyKey);
       loadStory();
     }
 
@@ -507,6 +538,8 @@
       });
     });
 
+    applyViewedState();
+
     addBtn.addEventListener('click', function () {
       var variantId = addBtn.dataset.variantId;
       if (!variantId || addBtn.hasAttribute('data-loading')) return;
@@ -649,6 +682,10 @@
     white-space: nowrap;
   }
 
+  .stories-bubble--viewed .stories-bubble__ring {
+    background: rgb(var(--color-foreground-rgb, 20 22 31) / 0.25);
+  }
+
   .stories-bubble--empty {
     cursor: default;
   }
@@ -691,6 +728,11 @@
 
   .stories-tray--rectangle .stories-bubble--empty .stories-bubble__ring {
     border: 2px dashed rgb(var(--color-foreground-rgb, 20 22 31) / 0.3);
+  }
+
+  .stories-tray--rectangle .stories-bubble--viewed .stories-bubble__image,
+  .stories-tray--square .stories-bubble--viewed .stories-bubble__image {
+    opacity: 0.55;
   }
 
   /* Format "Grandes cartes carrées" */
