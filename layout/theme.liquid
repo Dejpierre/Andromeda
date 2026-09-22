@@ -698,6 +698,24 @@
       });
 
       updateOverlayVisibility();
+
+      /* Suivi GA4 des choix de consentement cookies (bannière + panneau détaillé) */
+      var cookieConsentEvents = {
+        'shopify-pc__banner__btn-accept': { choice: 'accept_all', source: 'banner' },
+        'shopify-pc__banner__btn-decline': { choice: 'decline', source: 'banner' },
+        'shopify-pc__banner__btn-manage-prefs': { choice: 'open_preferences', source: 'banner' },
+        'shopify-pc__prefs__header-accept': { choice: 'accept_all', source: 'preferences' },
+        'shopify-pc__prefs__header-decline': { choice: 'decline_all', source: 'preferences' },
+        'shopify-pc__prefs__header-save': { choice: 'save_custom', source: 'preferences' }
+      };
+
+      document.addEventListener('click', function (e) {
+        var target = e.target.closest ? e.target.closest('button') : null;
+        if (!target || !cookieConsentEvents[target.id]) return;
+        if (typeof gtag === 'function') {
+          gtag('event', 'cookie_consent', cookieConsentEvents[target.id]);
+        }
+      });
     })();
   </script>
 
