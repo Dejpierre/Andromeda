@@ -33,7 +33,18 @@
           >
             <span class="stories-bubble__ring">
               <span class="stories-bubble__ring-inner">
-                {%- if block.settings.bubble_image != blank -%}
+                {%- if block.settings.preview_video != blank -%}
+                  <video
+                    class="stories-bubble__video"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    {% if block.settings.bubble_image != blank %}poster="{{ block.settings.bubble_image | image_url: width: 160 }}"{% endif %}
+                  >
+                    <source src="{{ block.settings.preview_video.sources.last.url }}" type="video/mp4">
+                  </video>
+                {%- elsif block.settings.bubble_image != blank -%}
                   {{
                     block.settings.bubble_image
                     | image_url: width: 160
@@ -663,7 +674,8 @@
     overflow: hidden;
   }
 
-  .stories-bubble__image {
+  .stories-bubble__image,
+  .stories-bubble__video {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -718,7 +730,8 @@
     box-shadow: 0 4px 14px rgba(20, 22, 31, 0.12);
   }
 
-  .stories-tray--rectangle .stories-bubble__image {
+  .stories-tray--rectangle .stories-bubble__image,
+  .stories-tray--rectangle .stories-bubble__video {
     border-radius: 12px;
   }
 
@@ -731,7 +744,9 @@
   }
 
   .stories-tray--rectangle .stories-bubble--viewed .stories-bubble__image,
-  .stories-tray--square .stories-bubble--viewed .stories-bubble__image {
+  .stories-tray--rectangle .stories-bubble--viewed .stories-bubble__video,
+  .stories-tray--square .stories-bubble--viewed .stories-bubble__image,
+  .stories-tray--square .stories-bubble--viewed .stories-bubble__video {
     opacity: 0.55;
   }
 
@@ -754,7 +769,8 @@
     box-shadow: 0 4px 14px rgba(20, 22, 31, 0.12);
   }
 
-  .stories-tray--square .stories-bubble__image {
+  .stories-tray--square .stories-bubble__image,
+  .stories-tray--square .stories-bubble__video {
     border-radius: 16px;
   }
 
@@ -1062,6 +1078,12 @@
           "type": "image_picker",
           "id": "bubble_image",
           "label": "Image de la bulle"
+        },
+        {
+          "type": "video",
+          "id": "preview_video",
+          "label": "Aperçu vidéo en boucle (facultatif)",
+          "info": "Si renseignée, remplace l'image par un aperçu vidéo muet en boucle sur la vignette, pour donner envie de cliquer"
         }
       ]
     },
