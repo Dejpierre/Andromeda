@@ -89,19 +89,10 @@
   <div class="stories-viewer__heading" id="stories-heading-{{ section.id }}" hidden></div>
 
   <div class="stories-viewer__product" id="stories-product-{{ section.id }}" hidden>
-    <div class="stories-viewer__product-row">
-      <a class="stories-viewer__product-media" id="stories-product-link-{{ section.id }}">
-        <img id="stories-product-image-{{ section.id }}" alt="" class="stories-viewer__product-image">
-      </a>
-      <div class="stories-viewer__product-info">
-        <span class="stories-viewer__product-title" id="stories-product-title-{{ section.id }}"></span>
-        <span class="stories-viewer__product-price" id="stories-product-price-{{ section.id }}"></span>
-        <div class="stories-viewer__swatches" id="stories-swatches-{{ section.id }}" hidden></div>
-      </div>
-      <button type="button" class="stories-viewer__add-btn" id="stories-add-btn-{{ section.id }}">
-        <span id="stories-add-btn-label-{{ section.id }}">Ajouter au panier</span>
-      </button>
-    </div>
+    <div class="stories-viewer__product-scroll" id="stories-product-scroll-{{ section.id }}"></div>
+    <button type="button" class="stories-viewer__product-next" id="stories-product-next-{{ section.id }}" aria-label="Voir l'autre variante" hidden>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
   </div>
 </div>
 
@@ -141,11 +132,12 @@
               {%- for val in block.settings.product.options_with_values.first.values -%}
               {
                 id: {% if val.variant %}{{ val.variant.id | json }}{% else %}null{% endif %},
+                title: {{ block.settings.product.title | json }},
                 label: {{ val.name | json }},
                 available: {{ val.available | json }},
                 price: {% if val.variant %}{{ val.variant.price | money | json }}{% else %}null{% endif %},
-                swatchColor: {% if val.swatch.color %}{{ val.swatch.color | json }}{% else %}null{% endif %},
-                swatchImage: {% if val.swatch.image %}{{ val.swatch.image | image_url: width: 60 | json }}{% else %}null{% endif %}
+                image: {% if val.variant.featured_image != blank %}{{ val.variant.featured_image | image_url: width: 200 | json }}{% elsif block.settings.product.featured_image != blank %}{{ block.settings.product.featured_image | image_url: width: 200 | json }}{% else %}null{% endif %},
+                url: {{ block.settings.product.url | json }}
               }{% unless forloop.last %},{% endunless %}
               {%- endfor -%}
             {%- endif -%}
@@ -179,13 +171,8 @@
     var mediaEl = document.getElementById('stories-media-' + sectionId);
     var headingEl = document.getElementById('stories-heading-' + sectionId);
     var productEl = document.getElementById('stories-product-' + sectionId);
-    var swatchesEl = document.getElementById('stories-swatches-' + sectionId);
-    var productLink = document.getElementById('stories-product-link-' + sectionId);
-    var productImage = document.getElementById('stories-product-image-' + sectionId);
-    var productTitle = document.getElementById('stories-product-title-' + sectionId);
-    var productPrice = document.getElementById('stories-product-price-' + sectionId);
-    var addBtn = document.getElementById('stories-add-btn-' + sectionId);
-    var addBtnLabel = document.getElementById('stories-add-btn-label-' + sectionId);
+    var productScrollEl = document.getElementById('stories-product-scroll-' + sectionId);
+    var productNextBtn = document.getElementById('stories-product-next-' + sectionId);
     var closeBtn = document.getElementById('stories-close-' + sectionId);
     var muteBtn = document.getElementById('stories-mute-' + sectionId);
     var tapPrev = document.getElementById('stories-tap-prev-' + sectionId);
@@ -370,65 +357,73 @@
 
       if (slide.product) {
         productEl.hidden = false;
-        productImage.src = slide.product.image || '';
-        productTitle.textContent = slide.product.title;
-        productLink.href = slide.product.url;
-        buildSwatches(slide.product);
-        selectVariant(slide.product, slide.product.variants && slide.product.variants.length ? findDefaultVariant(slide.product.variants) : null);
+        buildProductCards(slide.product);
       } else {
         productEl.hidden = true;
       }
     }
 
-    function findDefaultVariant(variants) {
-      var available = variants.filter(function (v) { return v.available && v.id; });
-      return available[0] || variants[0] || null;
-    }
+    function buildProductCards(product) {
+      productScrollEl.innerHTML = '';
+      var cards =
+        product.variants && product.variants.length
+          ? product.variants
+          : [
+              {
+                id: product.variantId,
+                title: product.title,
+                label: '',
+                available: product.available,
+                price: product.price,
+                image: product.image,
+                url: product.url
+              }
+            ];
 
-    function buildSwatches(product) {
-      swatchesEl.innerHTML = '';
-      var variants = product.variants || [];
-      if (variants.length < 2) {
-        swatchesEl.hidden = true;
-        return;
-      }
-      swatchesEl.hidden = false;
-      variants.forEach(function (variant) {
+      cards.forEach(function (card) {
+        var cardEl = document.createElement('div');
+        cardEl.className = 'stories-viewer__product-card';
+
+        var link = document.createElement('a');
+        link.className = 'stories-viewer__product-media';
+        link.href = card.url || '#';
+
+        var img = document.createElement('img');
+        img.className = 'stories-viewer__product-image';
+        img.src = card.image || '';
+        img.alt = '';
+        link.appendChild(img);
+
+        var info = document.createElement('div');
+        info.className = 'stories-viewer__product-info';
+
+        var titleEl2 = document.createElement('span');
+        titleEl2.className = 'stories-viewer__product-title';
+        titleEl2.textContent = card.label ? card.title + ' - ' + card.label : card.title;
+
+        var priceEl = document.createElement('span');
+        priceEl.className = 'stories-viewer__product-price';
+        priceEl.textContent = card.price || product.price;
+
+        info.appendChild(titleEl2);
+        info.appendChild(priceEl);
+
         var btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'stories-viewer__swatch';
-        btn.setAttribute('aria-label', variant.label);
-        btn.disabled = !variant.available;
-        if (variant.swatchImage) {
-          btn.style.backgroundImage = 'url(' + variant.swatchImage + ')';
-        } else if (variant.swatchColor) {
-          btn.style.background = variant.swatchColor;
-        } else {
-          btn.textContent = variant.label.slice(0, 2);
-          btn.classList.add('stories-viewer__swatch--text');
-        }
-        btn.addEventListener('click', function () {
-          selectVariant(product, variant);
-        });
-        swatchesEl.appendChild(btn);
-      });
-    }
+        btn.className = 'stories-viewer__add-btn';
+        btn.disabled = !card.available || !card.id;
+        btn.dataset.variantId = card.id || '';
+        var btnLabel = document.createElement('span');
+        btnLabel.textContent = card.available ? 'Ajouter au panier' : 'Épuisé';
+        btn.appendChild(btnLabel);
 
-    function selectVariant(product, variant) {
-      var swatchButtons = swatchesEl.querySelectorAll('.stories-viewer__swatch');
-      var variants = product.variants || [];
-      swatchButtons.forEach(function (btn, i) {
-        btn.classList.toggle('stories-viewer__swatch--active', variants[i] === variant);
+        cardEl.appendChild(link);
+        cardEl.appendChild(info);
+        cardEl.appendChild(btn);
+        productScrollEl.appendChild(cardEl);
       });
 
-      var variantId = variant ? variant.id : product.variantId;
-      var price = variant ? variant.price : product.price;
-      var available = variant ? variant.available : product.available;
-
-      productPrice.textContent = price || product.price;
-      addBtn.disabled = !available || !variantId;
-      addBtnLabel.textContent = available ? 'Ajouter au panier' : 'Épuisé';
-      addBtn.dataset.variantId = variantId || '';
+      productNextBtn.hidden = cards.length < 2;
     }
 
     function goToNextSlide() {
@@ -551,13 +546,16 @@
 
     applyViewedState();
 
-    addBtn.addEventListener('click', function () {
-      var variantId = addBtn.dataset.variantId;
-      if (!variantId || addBtn.hasAttribute('data-loading')) return;
+    productScrollEl.addEventListener('click', function (e) {
+      var btn = e.target.closest ? e.target.closest('.stories-viewer__add-btn') : null;
+      if (!btn) return;
+      var variantId = btn.dataset.variantId;
+      if (!variantId || btn.hasAttribute('data-loading')) return;
 
-      var originalLabel = addBtnLabel.textContent;
-      addBtn.setAttribute('data-loading', '');
-      addBtnLabel.textContent = 'Ajout...';
+      var labelEl = btn.querySelector('span');
+      var originalLabel = labelEl.textContent;
+      btn.setAttribute('data-loading', '');
+      labelEl.textContent = 'Ajout...';
 
       fetch(cartUrl('cart/add.js'), {
         method: 'POST',
@@ -577,7 +575,7 @@
           return res.json();
         })
         .then(function (result) {
-          addBtnLabel.textContent = 'Ajouté ✓';
+          labelEl.textContent = 'Ajouté ✓';
 
           var freshHtml = result.sections && result.sections['cart-drawer-section'];
           if (freshHtml) {
@@ -600,14 +598,20 @@
         })
         .catch(function (err) {
           console.error('stories add-to-cart failed', err);
-          addBtnLabel.textContent = 'Erreur';
+          labelEl.textContent = 'Erreur';
         })
         .finally(function () {
           setTimeout(function () {
-            addBtn.removeAttribute('data-loading');
-            addBtnLabel.textContent = originalLabel;
+            btn.removeAttribute('data-loading');
+            labelEl.textContent = originalLabel;
           }, 1500);
         });
+    });
+
+    productNextBtn.addEventListener('click', function () {
+      var card = productScrollEl.querySelector('.stories-viewer__product-card');
+      var cardWidth = card ? card.getBoundingClientRect().width + 10 : 260;
+      productScrollEl.scrollBy({ left: cardWidth, behavior: 'smooth' });
     });
   })();
 </script>
@@ -952,58 +956,42 @@
     right: 12px;
     bottom: calc(16px + env(safe-area-inset-bottom, 0px));
     z-index: 3;
-    background: #FFFFFF;
+  }
+
+  .stories-viewer__product-scroll {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .stories-viewer__product-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .stories-viewer__product-card {
+    flex: 0 0 auto;
+    width: 88%;
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(30, 30, 34, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border-radius: 16px;
     padding: 10px;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
   }
 
-  .stories-viewer__swatches {
-    display: flex;
-    gap: 6px;
-    overflow-x: auto;
-    margin-top: 4px;
-  }
-
-  .stories-viewer__swatch {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    outline: 1px solid rgba(20, 22, 31, 0.15);
-    outline-offset: -1px;
-    background-size: cover;
-    background-position: center;
-    flex-shrink: 0;
-    cursor: pointer;
-    font-size: 0.5rem;
-    color: #14161F;
-    text-transform: uppercase;
-    padding: 0;
-  }
-
-  .stories-viewer__swatch--active {
-    border-color: #14161F;
-  }
-
-  .stories-viewer__swatch:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-  }
-
-  .stories-viewer__product-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
   .stories-viewer__product-media {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     border-radius: 10px;
     overflow: hidden;
     flex-shrink: 0;
-    background: rgb(var(--color-foreground-rgb, 20 22 31) / 0.06);
+    background: rgba(255, 255, 255, 0.1);
   }
 
   .stories-viewer__product-image {
@@ -1023,9 +1011,9 @@
 
   .stories-viewer__product-title {
     font-family: var(--font-primary--family, sans-serif);
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 600;
-    color: #14161F;
+    color: #FFFFFF;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1033,8 +1021,8 @@
 
   .stories-viewer__product-price {
     font-family: var(--font-primary--family, sans-serif);
-    font-size: 0.8rem;
-    color: #6E6A63;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.75);
   }
 
   .stories-viewer__add-btn {
@@ -1043,8 +1031,8 @@
     color: #FFFFFF;
     border: none;
     border-radius: 999px;
-    padding: 10px 18px;
-    font-size: 0.85rem;
+    padding: 9px 14px;
+    font-size: 0.78rem;
     font-weight: 600;
     cursor: pointer;
   }
@@ -1052,6 +1040,24 @@
   .stories-viewer__add-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+
+  .stories-viewer__product-next {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.4);
+    color: #FFFFFF;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 4;
   }
 {% endstylesheet %}
 
