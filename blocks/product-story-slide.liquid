@@ -1,0 +1,65 @@
+{%- comment -%}
+  Bloc enfant "data only" : ne s'affiche jamais directement, sert uniquement
+  à transporter les réglages d'un slide jusqu'au bloc parent product-story
+  (qui les lit via les attributs data- une fois rendu dans le DOM).
+{%- endcomment -%}
+<div
+  class="product-story-slide-data"
+  hidden
+  data-media-type="{{ block.settings.media_type }}"
+  data-image="{% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 1600 }}{% endif %}"
+  data-video="{% if block.settings.video != blank %}{{ block.settings.video.sources.last.url }}{% endif %}"
+  data-video-poster="{% if block.settings.video != blank and block.settings.video.preview_image != blank %}{{ block.settings.video.preview_image | image_url: width: 1600 }}{% endif %}"
+  data-duration="{{ block.settings.duration | default: 5 }}"
+  data-heading="{{ block.settings.heading | escape }}"
+  {{ block.shopify_attributes }}
+></div>
+
+{% schema %}
+{
+  "name": "Slide",
+  "tag": null,
+  "settings": [
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "Type de média",
+      "options": [
+        { "value": "image", "label": "Image" },
+        { "value": "video", "label": "Vidéo" }
+      ],
+      "default": "image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (si type image)"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Vidéo (si type vidéo)"
+    },
+    {
+      "type": "range",
+      "id": "duration",
+      "label": "Durée (secondes, image uniquement)",
+      "min": 2,
+      "max": 15,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Texte affiché (facultatif)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Slide"
+    }
+  ]
+}
+{% endschema %}
