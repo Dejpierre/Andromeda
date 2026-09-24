@@ -83,6 +83,11 @@
 
   <div class="stories-viewer__media" id="stories-media-{{ section.id }}"></div>
 
+  <button type="button" class="stories-viewer__replay" id="stories-replay-{{ section.id }}" hidden>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+    <span>Revoir</span>
+  </button>
+
   <button type="button" class="stories-viewer__tap stories-viewer__tap--prev" id="stories-tap-prev-{{ section.id }}" aria-label="Précédent"></button>
   <button type="button" class="stories-viewer__tap stories-viewer__tap--next" id="stories-tap-next-{{ section.id }}" aria-label="Suivant"></button>
 
@@ -173,6 +178,7 @@
     var productEl = document.getElementById('stories-product-' + sectionId);
     var productScrollEl = document.getElementById('stories-product-scroll-' + sectionId);
     var productNextBtn = document.getElementById('stories-product-next-' + sectionId);
+    var replayBtn = document.getElementById('stories-replay-' + sectionId);
     var closeBtn = document.getElementById('stories-close-' + sectionId);
     var muteBtn = document.getElementById('stories-mute-' + sectionId);
     var tapPrev = document.getElementById('stories-tap-prev-' + sectionId);
@@ -246,6 +252,13 @@
         currentVideoEl = null;
       }
       mediaEl.innerHTML = '';
+      replayBtn.hidden = true;
+    }
+
+    function isAtLastSlideOverall() {
+      var key = storyOrder[currentStoryIndex];
+      var slides = groups[key];
+      return currentStoryIndex === storyOrder.length - 1 && currentSlideIndex === slides.length - 1;
     }
 
     var VIEWED_KEY = 'moona-stories-viewed';
@@ -333,7 +346,11 @@
           animateProgress(currentSlideIndex, video.duration * 1000);
         });
         video.addEventListener('ended', function () {
-          goToNextSlide();
+          if (isAtLastSlideOverall()) {
+            replayBtn.hidden = false;
+          } else {
+            goToNextSlide();
+          }
         });
         video.play().catch(function () {});
       } else if (slide.image) {
@@ -511,6 +528,14 @@
     tapNext.addEventListener('click', goToNextSlide);
     closeBtn.addEventListener('click', closeViewer);
     backdrop.addEventListener('click', closeViewer);
+
+    replayBtn.addEventListener('click', function () {
+      replayBtn.hidden = true;
+      if (!currentVideoEl) return;
+      animateProgress(currentSlideIndex, currentVideoEl.duration * 1000);
+      currentVideoEl.currentTime = 0;
+      currentVideoEl.play().catch(function () {});
+    });
 
     [tapPrev, tapNext].forEach(function (el) {
       el.addEventListener('pointerdown', pauseStory);
@@ -925,6 +950,30 @@
     padding: 0;
     z-index: 2;
     cursor: pointer;
+  }
+
+  .stories-viewer__replay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(20, 22, 31, 0.7);
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 999px;
+    padding: 12px 22px;
+    font-family: var(--font-primary--family, sans-serif);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .stories-viewer__replay[hidden] {
+    display: none;
   }
 
   .stories-viewer__tap--prev {
