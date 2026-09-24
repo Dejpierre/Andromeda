@@ -38,6 +38,8 @@
             "custom_width_mobile": 100,
             "height": "fit",
             "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
             "background_media": "none",
             "video_position": "cover",
             "background_image_position": "cover",
@@ -76,6 +78,8 @@
                 "custom_width_mobile": 100,
                 "height": "fit",
                 "custom_height": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
                 "background_media": "none",
                 "video_position": "cover",
                 "background_image_position": "cover",
@@ -201,6 +205,7 @@
       "name": "t:names.marquee_section",
       "settings": {
         "movement_direction": "normal",
+        "color_scheme": "",
         "padding-block-start": 24,
         "padding-block-end": 24,
         "gap_between_elements": 24
@@ -266,6 +271,47 @@
         "color_scheme": ""
       }
     },
+    "section_panel_showcase_hV3xQ9": {
+      "type": "section-panel-showcase",
+      "blocks": {
+        "panel_masque": {
+          "type": "panel",
+          "settings": {
+            "product": "masque-de-sommeil-en-soie-de-murier-22-mommes",
+            "heading": "",
+            "tag": "Masque de nuit",
+            "description": "100 % soie de mûrier 22 mommes, grade 6A, occultant, sangle ajustable."
+          }
+        },
+        "panel_bandeau": {
+          "type": "panel",
+          "settings": {
+            "product": "bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus",
+            "heading": "",
+            "tag": "Bandeau de nuit",
+            "description": "100 % soie de mûrier 22 mommes, grade 6A, doux pour les cheveux et sans pression."
+          }
+        },
+        "panel_chouchou": {
+          "type": "panel",
+          "settings": {
+            "product": "chouchou-pour-cheveux-en-soie-de-murier-22-mommes",
+            "heading": "",
+            "tag": "Chouchous",
+            "description": "Lot de 2, 100 % soie de mûrier 22 mommes, grade 6A, hypoallergénique."
+          }
+        }
+      },
+      "block_order": [
+        "panel_masque",
+        "panel_bandeau",
+        "panel_chouchou"
+      ],
+      "settings": {
+        "eyebrow": "Nos rituels",
+        "heading": "Explorez la collection"
+      }
+    },
     "section_R7Vhzp": {
       "type": "section",
       "blocks": {
@@ -278,8 +324,10 @@
             "image_ratio": "adapt",
             "width": "fill",
             "custom_width": 100,
+            "custom_width_raw": "",
             "width_mobile": "fill",
             "custom_width_mobile": 100,
+            "custom_width_mobile_raw": "",
             "height": "fit",
             "border": "none",
             "border_width": 1,
@@ -318,6 +366,7 @@
         "section_width": "page-width",
         "section_height": "",
         "section_height_custom": 50,
+        "color_scheme": "",
         "background_media": "none",
         "video_position": "cover",
         "background_image_position": "cover",
@@ -525,6 +574,7 @@
       "name": "t:names.marquee_section",
       "settings": {
         "movement_direction": "reverse",
+        "color_scheme": "",
         "padding-block-start": 24,
         "padding-block-end": 24,
         "gap_between_elements": 24
@@ -608,6 +658,7 @@
       "name": "t:names.marquee_section",
       "settings": {
         "movement_direction": "normal",
+        "color_scheme": "",
         "padding-block-start": 24,
         "padding-block-end": 64,
         "gap_between_elements": 24
@@ -696,6 +747,7 @@
         "section_width": "page-width",
         "section_height": "",
         "section_height_custom": 50,
+        "color_scheme": "",
         "background_media": "none",
         "video_position": "cover",
         "background_image_position": "cover",
@@ -766,6 +818,8 @@
             "custom_width_mobile": 100,
             "height": "fit",
             "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
             "background_media": "none",
             "video_position": "cover",
             "background_image_position": "cover",
@@ -882,6 +936,8 @@
             "horizontal_alignment": "flex-start",
             "vertical_alignment": "center",
             "collection_card_gap": 8,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
@@ -930,46 +986,46 @@
         "icons_shape": "circle",
         "section_width": "page-width",
         "gap": 12,
+        "color_scheme": "",
         "padding-block-start": 48,
         "padding-block-end": 48
       }
     },
-    "section_panel_showcase_hV3xQ9": {
-      "type": "section-panel-showcase",
+    "section_stories_LBwiQm": {
+      "type": "section-stories",
       "blocks": {
-        "panel_masque": {
-          "type": "panel",
+        "story_bubble_pzpMQd": {
+          "type": "story_bubble",
           "settings": {
-            "product": "masque-de-sommeil-en-soie-de-murier-22-mommes",
-            "tag": "Masque de nuit",
-            "description": "100 % soie de mûrier 22 mommes, grade 6A, occultant, sangle ajustable."
+            "group_name": "masque",
+            "label": "",
+            "bubble_image": "shopify://shop_images/masque_andromeda_boite_corrigee_fb3f960b-8c16-4182-8659-382e4ad1423e.png",
+            "preview_video": "shopify://files/videos/hf_20260819_130618_9b12e6d5-acae-4162-bdff-f4668477d440.mp4"
           }
         },
-        "panel_bandeau": {
-          "type": "panel",
+        "story_slide_M9Fh7B": {
+          "type": "story_slide",
           "settings": {
-            "product": "bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus",
-            "tag": "Bandeau de nuit",
-            "description": "100 % soie de mûrier 22 mommes, grade 6A, doux pour les cheveux et sans pression."
-          }
-        },
-        "panel_chouchou": {
-          "type": "panel",
-          "settings": {
-            "product": "chouchou-pour-cheveux-en-soie-de-murier-22-mommes",
-            "tag": "Chouchous",
-            "description": "Lot de 2, 100 % soie de mûrier 22 mommes, grade 6A, hypoallergénique."
+            "group": "masque",
+            "media_type": "video",
+            "video": "shopify://files/videos/hf_20260819_130618_9b12e6d5-acae-4162-bdff-f4668477d440.mp4",
+            "duration": 5,
+            "heading": "",
+            "product": "masque-de-sommeil-en-soie-de-murier-22-mommes"
           }
         }
       },
       "block_order": [
-        "panel_masque",
-        "panel_bandeau",
-        "panel_chouchou"
+        "story_bubble_pzpMQd",
+        "story_slide_M9Fh7B"
       ],
+      "name": "Stories produits",
       "settings": {
-        "eyebrow": "Nos rituels",
-        "heading": "Explorez la collection"
+        "title": "",
+        "tray_style": "bubbles",
+        "color_scheme": "",
+        "padding_top": 24,
+        "padding_bottom": 24
       }
     }
   },
@@ -986,6 +1042,7 @@
     "17779329099eeb9679",
     "featured_blog_posts_F8LihH",
     "section_seo_footer",
-    "collection_list_eyV4dE"
+    "collection_list_eyV4dE",
+    "section_stories_LBwiQm"
   ]
 }
