@@ -99,7 +99,6 @@
   <div class="section ae__body-section">
    <div class="ae__body-stack">
     <div class="ae__grid">
-      <div class="ae__body-margin" aria-hidden="true"></div>
       <div class="ae__content rte">{{ article.content }}</div>
     </div>
 
@@ -108,13 +107,11 @@
 
         {%- when 'pull_quote' -%}
           <div class="ae__grid ae__module" {{ block.shopify_attributes }}>
-            <div></div>
             <blockquote class="ae__pull-quote">{{ block.settings.quote }}</blockquote>
           </div>
 
         {%- when 'stat_row' -%}
           <div class="ae__grid ae__module" {{ block.shopify_attributes }}>
-            <div></div>
             <div class="ae__stats">
               {%- for i in (1..3) -%}
                 {%- assign stat_value_key = 'stat_' | append: i | append: '_value' -%}
@@ -221,7 +218,6 @@
 
     {%- if article.tags.size > 0 -%}
       <div class="ae__grid">
-        <div></div>
         <div class="ae__tags">
           <span class="ae__tags-label">Tags</span>
           {%- for tag in article.tags -%}
@@ -361,8 +357,7 @@
 
   /* ── Grille commune ────────────────────────────────────────────── */
   .ae__grid {
-    display: grid;
-    grid-template-columns: 160px 1fr;
+    display: flex;
     gap: 48px;
     max-width: 1100px;
     margin-inline: auto;
@@ -370,7 +365,7 @@
 
   @media screen and (max-width: 749px) {
     .ae__grid {
-      grid-template-columns: 1fr;
+      flex-direction: column;
       gap: 12px;
     }
   }
@@ -393,6 +388,7 @@
 
   .ae__meta-col {
     display: flex;
+    flex: 0 0 160px;
     flex-direction: column;
     gap: 8px;
     padding-top: 14px;
@@ -400,6 +396,8 @@
 
   .ae__title-col {
     display: flex;
+    flex: 1;
+    min-width: 0;
     flex-direction: column;
     gap: 32px;
   }
@@ -499,6 +497,8 @@
     line-height: 1.6;
     color: var(--ae-body);
     max-width: 640px;
+    flex: 1;
+    min-width: 0;
     counter-reset: ae-h2;
   }
 
@@ -594,12 +594,16 @@
     text-wrap: pretty;
     padding-left: 32px;
     border-left: 2px solid var(--ae-accent);
+    flex: 1;
+    min-width: 0;
   }
 
   .ae__stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     border-top: 1px solid rgba(20, 22, 31, 0.2);
+    flex: 1;
+    min-width: 0;
   }
 
   .ae__stat {
@@ -649,12 +653,15 @@
   }
 
   .ae__comparison-label {
+    flex: 0 0 160px;
     padding-top: 10px;
   }
 
   .ae__comparison {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-width: 0;
   }
 
   .ae__comparison-row {
@@ -705,6 +712,8 @@
     border-top: 1px solid rgba(20, 22, 31, 0.2);
     border-bottom: 1px solid rgba(20, 22, 31, 0.2);
     text-decoration: none;
+    flex: 1;
+    min-width: 0;
   }
 
   @media screen and (max-width: 749px) {
@@ -769,6 +778,8 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    flex: 1;
+    min-width: 0;
   }
 
   .ae__faq-item-wrap {

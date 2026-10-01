@@ -173,6 +173,74 @@
                 "price_tVjtKg"
               ]
             },
+            "group_KD6wzY": {
+              "type": "group",
+              "name": "Story insta",
+              "disabled": true,
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "product_story_wgPHtd": {
+                  "type": "product-story",
+                  "name": "Story produit",
+                  "settings": {
+                    "trigger_style": "bubble",
+                    "trigger_label": "Voir en story"
+                  },
+                  "blocks": {
+                    "product_story_slide_UMVc9J": {
+                      "type": "product-story-slide",
+                      "settings": {
+                        "media_type": "image",
+                        "duration": 5,
+                        "heading": ""
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "product_story_slide_UMVc9J"
+                  ]
+                }
+              },
+              "block_order": [
+                "product_story_wgPHtd"
+              ]
+            },
             "benefits_group": {
               "type": "group",
               "name": "Avantages produit",
@@ -1051,7 +1119,7 @@
                         "text_MBYAwi": {
                           "type": "text",
                           "settings": {
-                            "text": "<p><strong>Occultation totale</strong><br/>Grâce à la densité 22 mommes.</p>",
+                            "text": "<p><strong>Obscurité totale</strong><br/>Blocage de 100 % de la lumière.</p>",
                             "width": "fill",
                             "max_width": "normal",
                             "alignment": "left",
@@ -1355,7 +1423,7 @@
                     "text_desc": {
                       "type": "text",
                       "settings": {
-                        "text": "<h3>Un bandeau de sommeil hors du commun</h3><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux bandeaux synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h3>Obscurité totale pour un sommeil profond</h3><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre bandeau de sommeil offre une occultation totale grâce à la densité 22 mommes et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h3>Confort & élégance</h3><ul><li>Scratch qui permet de s'adapter à toutes les morphologies, sans pression sur les yeux</li><li>Thermorégulation naturelle — fraîche en été, douce en hiver</li><li>Hypoallergénique, idéal pour les peaux sensibles</li></ul><h3>Le rituel Andromeda</h3><p>Chaque bandeau est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement.</p>",
+                        "text": "<h3>Un bandeau de sommeil hors du commun</h3><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux bandeaux synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h3>Obscurité totale pour un sommeil profond</h3><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre bandeau de sommeil bloque 100% de la lumière et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h3>Confort & élégance</h3><ul><li>Scratch qui permet de s'adapter à toutes les morphologies, sans pression sur les yeux</li><li>Thermorégulation naturelle — fraîche en été, douce en hiver</li><li>Hypoallergénique, idéal pour les peaux sensibles</li></ul><h3>Le rituel Andromeda</h3><p>Chaque bandeau est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement.</p>",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
@@ -1450,6 +1518,7 @@
           },
           "block_order": [
             "group_icgrde",
+            "group_KD6wzY",
             "benefits_group",
             "group_tchpTP",
             "divider_VJhene",
@@ -1536,8 +1605,8 @@
     },
     "section_texte_reveal_scroll_n3wr7W": {
       "type": "section-texte-reveal-scroll",
-      "name": "Texte reveal au scroll",
       "disabled": true,
+      "name": "Texte reveal au scroll",
       "settings": {
         "text": "Née de la soie de mûrier la plus pure, chaque création Andromeda effleure la peau comme une caresse nocturne. Douce, hypoallergénique et bienveillante, notre soie enveloppe vos nuits d'un cocon céleste.",
         "background_image": "shopify://shop_images/bg-scroll-reveal.png",
@@ -1604,7 +1673,7 @@
           "type": "item",
           "settings": {
             "titre": "Description",
-            "contenu": "<h2>Un bandeau de sommeil hors du commun</h2><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux bandeaux synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h2>Obscurité totale pour un sommeil profond</h2><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre bandeau de sommeil offre une occultation totale grâce à la densité 22 mommes et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h2>Confort &amp; élégance</h2><ul>\n<li>Bande large et extensible pour s'adapter à toutes les morphologies, sans pression sur les yeux</li>\n<li>Thermorégulation naturelle — fraîche en été, douce en hiver</li>\n<li>Hypoallergénique, idéal pour les peaux sensibles</li>\n</ul><h2>Le rituel Andromeda</h2><p>Chaque bandeau est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement. Méditation, nature, ondes delta — une expérience sensorielle complète pour transformer chaque nuit en véritable <strong>rituel de sommeil de luxe</strong>.</p>"
+            "contenu": "<h2>Un bandeau de sommeil hors du commun</h2><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux bandeaux synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h2>Obscurité totale pour un sommeil profond</h2><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre bandeau de sommeil bloque 100% de la lumière et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h2>Confort &amp; élégance</h2><ul>\n<li>Bande large et extensible pour s'adapter à toutes les morphologies, sans pression sur les yeux</li>\n<li>Thermorégulation naturelle — fraîche en été, douce en hiver</li>\n<li>Hypoallergénique, idéal pour les peaux sensibles</li>\n</ul><h2>Le rituel Andromeda</h2><p>Chaque bandeau est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement. Méditation, nature, ondes delta — une expérience sensorielle complète pour transformer chaque nuit en véritable <strong>rituel de sommeil de luxe</strong>.</p>"
           }
         },
         "livraison": {
@@ -1949,7 +2018,7 @@
                 "text_andromeda_1": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Les mommes désignent le poids du tissu. À 22 mommes, notre soie est plus dense, plus opaque et plus durable : occultation totale grâce à la densité 22 mommes, et une douceur qui se conserve lavage après lavage.</p>",
+                    "text": "<p>Les mommes désignent le poids du tissu. À 22 mommes, notre soie est plus dense, plus opaque et plus durable. Elle bloque 100% de la lumière et conserve sa douceur lavage après lavage.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -2250,6 +2319,17 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "section_stories_nMXGP3": {
+      "type": "section-stories",
+      "name": "Stories produits",
+      "settings": {
+        "title": "",
+        "tray_style": "bubbles",
+        "color_scheme": "",
+        "padding_top": 24,
+        "padding_bottom": 24
+      }
     }
   },
   "order": [
@@ -2261,6 +2341,7 @@
     "section_comparatif",
     "product_recommendations_qggXJq",
     "17772818659bf33857",
-    "section_pX6aLk"
+    "section_pX6aLk",
+    "section_stories_nMXGP3"
   ]
 }

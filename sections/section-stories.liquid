@@ -33,18 +33,7 @@
           >
             <span class="stories-bubble__ring">
               <span class="stories-bubble__ring-inner">
-                {%- if block.settings.preview_video != blank -%}
-                  <video
-                    class="stories-bubble__video"
-                    autoplay
-                    muted
-                    loop
-                    playsinline
-                    {% if block.settings.bubble_image != blank %}poster="{{ block.settings.bubble_image | image_url: width: 160 }}"{% endif %}
-                  >
-                    <source src="{{ block.settings.preview_video.sources.last.url }}" type="video/mp4">
-                  </video>
-                {%- elsif block.settings.bubble_image != blank -%}
+                {%- if block.settings.bubble_image != blank -%}
                   {{
                     block.settings.bubble_image
                     | image_url: width: 160
@@ -83,21 +72,25 @@
 
   <div class="stories-viewer__media" id="stories-media-{{ section.id }}"></div>
 
-  <button type="button" class="stories-viewer__replay" id="stories-replay-{{ section.id }}" hidden>
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
-    <span>Revoir</span>
-  </button>
-
   <button type="button" class="stories-viewer__tap stories-viewer__tap--prev" id="stories-tap-prev-{{ section.id }}" aria-label="Précédent"></button>
   <button type="button" class="stories-viewer__tap stories-viewer__tap--next" id="stories-tap-next-{{ section.id }}" aria-label="Suivant"></button>
 
   <div class="stories-viewer__heading" id="stories-heading-{{ section.id }}" hidden></div>
 
   <div class="stories-viewer__product" id="stories-product-{{ section.id }}" hidden>
-    <div class="stories-viewer__product-scroll" id="stories-product-scroll-{{ section.id }}"></div>
-    <button type="button" class="stories-viewer__product-next" id="stories-product-next-{{ section.id }}" aria-label="Voir l'autre variante" hidden>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-    </button>
+    <div class="stories-viewer__product-row">
+      <a class="stories-viewer__product-media" id="stories-product-link-{{ section.id }}">
+        <img id="stories-product-image-{{ section.id }}" alt="" class="stories-viewer__product-image">
+      </a>
+      <div class="stories-viewer__product-info">
+        <span class="stories-viewer__product-title" id="stories-product-title-{{ section.id }}"></span>
+        <span class="stories-viewer__product-price" id="stories-product-price-{{ section.id }}"></span>
+        <div class="stories-viewer__swatches" id="stories-swatches-{{ section.id }}" hidden></div>
+      </div>
+      <button type="button" class="stories-viewer__add-btn" id="stories-add-btn-{{ section.id }}">
+        <span id="stories-add-btn-label-{{ section.id }}">Ajouter au panier</span>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -137,12 +130,11 @@
               {%- for val in block.settings.product.options_with_values.first.values -%}
               {
                 id: {% if val.variant %}{{ val.variant.id | json }}{% else %}null{% endif %},
-                title: {{ block.settings.product.title | json }},
                 label: {{ val.name | json }},
                 available: {{ val.available | json }},
                 price: {% if val.variant %}{{ val.variant.price | money | json }}{% else %}null{% endif %},
-                image: {% if val.variant.featured_image != blank %}{{ val.variant.featured_image | image_url: width: 200 | json }}{% elsif block.settings.product.featured_image != blank %}{{ block.settings.product.featured_image | image_url: width: 200 | json }}{% else %}null{% endif %},
-                url: {{ block.settings.product.url | json }}
+                swatchColor: {% if val.swatch.color %}{{ val.swatch.color | json }}{% else %}null{% endif %},
+                swatchImage: {% if val.swatch.image %}{{ val.swatch.image | image_url: width: 60 | json }}{% else %}null{% endif %}
               }{% unless forloop.last %},{% endunless %}
               {%- endfor -%}
             {%- endif -%}
@@ -176,9 +168,13 @@
     var mediaEl = document.getElementById('stories-media-' + sectionId);
     var headingEl = document.getElementById('stories-heading-' + sectionId);
     var productEl = document.getElementById('stories-product-' + sectionId);
-    var productScrollEl = document.getElementById('stories-product-scroll-' + sectionId);
-    var productNextBtn = document.getElementById('stories-product-next-' + sectionId);
-    var replayBtn = document.getElementById('stories-replay-' + sectionId);
+    var swatchesEl = document.getElementById('stories-swatches-' + sectionId);
+    var productLink = document.getElementById('stories-product-link-' + sectionId);
+    var productImage = document.getElementById('stories-product-image-' + sectionId);
+    var productTitle = document.getElementById('stories-product-title-' + sectionId);
+    var productPrice = document.getElementById('stories-product-price-' + sectionId);
+    var addBtn = document.getElementById('stories-add-btn-' + sectionId);
+    var addBtnLabel = document.getElementById('stories-add-btn-label-' + sectionId);
     var closeBtn = document.getElementById('stories-close-' + sectionId);
     var muteBtn = document.getElementById('stories-mute-' + sectionId);
     var tapPrev = document.getElementById('stories-tap-prev-' + sectionId);
@@ -252,43 +248,6 @@
         currentVideoEl = null;
       }
       mediaEl.innerHTML = '';
-      replayBtn.hidden = true;
-    }
-
-    function isAtLastSlideOverall() {
-      var key = storyOrder[currentStoryIndex];
-      var slides = groups[key];
-      return currentStoryIndex === storyOrder.length - 1 && currentSlideIndex === slides.length - 1;
-    }
-
-    var VIEWED_KEY = 'moona-stories-viewed';
-
-    function getViewedStories() {
-      try {
-        return JSON.parse(localStorage.getItem(VIEWED_KEY)) || {};
-      } catch (e) {
-        return {};
-      }
-    }
-
-    function markStoryViewed(storyKey) {
-      var viewed = getViewedStories();
-      if (viewed[storyKey]) return;
-      viewed[storyKey] = true;
-      try {
-        localStorage.setItem(VIEWED_KEY, JSON.stringify(viewed));
-      } catch (e) {}
-      var bubble = tray.querySelector('[data-story-group="' + CSS.escape(storyKey) + '"]');
-      if (bubble) bubble.classList.add('stories-bubble--viewed');
-    }
-
-    function applyViewedState() {
-      var viewed = getViewedStories();
-      tray.querySelectorAll('.stories-bubble').forEach(function (bubble) {
-        if (viewed[bubble.dataset.storyGroup]) {
-          bubble.classList.add('stories-bubble--viewed');
-        }
-      });
     }
 
     function openViewer(storyKey) {
@@ -299,7 +258,6 @@
       viewer.hidden = false;
       backdrop.hidden = false;
       document.body.style.overflow = 'hidden';
-      markStoryViewed(storyKey);
       loadStory();
     }
 
@@ -346,11 +304,7 @@
           animateProgress(currentSlideIndex, video.duration * 1000);
         });
         video.addEventListener('ended', function () {
-          if (isAtLastSlideOverall()) {
-            replayBtn.hidden = false;
-          } else {
-            goToNextSlide();
-          }
+          goToNextSlide();
         });
         video.play().catch(function () {});
       } else if (slide.image) {
@@ -374,73 +328,65 @@
 
       if (slide.product) {
         productEl.hidden = false;
-        buildProductCards(slide.product);
+        productImage.src = slide.product.image || '';
+        productTitle.textContent = slide.product.title;
+        productLink.href = slide.product.url;
+        buildSwatches(slide.product);
+        selectVariant(slide.product, slide.product.variants && slide.product.variants.length ? findDefaultVariant(slide.product.variants) : null);
       } else {
         productEl.hidden = true;
       }
     }
 
-    function buildProductCards(product) {
-      productScrollEl.innerHTML = '';
-      var cards =
-        product.variants && product.variants.length
-          ? product.variants
-          : [
-              {
-                id: product.variantId,
-                title: product.title,
-                label: '',
-                available: product.available,
-                price: product.price,
-                image: product.image,
-                url: product.url
-              }
-            ];
+    function findDefaultVariant(variants) {
+      var available = variants.filter(function (v) { return v.available && v.id; });
+      return available[0] || variants[0] || null;
+    }
 
-      cards.forEach(function (card) {
-        var cardEl = document.createElement('div');
-        cardEl.className = 'stories-viewer__product-card';
-
-        var link = document.createElement('a');
-        link.className = 'stories-viewer__product-media';
-        link.href = card.url || '#';
-
-        var img = document.createElement('img');
-        img.className = 'stories-viewer__product-image';
-        img.src = card.image || '';
-        img.alt = '';
-        link.appendChild(img);
-
-        var info = document.createElement('div');
-        info.className = 'stories-viewer__product-info';
-
-        var titleEl2 = document.createElement('span');
-        titleEl2.className = 'stories-viewer__product-title';
-        titleEl2.textContent = card.label ? card.title + ' - ' + card.label : card.title;
-
-        var priceEl = document.createElement('span');
-        priceEl.className = 'stories-viewer__product-price';
-        priceEl.textContent = card.price || product.price;
-
-        info.appendChild(titleEl2);
-        info.appendChild(priceEl);
-
+    function buildSwatches(product) {
+      swatchesEl.innerHTML = '';
+      var variants = product.variants || [];
+      if (variants.length < 2) {
+        swatchesEl.hidden = true;
+        return;
+      }
+      swatchesEl.hidden = false;
+      variants.forEach(function (variant) {
         var btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'stories-viewer__add-btn';
-        btn.disabled = !card.available || !card.id;
-        btn.dataset.variantId = card.id || '';
-        var btnLabel = document.createElement('span');
-        btnLabel.textContent = card.available ? 'Ajouter au panier' : 'Épuisé';
-        btn.appendChild(btnLabel);
+        btn.className = 'stories-viewer__swatch';
+        btn.setAttribute('aria-label', variant.label);
+        btn.disabled = !variant.available;
+        if (variant.swatchImage) {
+          btn.style.backgroundImage = 'url(' + variant.swatchImage + ')';
+        } else if (variant.swatchColor) {
+          btn.style.background = variant.swatchColor;
+        } else {
+          btn.textContent = variant.label.slice(0, 2);
+          btn.classList.add('stories-viewer__swatch--text');
+        }
+        btn.addEventListener('click', function () {
+          selectVariant(product, variant);
+        });
+        swatchesEl.appendChild(btn);
+      });
+    }
 
-        cardEl.appendChild(link);
-        cardEl.appendChild(info);
-        cardEl.appendChild(btn);
-        productScrollEl.appendChild(cardEl);
+    function selectVariant(product, variant) {
+      var swatchButtons = swatchesEl.querySelectorAll('.stories-viewer__swatch');
+      var variants = product.variants || [];
+      swatchButtons.forEach(function (btn, i) {
+        btn.classList.toggle('stories-viewer__swatch--active', variants[i] === variant);
       });
 
-      productNextBtn.hidden = cards.length < 2;
+      var variantId = variant ? variant.id : product.variantId;
+      var price = variant ? variant.price : product.price;
+      var available = variant ? variant.available : product.available;
+
+      productPrice.textContent = price || product.price;
+      addBtn.disabled = !available || !variantId;
+      addBtnLabel.textContent = available ? 'Ajouter au panier' : 'Épuisé';
+      addBtn.dataset.variantId = variantId || '';
     }
 
     function goToNextSlide() {
@@ -529,14 +475,6 @@
     closeBtn.addEventListener('click', closeViewer);
     backdrop.addEventListener('click', closeViewer);
 
-    replayBtn.addEventListener('click', function () {
-      replayBtn.hidden = true;
-      if (!currentVideoEl) return;
-      animateProgress(currentSlideIndex, currentVideoEl.duration * 1000);
-      currentVideoEl.currentTime = 0;
-      currentVideoEl.play().catch(function () {});
-    });
-
     [tapPrev, tapNext].forEach(function (el) {
       el.addEventListener('pointerdown', pauseStory);
       el.addEventListener('pointerup', resumeStory);
@@ -569,18 +507,13 @@
       });
     });
 
-    applyViewedState();
+    addBtn.addEventListener('click', function () {
+      var variantId = addBtn.dataset.variantId;
+      if (!variantId || addBtn.hasAttribute('data-loading')) return;
 
-    productScrollEl.addEventListener('click', function (e) {
-      var btn = e.target.closest ? e.target.closest('.stories-viewer__add-btn') : null;
-      if (!btn) return;
-      var variantId = btn.dataset.variantId;
-      if (!variantId || btn.hasAttribute('data-loading')) return;
-
-      var labelEl = btn.querySelector('span');
-      var originalLabel = labelEl.textContent;
-      btn.setAttribute('data-loading', '');
-      labelEl.textContent = 'Ajout...';
+      var originalLabel = addBtnLabel.textContent;
+      addBtn.setAttribute('data-loading', '');
+      addBtnLabel.textContent = 'Ajout...';
 
       fetch(cartUrl('cart/add.js'), {
         method: 'POST',
@@ -600,7 +533,7 @@
           return res.json();
         })
         .then(function (result) {
-          labelEl.textContent = 'Ajouté ✓';
+          addBtnLabel.textContent = 'Ajouté ✓';
 
           var freshHtml = result.sections && result.sections['cart-drawer-section'];
           if (freshHtml) {
@@ -623,20 +556,14 @@
         })
         .catch(function (err) {
           console.error('stories add-to-cart failed', err);
-          labelEl.textContent = 'Erreur';
+          addBtnLabel.textContent = 'Erreur';
         })
         .finally(function () {
           setTimeout(function () {
-            btn.removeAttribute('data-loading');
-            labelEl.textContent = originalLabel;
+            addBtn.removeAttribute('data-loading');
+            addBtnLabel.textContent = originalLabel;
           }, 1500);
         });
-    });
-
-    productNextBtn.addEventListener('click', function () {
-      var card = productScrollEl.querySelector('.stories-viewer__product-card');
-      var cardWidth = card ? card.getBoundingClientRect().width + 10 : 260;
-      productScrollEl.scrollBy({ left: cardWidth, behavior: 'smooth' });
     });
   })();
 </script>
@@ -703,8 +630,7 @@
     overflow: hidden;
   }
 
-  .stories-bubble__image,
-  .stories-bubble__video {
+  .stories-bubble__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -721,10 +647,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
-
-  .stories-bubble--viewed .stories-bubble__ring {
-    background: rgb(var(--color-foreground-rgb, 20 22 31) / 0.25);
   }
 
   .stories-bubble--empty {
@@ -759,8 +681,7 @@
     box-shadow: 0 4px 14px rgba(20, 22, 31, 0.12);
   }
 
-  .stories-tray--rectangle .stories-bubble__image,
-  .stories-tray--rectangle .stories-bubble__video {
+  .stories-tray--rectangle .stories-bubble__image {
     border-radius: 12px;
   }
 
@@ -770,13 +691,6 @@
 
   .stories-tray--rectangle .stories-bubble--empty .stories-bubble__ring {
     border: 2px dashed rgb(var(--color-foreground-rgb, 20 22 31) / 0.3);
-  }
-
-  .stories-tray--rectangle .stories-bubble--viewed .stories-bubble__image,
-  .stories-tray--rectangle .stories-bubble--viewed .stories-bubble__video,
-  .stories-tray--square .stories-bubble--viewed .stories-bubble__image,
-  .stories-tray--square .stories-bubble--viewed .stories-bubble__video {
-    opacity: 0.55;
   }
 
   /* Format "Grandes cartes carrées" */
@@ -798,8 +712,7 @@
     box-shadow: 0 4px 14px rgba(20, 22, 31, 0.12);
   }
 
-  .stories-tray--square .stories-bubble__image,
-  .stories-tray--square .stories-bubble__video {
+  .stories-tray--square .stories-bubble__image {
     border-radius: 16px;
   }
 
@@ -952,30 +865,6 @@
     cursor: pointer;
   }
 
-  .stories-viewer__replay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 5;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(20, 22, 31, 0.7);
-    color: #FFFFFF;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 999px;
-    padding: 12px 22px;
-    font-family: var(--font-primary--family, sans-serif);
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-  }
-
-  .stories-viewer__replay[hidden] {
-    display: none;
-  }
-
   .stories-viewer__tap--prev {
     left: 0;
     width: 30%;
@@ -1005,42 +894,58 @@
     right: 12px;
     bottom: calc(16px + env(safe-area-inset-bottom, 0px));
     z-index: 3;
-  }
-
-  .stories-viewer__product-scroll {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-
-  .stories-viewer__product-scroll::-webkit-scrollbar {
-    display: none;
-  }
-
-  .stories-viewer__product-card {
-    flex: 0 0 auto;
-    width: 88%;
-    scroll-snap-align: start;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(30, 30, 34, 0.55);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: #FFFFFF;
     border-radius: 16px;
     padding: 10px;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
   }
 
+  .stories-viewer__swatches {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    margin-top: 4px;
+  }
+
+  .stories-viewer__swatch {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    outline: 1px solid rgba(20, 22, 31, 0.15);
+    outline-offset: -1px;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    font-size: 0.5rem;
+    color: #14161F;
+    text-transform: uppercase;
+    padding: 0;
+  }
+
+  .stories-viewer__swatch--active {
+    border-color: #14161F;
+  }
+
+  .stories-viewer__swatch:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .stories-viewer__product-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
   .stories-viewer__product-media {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     border-radius: 10px;
     overflow: hidden;
     flex-shrink: 0;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgb(var(--color-foreground-rgb, 20 22 31) / 0.06);
   }
 
   .stories-viewer__product-image {
@@ -1060,9 +965,9 @@
 
   .stories-viewer__product-title {
     font-family: var(--font-primary--family, sans-serif);
-    font-size: 0.82rem;
+    font-size: 0.85rem;
     font-weight: 600;
-    color: #FFFFFF;
+    color: #14161F;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1070,8 +975,8 @@
 
   .stories-viewer__product-price {
     font-family: var(--font-primary--family, sans-serif);
-    font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.8rem;
+    color: #6E6A63;
   }
 
   .stories-viewer__add-btn {
@@ -1080,8 +985,8 @@
     color: #FFFFFF;
     border: none;
     border-radius: 999px;
-    padding: 9px 14px;
-    font-size: 0.78rem;
+    padding: 10px 18px;
+    font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
   }
@@ -1089,24 +994,6 @@
   .stories-viewer__add-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-  }
-
-  .stories-viewer__product-next {
-    position: absolute;
-    right: 2px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.4);
-    color: #FFFFFF;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 4;
   }
 {% endstylesheet %}
 
@@ -1133,12 +1020,6 @@
           "type": "image_picker",
           "id": "bubble_image",
           "label": "Image de la bulle"
-        },
-        {
-          "type": "video",
-          "id": "preview_video",
-          "label": "Aperçu vidéo en boucle (facultatif)",
-          "info": "Si renseignée, remplace l'image par un aperçu vidéo muet en boucle sur la vignette, pour donner envie de cliquer"
         }
       ]
     },

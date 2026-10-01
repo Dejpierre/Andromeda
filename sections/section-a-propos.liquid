@@ -1,0 +1,682 @@
+{%- liquid
+  assign hero_image = section.settings.hero_image
+  assign founders_image = section.settings.founders_image
+  assign ritual_image = section.settings.ritual_image
+-%}
+
+<div class="ap">
+
+  <!-- Hero -->
+  <div class="ap__hero-wrap">
+    <div class="ap__hero">
+      {%- if hero_image -%}
+        {{ hero_image | image_url: width: 2000 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750,1100,1500,2000', class: 'ap__hero-img', alt: hero_image.alt | default: section.settings.hero_title | strip_html }}
+      {%- else -%}
+        <img class="ap__hero-img" src="{{ 'andromeda-apropos-hero.png' | asset_url }}" alt="{{ section.settings.hero_title | strip_html }}" loading="eager" fetchpriority="high">
+      {%- endif -%}
+      {%- if section.settings.hero_overlay -%}<div class="ap__hero-overlay" aria-hidden="true"></div>{%- endif -%}
+      <h1 class="ap__hero-title" data-ap-reveal>{{ section.settings.hero_title }}</h1>
+    </div>
+  </div>
+
+  <!-- Manifeste -->
+  <div class="ap__block ap__block--manifesto">
+    <div class="ap__prose">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'prose_paragraph' and block.settings.placement == 'manifesto' -%}
+          <div class="ap__p" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <!-- Constellation -->
+  <div class="ap__block ap__block--constellation">
+    <div class="ap__constellation" data-ap-reveal>
+      <img class="ap__const ap__const-1" src="https://www.andromedaparis.com/cdn/shop/files/Masque_de_sommeil_terracotta_sur_table_de_chevet.png?v=1787605649&width=800" alt="Masque terracotta sur une table de chevet" loading="lazy">
+      <img class="ap__const ap__const-2" src="{{ 'andromeda-masque-crepuscule-coffret.png' | asset_url }}" alt="Masque Crépuscule dans son coffret" loading="lazy">
+      <img class="ap__const ap__const-3" src="https://www.andromedaparis.com/cdn/shop/files/Andromeda_Bedroom_Serene.png?v=1774394685&width=800" alt="Chambre sereine" loading="lazy">
+      <img class="ap__const ap__const-4" src="{{ 'andromeda-masque-nuit-celeste-coffret.png' | asset_url }}" alt="Masque Nuit céleste dans son coffret" loading="lazy">
+
+      <div class="ap__const-center">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 6.6L20.5 10l-6.7 1.6L12 18.2l-1.8-6.6L3.5 10l6.7-1.4z"></path></svg>
+        <h2 class="ap__h2">{{ section.settings.constellation_title }}</h2>
+      </div>
+
+      <img class="ap__const ap__const-5" src="{{ 'andromeda-masque-douce-lueur-coffret.png' | asset_url }}" alt="Masque Douce lueur dans son coffret" loading="lazy">
+      <img class="ap__const ap__const-6" src="https://www.andromedaparis.com/cdn/shop/files/Collection_Masques_Andromeda_Soie_3_2_1.jpg?v=1776670408&width=800" alt="Collection de masques en soie" loading="lazy">
+      <img class="ap__const ap__const-7" src="https://www.andromedaparis.com/cdn/shop/files/Andromeda_Overhead_Dramatic.png?v=1774394684&width=800" alt="Masque vu du dessus" loading="lazy">
+      <img class="ap__const ap__const-8" src="{{ 'andromeda-collection-quatre-coins-du-monde.png' | asset_url }}" alt="Globe éclairé par une lampe de chevet" loading="lazy">
+    </div>
+  </div>
+
+  <!-- La matière -->
+  <div class="ap__block ap__block--matiere">
+    <h2 class="ap__h2 ap__tc" data-ap-reveal>{{ section.settings.matiere_heading }}</h2>
+    <div class="ap__prose">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'prose_paragraph' and block.settings.placement == 'matiere' -%}
+          <div class="ap__p" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    <div class="ap__stats" data-ap-reveal>
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'material_stat' -%}
+          <div class="ap__stat" {{ block.shopify_attributes }}>
+            <span class="ap__stat-value">{{ block.settings.value }}</span>
+            <span class="ap__stat-label">{{ block.settings.label }}</span>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <!-- Les fondateurs -->
+  <div class="ap__block ap__block--founders">
+    <h2 class="ap__h2 ap__tc" data-ap-reveal>{{ section.settings.founders_heading }}</h2>
+    <div class="ap__founders-photo-wrap" data-ap-reveal>
+      {%- if founders_image -%}
+        {{ founders_image | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '(min-width: 1240px) 1200px, 100vw', widths: '600,900,1200,1600', class: 'ap__founders-photo', alt: founders_image.alt | default: section.settings.founders_caption }}
+      {%- else -%}
+        <div class="ap__founders-placeholder" role="img" aria-label="Photo de Marion et Pierre">Photo de Marion et Pierre</div>
+      {%- endif -%}
+      {%- if section.settings.founders_caption != blank -%}
+        <span class="ap__founders-caption">{{ section.settings.founders_caption }}</span>
+      {%- endif -%}
+    </div>
+    <div class="ap__prose">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'prose_paragraph' and block.settings.placement == 'founders' -%}
+          <div class="ap__p" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <!-- Le rituel, en trois temps -->
+  <div class="ap__block ap__block--ritual">
+    <div class="ap__ritual-grid">
+      <div class="ap__ritual-photo-wrap" data-ap-reveal>
+        {%- if ritual_image -%}
+          {{ ritual_image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 1240px) 600px, 100vw', widths: '400,600,900,1200', class: 'ap__ritual-photo' }}
+        {%- else -%}
+          <img class="ap__ritual-photo" src="{{ 'andromeda-masque-nuit-celeste-coffret.png' | asset_url }}" alt="Masque Nuit céleste dans son coffret" loading="lazy">
+        {%- endif -%}
+        <div class="ap__ritual-card">
+          <span class="ap__ritual-card-eyebrow">Dans chaque coffret</span>
+          <span class="ap__ritual-card-text">Un QR code vers l'espace sonore</span>
+        </div>
+      </div>
+      <div class="ap__ritual-content" data-ap-reveal>
+        <h2 class="ap__h2">{{ section.settings.ritual_heading }}</h2>
+        <div class="ap__ritual-steps">
+          {%- assign step_index = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'ritual_step' -%}
+              {%- assign step_index = step_index | plus: 1 -%}
+              <div class="ap__ritual-step" {{ block.shopify_attributes }}>
+                <span class="ap__ritual-step-num">{{ step_index | prepend: '0' | slice: -2, 2 }}</span>
+                <div class="ap__ritual-step-body">
+                  <span class="ap__ritual-step-title">{{ block.settings.title }}</span>
+                  <span class="ap__ritual-step-text">{{ block.settings.text }}</span>
+                  <span class="ap__ritual-step-links">
+                    {%- if block.settings.link_1_product != blank -%}
+                      <a href="{{ block.settings.link_1_product.url }}">{{ block.settings.link_1_label | default: block.settings.link_1_product.title }} — {{ block.settings.link_1_product.price | money }}</a>
+                    {%- elsif block.settings.link_1_url != blank -%}
+                      <a href="{{ block.settings.link_1_url }}">{{ block.settings.link_1_label }}</a>
+                    {%- elsif block.settings.link_1_label != blank -%}
+                      <span>{{ block.settings.link_1_label }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.link_2_product != blank -%}
+                      <a href="{{ block.settings.link_2_product.url }}">{{ block.settings.link_2_label | default: block.settings.link_2_product.title }} — {{ block.settings.link_2_product.price | money }}</a>
+                    {%- elsif block.settings.link_2_url != blank -%}
+                      <a href="{{ block.settings.link_2_url }}">{{ block.settings.link_2_label }}</a>
+                    {%- elsif block.settings.link_2_label != blank -%}
+                      <span>{{ block.settings.link_2_label }}</span>
+                    {%- endif -%}
+                  </span>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Engagements -->
+  <div class="ap__block ap__block--commitments">
+    <h2 class="ap__h2 ap__tc" data-ap-reveal>{{ section.settings.commitments_heading }}</h2>
+    <div class="ap__commitments" data-ap-reveal>
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'commitment' -%}
+          <span class="ap__commitment" {{ block.shopify_attributes }}>
+            <span class="ap__commitment-icon">
+              {%- if block.settings.icon_image != blank -%}
+                {{ block.settings.icon_image | image_url: width: 88 | image_tag: loading: 'lazy', alt: '' }}
+              {%- else -%}
+                {{ block.settings.icon_text }}
+              {%- endif -%}
+            </span>
+            <span class="ap__commitment-label">{{ block.settings.label }}</span>
+          </span>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": {{ page.title | json }},
+  "url": {{ shop.url | append: page.url | json }},
+  "mainEntity": {
+    "@type": "Organization",
+    "@id": "https://www.andromedaparis.com/#organization",
+    "name": "Andromeda Paris",
+    "url": "https://www.andromedaparis.com",
+    "logo": "https://www.andromedaparis.com/cdn/shop/files/logo-andromeda.png",
+    "foundingDate": "2024",
+    "founder": [
+      { "@type": "Person", "name": "Marion Dejonghe" },
+      { "@type": "Person", "name": "Pierre Dejonghe" }
+    ],
+    "sameAs": [
+      "https://www.instagram.com/andromeda_paris/",
+      "https://www.facebook.com/profile.php?id=61573303544976",
+      "https://fr.pinterest.com/andromedaparisfr/",
+      "https://www.tiktok.com/@andromeda_paris"
+    ]
+  }
+}
+</script>
+
+<style>
+  .ap { background: #FFFFFF; color: #14161F; font-family: 'Raleway', var(--font-body--family, sans-serif); }
+  .ap h1, .ap h2 { font-family: 'GC Amelie Promised', var(--font-heading--family, Georgia, serif); font-weight: 400; line-height: 1.1; margin: 0; }
+  .ap a { color: #4A2731; text-decoration-color: rgba(74,39,49,0.4); text-underline-offset: 4px; transition: text-decoration-color .25s ease-out; }
+  .ap a:hover { text-decoration-color: #4A2731; }
+  .ap a:focus-visible { outline: 2px solid #4A2731; outline-offset: 1px; }
+
+  .ap__block { padding-top: 96px; display: flex; flex-direction: column; align-items: center; }
+  .ap__block--matiere { gap: 20px; padding-inline: 24px; }
+  .ap__block--founders,
+  .ap__block--ritual { padding-top: 120px; }
+  .ap__block--commitments { padding-top: 96px; padding-bottom: 96px; }
+
+  @media screen and (min-width: 990px) {
+    .ap__block { padding-top: 160px; }
+    .ap__block--matiere { gap: 24px; }
+    .ap__block--founders,
+    .ap__block--ritual { padding-top: 200px; }
+    .ap__block--commitments { padding-top: 160px; padding-bottom: 160px; }
+  }
+
+  .ap__h2 { font-size: 28px; max-width: 480px; text-wrap: balance; }
+  .ap__tc { text-align: center; margin-inline: auto; }
+
+  @media screen and (min-width: 990px) {
+    .ap__h2 { font-size: 36px; max-width: 620px; }
+  }
+
+  .ap__prose { display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; padding-inline: 24px; width: 100%; max-width: 680px; margin-inline: auto; }
+  .ap__p { font-size: 18px; font-weight: 300; line-height: 1.6; color: #14161F; margin: 0; max-width: 560px; text-wrap: pretty; }
+  .ap__p p { margin: 0; }
+  .ap__p p + p { margin-top: 1em; }
+
+  @media screen and (min-width: 990px) {
+    .ap__prose { gap: 24px; }
+    .ap__p { font-size: 20px; }
+  }
+
+  /* ── Hero ───────────────────────────────────────────────────────── */
+  .ap__hero-wrap { padding: 12px 12px 0; }
+
+  @media screen and (min-width: 990px) {
+    .ap__hero-wrap { padding: 24px 24px 0; }
+  }
+
+  .ap__hero {
+    position: relative;
+    height: 560px;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 24px;
+  }
+
+  @media screen and (min-width: 990px) {
+    .ap__hero { height: 720px; padding: 0; }
+  }
+
+  .ap__hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ap__hero-overlay { position: absolute; inset: 0; background: rgba(20,22,31,0.35); }
+
+  .ap__hero-title {
+    position: relative;
+    font-size: 40px;
+    color: #FFFFFF;
+    max-width: 760px;
+    text-wrap: balance;
+  }
+
+  @media screen and (min-width: 990px) {
+    .ap__hero-title { font-size: 64px; }
+  }
+
+  /* ── Constellation ──────────────────────────────────────────────── */
+  .ap__constellation {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 24px;
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+    gap: 12px;
+  }
+
+  .ap__const { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 16px; display: block; }
+  .ap__const-2, .ap__const-8 { margin-top: 32px; }
+  .ap__const-5, .ap__const-6, .ap__const-7 { display: none; }
+  .ap__const-center { grid-column: 1 / -1; order: -1; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; color: #B06A47; padding-bottom: 8px; }
+  .ap__const-center .ap__h2 { color: #14161F; }
+
+  @media screen and (min-width: 1100px) {
+    .ap__constellation { position: relative; height: 760px; display: block; padding-inline: 0; }
+    .ap__const { position: absolute; aspect-ratio: auto; }
+    .ap__const-1 { left: 120px; top: 40px; width: 260px; aspect-ratio: 4/3; }
+    .ap__const-2 { left: 300px; top: 0; width: 170px; aspect-ratio: 1/1; margin-top: 0; }
+    .ap__const-3 { right: 190px; top: 10px; width: 250px; aspect-ratio: 4/3; }
+    .ap__const-4 { right: 110px; top: 120px; width: 190px; aspect-ratio: 1/1; }
+    .ap__const-5 { display: block; left: 200px; top: 470px; width: 190px; aspect-ratio: 1/1; }
+    .ap__const-6 { display: block; left: 330px; top: 560px; width: 250px; aspect-ratio: 4/3; }
+    .ap__const-7 { display: block; right: 330px; top: 520px; width: 220px; aspect-ratio: 1/1; }
+    .ap__const-8 { right: 180px; top: 470px; width: 180px; aspect-ratio: 3/4; margin-top: 0; }
+    .ap__const-center { position: absolute; left: 0; right: 0; top: 270px; }
+    .ap__const-center .ap__h2 { font-size: 48px; max-width: 680px; }
+  }
+
+  /* ── La matière ─────────────────────────────────────────────────── */
+  .ap__stats {
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    width: 100%;
+    max-width: 392px;
+    padding-inline: 24px;
+  }
+
+  @media screen and (min-width: 990px) {
+    .ap__stats { grid-template-columns: repeat(4, 180px); max-width: fit-content; padding-inline: 0; }
+  }
+
+  .ap__stat {
+    border: 1px solid rgba(20,22,31,0.12);
+    border-radius: 8px;
+    padding: 20px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+
+  @media screen and (min-width: 990px) {
+    .ap__stat { padding: 24px 20px; gap: 8px; }
+  }
+
+  .ap__stat-value { font-size: 36px; font-weight: 300; line-height: 1; color: #B06A47; }
+  .ap__stat-label { font-size: 14px; line-height: 1.5; color: #6E6A63; }
+
+  @media screen and (min-width: 990px) {
+    .ap__stat-value { font-size: 40px; }
+    .ap__stat-label { line-height: 1.6; }
+  }
+
+  /* ── Les fondateurs ─────────────────────────────────────────────── */
+  .ap__block--founders { gap: 32px; padding-inline: 24px; }
+
+  @media screen and (min-width: 990px) {
+    .ap__block--founders { gap: 64px; }
+  }
+
+  .ap__founders-photo-wrap { width: 100%; max-width: 1200px; display: flex; flex-direction: column; gap: 12px; }
+
+  @media screen and (min-width: 990px) {
+    .ap__founders-photo-wrap { gap: 20px; }
+  }
+
+  .ap__founders-photo { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 16px; display: block; }
+
+  @media screen and (min-width: 990px) {
+    .ap__founders-photo { aspect-ratio: auto; height: 720px; }
+  }
+
+  .ap__founders-placeholder {
+    width: 100%;
+    aspect-ratio: 4/5;
+    border-radius: 16px;
+    background: color-mix(in srgb, #14161F 6%, transparent);
+    border: 1px dashed rgba(20,22,31,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6E6A63;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  @media screen and (min-width: 990px) {
+    .ap__founders-placeholder { aspect-ratio: auto; height: 720px; }
+  }
+
+  .ap__founders-caption { font-size: 14px; color: #6E6A63; text-align: center; }
+
+  /* ── Le rituel ──────────────────────────────────────────────────── */
+  .ap__block--ritual { padding-inline: 24px; }
+
+  .ap__ritual-grid {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+    gap: 48px;
+  }
+
+  @media screen and (min-width: 990px) {
+    .ap__ritual-grid { grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 64px; align-items: center; }
+  }
+
+  .ap__ritual-photo-wrap { position: relative; border-radius: 16px; overflow: hidden; }
+  .ap__ritual-photo { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
+
+  .ap__ritual-card {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  @media screen and (min-width: 990px) {
+    .ap__ritual-card { left: 16px; right: auto; bottom: 16px; padding: 14px 18px; }
+  }
+
+  .ap__ritual-card-eyebrow { font-size: 14px; color: #6E6A63; }
+  .ap__ritual-card-text { font-size: 16px; color: #14161F; }
+
+  .ap__ritual-content { display: flex; flex-direction: column; gap: 32px; }
+
+  @media screen and (min-width: 990px) {
+    .ap__ritual-content { gap: 48px; }
+  }
+
+  .ap__ritual-steps { display: flex; flex-direction: column; }
+
+  .ap__ritual-step {
+    padding: 24px 0;
+    border-top: 1px solid rgba(20,22,31,0.12);
+    display: grid;
+    grid-template-columns: 36px minmax(0,1fr);
+    gap: 12px;
+  }
+
+  @media screen and (min-width: 990px) {
+    .ap__ritual-step { padding: 28px 0; grid-template-columns: 56px 1fr; gap: 16px; }
+  }
+
+  .ap__ritual-step:last-child { border-bottom: 1px solid rgba(20,22,31,0.12); }
+
+  .ap__ritual-step-num { font-size: 14px; color: #B06A47; padding-top: 4px; }
+  .ap__ritual-step-body { display: flex; flex-direction: column; gap: 8px; }
+  .ap__ritual-step-title { font-size: 20px; color: #14161F; }
+  .ap__ritual-step-text { font-size: 16px; font-weight: 300; line-height: 1.6; color: #3A3A42; }
+  .ap__ritual-step-links { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+  .ap__ritual-step-links a,
+  .ap__ritual-step-links > span { font-size: 14px; display: inline-flex; align-items: center; min-height: 44px; }
+  .ap__ritual-step-links > span { color: #3A3A42; }
+
+  @media screen and (min-width: 990px) {
+    .ap__ritual-step-links a,
+    .ap__ritual-step-links > span { min-height: 0; }
+  }
+
+  /* ── Engagements ────────────────────────────────────────────────── */
+  .ap__commitments {
+    margin-top: 32px;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 16px;
+    padding-inline: 24px;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  @media screen and (min-width: 990px) {
+    .ap__commitments { display: flex; justify-content: center; gap: 48px; max-width: fit-content; padding-inline: 0; margin-top: 48px; }
+  }
+
+  .ap__commitment { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+
+  @media screen and (min-width: 990px) {
+    .ap__commitment { flex-direction: row; gap: 12px; }
+  }
+
+  .ap__commitment-icon {
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(20,22,31,0.12);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: #14161F;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .ap__commitment-icon img { width: 100%; height: 100%; object-fit: contain; }
+  .ap__commitment-label { font-size: 14px; line-height: 1.5; color: #14161F; }
+
+  @media screen and (min-width: 990px) {
+    .ap__commitment-label { font-size: 16px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ap * { animation: none !important; transition-duration: 0.01ms !important; }
+  }
+
+  /* ── Apparition au scroll (activée par le JS ci-dessous) ───────────
+     Sans JS, [data-ap-reveal] reste visible normalement. */
+  .ap.ap-js [data-ap-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s cubic-bezier(.16,.84,.44,1), transform .7s cubic-bezier(.16,.84,.44,1);
+  }
+
+  .ap.ap-js [data-ap-reveal].is-visible { opacity: 1; transform: translateY(0); }
+
+  .ap.ap-js .ap__const,
+  .ap.ap-js .ap__stat,
+  .ap.ap-js .ap__commitment,
+  .ap.ap-js .ap__ritual-step {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity .5s ease-out, transform .5s ease-out;
+  }
+
+  .ap.ap-js .is-visible .ap__const,
+  .ap.ap-js .is-visible .ap__stat,
+  .ap.ap-js .is-visible .ap__commitment,
+  .ap.ap-js .is-visible .ap__ritual-step {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .ap.ap-js .ap__constellation.is-visible .ap__const:nth-of-type(1) { transition-delay: .05s; }
+  .ap.ap-js .ap__constellation.is-visible .ap__const:nth-of-type(2) { transition-delay: .12s; }
+  .ap.ap-js .ap__constellation.is-visible .ap__const:nth-of-type(3) { transition-delay: .19s; }
+  .ap.ap-js .ap__constellation.is-visible .ap__const:nth-of-type(4) { transition-delay: .26s; }
+  .ap.ap-js .ap__constellation.is-visible .ap__const:nth-of-type(5) { transition-delay: .33s; }
+  .ap.ap-js .ap__constellation.is-visible .ap__const:nth-of-type(6) { transition-delay: .4s; }
+  .ap.ap-js .ap__constellation.is-visible .ap__const:nth-of-type(7) { transition-delay: .47s; }
+  .ap.ap-js .ap__constellation.is-visible .ap__const:nth-of-type(8) { transition-delay: .54s; }
+
+  .ap.ap-js .ap__stats.is-visible .ap__stat:nth-child(1) { transition-delay: 0s; }
+  .ap.ap-js .ap__stats.is-visible .ap__stat:nth-child(2) { transition-delay: .08s; }
+  .ap.ap-js .ap__stats.is-visible .ap__stat:nth-child(3) { transition-delay: .16s; }
+  .ap.ap-js .ap__stats.is-visible .ap__stat:nth-child(4) { transition-delay: .24s; }
+
+  .ap.ap-js .ap__commitments.is-visible .ap__commitment:nth-child(1) { transition-delay: 0s; }
+  .ap.ap-js .ap__commitments.is-visible .ap__commitment:nth-child(2) { transition-delay: .08s; }
+  .ap.ap-js .ap__commitments.is-visible .ap__commitment:nth-child(3) { transition-delay: .16s; }
+  .ap.ap-js .ap__commitments.is-visible .ap__commitment:nth-child(4) { transition-delay: .24s; }
+
+  .ap.ap-js .ap__ritual-content.is-visible .ap__ritual-step:nth-child(1) { transition-delay: 0s; }
+  .ap.ap-js .ap__ritual-content.is-visible .ap__ritual-step:nth-child(2) { transition-delay: .12s; }
+  .ap.ap-js .ap__ritual-content.is-visible .ap__ritual-step:nth-child(3) { transition-delay: .24s; }
+</style>
+
+<script>
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  document.querySelectorAll('.ap').forEach(function (root) {
+    if (root.classList.contains('ap-js')) return;
+    root.classList.add('ap-js');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+    root.querySelectorAll('[data-ap-reveal]').forEach(function (el) { io.observe(el); });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "À propos Andromeda",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "hero_title", "label": "Titre", "default": "Plus qu'un masque de nuit, un véritable rituel nocturne." },
+    { "type": "image_picker", "id": "hero_image", "label": "Image (sinon image par défaut)" },
+    { "type": "checkbox", "id": "hero_overlay", "label": "Voile sombre sur l'image", "default": false },
+
+    { "type": "header", "content": "Constellation" },
+    { "type": "text", "id": "constellation_title", "label": "Titre", "default": "Une soie choisie parmi les 5 % les plus rares au monde" },
+
+    { "type": "header", "content": "La matière" },
+    { "type": "text", "id": "matiere_heading", "label": "Titre", "default": "Une soie de mûrier grade 6A, certifiée OEKO-TEX®" },
+
+    { "type": "header", "content": "Les fondateurs" },
+    { "type": "text", "id": "founders_heading", "label": "Titre", "default": "Derrière Andromeda, un duo" },
+    { "type": "image_picker", "id": "founders_image", "label": "Photo du duo" },
+    { "type": "text", "id": "founders_caption", "label": "Légende", "default": "Marion & Pierre Dejonghe, cofondateurs, Paris." },
+
+    { "type": "header", "content": "Le rituel" },
+    { "type": "text", "id": "ritual_heading", "label": "Titre", "default": "Le rituel, en trois temps" },
+    { "type": "image_picker", "id": "ritual_image", "label": "Image (sinon image par défaut)" },
+
+    { "type": "header", "content": "Engagements" },
+    { "type": "text", "id": "commitments_heading", "label": "Titre", "default": "Des engagements qui accompagnent chaque nuit" }
+  ],
+  "blocks": [
+    {
+      "type": "prose_paragraph",
+      "name": "Paragraphe",
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Emplacement",
+          "options": [
+            { "value": "manifesto", "label": "Manifeste" },
+            { "value": "matiere", "label": "La matière" },
+            { "value": "founders", "label": "Les fondateurs" }
+          ],
+          "default": "manifesto"
+        },
+        { "type": "richtext", "id": "text", "label": "Texte" }
+      ]
+    },
+    {
+      "type": "material_stat",
+      "name": "Chiffre clé",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Valeur" },
+        { "type": "text", "id": "label", "label": "Libellé" }
+      ]
+    },
+    {
+      "type": "ritual_step",
+      "name": "Étape du rituel",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titre" },
+        { "type": "text", "id": "text", "label": "Texte" },
+        { "type": "header", "content": "Premier lien" },
+        { "type": "product", "id": "link_1_product", "label": "Produit" },
+        { "type": "text", "id": "link_1_label", "label": "Libellé (si pas de produit)" },
+        { "type": "url", "id": "link_1_url", "label": "Lien (si pas de produit)" },
+        { "type": "header", "content": "Second lien (optionnel)" },
+        { "type": "product", "id": "link_2_product", "label": "Produit" },
+        { "type": "text", "id": "link_2_label", "label": "Libellé (si pas de produit)" },
+        { "type": "url", "id": "link_2_url", "label": "Lien (si pas de produit)" }
+      ]
+    },
+    {
+      "type": "commitment",
+      "name": "Engagement",
+      "settings": [
+        { "type": "text", "id": "icon_text", "label": "Texte du picto (provisoire)" },
+        { "type": "image_picker", "id": "icon_image", "label": "Image du picto (remplace le texte)" },
+        { "type": "text", "id": "label", "label": "Libellé" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "À propos Andromeda",
+      "blocks": [
+        { "type": "prose_paragraph", "settings": { "placement": "manifesto", "text": "<p>Une bonne alimentation, une activité physique régulière et un sommeil réparateur sont les trois piliers de la santé.</p>" } },
+        { "type": "prose_paragraph", "settings": { "placement": "manifesto", "text": "<p>Pourtant, le sommeil est souvent relégué au second plan, faute de moyens naturels pour agir dessus.</p>" } },
+        { "type": "prose_paragraph", "settings": { "placement": "manifesto", "text": "<p>Andromeda imagine des accessoires en soie de mûrier et des ambiances sonores relaxantes qui font du coucher un moment de bien-être absolu.</p>" } },
+        { "type": "prose_paragraph", "settings": { "placement": "matiere", "text": "<p>La soie de mûrier de grade 6A est la plus qualitative du marché. Certifiée OEKO-TEX®, elle est thermorégulatrice, hypoallergénique et anti-acarienne.</p>" } },
+        { "type": "prose_paragraph", "settings": { "placement": "matiere", "text": "<p>Même au contact du visage toute la nuit, elle ne laisse aucune marque ni irritation au réveil.</p>" } },
+        { "type": "material_stat", "settings": { "value": "6A", "label": "Grade de soie" } },
+        { "type": "material_stat", "settings": { "value": "22", "label": "Mommes" } },
+        { "type": "material_stat", "settings": { "value": "100 %", "label": "Soie, rembourrage inclus" } },
+        { "type": "material_stat", "settings": { "value": "5 %", "label": "De la production mondiale" } },
+        { "type": "prose_paragraph", "settings": { "placement": "founders", "text": "<p>Nous avons voulu des masques fabriqués 100 % en soie, y compris le rembourrage. Ultra-légers, ils s'adaptent à toutes les morphologies.</p>" } },
+        { "type": "prose_paragraph", "settings": { "placement": "founders", "text": "<p>Nous les pensons comme un prolongement de la skin-care du soir : la soie n'absorbe pas la crème de nuit et laisse respirer la peau.</p>" } },
+        { "type": "prose_paragraph", "settings": { "placement": "founders", "text": "<p>Une question sur un coloris, un cadeau ? <a href=\"mailto:contact@andromedaparis.com\">Écrivez-nous</a>.</p>" } },
+        { "type": "ritual_step", "settings": { "title": "Protéger ses cheveux", "text": "Le chouchou ou le bandeau en soie évite la casse pendant la nuit.", "link_1_label": "Chouchous — 22,99 €", "link_2_label": "Bandeau — 39,99 €" } },
+        { "type": "ritual_step", "settings": { "title": "Poser son masque", "text": "Obscurité totale, sans marque au réveil. La soie laisse respirer la peau et n'absorbe pas la crème de nuit.", "link_1_label": "Masque de nuit — 35,99 €" } },
+        { "type": "ritual_step", "settings": { "title": "Lancer une ambiance", "text": "Pluie, vagues ou musiques du monde, pour laisser l'esprit ralentir.", "link_1_label": "Ambiance sensorielle", "link_2_label": "Quatre coins du monde" } },
+        { "type": "commitment", "settings": { "icon_text": "OEKO", "label": "Certifiée OEKO-TEX®" } },
+        { "type": "commitment", "settings": { "icon_text": "30 j", "label": "Retours sous 30 jours" } },
+        { "type": "commitment", "settings": { "icon_text": "55 €", "label": "Livraison offerte dès 55 €" } },
+        { "type": "commitment", "settings": { "icon_text": "QR", "label": "Espace sonore inclus" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
