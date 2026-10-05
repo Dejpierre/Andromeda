@@ -21,8 +21,16 @@
     endif
 
   elsif request.page_type == 'collection'
-    assign seo_title = collection.title | append: ' — Andromeda'
-    assign seo_description = 'Explorez la collection ' | append: collection.title | append: " d'Andromeda. Accessoires de sommeil haut de gamme en soie de mûrier, pensés pour un rituel du soir élégant."
+    if collection.seo.title != blank
+      assign seo_title = collection.seo.title
+    else
+      assign seo_title = collection.title | append: ' — Andromeda'
+    endif
+    if collection.seo.description != blank
+      assign seo_description = collection.seo.description
+    else
+      assign seo_description = 'Explorez la collection ' | append: collection.title | append: " d'Andromeda. Accessoires de sommeil haut de gamme en soie de mûrier, pensés pour un rituel du soir élégant."
+    endif
 
   elsif request.page_type == 'article'
     assign seo_title = article.title | append: ' — Andromeda'

@@ -1613,6 +1613,49 @@
         "color_scheme": ""
       }
     },
+    "founders_reassurance_section": {
+      "type": "_blocks",
+      "blocks": {
+        "founders_reassurance": {
+          "type": "andromeda-founders-reassurance",
+          "name": "Fondateurs — réassurance",
+          "settings": {
+            "image": "shopify://shop_images/andromeda-fondateurs-duo.jpg",
+            "link": "/pages/qui-sommes-nous"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "founders_reassurance"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "full-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 64,
+        "padding-block-end": 64
+      }
+    },
     "1777960337a20780a9": {
       "type": "_blocks",
       "blocks": {
@@ -2336,6 +2379,7 @@
     "main",
     "marquee_HYpWxg",
     "section_texte_reveal_scroll_n3wr7W",
+    "founders_reassurance_section",
     "1777960337a20780a9",
     "accordeon_produit",
     "section_comparatif",
