@@ -1439,6 +1439,14 @@
                 "row_livraison"
               ]
             },
+            "product_guides": {
+              "type": "andromeda-product-guides",
+              "name": "Guides liés",
+              "settings": {
+                "article_1": "actualites/soie-19-vs-22-mommes-guide"
+              },
+              "blocks": {}
+            },
             "rituel_banner": {
               "type": "custom-liquid",
               "name": "Bannière espace rituel",
@@ -1459,6 +1467,7 @@
             "buy_buttons_eYQEYi",
             "text_aEtTtq",
             "accordion_desc_livraison",
+            "product_guides",
             "rituel_banner"
           ]
         }
