@@ -160,7 +160,8 @@
                                 widths: '86',
                                 class: 'quick-order-list__table-image',
                                 sizes: '43px',
-                                loading: 'lazy'
+                                loading: 'lazy',
+                                alt: variant.image.alt | default: variant.title | default: product.title
                             }}
                           {% endif %}
                         </div>

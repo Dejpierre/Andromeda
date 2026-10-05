@@ -40,7 +40,8 @@
           loading: 'lazy',
           widths: '300, 500, 800',
           sizes: '(min-width: 750px) 25vw, 50vw',
-          class: 'variant-card__image'
+          class: 'variant-card__image',
+          alt: variant_image.alt | default: variant.title | default: product.title
       }}
     {%- else -%}
       {{ 'product-1' | placeholder_svg_tag: 'variant-card__placeholder' }}

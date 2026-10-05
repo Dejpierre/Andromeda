@@ -99,7 +99,7 @@
     <div class="ap__ritual-grid">
       <div class="ap__ritual-photo-wrap" data-ap-reveal>
         {%- if ritual_image -%}
-          {{ ritual_image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 1240px) 600px, 100vw', widths: '400,600,900,1200', class: 'ap__ritual-photo' }}
+          {{ ritual_image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 1240px) 600px, 100vw', widths: '400,600,900,1200', class: 'ap__ritual-photo', alt: ritual_image.alt | default: section.settings.ritual_heading }}
         {%- else -%}
           <img class="ap__ritual-photo" src="{{ 'andromeda-masque-nuit-celeste-coffret.png' | asset_url }}" alt="Masque Nuit céleste dans son coffret" loading="lazy">
         {%- endif -%}
