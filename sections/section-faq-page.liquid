@@ -78,7 +78,8 @@
           <span class="faq-page__eyebrow">{{ total }} {{ eyebrow_suffix }}</span>
         {%- endif -%}
         {%- if heading != blank -%}
-          <h1 class="faq-page__title">{{ heading }}</h1>
+          {%- assign heading_tag = section.settings.heading_tag | default: 'h2' -%}
+          <{{ heading_tag }} class="faq-page__title">{{ heading }}</{{ heading_tag }}>
         {%- endif -%}
         {%- if intro != blank -%}
           <div class="faq-page__intro">{{ intro }}</div>
@@ -607,6 +608,18 @@
       "id": "heading",
       "label": "Titre",
       "default": "Vos questions"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Niveau de titre (HTML)",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" }
+      ],
+      "default": "h2",
+      "info": "H2 par défaut : la page a déjà son propre H1 (titre SEO masqué)."
     },
     {
       "type": "text",
