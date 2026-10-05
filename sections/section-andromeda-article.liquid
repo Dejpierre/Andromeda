@@ -80,6 +80,7 @@
 
   <!-- ── Image plein cadre ─────────────────────────────────────────────── -->
   {%- if article.image -%}
+    {%- assign article_hero_alt = article.image.alt | default: article.title -%}
     <div class="ae__hero-img-wrap">
       {{
         article.image
@@ -90,7 +91,7 @@
           sizes: '100vw',
           widths: '750,1100,1500,2000,2400',
           class: 'ae__hero-img',
-          alt: article.image.alt | default: article.title
+          alt: article_hero_alt
       }}
     </div>
   {%- endif -%}

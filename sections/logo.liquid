@@ -10,6 +10,7 @@
 %}
 
 {%- if image -%}
+  {% assign logo_image_alt = shop.name | append: ' - Masque de sommeil en soie de mûrier' %}
   {% capture logo_image %}
     {{-
       image
@@ -19,7 +20,7 @@
         widths: '240, 352, 832, 1200, 1600, 1920, 2560, 3840',
         height: image.height,
         class: 'logo-section__image',
-        alt: shop.name | append: ' - Masque de sommeil en soie de mûrier',
+        alt: logo_image_alt,
         sizes: '(min-width: 750px) calc(var(--logo-width)), 100vw'
     -}}
   {% endcapture %}

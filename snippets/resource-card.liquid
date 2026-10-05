@@ -85,6 +85,7 @@
             assign ref_image_to_transition = 'imagesToTransition[]'
           endif
         %}
+        {%- assign featured_image_alt = featured_image.alt | default: resource.title -%}
         {{
           featured_image
           | image_url: width: image_width
@@ -94,7 +95,7 @@
             widths: widths,
             sizes: image_sizes,
             ref: ref_image_to_transition,
-            alt: featured_image.alt | default: resource.title,
+            alt: featured_image_alt,
             data-media-id: featured_image.id,
             style: primary_focal_point_style
         }}
@@ -105,6 +106,7 @@
               assign secondary_focal_point_style = 'object-position: ' | append: resource.media[1].presentation.focal_point | append: ';'
             endif
           %}
+          {%- assign secondary_image_alt = resource.media[1].alt | default: resource.title -%}
           {{
             resource.media[1]
             | image_url: width: image_width
@@ -114,7 +116,7 @@
               widths: widths,
               sizes: image_sizes,
               ref: ref_image_to_transition,
-              alt: resource.media[1].alt | default: resource.title,
+              alt: secondary_image_alt,
               data-media-id: resource.media[1].id,
               style: secondary_focal_point_style
           }}
@@ -132,10 +134,11 @@
         <div class="resource-card__image-wrapper">
           {% assign resource_products = resource.products | where: 'featured_image' %}
           {% for product in resource_products limit: 4 %}
+            {%- assign collection_image_alt = product.featured_image.alt | default: product.title -%}
             {{
               product.featured_image
               | image_url: width: image_width
-              | image_tag: loading: image_loading, class: 'resource-card__collection-image', sizes: image_sizes, widths: widths, alt: product.featured_image.alt | default: product.title
+              | image_tag: loading: image_loading, class: 'resource-card__collection-image', sizes: image_sizes, widths: widths, alt: collection_image_alt
             }}
           {% endfor %}
         </div>

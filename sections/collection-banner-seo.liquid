@@ -5,7 +5,8 @@
 <div class="cbs" id="cbs-{{ section.id }}">
   <div class="cbs__banner">
     {%- if banner_image -%}
-      {{ banner_image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750,1100,1500,2000,2400', class: 'cbs__img', alt: banner_image.alt | default: collection.title }}
+      {%- assign banner_image_alt = banner_image.alt | default: collection.title -%}
+      {{ banner_image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750,1100,1500,2000,2400', class: 'cbs__img', alt: banner_image_alt }}
     {%- endif -%}
     <div class="cbs__overlay" style="--cbs-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }}" aria-hidden="true"></div>
 

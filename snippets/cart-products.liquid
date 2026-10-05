@@ -177,7 +177,8 @@
                       style="--ratio:{{ ratio }};"
                     >
                       {%- liquid
-                        echo item.image | image_url: width: 250 | image_tag: class: 'cart-items__media-image border-style', style: border_override, alt: item.title | default: item.product_title
+                        assign cart_item_alt = item.title | default: item.product_title
+                        echo item.image | image_url: width: 250 | image_tag: class: 'cart-items__media-image border-style', style: border_override, alt: cart_item_alt
                       -%}
                     </a>
                   {%- endif %}

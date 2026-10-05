@@ -40,6 +40,7 @@
   assign widths = '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
 %}
 
+{% assign image_alt = block_settings.image.alt | default: shop.name %}
 {% capture image %}
   {%- if block_settings.image -%}
     {{
@@ -49,6 +50,7 @@
         width: block_settings.image.width,
         widths: widths,
         height: block_settings.image.height,
+        alt: image_alt,
         class: 'image-block__image border-style',
         style: image_border_style,
         sizes: sizes

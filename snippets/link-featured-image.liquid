@@ -13,35 +13,39 @@
 
 {% if link.type == 'collection_link' %}
   {% if link.object.featured_image %}
+    {% assign featured_image_alt = link.title | default: link.object.title %}
     {{
       link.object.featured_image
       | image_url: width: 800
-      | image_tag: loading: 'lazy', class: class, sizes: image_sizes, alt: link.title | default: link.object.title
+      | image_tag: loading: 'lazy', class: class, sizes: image_sizes, alt: featured_image_alt
     }}
   {% elsif link.object.products.size > 0 %}
     {% assign product_object = link.object.products | where: 'featured_image' | first %}
     {% if product_object.featured_image %}
+      {% assign featured_image_alt = link.title | default: product_object.title %}
       {{
         product_object.featured_image
         | image_url: width: 800
-        | image_tag: loading: 'lazy', class: class, sizes: image_sizes, alt: link.title | default: product_object.title
+        | image_tag: loading: 'lazy', class: class, sizes: image_sizes, alt: featured_image_alt
       }}
     {% endif %}
   {% endif %}
 {% elsif link.type == 'collections_link' %}
   {% assign collection_object = collections | where: 'featured_image' | first %}
   {% if collection_object.featured_image %}
+    {% assign featured_image_alt = link.title | default: collection_object.title %}
     {{
       collection_object.featured_image
       | image_url: width: 800
-      | image_tag: loading: 'lazy', class: class, sizes: image_sizes, alt: link.title | default: collection_object.title
+      | image_tag: loading: 'lazy', class: class, sizes: image_sizes, alt: featured_image_alt
     }}
   {% endif %}
 {% elsif link.type == 'catalog_link' %}
   {% assign product_object = collections.all.products | where: 'featured_image' | first %}
+  {% assign featured_image_alt = link.title | default: product_object.title %}
   {{
     product_object.featured_image
     | image_url: width: 800
-    | image_tag: loading: 'lazy', class: class, sizes: image_sizes, alt: link.title | default: product_object.title
+    | image_tag: loading: 'lazy', class: class, sizes: image_sizes, alt: featured_image_alt
   }}
 {% endif %}

@@ -153,6 +153,7 @@
                       {% if section.settings.show_image %}
                         <div class="variant-item__image-container">
                           {% if variant.image %}
+                            {% assign variant_image_alt = variant.image.alt | default: variant.title | default: product.title %}
                             {{
                               variant.image
                               | image_url: width: 86
@@ -161,7 +162,7 @@
                                 class: 'quick-order-list__table-image',
                                 sizes: '43px',
                                 loading: 'lazy',
-                                alt: variant.image.alt | default: variant.title | default: product.title
+                                alt: variant_image_alt
                             }}
                           {% endif %}
                         </div>

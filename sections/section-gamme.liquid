@@ -27,6 +27,7 @@
             assign bg_src = variant.featured_media | default: product_ref.featured_image
           endif
         -%}
+        {%- assign bg_img_alt = variant.title | default: product_ref.title | escape -%}
         <div class="sgm__bg{% if forloop.first %} is-active{% endif %}" data-variant-id="{{ variant.id }}">
           {%- if bg_src != blank -%}
             <picture>
@@ -34,9 +35,9 @@
                 <source media="(max-width: 749px)" srcset="{{ block_bg_mobile | image_url: width: 1000 }} 1000w, {{ block_bg_mobile | image_url: width: 750 }} 750w" sizes="100vw">
               {%- endif -%}
               {%- if forloop.first -%}
-                {{- bg_src | image_url: width: 2000 | image_tag: class: 'sgm__bg-img', loading: 'eager', fetchpriority: 'high', widths: '800,1200,1600,2000', sizes: '100vw', alt: variant.title | default: product_ref.title | escape -}}
+                {{- bg_src | image_url: width: 2000 | image_tag: class: 'sgm__bg-img', loading: 'eager', fetchpriority: 'high', widths: '800,1200,1600,2000', sizes: '100vw', alt: bg_img_alt -}}
               {%- else -%}
-                {{- bg_src | image_url: width: 2000 | image_tag: class: 'sgm__bg-img', loading: 'lazy', widths: '800,1200,1600,2000', sizes: '100vw', alt: variant.title | default: product_ref.title | escape -}}
+                {{- bg_src | image_url: width: 2000 | image_tag: class: 'sgm__bg-img', loading: 'lazy', widths: '800,1200,1600,2000', sizes: '100vw', alt: bg_img_alt -}}
               {%- endif -%}
             </picture>
           {%- endif -%}
@@ -109,12 +110,13 @@
           aria-pressed="{{ forloop.first }}"
         >
           {%- if block_thumb != blank -%}
+            {%- assign swatch_img_alt = variant.title | escape -%}
             {{- block_thumb | image_url: width: 80 | image_tag:
               class: 'sgm__swatch-img',
               loading: 'lazy',
               widths: '40,80',
               sizes: '40px',
-              alt: variant.title | escape
+              alt: swatch_img_alt
             -}}
           {%- endif -%}
           <span class="sgm__swatch-label">{{ variant.title }}</span>

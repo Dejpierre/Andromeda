@@ -149,10 +149,11 @@
       {% render 'overlay', settings: block_settings %}
     {%- endif -%}
 
+    {% assign image_alt = image_resource.alt | default: shop.name %}
     {{
       image_resource
       | image_url: width: 3840
-      | image_tag: widths: widths, class: 'image-block__image', sizes: sizes, loading: loading, alt: image_resource.alt | default: ''
+      | image_tag: widths: widths, class: 'image-block__image', sizes: sizes, loading: loading, alt: image_alt
     }}
   </div>
 {% else %}
