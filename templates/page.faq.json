@@ -31,7 +31,7 @@
           "type": "item",
           "settings": {
             "titre": "Quelle est la différence entre soie 22 mommes et 19 mommes ?",
-            "contenu": "<p>Les mommes mesurent la densité du tissu de soie. À 22 mommes, la soie Andromeda est 15 à 20 % plus dense qu'une soie 19 mommes standard. Elle bloque 100 % de la lumière, résiste mieux aux lavages et conserve sa douceur sur le long terme. Une soie 19 mommes, plus fine, perd ses propriétés plus rapidement.</p>",
+            "contenu": "<p>Les mommes mesurent la densité du tissu de soie. À 22 mommes, la soie Andromeda est 15 à 20 % plus dense qu'une soie 19 mommes standard : occultation totale grâce à la densité 22 mommes, meilleure résistance aux lavages et douceur qui se conserve sur le long terme. Une soie 19 mommes, plus fine, perd ses propriétés plus rapidement.</p>",
             "categorie": "matiere"
           }
         },
@@ -55,15 +55,15 @@
           "type": "item",
           "settings": {
             "titre": "Le masque convient-il aux personnes avec une peau sensible ?",
-            "contenu": "<p>Oui. La soie de mûrier est hypoallergénique par nature. La certification OEKO-TEX® STANDARD 100 garantit en plus l'absence de substances irritantes dans le tissu. Le masque est adapté aux peaux sensibles, réactives ou sujettes à l'eczéma.</p>",
+            "contenu": "<p>Oui. La soie de mûrier est hypoallergénique par nature. Le masque est adapté aux peaux sensibles, réactives ou sujettes à l'eczéma.</p>",
             "categorie": "matiere"
           }
         },
         "faq_5": {
           "type": "item",
           "settings": {
-            "titre": "Le masque Andromeda est-il certifié ?",
-            "contenu": "<p>Oui. Le masque est certifié OEKO-TEX® STANDARD 100, la certification textile la plus reconnue mondialement. Elle garantit l'absence de substances nocives : colorants, métaux lourds, pesticides, formaldéhyde. Sûr pour le contact direct et prolongé avec la peau, y compris pour les personnes sensibles.</p>",
+            "titre": "Le masque Andromeda est-il sans danger pour la peau ?",
+            "contenu": "<p>Oui. La soie de mûrier est hypoallergénique par nature et ne contient aucune substance irritante connue. Elle convient au contact direct et prolongé avec la peau, y compris pour les personnes sensibles.</p>",
             "categorie": "matiere"
           }
         },
@@ -78,8 +78,8 @@
         "faq_4": {
           "type": "item",
           "settings": {
-            "titre": "Le masque bloque-t-il vraiment 100 % de la lumière ?",
-            "contenu": "<p>Oui. La densité de la soie 22 mommes combinée à la coupe anatomique du masque garantit une obscurité totale. La forme enveloppante laisse une légère cavité pour les yeux, ce qui évite toute pression sur les paupières tout en maintenant une opacité complète.</p>",
+            "titre": "Le masque garantit-il une occultation totale ?",
+            "contenu": "<p>Oui, occultation totale grâce à la densité 22 mommes combinée à la coupe anatomique du masque. La forme enveloppante laisse une légère cavité pour les yeux, ce qui évite toute pression sur les paupières tout en maintenant cette occultation.</p>",
             "categorie": "produit-entretien"
           }
         },
@@ -95,7 +95,7 @@
           "type": "item",
           "settings": {
             "titre": "Le masque est-il disponible en plusieurs couleurs ?",
-            "contenu": "<p>Oui. Le masque Andromeda est disponible en plusieurs coloris : Crépuscule, Nébuleuse, Clair de lune, Nuit céleste, Douce lueur et Poussière d'étoile. Toutes les couleurs sont réalisées avec des teintures certifiées OEKO-TEX®, sans substances nocives.</p>",
+            "contenu": "<p>Oui. Le masque Andromeda est disponible en plusieurs coloris : Crépuscule, Nébuleuse, Clair de lune, Nuit céleste, Douce lueur et Poussière d'étoile. Toutes les couleurs sont réalisées avec des teintures douces, sans substances nocives.</p>",
             "categorie": "produit-entretien"
           }
         },

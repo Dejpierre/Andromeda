@@ -4,7 +4,106 @@
   @param {object} [product] - The product object, available on product pages for price meta tags.
 {% enddoc %}
 
-{%- render 'seo-content' -%}
+{%- comment -%}
+  SEO title/description logic lives directly here (not in a separate
+  render'd snippet): {% render %} isolates variable scope in Shopify
+  Liquid, so any `assign` made inside a rendered snippet never reaches
+  the caller. A previously deleted snippet relied on exactly that
+  pattern and silently did nothing — seo_title/seo_description
+  were always blank, falling through to the native page_title/
+  page_description Shopify objects on every page.
+{%- endcomment -%}
+{%- liquid
+  assign seo_title = ''
+  assign seo_description = ''
+
+  if request.page_type == 'index'
+    assign seo_title = 'Andromeda Paris — Masques, bandeaux et chouchous en soie de mûrier grade 6A'
+    assign seo_description = 'Masques de nuit, bandeaux et chouchous en soie de mûrier grade 6A, 22 mommes. Occultation totale grâce à la densité 22 mommes, hypoallergénique. Livraison offerte dès 55 €.'
+
+  elsif request.page_type == 'product'
+    if product.handle == 'masque-de-sommeil-en-soie-de-murier-22-mommes'
+      assign seo_title = 'Masque de nuit en soie de mûrier 22 mommes 6A | Andromeda Paris'
+      assign seo_description = "Masque de sommeil 100 % soie de mûrier 22 mommes, grade 6A, occultant, sangle ajustable. Livré en coffret cadeau + rituel sonore d'endormissement. Livraison offerte dès 55 €."
+    elsif product.handle == 'bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus'
+      assign seo_title = 'Bandeau de nuit en soie de mûrier 22 mommes 6A | Andromeda Paris'
+      assign seo_description = "Bandeau de nuit 100 % soie de mûrier 22 mommes, grade 6A, doux pour les cheveux et sans pression. Livré en coffret cadeau + rituel sonore d'endormissement. Livraison offerte dès 55 €."
+    elsif product.handle == 'chouchou-pour-cheveux-en-soie-de-murier-22-mommes'
+      assign seo_title = 'Chouchous en soie de mûrier 22 mommes 6A | Andromeda Paris'
+      assign seo_description = 'Lot de 2 chouchous 100 % soie de mûrier 22 mommes, grade 6A, hypoallergénique, doux pour les cheveux. Packaging premium, livraison offerte dès 55 €.'
+    else
+      assign seo_title = product.title | append: ' — Andromeda'
+      assign seo_description = product.description | strip_html | truncate: 155
+    endif
+
+  elsif request.page_type == 'collection' and collection.handle == 'all'
+    assign seo_title = 'Tous nos accessoires en soie de mûrier | Andromeda Paris'
+    assign seo_description = 'Découvrez tous nos accessoires de sommeil en soie de mûrier 22 mommes : masques, bandeaux et chouchous imaginés à Paris.'
+
+  elsif request.page_type == 'collection'
+    if collection.seo.title != blank
+      assign seo_title = collection.seo.title
+    else
+      assign seo_title = collection.title | append: ' — Andromeda'
+    endif
+    if collection.seo.description != blank
+      assign seo_description = collection.seo.description
+    else
+      assign seo_description = 'Explorez la collection ' | append: collection.title | append: " d'Andromeda. Accessoires de sommeil haut de gamme en soie de mûrier, pensés pour un rituel du soir élégant."
+    endif
+
+  elsif request.page_type == 'list-collections'
+    assign seo_title = 'Toutes nos collections | Andromeda Paris'
+    assign seo_description = 'Toutes les collections Andromeda Paris : masques de sommeil, bandeaux et chouchous en soie de mûrier 22 mommes.'
+
+  elsif request.page_type == 'policy'
+    assign seo_title = page_title | append: ' — Andromeda Paris'
+    assign seo_description = page_title | append: ' – Andromeda Paris : informations sur vos commandes, livraisons, retours et données personnelles.'
+
+  elsif request.page_type == 'article'
+    assign seo_title = article.title | append: ' — Andromeda'
+    assign seo_description = article.excerpt_or_content | strip_html | truncate: 155
+
+  elsif request.page_type == 'blog'
+    assign seo_title = 'Blog Sommeil & Bien-être — Andromeda Paris'
+    assign seo_description = 'Conseils, rituels et inspirations pour mieux dormir par Andromeda. Soie de mûrier, bien-être nocturne, routines beauté : plongez dans un univers de douceur.'
+
+  elsif request.page_type == 'page'
+    if page.handle == 'contact'
+      assign seo_title = 'Contactez Andromeda — Service Client & Commandes'
+      assign seo_description = 'Une question sur votre commande ou nos masques en soie ? Notre équipe vous répond sous 24h. Contactez Andromeda Paris par email ou formulaire.'
+    elsif page.handle == 'faq'
+      assign seo_title = 'FAQ — Masque de Sommeil en Soie | Andromeda Paris'
+      assign seo_description = 'Toutes vos questions sur le masque Andromeda : soie de mûrier grade 6A, entretien, livraison, retours. Réponses claires et complètes.'
+    elsif page.handle == 'rituels'
+      assign seo_title = 'Rituels du Soir — Andromeda'
+      assign seo_description = ''
+      assign seo_noindex = true
+    elsif page.handle == 'qui-sommes-nous'
+      assign seo_title = "Qui sommes-nous — L'histoire d'Andromeda Paris"
+      assign seo_description = "Derrière Andromeda, Marion et Pierre Dejonghe réinventent le rituel du soir avec une soie de mûrier grade 6A hypoallergénique, pour un sommeil d'exception."
+    else
+      assign seo_title = page.title | append: ' — Andromeda'
+      assign seo_description = page.content | strip_html | truncate: 155
+    endif
+
+  elsif request.page_type == 'search'
+    assign seo_title = 'Recherche — Andromeda Paris'
+    assign seo_description = "Trouvez l'accessoire de sommeil idéal parmi la sélection premium Andromeda."
+
+  elsif request.page_type == 'cart'
+    assign seo_title = 'Votre Panier — Andromeda Paris'
+    assign seo_description = "Finalisez votre commande et offrez-vous un rituel de sommeil d'exception avec Andromeda."
+
+  elsif request.page_type == '404'
+    assign seo_title = 'Page introuvable — Andromeda Paris'
+    assign seo_description = "Cette page n'existe pas ou plus. Découvrez nos masques, bandeaux et chouchous en soie de mûrier grade 6A."
+
+  else
+    assign seo_title = page_title | default: shop.name
+    assign seo_description = page_description | default: "Andromeda — Masques de sommeil premium en soie de mûrier grade 6A. Un rituel du soir élégant, doux et sensoriel."
+  endif
+-%}
 <meta charset="utf-8">
 <meta
   http-equiv="X-UA-Compatible"
@@ -23,7 +122,7 @@
   assign og_title = seo_title | default: page_title | default: shop.name
   assign og_url = canonical_url | default: request.origin
   assign og_type = 'website'
-  assign og_description = seo_description | default: page_description | default: shop.description | default: shop.name
+  assign og_description = seo_description | default: page_description | default: shop.name
 
   if request.page_type == 'product'
     assign og_type = 'product'
@@ -132,6 +231,6 @@
 {%- else -%}
 <meta
   name="description"
-  content="{{ seo_description | default: page_description | default: shop.description | default: shop.name | escape }}"
+  content="{{ seo_description | default: page_description | default: shop.name | escape }}"
 >
 {%- endif -%}

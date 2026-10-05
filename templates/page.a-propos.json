@@ -48,7 +48,7 @@
           "type": "prose_paragraph",
           "settings": {
             "placement": "matiere",
-            "text": "<p>La soie de mûrier de grade 6A est la plus qualitative du marché. Certifiée OEKO-TEX®, elle est thermorégulatrice, hypoallergénique et anti-acarienne.</p>"
+            "text": "<p>La soie de mûrier de grade 6A est la plus qualitative du marché. Elle est thermorégulatrice, hypoallergénique et anti-acarienne.</p>"
           }
         },
         "matiere_2": {
@@ -149,8 +149,8 @@
         "commitment_1": {
           "type": "commitment",
           "settings": {
-            "icon_text": "OEKO",
-            "label": "Certifiée OEKO-TEX®"
+            "icon_text": "6A",
+            "label": "Grade 6A hypoallergénique"
           }
         },
         "commitment_2": {
@@ -200,7 +200,7 @@
         "hero_title": "Plus qu'un masque de nuit, un véritable rituel nocturne.",
         "hero_overlay": false,
         "constellation_title": "Une soie choisie parmi les 5 % les plus rares au monde",
-        "matiere_heading": "Une soie de mûrier grade 6A, certifiée OEKO-TEX®",
+        "matiere_heading": "Une soie de mûrier grade 6A, hypoallergénique",
         "founders_heading": "Derrière Andromeda, un duo",
         "founders_image": "shopify://shop_images/andromeda-fondateurs-duo.jpg",
         "founders_caption": "Marion & Pierre Dejonghe, cofondateurs, Paris.",
