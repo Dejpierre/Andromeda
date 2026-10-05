@@ -1,6 +1,5 @@
 {% assign qr_image = section.settings.qr_image %}
 {% assign card_bg = section.settings.card_bg | default: '#1E2244' %}
-{% assign cta_url = section.settings.cta_url | default: '/pages/rituels' %}
 {%- assign _en = false -%}
 {%- if request.locale.iso_code == 'en' -%}{%- assign _en = true -%}{%- endif -%}
 {%- assign qr_features_en = 'Exclusive sounds|Relaxing atmospheres|Guided sleep journey' | split: '|' -%}
