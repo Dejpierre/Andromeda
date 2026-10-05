@@ -80,11 +80,11 @@
     {%- if paginate.pages > 1 -%}
       <nav class="andro-blog__pagination" aria-label="Pagination">
         {%- if paginate.previous -%}
-          <a href="{{ paginate.previous.url }}" class="andro-blog__page-btn">← Précédent</a>
+          <a href="{{ paginate.previous.url | remove: '?page=1' }}" class="andro-blog__page-btn">← Précédent</a>
         {%- endif -%}
         <span class="andro-blog__page-info">{{ paginate.current_page }} / {{ paginate.pages }}</span>
         {%- if paginate.next -%}
-          <a href="{{ paginate.next.url }}" class="andro-blog__page-btn">Suivant →</a>
+          <a href="{{ paginate.next.url | remove: '?page=1' }}" class="andro-blog__page-btn">Suivant →</a>
         {%- endif -%}
       </nav>
     {%- endif -%}

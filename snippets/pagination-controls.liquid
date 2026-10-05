@@ -33,7 +33,7 @@
         {%- if paginate.previous -%}
           {%- assign prev_params = paginate.previous.url | split: '?' | last -%}
           <a
-            href="{{ paginate.previous.url }}"
+            href="{{ paginate.previous.url | remove: '?page=1' }}"
             aria-label="{{ 'content.pagination.previous' | t }}"
             class="pagination__link pagination__link--arrow"
             {% if on_click_handler != blank %}
@@ -106,7 +106,7 @@
           {%- if part.is_link -%}
             {%- assign part_params = part.url | split: '?' | last -%}
             <a
-              href="{{ part.url }}"
+              href="{{ part.url | remove: '?page=1' }}"
               aria-label="{{ 'content.pagination.page' | t: page: part.title }}"
               class="pagination__link pagination__link--page"
               {% if on_click_handler != blank %}
@@ -138,7 +138,7 @@
         {%- if paginate.next -%}
           {%- assign next_params = paginate.next.url | split: '?' | last -%}
           <a
-            href="{{ paginate.next.url }}"
+            href="{{ paginate.next.url | remove: '?page=1' }}"
             aria-label="{{ 'content.pagination.next' | t }}"
             class="pagination__link pagination__link--arrow"
             {% if on_click_handler != blank %}
