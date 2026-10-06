@@ -1,11 +1,22 @@
 {%- comment -%}
-  FAQ de collection : accordéon accessible en <details>/<summary>, sans JS,
-  plus un schema JSON-LD FAQPage généré à partir des mêmes blocs.
+  FAQ de collection : même design que la FAQ dédiée (section-faq-page.liquid)
+  — cartes numérotées, icône plus/minus SVG — mais en accordéon <details>/
+  <summary> natif, sans JS ni custom element.
 {%- endcomment -%}
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="section-background color-{{ section.settings.color_scheme }}"
+></div>
 <div class="section">
-  <div class="collection-faq__inner">
+  <div
+    class="collection-faq__inner"
+    style="
+      --cfaq-accent: {{ section.settings.accent_color }};
+      --cfaq-dark: {{ section.settings.dark_color }};
+      --cfaq-heading: {{ section.settings.heading_color }};
+      --cfaq-body: {{ section.settings.body_color }};
+    "
+  >
     {%- if section.settings.heading != blank -%}
       <h2 class="collection-faq__heading">{{ section.settings.heading }}</h2>
     {%- endif -%}
@@ -13,10 +24,19 @@
     <div class="collection-faq__list">
       {%- for block in section.blocks -%}
         {%- if block.type == 'question' -%}
+          {%- assign num = forloop.index | prepend: '00' | slice: -3, 3 -%}
           <details class="collection-faq__item" {{ block.shopify_attributes }}>
             <summary class="collection-faq__summary">
+              <span class="collection-faq__number">{{ num }}</span>
               <span class="collection-faq__question">{{ block.settings.question }}</span>
-              <span class="collection-faq__icon" aria-hidden="true">+</span>
+              <span class="collection-faq__icon">
+                <span class="collection-faq__icon-face collection-faq__icon-face--plus">
+                  {{- 'icon-plus.svg' | inline_asset_content -}}
+                </span>
+                <span class="collection-faq__icon-face collection-faq__icon-face--minus">
+                  {{- 'icon-minus.svg' | inline_asset_content -}}
+                </span>
+              </span>
             </summary>
             <div class="collection-faq__answer rte">{{ block.settings.answer }}</div>
           </details>
@@ -57,68 +77,129 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
-    max-width: 800px;
+    max-width: 720px;
   }
 
   .collection-faq__heading {
     font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
     font-size: clamp(28px, 3vw, 36px);
     line-height: 1.15;
+    color: var(--cfaq-heading);
     margin: 0;
   }
 
   .collection-faq__list {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 12px;
   }
 
   .collection-faq__item {
-    border-top: 1px solid rgba(20, 22, 31, 0.12);
-    padding-block: 20px;
+    border: 1px solid rgba(20, 22, 31, 0.12);
+    border-radius: 8px;
+    padding: 24px 28px;
+    transition: border-color var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out);
   }
 
-  .collection-faq__item:last-child {
-    border-bottom: 1px solid rgba(20, 22, 31, 0.12);
+  .collection-faq__item[open] {
+    border-color: rgba(20, 22, 31, 0.22);
   }
 
   .collection-faq__summary {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
+    align-items: flex-start;
+    gap: 20px;
     cursor: pointer;
     list-style: none;
-    font-size: 17px;
   }
 
   .collection-faq__summary::-webkit-details-marker {
     display: none;
   }
 
-  .collection-faq__icon {
+  .collection-faq__number {
+    font-size: 16px;
+    color: var(--cfaq-accent);
+    padding-top: 6px;
     flex-shrink: 0;
-    font-size: 1.2rem;
-    transition: transform 0.3s ease;
+  }
+
+  .collection-faq__question {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: clamp(20px, 2vw, 24px);
+    line-height: 1.2;
+    color: var(--cfaq-heading);
+    flex: 1;
+  }
+
+  .collection-faq__icon {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    flex-shrink: 0;
+    border: 1px solid rgba(20, 22, 31, 0.12);
+    transition: border-color var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out),
+      background-color var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out);
+  }
+
+  .collection-faq__icon-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    transition: opacity var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out),
+      transform var(--animation-speed-slow, 0.2s) var(--animation-easing, ease-in-out);
+  }
+
+  .collection-faq__icon-face svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .collection-faq__icon-face--plus {
+    color: var(--cfaq-heading);
+  }
+
+  .collection-faq__icon-face--minus {
+    color: #ffffff;
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.5);
   }
 
   .collection-faq__item[open] .collection-faq__icon {
-    transform: rotate(45deg);
+    border-color: var(--cfaq-dark);
+    background: var(--cfaq-dark);
+  }
+
+  .collection-faq__item[open] .collection-faq__icon-face--plus {
+    opacity: 0;
+    transform: rotate(45deg) scale(0.5);
+  }
+
+  .collection-faq__item[open] .collection-faq__icon-face--minus {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
   }
 
   .collection-faq__answer {
-    padding-top: 12px;
     font-size: 16px;
     font-weight: 300;
-    line-height: 1.7;
+    line-height: 1.6;
+    color: var(--cfaq-body);
+    margin: 0 0 0 36px;
+    padding-block-start: 16px;
     text-wrap: pretty;
   }
 
-  .collection-faq__answer p {
-    margin: 0 0 12px;
+  .collection-faq__answer > :first-child {
+    margin-top: 0;
   }
 
-  .collection-faq__answer p:last-child {
+  .collection-faq__answer > :last-child {
     margin-bottom: 0;
   }
 
@@ -126,6 +207,14 @@
     .collection-faq__inner {
       padding-block: 32px;
       gap: 16px;
+    }
+
+    .collection-faq__item {
+      padding: 20px;
+    }
+
+    .collection-faq__answer {
+      margin-left: 0;
     }
   }
 {% endstylesheet %}
@@ -145,6 +234,34 @@
       "id": "heading",
       "label": "Titre",
       "default": "Questions fréquentes"
+    },
+    {
+      "type": "header",
+      "content": "Couleurs"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (numéros)",
+      "default": "#B06A47"
+    },
+    {
+      "type": "color",
+      "id": "dark_color",
+      "label": "Foncé (icône moins)",
+      "default": "#191A2E"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Titres",
+      "default": "#14161F"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Corps de texte",
+      "default": "#3A3A42"
     }
   ],
   "blocks": [
