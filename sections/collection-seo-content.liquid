@@ -1,0 +1,118 @@
+{%- comment -%}
+  Blocs de contenu SEO (titre H2 + texte riche) affichés sous la grille
+  produits d'une collection. Un bloc par thème, pas de H1 — le H1 de la
+  page vit dans collection-banner-seo.liquid.
+{%- endcomment -%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div class="section collection-seo__inner">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="collection-seo__heading">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+
+  <div class="collection-seo__blocks">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'text_block' -%}
+        <div class="collection-seo__block" {{ block.shopify_attributes }}>
+          {%- if block.settings.heading != blank -%}
+            <h2 class="collection-seo__block-heading">{{ block.settings.heading }}</h2>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <div class="collection-seo__block-text rte">{{ block.settings.text }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .collection-seo__inner {
+    padding-block: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .collection-seo__heading {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: clamp(28px, 3vw, 36px);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  .collection-seo__blocks {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 48px;
+  }
+
+  .collection-seo__block-heading {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: clamp(20px, 2vw, 24px);
+    line-height: 1.2;
+    margin: 0 0 12px;
+  }
+
+  .collection-seo__block-text {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+
+  .collection-seo__block-text p {
+    margin: 0 0 12px;
+  }
+
+  .collection-seo__block-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .collection-seo__block-text a {
+    text-decoration-color: currentColor;
+    text-underline-offset: 3px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .collection-seo__inner {
+      padding-block: 32px;
+      gap: 24px;
+    }
+
+    .collection-seo__blocks {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "SEO — Contenu collection",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Palette (fond de section)",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titre (optionnel, au-dessus des blocs)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "Bloc de texte",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Titre (H2)" },
+        { "type": "richtext", "id": "text", "label": "Texte" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "SEO — Contenu collection" }]
+}
+{% endschema %}

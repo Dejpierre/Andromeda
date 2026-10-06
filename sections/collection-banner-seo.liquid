@@ -16,7 +16,7 @@
         <span>›</span>
         <span>{{ collection.title }}</span>
       </div>
-      <h1 class="cbs__title">{{ collection.title }}</h1>
+      <h1 class="cbs__title">{{ section.settings.h1_override | default: collection.title }}</h1>
 
       {%- if collection.description != blank -%}
         <div class="cbs__text-wrap">
@@ -178,6 +178,7 @@
 {
   "name": "Bannière SEO collection",
   "settings": [
+    { "type": "text", "id": "h1_override", "label": "Titre H1 personnalisé (sinon titre de la collection)" },
     { "type": "image_picker", "id": "image", "label": "Image (sinon image de la collection)" },
     { "type": "range", "id": "overlay_opacity", "label": "Opacité du voile", "min": 0, "max": 100, "step": 1, "default": 82 },
     { "type": "text", "id": "label_more", "label": "Libellé \"déplier\"", "default": "Lire la suite" },

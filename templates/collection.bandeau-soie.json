@@ -1,0 +1,94 @@
+{
+  "sections": {
+    "section": {
+      "type": "collection-banner-seo",
+      "settings": {
+        "image": "shopify://shop_images/andromeda-collection-banniere.jpg",
+        "h1_override": "Bandeau de nuit en soie de mûrier"
+      }
+    },
+    "main": {
+      "type": "collection-variant-grid",
+      "settings": {
+        "image_ratio": "square",
+        "hide_unavailable": false,
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 64,
+        "padding-block-end": 32
+      }
+    },
+    "seo_content": {
+      "type": "collection-seo-content",
+      "blocks": {
+        "block_1": {
+          "type": "text_block",
+          "settings": {
+            "heading": "Pourquoi choisir un bandeau en soie de mûrier ?",
+            "text": "<p>La soie de mûrier est produite par le ver Bombyx mori, qui se nourrit exclusivement de feuilles de mûrier blanc. Le fil obtenu est long, régulier et très lisse : c'est la soie de meilleure qualité. Contre la peau, elle limite les frottements, préserve l'hydratation et respecte le contour des yeux, la zone la plus fine du visage.</p>"
+          }
+        },
+        "block_2": {
+          "type": "text_block",
+          "settings": {
+            "heading": "Pourquoi 22 mommes ?",
+            "text": "<p>Le momme est l'unité de mesure de la densité de la soie. Le standard du marché tourne autour de 19 mommes, plus léger. Nous avons choisi exclusivement le 22 mommes : un tissu plus dense, plus opaque et plus durable, qui occulte mieux la lumière et garde sa tenue au fil des lavages. <a href=\"/blogs/actualites/soie-19-vs-22-mommes-guide\">Tout comprendre sur le grammage de la soie</a>.</p>"
+          }
+        },
+        "block_3": {
+          "type": "text_block",
+          "settings": {
+            "heading": "Un masque de nuit bandeau pour un sommeil profond",
+            "text": "<p>La forme bandeau enveloppe le haut du visage sans appuyer sur les paupières. La lumière est bloquée efficacement, le corps produit plus facilement de la mélatonine et l'endormissement est plus rapide. Résultat : un confort optimal, à la maison comme en voyage.</p>"
+          }
+        },
+        "block_4": {
+          "type": "text_block",
+          "settings": {
+            "heading": "Entretien",
+            "text": "<p>Lavage à la main à l'eau froide, avec une lessive douce adaptée à la soie. Pas de sèche-linge : laissez sécher à plat, à l'abri du soleil.</p>"
+          }
+        }
+      },
+      "block_order": ["block_1", "block_2", "block_3", "block_4"]
+    },
+    "faq": {
+      "type": "collection-faq",
+      "blocks": {
+        "q_1": {
+          "type": "question",
+          "settings": {
+            "question": "Un bandeau de nuit en soie est-il vraiment plus efficace ?",
+            "answer": "<p>Oui. La soie de mûrier 22 mommes est dense et opaque : elle bloque efficacement la lumière tout en restant légère et respirante.</p>"
+          }
+        },
+        "q_2": {
+          "type": "question",
+          "settings": {
+            "question": "Pourquoi du 22 mommes plutôt que du 19 ?",
+            "answer": "<p>Le 22 mommes est plus dense : meilleure occultation, toucher plus riche et durabilité accrue au lavage.</p>"
+          }
+        },
+        "q_3": {
+          "type": "question",
+          "settings": {
+            "question": "La soie abîme-t-elle les cils ou le maquillage ?",
+            "answer": "<p>Non. Sa surface lisse limite les frottements, contrairement au coton ou au polyester.</p>"
+          }
+        },
+        "q_4": {
+          "type": "question",
+          "settings": {
+            "question": "Le bandeau convient-il aux peaux sensibles ?",
+            "answer": "<p>La soie de mûrier est naturellement douce et hypoallergénique, ce qui la rend adaptée au contour des yeux et aux peaux réactives.</p>"
+          }
+        }
+      },
+      "block_order": ["q_1", "q_2", "q_3", "q_4"]
+    }
+  },
+  "order": ["section", "main", "seo_content", "faq"]
+}

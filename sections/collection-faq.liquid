@@ -1,0 +1,160 @@
+{%- comment -%}
+  FAQ de collection : accordéon accessible en <details>/<summary>, sans JS,
+  plus un schema JSON-LD FAQPage généré à partir des mêmes blocs.
+{%- endcomment -%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div class="section collection-faq__inner">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="collection-faq__heading">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+
+  <div class="collection-faq__list">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'question' -%}
+        <details class="collection-faq__item" {{ block.shopify_attributes }}>
+          <summary class="collection-faq__summary">
+            <span class="collection-faq__question">{{ block.settings.question }}</span>
+            <span class="collection-faq__icon" aria-hidden="true">+</span>
+          </summary>
+          <div class="collection-faq__answer rte">{{ block.settings.answer }}</div>
+        </details>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{%- if section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'question' -%}
+          {%- assign q = block.settings.question | strip_html | escape -%}
+          {%- assign a = block.settings.answer | strip_html -%}
+          {
+            "@type": "Question",
+            "name": {{ q | json }},
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": {{ a | json }}
+            }
+          }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+    ]
+  }
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .collection-faq__inner {
+    padding-block: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 800px;
+  }
+
+  .collection-faq__heading {
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-size: clamp(28px, 3vw, 36px);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  .collection-faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .collection-faq__item {
+    border-top: 1px solid rgba(20, 22, 31, 0.12);
+    padding-block: 20px;
+  }
+
+  .collection-faq__item:last-child {
+    border-bottom: 1px solid rgba(20, 22, 31, 0.12);
+  }
+
+  .collection-faq__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    cursor: pointer;
+    list-style: none;
+    font-size: 17px;
+  }
+
+  .collection-faq__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .collection-faq__icon {
+    flex-shrink: 0;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+  }
+
+  .collection-faq__item[open] .collection-faq__icon {
+    transform: rotate(45deg);
+  }
+
+  .collection-faq__answer {
+    padding-top: 12px;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+
+  .collection-faq__answer p {
+    margin: 0 0 12px;
+  }
+
+  .collection-faq__answer p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .collection-faq__inner {
+      padding-block: 32px;
+      gap: 16px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FAQ — Collection",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Palette (fond de section)",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titre",
+      "default": "Questions fréquentes"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Réponse" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "FAQ — Collection" }]
+}
+{% endschema %}
