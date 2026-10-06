@@ -4,23 +4,25 @@
 {%- endcomment -%}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
-<div class="section collection-faq__inner">
-  {%- if section.settings.heading != blank -%}
-    <h2 class="collection-faq__heading">{{ section.settings.heading }}</h2>
-  {%- endif -%}
+<div class="section">
+  <div class="collection-faq__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="collection-faq__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
 
-  <div class="collection-faq__list">
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'question' -%}
-        <details class="collection-faq__item" {{ block.shopify_attributes }}>
-          <summary class="collection-faq__summary">
-            <span class="collection-faq__question">{{ block.settings.question }}</span>
-            <span class="collection-faq__icon" aria-hidden="true">+</span>
-          </summary>
-          <div class="collection-faq__answer rte">{{ block.settings.answer }}</div>
-        </details>
-      {%- endif -%}
-    {%- endfor -%}
+    <div class="collection-faq__list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'question' -%}
+          <details class="collection-faq__item" {{ block.shopify_attributes }}>
+            <summary class="collection-faq__summary">
+              <span class="collection-faq__question">{{ block.settings.question }}</span>
+              <span class="collection-faq__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="collection-faq__answer rte">{{ block.settings.answer }}</div>
+          </details>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
   </div>
 </div>
 
