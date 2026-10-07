@@ -1,0 +1,63 @@
+{%- doc -%}
+  Charge GSAP (et ScrollTrigger si demandé) une seule fois par page, même si
+  plusieurs sections/blocks l'utilisent. Les scripts src= ne sont pas
+  dédupliqués par le navigateur, donc chaque {% render %} dans ce fichier
+  injecte un loader JS idempotent au lieu d'un <script src> direct.
+
+  @param {boolean} [scrolltrigger] - Charge aussi le plugin ScrollTrigger
+
+  @example
+  {% render 'vendor-gsap' %}
+  {% render 'vendor-gsap', scrolltrigger: true %}
+
+  Les consommateurs attendent `window.__gsapReady` (une Promise) plutôt que
+  de tester `window.gsap` de façon synchrone :
+
+  window.__gsapReady.then(function () {
+    // gsap (et ScrollTrigger si demandé) sont garantis disponibles ici
+  });
+{%- enddoc -%}
+
+<script>
+(function () {
+  var CORE_URL = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
+  var ST_URL = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js';
+
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      var existing = document.querySelector('script[data-vendor-src="' + src + '"]');
+      if (existing) {
+        if (existing.dataset.loaded === 'true') {
+          resolve();
+        } else {
+          existing.addEventListener('load', resolve);
+          existing.addEventListener('error', reject);
+        }
+        return;
+      }
+      var s = document.createElement('script');
+      s.src = src;
+      s.dataset.vendorSrc = src;
+      s.onload = function () {
+        s.dataset.loaded = 'true';
+        resolve();
+      };
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  if (!window.__gsapReady) {
+    window.__gsapReady = loadScript(CORE_URL);
+  }
+
+  {%- if scrolltrigger -%}
+    if (!window.__gsapScrollTriggerReady) {
+      window.__gsapScrollTriggerReady = window.__gsapReady.then(function () {
+        return loadScript(ST_URL);
+      });
+      window.__gsapReady = window.__gsapScrollTriggerReady;
+    }
+  {%- endif -%}
+})();
+</script>
