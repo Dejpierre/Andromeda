@@ -1,10 +1,19 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "section": {
       "type": "collection-banner-seo",
       "settings": {
-        "image": "shopify://shop_images/andromeda-collection-banniere.jpg",
-        "h1_override": "Bandeau de nuit en soie de mûrier"
+        "h1_override": "Bandeau de nuit en soie de mûrier",
+        "image": "shopify://shop_images/andromeda-collection-banniere.jpg"
       }
     },
     "main": {
@@ -53,7 +62,13 @@
           }
         }
       },
-      "block_order": ["block_1", "block_2", "block_3", "block_4"]
+      "block_order": [
+        "block_1",
+        "block_2",
+        "block_3",
+        "block_4"
+      ],
+      "settings": {}
     },
     "faq": {
       "type": "collection-faq",
@@ -87,8 +102,19 @@
           }
         }
       },
-      "block_order": ["q_1", "q_2", "q_3", "q_4"]
+      "block_order": [
+        "q_1",
+        "q_2",
+        "q_3",
+        "q_4"
+      ],
+      "settings": {}
     }
   },
-  "order": ["section", "main", "seo_content", "faq"]
+  "order": [
+    "section",
+    "main",
+    "seo_content",
+    "faq"
+  ]
 }
