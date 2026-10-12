@@ -18,8 +18,8 @@
   assign seo_description = ''
 
   if request.page_type == 'index'
-    assign seo_title = 'Andromeda Paris — Masques, bandeaux et chouchous en soie de mûrier grade 6A'
-    assign seo_description = 'Masques de nuit, bandeaux et chouchous en soie de mûrier grade 6A, 22 mommes. Occultation totale grâce à la densité 22 mommes, hypoallergénique. Livraison offerte dès 55 €.'
+    assign seo_title = 'Andromeda Paris — Masques et accessoires en soie de mûrier'
+    assign seo_description = "Masques, bandeaux et chouchous en soie de mûrier grade 6A, 22 mommes : occultation totale, hypoallergénique. Livraison offerte dès 55 € en France."
 
   elsif request.page_type == 'product'
     if product.handle == 'masque-de-sommeil-en-soie-de-murier-22-mommes'
@@ -104,7 +104,6 @@
     assign seo_description = page_description | default: "Andromeda — Masques de sommeil premium en soie de mûrier grade 6A. Un rituel du soir élégant, doux et sensoriel."
   endif
 -%}
-<meta charset="utf-8">
 <meta
   http-equiv="X-UA-Compatible"
   content="IE=edge"
@@ -154,22 +153,23 @@
   content="{{ og_description | escape }}"
 >
 
-{%- if page_image -%}
+{%- assign social_image = page_image | default: images['andromeda-collection-banniere.jpg'] -%}
+{%- if social_image -%}
   <meta
     property="og:image"
-    content="http:{{ page_image | image_url }}"
+    content="http:{{ social_image | image_url }}"
   >
   <meta
     property="og:image:secure_url"
-    content="https:{{ page_image | image_url }}"
+    content="https:{{ social_image | image_url }}"
   >
   <meta
     property="og:image:width"
-    content="{{ page_image.width }}"
+    content="{{ social_image.width }}"
   >
   <meta
     property="og:image:height"
-    content="{{ page_image.height }}"
+    content="{{ social_image.height }}"
   >
 {%- endif -%}
 
@@ -202,6 +202,12 @@
   name="twitter:description"
   content="{{ og_description | escape }}"
 >
+{%- if social_image -%}
+  <meta
+    name="twitter:image"
+    content="https:{{ social_image | image_url }}"
+  >
+{%- endif -%}
 
 <title>
   {{ seo_title | default: page_title }}
