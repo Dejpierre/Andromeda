@@ -13,7 +13,7 @@
   <ol class="andromeda-bc__list" itemscope itemtype="https://schema.org/BreadcrumbList">
 
     <li class="andromeda-bc__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-      <a href="{{ shop.url }}" class="andromeda-bc__link" itemprop="item">
+      <a href="{{ shop.url | append: '/' }}" class="andromeda-bc__link" itemprop="item">
         <span itemprop="name">Accueil</span>
       </a>
       <meta itemprop="position" content="1">
