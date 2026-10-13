@@ -15,7 +15,7 @@
           "type": "text",
           "name": "Title",
           "settings": {
-            "text": "<h1>{{ closest.collection.title }}</h1>",
+            "text": "<h1>Tous nos accessoires en soie de mûrier</h1>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -41,7 +41,7 @@
           "type": "text",
           "name": "Description",
           "settings": {
-            "text": "{{ closest.collection.description }}",
+            "text": "<p>Masques de nuit, bandeaux et chouchous en soie de mûrier grade 6A, 22 mommes — tous les accessoires de sommeil Andromeda pensés pour un rituel du soir complet.</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -110,10 +110,80 @@
         "padding-block-start": 0,
         "padding-block-end": 32
       }
+    },
+    "seo_content": {
+      "type": "collection-seo-content",
+      "blocks": {
+        "block_1": {
+          "type": "text_block",
+          "settings": {
+            "heading": "Pourquoi la soie de mûrier grade 6A ?",
+            "text": "<p>La soie de mûrier est produite par le ver Bombyx mori, qui se nourrit exclusivement de feuilles de mûrier blanc. Le grade 6A désigne la plus haute classification mondiale de cette soie : un fil long, régulier et très lisse, qui limite les frottements, préserve l'hydratation et respecte les zones les plus fines du visage et du cuir chevelu.</p>"
+          }
+        },
+        "block_2": {
+          "type": "text_block",
+          "settings": {
+            "heading": "Pourquoi 22 mommes ?",
+            "text": "<p>Le momme est l'unité de mesure de la densité de la soie. Le standard du marché tourne autour de 19 mommes, plus léger. Nous avons choisi exclusivement le 22 mommes : un tissu plus dense, plus opaque et plus durable, qui garde sa tenue au fil des lavages. <a href=\"/blogs/actualites/soie-19-vs-22-mommes-guide\">Tout comprendre sur le grammage de la soie</a>.</p>"
+          }
+        },
+        "block_3": {
+          "type": "text_block",
+          "settings": {
+            "heading": "Une gamme pensée pour un rituel complet",
+            "text": "<p>Masque de nuit, bandeau et chouchous se complètent pour un rituel du soir sans compromis : occultation de la lumière, protection des cheveux, confort du contour des yeux. Chaque pièce est livrée dans un coffret cadeau avec accès à un espace sonore dédié à l'endormissement.</p>"
+          }
+        },
+        "block_4": {
+          "type": "text_block",
+          "settings": {
+            "heading": "Entretien",
+            "text": "<p>Lavage à la main à l'eau froide, avec une lessive douce adaptée à la soie. Pas de sèche-linge : laissez sécher à plat, à l'abri du soleil.</p>"
+          }
+        }
+      },
+      "block_order": ["block_1", "block_2", "block_3", "block_4"]
+    },
+    "faq": {
+      "type": "collection-faq",
+      "blocks": {
+        "q_1": {
+          "type": "question",
+          "settings": {
+            "question": "Quelle est la différence entre le masque, le bandeau et les chouchous ?",
+            "answer": "<p>Le masque offre l'occultation la plus complète, le bandeau protège les cheveux tout en maintenant le masque en place, et les chouchous complètent la routine capillaire au quotidien. Les trois sont en soie de mûrier 22 mommes.</p>"
+          }
+        },
+        "q_2": {
+          "type": "question",
+          "settings": {
+            "question": "Pourquoi du 22 mommes plutôt que du 19 ?",
+            "answer": "<p>Le 22 mommes est plus dense : meilleure occultation et toucher plus riche pour le masque et le bandeau, durabilité accrue pour l'ensemble de la gamme.</p>"
+          }
+        },
+        "q_3": {
+          "type": "question",
+          "settings": {
+            "question": "La soie convient-elle aux peaux et cheveux sensibles ?",
+            "answer": "<p>Oui. La soie de mûrier est naturellement hypoallergénique et limite les frottements, contrairement au coton ou au polyester.</p>"
+          }
+        },
+        "q_4": {
+          "type": "question",
+          "settings": {
+            "question": "Les produits sont-ils livrés avec un accès aux ambiances sonores ?",
+            "answer": "<p>Oui. Chaque coffret inclut un QR code donnant accès à une bibliothèque de sons pensés pour l'endormissement.</p>"
+          }
+        }
+      },
+      "block_order": ["q_1", "q_2", "q_3", "q_4"]
     }
   },
   "order": [
     "section",
-    "main"
+    "main",
+    "seo_content",
+    "faq"
   ]
 }
