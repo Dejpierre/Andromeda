@@ -1,4 +1,18 @@
 {% # theme-check-disable %}
+{%- comment -%}
+  Raleway et Inter étaient chargées via @import dans 5 fichiers de thème
+  différents (sections/blocks/snippets), chacun dans son propre bloc de
+  style. Un @import ailleurs qu'en tout début de feuille de style casse
+  la minification du CSS compilé par Shopify (voir audit Semrush :
+  "Fichiers Javascript et CSS non minimisés"). Chargées ici une seule
+  fois via <link>, dédupliquées, avec preconnect.
+{%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&family=Inter:wght@400;700&display=swap"
+>
 {%- unless settings.type_body_font.system? -%}
   <link
     rel="preload"
