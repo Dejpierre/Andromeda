@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "section": {
       "type": "section",
@@ -143,7 +144,13 @@
           }
         }
       },
-      "block_order": ["block_1", "block_2", "block_3", "block_4"]
+      "block_order": [
+        "block_1",
+        "block_2",
+        "block_3",
+        "block_4"
+      ],
+      "settings": {}
     },
     "faq": {
       "type": "collection-faq",
@@ -177,7 +184,13 @@
           }
         }
       },
-      "block_order": ["q_1", "q_2", "q_3", "q_4"]
+      "block_order": [
+        "q_1",
+        "q_2",
+        "q_3",
+        "q_4"
+      ],
+      "settings": {}
     }
   },
   "order": [
