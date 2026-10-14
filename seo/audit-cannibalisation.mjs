@@ -76,6 +76,9 @@ function containsKeyword(haystack, keyword) {
 // mais matche "masque, pour un sommeil...": utile pour C2 où la formulation
 // naturelle du contenu intercale souvent d'autres mots).
 const STOPWORDS = new Set(['de', 'en', 'et', 'la', 'le', 'les', 'un', 'une', 'des', 'du', 'pour', 'à', 'a']);
+// Mots équivalents dans le contenu réel mais absents l'un de l'autre littéralement
+// (ex. "soie 19 vs 22 mommes" doit matcher le mot-clé "soie 19 ou 22 mommes").
+const WORD_ALIASES = { ou: ['ou', 'vs'] };
 function containsAllWords(haystack, keyword) {
   if (!haystack) return false;
   const normHaystack = normalize(haystack);
@@ -83,9 +86,12 @@ function containsAllWords(haystack, keyword) {
     .split(' ')
     .filter((w) => w.length > 0 && !STOPWORDS.has(w));
   return words.every((w) => {
-    const singular = w.endsWith('s') && w.length > 3 ? w.slice(0, -1) : w;
-    const plural = w.endsWith('s') ? w : `${w}s`;
-    return normHaystack.includes(singular) || normHaystack.includes(plural);
+    const candidates = WORD_ALIASES[w] || [w];
+    return candidates.some((c) => {
+      const singular = c.endsWith('s') && c.length > 3 ? c.slice(0, -1) : c;
+      const plural = c.endsWith('s') ? c : `${c}s`;
+      return normHaystack.includes(singular) || normHaystack.includes(plural);
+    });
   });
 }
 
@@ -132,10 +138,15 @@ function absoluteUrl(path) {
 }
 
 async function main() {
-  const keywordMap = JSON.parse(readFileSync(join(__dirname, 'keyword-map.json'), 'utf8'));
+  const fullMap = JSON.parse(readFileSync(join(__dirname, 'keyword-map.json'), 'utf8'));
+  const excluded = fullMap.filter((e) => e.status === 'draft-redirect');
+  const keywordMap = fullMap.filter((e) => e.status !== 'draft-redirect');
   const pages = [];
 
   console.log(`Audit de ${keywordMap.length} pages via ${BASE}${args.themeId ? ` (preview_theme_id=${args.themeId})` : ''}...`);
+  if (excluded.length > 0) {
+    console.log(`  (${excluded.length} URL(s) exclue(s) : brouillons non publiés / redirigés — voir "status": "draft-redirect")`);
+  }
 
   for (const entry of keywordMap) {
     process.stdout.write(`  ${entry.url} ... `);
@@ -156,7 +167,7 @@ async function main() {
   }
 
   // ---- Contrôles ----
-  const results = pages.map((p) => ({ url: p.url, primary: p.primary, checks: {} }));
+  const results = pages.map((p) => ({ url: p.url, primary: p.primary, acceptedGaps: p.accepted_gaps || [], checks: {} }));
   const byUrl = Object.fromEntries(results.map((r) => [r.url, r]));
 
   // Regroupements pour les contrôles croisés
@@ -208,12 +219,22 @@ async function main() {
     // contiguë stricte.
     if (p.primary) {
       const inTitle = containsAllWords(p.title, p.primary);
-      const inH1 = (p.h1s || []).some((h) => containsAllWords(h, p.primary));
-      r.checks.C2_primary_in_title_h1 = {
-        ok: inTitle && inH1,
-        severity: '🔴',
-        detail: `title: ${inTitle ? 'ok' : 'absent'} | h1: ${inH1 ? 'ok' : 'absent'}`,
-      };
+      // Exception home (brief n°3) : la marque est vérifiée dans le <title> uniquement,
+      // le H1 porte volontairement le mot-clé produit générique, pas la marque.
+      if (p.type === 'home') {
+        r.checks.C2_primary_in_title_h1 = {
+          ok: inTitle,
+          severity: '🔴',
+          detail: `title: ${inTitle ? 'ok' : 'absent'} (h1 non vérifié sur la home, voir note du référentiel)`,
+        };
+      } else {
+        const inH1 = (p.h1s || []).some((h) => containsAllWords(h, p.primary));
+        r.checks.C2_primary_in_title_h1 = {
+          ok: inTitle && inH1,
+          severity: '🔴',
+          detail: `title: ${inTitle ? 'ok' : 'absent'} | h1: ${inH1 ? 'ok' : 'absent'}`,
+        };
+      }
     }
 
     // C3 — pas de doublon de title
@@ -362,8 +383,13 @@ async function main() {
     md += `- Canonical : \`${r.extracted.canonical}\`\n\n`;
     md += `| Contrôle | Résultat | Détail |\n|---|---|---|\n`;
     for (const [key, check] of Object.entries(r.checks)) {
-      md += `| ${key} | ${check.ok ? '✅' : `❌ ${check.severity}`} | ${check.detail} |\n`;
-      if (!check.ok) allFailures.push({ url: r.url, check: key, severity: check.severity, detail: check.detail });
+      const isAccepted = !check.ok && r.acceptedGaps.some((code) => key.startsWith(code));
+      if (isAccepted) {
+        md += `| ${key} | ✅ (accepté) | ${check.detail} |\n`;
+      } else {
+        md += `| ${key} | ${check.ok ? '✅' : `❌ ${check.severity}`} | ${check.detail} |\n`;
+        if (!check.ok) allFailures.push({ url: r.url, check: key, severity: check.severity, detail: check.detail });
+      }
     }
     md += `\n`;
   }
