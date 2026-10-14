@@ -2,6 +2,8 @@
 
 Cette liste couvre tous les ❌ de `seo/audit-report.md` qui sont des problèmes de **contenu** (admin Shopify), pas de code. Contrairement aux briefs précédents, **rien n'a été modifié via l'API** pour cette série : tout est à valider et saisir par Pierre.
 
+> ⚠️ **Mise à jour brief n°6** : les sections 1, 2 et 4 ci-dessous ont été appliquées via l'API (voir `seo/changelog-admin.md`). La section 3 (bandeau) reste sans changement par choix de Pierre. La section 5 (avion) a été appliquée avec un titre différent de celui proposé ici. La section 6 (brouillons/redirections) n'a toujours pas été touchée — toujours en attente de décision.
+
 ## 1. Produit — Masque de sommeil en soie (`masque-de-sommeil-en-soie-de-murier-22-mommes`)
 
 Mot-clé cible : *masque de sommeil en soie*. Le titre et le H1 actuels disent « nuit », pas « sommeil » — le mot-clé cible n'apparaît donc littéralement nulle part sur la page.
