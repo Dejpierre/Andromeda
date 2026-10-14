@@ -18,14 +18,20 @@ Un seul `<h1>`, égal à `product.title`. Aucune balise H1 dans `product.descrip
 
 Le thème (architecture Horizon, pas Dawn) n'utilise jamais le motif `within: collection`. Les cartes produit (`blocks/product-title.liquid`) pointent directement vers `product.selected_or_first_available_variant.url`, qui canonicalise vers l'URL produit. Le titre produit est bien un lien texte cliquable.
 
-## Tâche 4 — Cas A : liens codés en dur vers la collection (commit `230c70c`)
+## Tâche 4 — Cas A, corrigé après coup (commits `230c70c` puis revert `705d0e2`)
 
-Recherche exhaustive des références à la collection bandeau dans le thème :
+Recherche exhaustive des références à la collection bandeau dans le thème, puis **correction de ma propre analyse** :
 
-- **Hero home** (`templates/index.json`) : pointait déjà vers le produit, rien à changer.
-- **Tuile "Collections vedettes" (home)** : pointait vers `/collections/bandeau-de-sommeil-en-soie`. Ajout d'un setting optionnel `link_override` sur le bloc "collection" de `section-collections-vedettes.liquid` (vide par défaut — n'affecte pas les tuiles masque/chouchou), réglé sur l'URL du produit pour cette tuile uniquement.
-- **Menu actif du header** (`main-menu-test`, assigné dans `header-group.json`) : son méga-menu contient un lien "Bandeau de sommeil en soie" → `/collections/bandeau-de-sommeil-en-soie`. **Ressource Shopify Navigation, pas du code** — à modifier par Pierre dans l'admin (Navigation) s'il veut qu'il pointe vers le produit.
+- **Hero home** (`templates/index.json`) : pointait déjà vers le produit, rien à changé.
+- **Tuile "Collections vedettes" (home)** : redirigée une première fois vers le produit (commit `230c70c`), **puis reverted** (commit `705d0e2`) — voir ci-dessous pourquoi.
+- **Menu actif du header** (`main-menu-test`) : son méga-menu pointe vers la collection. **À garder tel quel**, ne pas modifier (voir ci-dessous).
 - Footer : aucun lien vers cette collection.
+
+### ⚠️ Correction importante sur le "cas A"
+
+Le cas A suppose qu'une collection à un seul produit est une page catégorie "pauvre" qu'il vaut mieux contourner. **Ça ne s'applique pas à cette collection** : bien qu'il n'y ait qu'un seul produit Shopify, ce produit a 2 variantes de couleur (Dolce vita, Glamour), et `sections/collection-variant-grid.liquid` génère **une carte par variante, pas par produit** (`for product in collection.products` puis `for variant in product.variants`). La page collection affiche donc réellement **2 cartes distinctes** — vérifié en direct. Ce n'est pas une collection pauvre, c'est une vraie page catégorie à 2 articles.
+
+**Conclusion : la collection reste la bonne destination partout (home, menu).** Je ne recommande plus de rediriger quoi que ce soit vers la fiche produit.
 
 ## Tâche 5 — Non applicable (cas B uniquement)
 
@@ -52,7 +58,7 @@ Le champ natif `collection.seo.title`/`collection.seo.description` mis à jour v
 
 ## Encore à faire par Pierre dans l'admin
 
-- **Navigation → menu actif (`main-menu-test`)** : modifier le lien "Bandeau de sommeil en soie" du méga-menu pour qu'il pointe vers `/products/bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus` au lieu de la collection (cohérent avec le cas A).
+- **Navigation → menu actif (`main-menu-test`)** : ne rien changer, le lien vers la collection est le bon choix.
 - **Semrush** : ajouter les mots-clés `bandeaux de sommeil en soie` et `bandeau soie nuit` au suivi de position.
 
 ## URLs à vérifier
@@ -63,5 +69,6 @@ Le champ natif `collection.seo.title`/`collection.seo.description` mis à jour v
 
 ## Commits
 
-1. `230c70c` — tuile home vers la fiche produit (Tâche 4, cas A)
+1. `230c70c` — tuile home vers la fiche produit (Tâche 4, cas A) — **reverted ensuite**
 2. `92391c8` — titre/description produit + collection (hors code)
+3. `705d0e2` — revert de la tuile home vers la collection (la "cas A" ne s'appliquait pas, voir Tâche 4)
