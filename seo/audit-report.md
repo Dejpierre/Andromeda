@@ -24,7 +24,7 @@ Base testée : `https://www.andromedaparis.com`
 
 ## /products/masque-de-sommeil-en-soie-de-murier-22-mommes — mot-clé : *masque de sommeil en soie*
 
-- Title : `Masque de nuit en soie de mûrier 22 mommes 6A | Andromeda Paris`
+- Title : `Masque de sommeil en soie de mûrier 22 mommes 6A | Andromeda Paris`
 - Description : `Masque de sommeil 100 % soie de mûrier 22 mommes, grade 6A, occultant, sangle ajustable. Livré en coffret cadeau + rituel sonore d'endormissement. Livraison ...`
 - H1 (1) : `Masque de sommeil en soie de mûrier 22 mommes — Rituel de sommeil inclus`
 - Canonical : `https://www.andromedaparis.com/products/masque-de-sommeil-en-soie-de-murier-22-mommes`
@@ -32,7 +32,7 @@ Base testée : `https://www.andromedaparis.com`
 | Contrôle | Résultat | Détail |
 |---|---|---|
 | C1_single_h1 | ✅ | 1 h1 trouvé(s): Masque de sommeil en soie de mûrier 22 mommes — Rituel de sommeil inclus |
-| C2_primary_in_title_h1 | ❌ 🔴 | title: absent | h1: ok |
+| C2_primary_in_title_h1 | ✅ | title: ok | h1: ok |
 | C3_no_duplicate_title | ✅ | unique |
 | C4_no_duplicate_h1 | ✅ | unique |
 | C5_no_cannibalisation | ✅ | ok |
@@ -326,12 +326,12 @@ Base testée : `https://www.andromedaparis.com`
 
 Politique de retour
 Chaque commande Andromeda est préparée avec soin. Si votre masque de sommeil ne vous convient pas, vous disposez de 30 jours pour ...`
-- H1 (0) : (aucun)
+- H1 (1) : `Politique de retour`
 - Canonical : `https://www.andromedaparis.com/pages/politique-retour`
 
 | Contrôle | Résultat | Détail |
 |---|---|---|
-| C1_single_h1 | ❌ 🔴 | 0 h1 trouvé(s):  |
+| C1_single_h1 | ✅ | 1 h1 trouvé(s): Politique de retour |
 | C3_no_duplicate_title | ✅ | unique |
 | C4_no_duplicate_h1 | ✅ | unique |
 | C5_no_cannibalisation | ✅ | ok |
@@ -744,8 +744,6 @@ Chaque commande Andromeda est préparée avec soin. Si votre masque de sommeil n
 
 | Sévérité | Page | Contrôle | Détail |
 |---|---|---|---|
-| 🔴 | /products/masque-de-sommeil-en-soie-de-murier-22-mommes | C2_primary_in_title_h1 | title: absent | h1: ok |
-| 🔴 | /pages/politique-retour | C1_single_h1 | 0 h1 trouvé(s):  |
 | 🟠 | / | C8_anchor_targets | ancre "Masque de sommeil en soie €35,99" → /collections/masque-de-sommeil-soie (attendu /products/masque-de-sommeil-en-soie-de-murier-22-mommes) ; ancre "Bandeau de sommeil en soie €39,99" → /collections/bandeau-de-sommeil-en-soie (attendu /products/bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus) ; ancre "Masque de sommeil en soie" → /collections/masque-de-sommeil-soie (attendu /products/masque-de-sommeil-en-soie-de-murier-22-mommes) ; ancre "Bandeau de sommeil en soie" → /collections/bandeau-de-sommeil-en-soie (attendu /products/bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus) |
 | 🟠 | /products/masque-de-sommeil-en-soie-de-murier-22-mommes | C8_anchor_targets | ancre "Masque de sommeil en soie €35,99" → /collections/masque-de-sommeil-soie (attendu /products/masque-de-sommeil-en-soie-de-murier-22-mommes) ; ancre "Bandeau de sommeil en soie €39,99" → /collections/bandeau-de-sommeil-en-soie (attendu /products/bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus) ; ancre "Masque de sommeil en soie" → /collections/masque-de-sommeil-soie (attendu /products/masque-de-sommeil-en-soie-de-murier-22-mommes) ; ancre "Bandeau de sommeil en soie" → /collections/bandeau-de-sommeil-en-soie (attendu /products/bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus) |
 | 🟠 | /products/bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus | C8_anchor_targets | ancre "Masque de sommeil en soie €35,99" → /collections/masque-de-sommeil-soie (attendu /products/masque-de-sommeil-en-soie-de-murier-22-mommes) ; ancre "Bandeau de sommeil en soie €39,99" → /collections/bandeau-de-sommeil-en-soie (attendu /products/bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus) ; ancre "Masque de sommeil en soie" → /collections/masque-de-sommeil-soie (attendu /products/masque-de-sommeil-en-soie-de-murier-22-mommes) ; ancre "Bandeau de sommeil en soie" → /collections/bandeau-de-sommeil-en-soie (attendu /products/bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus) |
@@ -784,4 +782,4 @@ Chaque commande Andromeda est préparée avec soin. Si votre masque de sommeil n
 | 🟠 | /blogs/actualites/andromeda-dans-marie-claire-adresses-incontournables | C8_anchor_targets | ancre "Masque de sommeil en soie €35,99" → /collections/masque-de-sommeil-soie (attendu /products/masque-de-sommeil-en-soie-de-murier-22-mommes) ; ancre "Bandeau de sommeil en soie €39,99" → /collections/bandeau-de-sommeil-en-soie (attendu /products/bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus) ; ancre "Masque de sommeil en soie" → /collections/masque-de-sommeil-soie (attendu /products/masque-de-sommeil-en-soie-de-murier-22-mommes) ; ancre "Bandeau de sommeil en soie" → /collections/bandeau-de-sommeil-en-soie (attendu /products/bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus) |
 | 🟠 | /blogs/actualites/chouchou-cheveux-en-soie-guide-simple | C8_anchor_targets | ancre "Masque de sommeil en soie €35,99" → /collections/masque-de-sommeil-soie (attendu /products/masque-de-sommeil-en-soie-de-murier-22-mommes) ; ancre "Bandeau de sommeil en soie €39,99" → /collections/bandeau-de-sommeil-en-soie (attendu /products/bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus) ; ancre "Masque de sommeil en soie" → /collections/masque-de-sommeil-soie (attendu /products/masque-de-sommeil-en-soie-de-murier-22-mommes) ; ancre "Bandeau de sommeil en soie" → /collections/bandeau-de-sommeil-en-soie (attendu /products/bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus) |
 
-**Total : 2 🔴 critique(s), 37 🟠 moyen(s), 0 🟡 mineur(s).**
+**Total : 0 🔴 critique(s), 37 🟠 moyen(s), 0 🟡 mineur(s).**
