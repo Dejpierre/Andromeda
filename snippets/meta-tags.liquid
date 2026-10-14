@@ -26,8 +26,8 @@
       assign seo_title = 'Masque de nuit en soie de mûrier 22 mommes 6A | Andromeda Paris'
       assign seo_description = "Masque de sommeil 100 % soie de mûrier 22 mommes, grade 6A, occultant, sangle ajustable. Livré en coffret cadeau + rituel sonore d'endormissement. Livraison offerte dès 55 €."
     elsif product.handle == 'bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus'
-      assign seo_title = 'Bandeau de nuit en soie de mûrier 22 mommes 6A | Andromeda Paris'
-      assign seo_description = "Bandeau de nuit 100 % soie de mûrier 22 mommes, grade 6A, doux pour les cheveux et sans pression. Livré en coffret cadeau + rituel sonore d'endormissement. Livraison offerte dès 55 €."
+      assign seo_title = 'Bandeau de sommeil en soie de mûrier 22 mommes – rituel inclus | Andromeda Paris'
+      assign seo_description = "Bandeau de sommeil en soie de mûrier 22 mommes, doux pour la peau et les cheveux. Occultation douce, maintien sans pression, livré avec son rituel de sommeil."
     elsif product.handle == 'chouchou-pour-cheveux-en-soie-de-murier-22-mommes'
       assign seo_title = 'Chouchous en soie de mûrier 22 mommes 6A | Andromeda Paris'
       assign seo_description = 'Lot de 2 chouchous 100 % soie de mûrier 22 mommes, grade 6A, hypoallergénique, doux pour les cheveux. Packaging premium, livraison offerte dès 55 €.'
@@ -39,6 +39,10 @@
   elsif request.page_type == 'collection' and collection.handle == 'all'
     assign seo_title = 'Tous nos accessoires en soie de mûrier | Andromeda Paris'
     assign seo_description = 'Découvrez tous nos accessoires de sommeil en soie de mûrier 22 mommes : masques, bandeaux et chouchous imaginés à Paris.'
+
+  elsif request.page_type == 'collection' and collection.handle == 'bandeau-de-sommeil-en-soie'
+    assign seo_title = 'Bandeaux de sommeil en soie de mûrier | Andromeda Paris'
+    assign seo_description = "Nos bandeaux de sommeil en soie de mûrier 22 mommes pour des nuits plus douces : occultation légère, confort sans pression, bienfaits pour la peau et les cheveux."
 
   elsif request.page_type == 'collection'
     if collection.seo.title != blank

@@ -12,7 +12,6 @@
     "section": {
       "type": "collection-banner-seo",
       "settings": {
-        "h1_override": "Bandeau de nuit en soie de mûrier",
         "image": "shopify://shop_images/andromeda-collection-banniere.jpg"
       }
     },
