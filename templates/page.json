@@ -11,7 +11,7 @@
   "sections": {
     "main": {
       "type": "main-page",
-      "disabled": true,
+      "disabled": false,
       "settings": {
         "content_direction": "column",
         "gap": 32,
