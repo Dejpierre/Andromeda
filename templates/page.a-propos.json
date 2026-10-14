@@ -48,14 +48,21 @@
           "type": "prose_paragraph",
           "settings": {
             "placement": "matiere",
-            "text": "<p>La soie de mûrier de grade 6A est la plus qualitative du marché. Elle est thermorégulatrice, hypoallergénique et anti-acarienne.</p>"
+            "text": "<p>La soie de mûrier est produite par le Bombyx mori, un ver à soie nourri exclusivement de feuilles de mûrier blanc. Chaque cocon est déroulé en un seul filament continu, long et lisse : c'est ce qui donne à la soie sa douceur et son absence de frottement, sur la peau comme sur les cheveux.</p>"
           }
         },
         "matiere_2": {
           "type": "prose_paragraph",
           "settings": {
             "placement": "matiere",
-            "text": "<p>Même au contact du visage toute la nuit, elle ne laisse aucune marque ni irritation au réveil.</p>"
+            "text": "<p>Toutes les soies ne se valent pas. La nôtre est classée grade 6A, le plus haut niveau de qualité (<a href=\"/blogs/actualites/soie-6a-c-est-quoi\">Soie 6A, c'est quoi exactement ?</a>), et tissée en 22 mommes, une densité supérieure aux soies standard (<a href=\"/blogs/actualites/soie-19-vs-22-mommes-guide\">Soie 19 ou 22 mommes : quel grammage choisir ?</a>). Et contrairement au satin, qui n'est qu'un tissage souvent en polyester, c'est une fibre 100 % naturelle (<a href=\"/blogs/actualites/mulberry-silk-vs-satin-sleep-mask\">Soie ou satin : quelle différence ?</a>).</p>"
+          }
+        },
+        "matiere_3": {
+          "type": "prose_paragraph",
+          "settings": {
+            "placement": "matiere",
+            "text": "<p>Ses bienfaits, nous les détaillons <a href=\"/blogs/actualites/decouvrez-les-bienfaits-de-la-soie-pour-votre-peau\">pour la peau</a> et <a href=\"/blogs/actualites/masque-en-soie-pour-proteger-les-cheveux\">pour les cheveux</a>. Découvrez notre <a href=\"/products/masque-de-sommeil-en-soie-de-murier-22-mommes\">masque de sommeil en soie</a>.</p>"
           }
         },
         "stat_1": {
@@ -181,6 +188,7 @@
         "manifesto_3",
         "matiere_1",
         "matiere_2",
+        "matiere_3",
         "stat_1",
         "stat_2",
         "stat_3",
@@ -197,10 +205,10 @@
         "commitment_4"
       ],
       "settings": {
-        "hero_title": "Plus qu'un masque de nuit, un véritable rituel nocturne.",
+        "hero_title": "Notre histoire : la soie de mûrier au service du sommeil",
         "hero_overlay": false,
         "constellation_title": "Une soie choisie parmi les 5 % les plus rares au monde",
-        "matiere_heading": "Une soie de mûrier grade 6A, hypoallergénique",
+        "matiere_heading": "La soie de mûrier, c'est quoi ?",
         "founders_heading": "Derrière Andromeda, un duo",
         "founders_image": "shopify://shop_images/andromeda-fondateurs-duo.jpg",
         "founders_caption": "Marion & Pierre Dejonghe, cofondateurs, Paris.",
