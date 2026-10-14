@@ -1292,38 +1292,6 @@
               },
               "block_order": []
             },
-            "text_aEtTtq": {
-              "type": "text",
-              "name": "Product description",
-              "settings": {
-                "text": "{{ closest.product.description }}",
-                "width": "100%",
-                "max_width": "none",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-primary--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "slidein_enabled": false,
-                "slidein_link_label": "En savoir plus",
-                "slidein_title": "",
-                "slidein_content": "",
-                "slidein_cta_label": "",
-                "slidein_cta_url": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
             "accordion_desc_livraison": {
               "type": "accordion",
               "name": "Description & Livraison",
@@ -1355,7 +1323,7 @@
                     "text_desc": {
                       "type": "text",
                       "settings": {
-                        "text": "<h2>Un chouchou de soie hors du commun</h2><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux élastiques synthétiques, la soie ne tire pas la fibre capillaire et respecte l'hydratation naturelle de vos cheveux.</p><h2>Douceur pour vos cheveux, jour et nuit</h2><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre chouchou glisse au lieu d'accrocher et limite les frisottis, les nœuds et la casse. Résultat : des cheveux protégés, la nuit comme la journée.</p><h2>Confort & élégance</h2><ul><li>S'adapte à toutes les épaisseurs et longueurs de cheveux</li><li>Thermorégulation naturelle — fraîche en été, douce en hiver</li><li>Hypoallergénique, idéal pour les peaux sensibles</li></ul><h2>Le rituel Andromeda</h2><p>Chaque commande est livrée avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement.</p>",
+                        "text": "{{ closest.product.description }}<h2>Un chouchou de soie hors du commun</h2><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux élastiques synthétiques, la soie ne tire pas la fibre capillaire et respecte l'hydratation naturelle de vos cheveux.</p><h2>Douceur pour vos cheveux, jour et nuit</h2><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre chouchou glisse au lieu d'accrocher et limite les frisottis, les nœuds et la casse. Résultat : des cheveux protégés, la nuit comme la journée.</p><h2>Confort & élégance</h2><ul><li>S'adapte à toutes les épaisseurs et longueurs de cheveux</li><li>Thermorégulation naturelle — fraîche en été, douce en hiver</li><li>Hypoallergénique, idéal pour les peaux sensibles</li></ul><h2>Le rituel Andromeda</h2><p>Chaque commande est livrée avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement.</p>",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
@@ -1465,7 +1433,6 @@
             "custom_liquid_4CdyVR",
             "andromeda_bundle_picker_LDr6XN",
             "buy_buttons_eYQEYi",
-            "text_aEtTtq",
             "accordion_desc_livraison",
             "product_guides",
             "rituel_banner"

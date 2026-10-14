@@ -1360,38 +1360,6 @@
               },
               "block_order": []
             },
-            "text_aEtTtq": {
-              "type": "text",
-              "name": "Product description",
-              "settings": {
-                "text": "{{ closest.product.description }}",
-                "width": "100%",
-                "max_width": "none",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-primary--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "slidein_enabled": false,
-                "slidein_link_label": "En savoir plus",
-                "slidein_title": "",
-                "slidein_content": "",
-                "slidein_cta_label": "",
-                "slidein_cta_url": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
             "accordion_desc_livraison": {
               "type": "accordion",
               "name": "Description & Livraison",
@@ -1423,7 +1391,7 @@
                     "text_desc": {
                       "type": "text",
                       "settings": {
-                        "text": "<h3>Un bandeau de sommeil hors du commun</h3><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux bandeaux synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h3>Obscurité totale pour un sommeil profond</h3><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre bandeau de sommeil offre une occultation totale grâce à la densité 22 mommes et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h3>Confort & élégance</h3><ul><li>Scratch qui permet de s'adapter à toutes les morphologies, sans pression sur les yeux</li><li>Thermorégulation naturelle — fraîche en été, douce en hiver</li><li>Hypoallergénique, idéal pour les peaux sensibles</li></ul><h3>Le rituel Andromeda</h3><p>Chaque bandeau est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement.</p>",
+                        "text": "{{ closest.product.description }}<h3>Un bandeau de sommeil hors du commun</h3><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux bandeaux synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h3>Obscurité totale pour un sommeil profond</h3><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre bandeau de sommeil offre une occultation totale grâce à la densité 22 mommes et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h3>Confort & élégance</h3><ul><li>Scratch qui permet de s'adapter à toutes les morphologies, sans pression sur les yeux</li><li>Thermorégulation naturelle — fraîche en été, douce en hiver</li><li>Hypoallergénique, idéal pour les peaux sensibles</li></ul><h3>Le rituel Andromeda</h3><p>Chaque bandeau est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement.</p>",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
@@ -1534,7 +1502,6 @@
             "custom_liquid_4CdyVR",
             "andromeda_bundle_picker_LDr6XN",
             "buy_buttons_eYQEYi",
-            "text_aEtTtq",
             "accordion_desc_livraison",
             "product_guides",
             "rituel_banner"
