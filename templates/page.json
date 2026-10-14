@@ -12,6 +12,15 @@
     "main": {
       "type": "main-page",
       "disabled": false,
+      "blocks": {
+        "page_content": {
+          "type": "page-content",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "page_content"
+      ],
       "settings": {
         "content_direction": "column",
         "gap": 32,
