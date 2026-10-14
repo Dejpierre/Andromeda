@@ -6,10 +6,14 @@
     "setup:metaobjects": "node scripts/setup-metaobjects.js",
     "shopify:theme:push": "shopify theme push --store andromeda-paris.myshopify.com",
     "shopify:theme:pull": "shopify theme pull --store andromeda-paris.myshopify.com",
-    "shopify:dev": "shopify theme dev --store andromeda-paris.myshopify.com"
+    "shopify:dev": "shopify theme dev --store andromeda-paris.myshopify.com",
+    "seo:audit": "node seo/audit-cannibalisation.mjs"
   },
   "dependencies": {
     "@shopify/shopify_function": "~2.0.0",
     "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "cheerio": "^1.2.0"
   }
 }
