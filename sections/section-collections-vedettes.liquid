@@ -32,7 +32,7 @@
             assign display_image = block.settings.image | default: coll.featured_image | default: first_product.featured_image
           %}
           <a
-            href="{{ coll.url | default: '#' }}"
+            href="{{ block.settings.link_override | default: coll.url | default: '#' }}"
             class="collections-showcase__tile"
             {{ block.shopify_attributes }}
           >
@@ -429,6 +429,12 @@
           "id": "custom_title",
           "label": "Titre personnalisé",
           "info": "Laisser vide pour utiliser le titre de la collection."
+        },
+        {
+          "type": "url",
+          "id": "link_override",
+          "label": "Lien personnalisé (optionnel)",
+          "info": "Laisser vide pour pointer vers la collection. Utile si la collection ne contient qu'un seul produit : faire pointer directement vers la fiche produit."
         },
         {
           "type": "text",

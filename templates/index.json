@@ -229,6 +229,7 @@
           "type": "collection",
           "settings": {
             "collection": "bandeau-de-sommeil-en-soie",
+            "link_override": "/products/bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus",
             "custom_title": "",
             "tagline": "Un vrai nuage...",
             "show_price": true,
