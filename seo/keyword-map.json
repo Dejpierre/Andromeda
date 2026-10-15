@@ -16,7 +16,7 @@
 
   { "url": "/pages/contact", "type": "page", "primary": null, "secondary": [] },
   { "url": "/pages/faq", "type": "page", "primary": null, "secondary": [] },
-  { "url": "/pages/qui-sommes-nous", "type": "page", "primary": null, "secondary": [] },
+  { "url": "/pages/qui-sommes-nous", "type": "page", "primary": "soie de mûrier", "secondary": ["mûrier soie"] },
   { "url": "/pages/univers", "type": "page", "primary": null, "secondary": [] },
   { "url": "/pages/politique-retour", "type": "page", "primary": null, "secondary": [] },
 
@@ -29,20 +29,20 @@
   { "url": "/policies/contact-information", "type": "page", "primary": null, "secondary": [] },
 
   { "url": "/blogs/actualites", "type": "blog", "primary": null, "secondary": [] },
-  { "url": "/blogs/actualites/comment-choisir-son-masque-de-sommeil", "type": "article", "primary": null, "secondary": [] },
+  { "url": "/blogs/actualites/comment-choisir-son-masque-de-sommeil", "type": "article", "primary": "meilleur masque de sommeil", "secondary": [] },
   { "url": "/blogs/actualites/decouvrez-les-bienfaits-de-la-soie-pour-votre-peau", "type": "article", "primary": null, "secondary": [] },
   { "url": "/blogs/actualites/comment-entretenir-un-masque-de-sommeil-en-soie", "type": "article", "primary": null, "secondary": [], "status": "draft-redirect", "note": "brouillon non publié, aucune redirection (404 pur) — exclu de l'audit tant que non publié (brief n°6, tâche 5)" },
-  { "url": "/blogs/actualites/masque-en-soie-pour-proteger-les-cheveux", "type": "article", "primary": null, "secondary": [] },
+  { "url": "/blogs/actualites/masque-en-soie-pour-proteger-les-cheveux", "type": "article", "primary": "soie pour les cheveux", "secondary": [] },
   { "url": "/blogs/actualites/routine-du-soir-sommeil-reparateur", "type": "article", "primary": null, "secondary": [] },
   { "url": "/blogs/actualites/lumiere-et-melatonine-sommeil", "type": "article", "primary": null, "secondary": [] },
-  { "url": "/blogs/actualites/soie-6a-c-est-quoi", "type": "article", "primary": null, "secondary": [] },
+  { "url": "/blogs/actualites/soie-6a-c-est-quoi", "type": "article", "primary": "soie 6a", "secondary": [] },
   { "url": "/blogs/actualites/comment-laver-un-masque-en-soie", "type": "article", "primary": null, "secondary": [] },
   { "url": "/blogs/actualites/masque-de-sommeil-en-soie-pour-avion", "type": "article", "primary": null, "secondary": [] },
   { "url": "/blogs/actualites/masque-de-sommeil-pour-meditation", "type": "article", "primary": null, "secondary": [] },
-  { "url": "/blogs/actualites/mulberry-silk-vs-satin-sleep-mask", "type": "article", "primary": null, "secondary": [] },
+  { "url": "/blogs/actualites/mulberry-silk-vs-satin-sleep-mask", "type": "article", "primary": "soie ou satin", "secondary": ["satin ou soie", "différence soie satin"] },
   { "url": "/blogs/actualites/masque-de-nuit-7-benefices-prouves-sommeil-profond", "type": "article", "primary": null, "secondary": [], "status": "draft-redirect", "note": "brouillon non publié, 301 vers /blogs/actualites/lumiere-et-melatonine-sommeil — exclu de l'audit tant que non publié (brief n°6, tâche 5)" },
   { "url": "/blogs/actualites/organiser-sommeil-apres-decalage-horaire", "type": "article", "primary": null, "secondary": [] },
   { "url": "/blogs/actualites/reduire-frottements-nocturnes-visage", "type": "article", "primary": null, "secondary": [], "status": "draft-redirect", "note": "brouillon non publié, 301 vers /blogs/actualites/decouvrez-les-bienfaits-de-la-soie-pour-votre-peau — exclu de l'audit tant que non publié (brief n°6, tâche 5)" },
   { "url": "/blogs/actualites/andromeda-dans-marie-claire-adresses-incontournables", "type": "article", "primary": null, "secondary": [] },
-  { "url": "/blogs/actualites/chouchou-cheveux-en-soie-guide-simple", "type": "article", "primary": null, "secondary": [] }
+  { "url": "/blogs/actualites/chouchou-cheveux-en-soie-guide-simple", "type": "article", "primary": "comment porter un chouchou en soie", "secondary": [] }
 ]
