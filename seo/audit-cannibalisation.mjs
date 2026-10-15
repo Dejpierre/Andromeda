@@ -101,14 +101,30 @@ function equalsKeyword(text, keyword) {
   return keywordVariants(keyword).some((v) => normText === v);
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Évite de déclencher le rate-limit de Shopify sur de grosses séries de
+// requêtes séquentielles : petite pause entre chaque page, et re-essai avec
+// backoff exponentiel si un 429 passe quand même.
 async function fetchPage(url) {
   const sep = url.includes('?') ? '&' : '?';
   const fullUrl = args.themeId ? `${BASE}${url}${sep}preview_theme_id=${args.themeId}` : `${BASE}${url}`;
   const headers = { 'User-Agent': 'Mozilla/5.0 (compatible; AndromedaAuditBot/1.0)' };
   if (args.cookie) headers['Cookie'] = args.cookie;
-  const res = await fetch(fullUrl, { headers, redirect: 'follow' });
-  const html = await res.text();
-  return { status: res.status, html, fullUrl };
+
+  const maxRetries = 4;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    const res = await fetch(fullUrl, { headers, redirect: 'follow' });
+    if (res.status === 429 && attempt < maxRetries) {
+      const backoff = 2000 * 2 ** attempt;
+      await sleep(backoff);
+      continue;
+    }
+    const html = await res.text();
+    return { status: res.status, html, fullUrl };
+  }
 }
 
 function extractPage(html, pageUrl) {
@@ -151,6 +167,7 @@ async function main() {
   for (const entry of keywordMap) {
     process.stdout.write(`  ${entry.url} ... `);
     try {
+      await sleep(350);
       const { status, html } = await fetchPage(entry.url);
       if (status !== 200) {
         console.log(`HTTP ${status}`);
