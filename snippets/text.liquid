@@ -217,4 +217,11 @@
   .custom-color > :is(h1, h2, h3, h4, h5, h6, p, *) {
     color: var(--color);
   }
+
+  /* Normalise la taille des sous-titres dans certains blocs de description
+     produit (ex. fiche bandeau) : les presets h2/h3/h5 natifs donnent des
+     tailles trop disparates une fois le contenu admin et l'accordéon fusionnés. */
+  .accordion-subheading-28 {
+    font-size: 28px;
+  }
 {% endstylesheet %}
