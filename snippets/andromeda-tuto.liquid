@@ -1,0 +1,304 @@
+{% comment %}
+  Andromeda Paris : tuto d'accueil de l'espace sensoriel (/pages/univers)
+  Intégration : {% render 'andromeda-tuto' %} dans sections/section-rituels.liquid.
+  Relancer le tuto : n'importe quel élément avec l'attribut data-atuto-open
+  ou window.AndromedaTuto.open() / window.AndromedaTuto.reset() en console.
+{% endcomment %}
+
+<style>
+  .atuto{--atuto-ink:#0d1330;position:fixed;inset:0;z-index:2147483000;font-family:'Raleway',system-ui,sans-serif;touch-action:none;-webkit-font-smoothing:antialiased}
+  .atuto[hidden]{display:none}
+  .atuto *{box-sizing:border-box}
+  .atuto__backdrop{position:absolute;inset:0;background:rgba(13,19,48,.45);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);opacity:0;transition:opacity .5s ease}
+  .atuto.is-open:not(.is-spot) .atuto__backdrop{opacity:1}
+  .atuto__ring{position:fixed;top:0;left:0;width:0;height:0;border-radius:12px;box-shadow:0 0 0 9999px rgba(13,19,48,.45),0 0 0 2px #fff;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:top .45s ease,left .45s ease,width .45s ease,height .45s ease,opacity .4s ease}
+  .atuto.is-open.is-spot .atuto__ring{opacity:1}
+
+  .atuto__card{position:absolute;left:16px;right:16px;bottom:max(16px,env(safe-area-inset-bottom));margin:0 auto;max-width:400px;padding:32px 28px 24px;border-radius:16px;background:#ffffff;color:var(--atuto-ink);border:1px solid rgba(13,19,48,.08);box-shadow:0 12px 40px rgba(13,19,48,.12);transform:translateY(24px);opacity:0;transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .45s ease}
+  .atuto.is-open .atuto__card{transform:none;opacity:1}
+  .atuto.is-top .atuto__card{bottom:auto;top:max(16px,env(safe-area-inset-top))}
+  @media (min-width:768px){
+    .atuto:not(.is-spot) .atuto__card{top:50%;bottom:auto;transform:translateY(-44%)}
+    .atuto.is-open:not(.is-spot) .atuto__card{transform:translateY(-50%)}
+  }
+
+  .atuto__skip{position:absolute;top:16px;right:18px;background:none;border:0;padding:6px;color:rgba(13,19,48,.5);font:500 12px/1 'Raleway',sans-serif;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:color .15s ease}
+  .atuto__skip:hover{color:var(--atuto-ink)}
+
+  .atuto__body{transition:opacity .22s ease,transform .22s ease}
+  .atuto__body.is-changing{opacity:0;transform:translateY(6px)}
+  .atuto__icon{width:36px;height:36px;margin-bottom:18px;color:var(--atuto-ink)}
+  .atuto__icon svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+  .atuto__step{margin:0 0 8px;color:rgba(13,19,48,.45);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+  .atuto__title{margin:0 0 10px;font-family:'GC Amelie Promised',Georgia,serif;font-weight:400;font-size:28px;line-height:1.2;color:var(--atuto-ink)}
+  .atuto__text{margin:0;color:rgba(13,19,48,.62);font-size:15px;line-height:1.6;min-height:4.8em}
+  .atuto__text svg{width:14px;height:14px;vertical-align:-2px}
+
+  .atuto__foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:22px}
+  .atuto__dots{display:flex;gap:6px}
+  .atuto__dot{width:6px;height:6px;border-radius:999px;background:rgba(13,19,48,.15);transition:width .35s ease,background .35s ease}
+  .atuto__dot.is-active{width:18px;background:var(--atuto-ink)}
+  .atuto__nav{display:flex;gap:8px}
+  .atuto__btn{border-radius:999px;padding:12px 20px;font:600 14px/1 'Raleway',sans-serif;letter-spacing:.02em;cursor:pointer;transition:background .25s ease,color .25s ease,opacity .15s ease,transform .15s ease}
+  .atuto__btn:active{transform:scale(.97)}
+  .atuto__prev{background:transparent;color:var(--atuto-ink);border:1px solid rgba(13,19,48,.2)}
+  .atuto__prev:hover{background:rgba(13,19,48,.04)}
+  .atuto__next{background:var(--atuto-ink);color:#fff;border:1px solid var(--atuto-ink)}
+  .atuto__next:hover{opacity:.88}
+  .atuto button:focus-visible{outline:2px solid var(--atuto-ink);outline-offset:3px}
+
+  @media (prefers-reduced-motion:reduce){
+    .atuto *,.atuto__backdrop,.atuto__ring,.atuto__card{transition:none!important}
+  }
+</style>
+
+<div id="atuto" class="atuto" role="dialog" aria-modal="true" aria-labelledby="atuto-title" aria-hidden="true" hidden>
+  <div class="atuto__backdrop"></div>
+  <div class="atuto__ring" aria-hidden="true"></div>
+  <div class="atuto__card">
+    <button class="atuto__skip" type="button">Passer</button>
+    <div class="atuto__body" aria-live="polite">
+      <div class="atuto__icon" aria-hidden="true"></div>
+      <p class="atuto__step"></p>
+      <h2 id="atuto-title" class="atuto__title"></h2>
+      <p class="atuto__text"></p>
+    </div>
+    <div class="atuto__foot">
+      <div class="atuto__dots" aria-hidden="true"></div>
+      <div class="atuto__nav">
+        <button class="atuto__btn atuto__prev" type="button">Retour</button>
+        <button class="atuto__btn atuto__next" type="button">Suivant</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var DOTS_ICON = '<svg viewBox="0 0 24 24" style="width:14px;height:14px;vertical-align:-2px"><circle cx="12" cy="5" r="1.6" fill="currentColor"></circle><circle cx="12" cy="12" r="1.6" fill="currentColor"></circle><circle cx="12" cy="19" r="1.6" fill="currentColor"></circle></svg>';
+  var SHARE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;vertical-align:-2px"><path d="M12 3v12"></path><path d="M8 7l4-4 4 4"></path><rect x="5" y="11" width="14" height="10" rx="2"></rect></svg>';
+
+  function isStandalone() {
+    return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+  }
+
+  function detectBrowser() {
+    var ua = navigator.userAgent;
+    var isMobile = /Android|iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+    var isEdge = /Edg\//.test(ua);
+    var isSamsung = /SamsungBrowser/.test(ua);
+    var isChromeFamily = /CriOS|Chrome/.test(ua) && !isEdge && !isSamsung;
+    var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+    var isSafariIOS = isIOS && !/CriOS|FxiOS/.test(ua);
+    if (isMobile && isChromeFamily) return 'chrome';
+    if (isSafariIOS) return 'safari';
+    return 'other';
+  }
+
+  var CONFIG = {
+    storageKey: 'andromeda_tuto_v1',
+    // Élément visible uniquement sur l'espace sensoriel (le lecteur), jamais
+    // sur les messages "Scanne le QR code" / "lien invalide" (code mort,
+    // jamais peuplé ni affiché par aucun script — voir récap du brief).
+    readySelector: '#moona-hub-tracks',
+    delay: 700,
+    nextLabel: 'Suivant',
+    finishLabel: 'Commencer mon rituel',
+    steps: [
+      {
+        icon: 'moon',
+        title: 'Bienvenue dans ton rituel',
+        text: "Ton espace sensoriel est prêt. Prends quelques secondes pour le découvrir, puis laisse-toi aller.",
+        target: null
+      },
+      {
+        icon: 'wave',
+        title: 'Choisis ton paysage sonore',
+        text: "Deux familles t'attendent : Ambiance situationnelle et S'endormir aux quatre coins du monde. Touche une piste pour la lancer.",
+        target: '#moona-hub-tracks'
+      },
+      {
+        icon: 'clock',
+        title: "Programme l'arrêt",
+        text: "Choisis 15, 30 ou 60 min : le son s'arrête tout seul pendant que tu dors. Plus besoin de toucher ton téléphone.",
+        target: '.moona-player2__sleep-section'
+      },
+      {
+        icon: 'home',
+        title: 'Garde ton rituel à portée de main',
+        skipIf: 'standalone',
+        textByBrowser: {
+          chrome: 'Touche les 3 petits points ' + DOTS_ICON + ' en haut à droite, puis "Ajouter à l\'écran d\'accueil". Tu retrouveras tes sons d\'un geste, chaque soir.',
+          safari: 'Touche le bouton Partager ' + SHARE_ICON + ' en bas de l\'écran, puis "Sur l\'écran d\'accueil". Tu retrouveras tes sons d\'un geste, chaque soir.',
+          other: 'Enregistre cette page dans tes favoris pour retrouver tes sons à tout moment.'
+        },
+        target: null
+      },
+      {
+        icon: 'mask',
+        title: 'Glisse vers le sommeil',
+        text: "Baisse la luminosité, pose ton téléphone près de toi et enfile ton masque. Le reste, on s'en occupe.",
+        target: null
+      }
+    ]
+  };
+
+  var ICONS = {
+    moon: '<svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/><path d="M17 3.5v2M16 4.5h2M20.5 8v1.4M19.8 8.7h1.4"/></svg>',
+    wave: '<svg viewBox="0 0 24 24"><path d="M3 12h1.5M7 9v6M10.5 5.5v13M14 8v8M17.5 10v4M21 12h-0.5"/></svg>',
+    clock: '<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 8.5V13l3 2M9.5 2.5h5"/></svg>',
+    home: '<svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5"/><path d="M6 9.5V20h12V9.5"/><circle cx="18" cy="17" r="4.2" fill="#fff" stroke="currentColor"/><path d="M18 15.3v3.4M16.3 17h3.4"/></svg>',
+    mask: '<svg viewBox="0 0 24 24"><path d="M2.5 11c0-2.2 2.5-3.5 9.5-3.5s9.5 1.3 9.5 3.5v.6c0 3-2.1 5.2-4.7 5.2-2.2 0-3.1-1.7-4.8-1.7s-2.6 1.7-4.8 1.7c-2.6 0-4.7-2.2-4.7-5.2z"/><path d="M6.5 12c.8.7 2.2.7 3 0M14.5 12c.8.7 2.2.7 3 0"/></svg>'
+  };
+
+  var root = document.getElementById('atuto');
+  if (!root) return;
+
+  var q = function (s) { return root.querySelector(s); };
+  var card = q('.atuto__card'), ring = q('.atuto__ring'), body = q('.atuto__body'),
+      elIcon = q('.atuto__icon'), elStep = q('.atuto__step'), elTitle = q('.atuto__title'),
+      elText = q('.atuto__text'), elDots = q('.atuto__dots'),
+      btnPrev = q('.atuto__prev'), btnNext = q('.atuto__next'), btnSkip = q('.atuto__skip');
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Filtrer les étapes (ex. skipIf: 'standalone') AVANT de générer les dots,
+  // pour que le compteur ("1 / n") reste juste même si une étape disparaît.
+  var steps = CONFIG.steps.filter(function (s) {
+    return !(s.skipIf === 'standalone' && isStandalone());
+  });
+
+  var i = 0, isOpen = false, lastFocus = null, spotEl = null;
+
+  function seen() { try { return localStorage.getItem(CONFIG.storageKey) === '1'; } catch (e) { return false; } }
+  function markSeen() { try { localStorage.setItem(CONFIG.storageKey, '1'); } catch (e) {} }
+  function visible(el) {
+    if (!el) return false;
+    var r = el.getBoundingClientRect();
+    return r.width > 0 && r.height > 0 && getComputedStyle(el).visibility !== 'hidden';
+  }
+
+  steps.forEach(function () {
+    var d = document.createElement('span');
+    d.className = 'atuto__dot';
+    elDots.appendChild(d);
+  });
+  var dots = elDots.children;
+
+  function placeRing() {
+    if (!spotEl || !visible(spotEl)) { root.classList.remove('is-spot', 'is-top'); return; }
+    var r = spotEl.getBoundingClientRect(), p = 8;
+    ring.style.top = (r.top - p) + 'px';
+    ring.style.left = (r.left - p) + 'px';
+    ring.style.width = (r.width + p * 2) + 'px';
+    ring.style.height = (r.height + p * 2) + 'px';
+    root.classList.add('is-spot');
+    root.classList.toggle('is-top', r.top + r.height / 2 > window.innerHeight * 0.5);
+  }
+
+  function fill() {
+    var s = steps[i];
+    elIcon.innerHTML = ICONS[s.icon] || '';
+    elStep.textContent = (i + 1) + ' / ' + steps.length;
+    elTitle.textContent = s.title;
+
+    // innerHTML uniquement pour le texte adapté au navigateur (contenu
+    // maîtrisé localement, nécessaire pour les icônes SVG inline).
+    // textContent partout ailleurs.
+    if (s.textByBrowser) {
+      elText.innerHTML = s.textByBrowser[detectBrowser()];
+    } else {
+      elText.textContent = s.text;
+    }
+
+    for (var n = 0; n < dots.length; n++) dots[n].classList.toggle('is-active', n === i);
+    btnPrev.style.visibility = i === 0 ? 'hidden' : 'visible';
+    btnNext.textContent = i === steps.length - 1 ? CONFIG.finishLabel : CONFIG.nextLabel;
+    spotEl = s.target ? document.querySelector(s.target) : null;
+    if (spotEl && visible(spotEl)) {
+      spotEl.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' });
+      setTimeout(placeRing, reduced ? 0 : 420);
+    } else {
+      placeRing();
+    }
+  }
+
+  function go(n) {
+    if (n < 0 || n >= steps.length) return;
+    i = n;
+    if (reduced) { fill(); return; }
+    body.classList.add('is-changing');
+    setTimeout(function () { fill(); body.classList.remove('is-changing'); }, 220);
+  }
+
+  function open() {
+    if (isOpen) return;
+    isOpen = true; i = 0; lastFocus = document.activeElement;
+    root.hidden = false;
+    root.setAttribute('aria-hidden', 'false');
+    fill();
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        root.classList.add('is-open');
+        try { btnNext.focus({ preventScroll: true }); } catch (e) { btnNext.focus(); }
+      });
+    });
+  }
+
+  function close() {
+    if (!isOpen) return;
+    isOpen = false;
+    markSeen();
+    root.classList.remove('is-open');
+    setTimeout(function () {
+      root.hidden = true;
+      root.setAttribute('aria-hidden', 'true');
+      root.classList.remove('is-spot', 'is-top');
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }, reduced ? 0 : 450);
+  }
+
+  btnNext.addEventListener('click', function () { i === steps.length - 1 ? close() : go(i + 1); });
+  btnPrev.addEventListener('click', function () { go(i - 1); });
+  btnSkip.addEventListener('click', close);
+
+  document.addEventListener('keydown', function (e) {
+    if (!isOpen) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowRight') { i === steps.length - 1 ? close() : go(i + 1); }
+    else if (e.key === 'ArrowLeft') go(i - 1);
+    else if (e.key === 'Tab') {
+      var f = [].filter.call(card.querySelectorAll('button'), function (b) { return b.style.visibility !== 'hidden'; });
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  window.addEventListener('resize', function () { if (isOpen) placeRing(); });
+  window.addEventListener('scroll', function () { if (isOpen) placeRing(); }, { passive: true });
+
+  document.addEventListener('click', function (e) {
+    var o = e.target.closest && e.target.closest('[data-atuto-open]');
+    if (o) { e.preventDefault(); open(); }
+  });
+
+  function autoStart() {
+    if (!steps.length || seen()) return;
+    if (!CONFIG.readySelector) { setTimeout(open, CONFIG.delay); return; }
+    var t = 0, iv = setInterval(function () {
+      if (visible(document.querySelector(CONFIG.readySelector))) { clearInterval(iv); setTimeout(open, CONFIG.delay); }
+      else if ((t += 300) > 20000) clearInterval(iv);
+    }, 300);
+  }
+
+  window.AndromedaTuto = {
+    open: open,
+    close: close,
+    reset: function () { try { localStorage.removeItem(CONFIG.storageKey); } catch (e) {} }
+  };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', autoStart);
+  else autoStart();
+})();
+</script>

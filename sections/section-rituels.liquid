@@ -28,6 +28,13 @@
         <button type="button" class="moona-hub__icon-btn" id="moona-hub-theme-btn" aria-label="Passer en version sombre" aria-pressed="false">
           <span id="moona-hub-theme-icon"></span>
         </button>
+        <button type="button" class="moona-hub__icon-btn" data-atuto-open aria-label="Revoir le tutoriel">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M9.5 9a2.5 2.5 0 0 1 4.9.8c0 1.7-2.4 1.9-2.4 3.7"></path>
+            <circle cx="12" cy="17" r="0.1" fill="currentColor" stroke-width="2"></circle>
+          </svg>
+        </button>
       </div>
 
       <div class="moona-hub__heading">
@@ -213,6 +220,8 @@
     {%- endif -%}
 
   </div>
+
+  {% render 'andromeda-tuto' %}
 </div>
 
 <style>
