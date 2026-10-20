@@ -11,7 +11,7 @@
   .atuto *{box-sizing:border-box}
   .atuto__backdrop{position:absolute;inset:0;background:rgba(13,19,48,.45);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);opacity:0;transition:opacity .5s ease}
   .atuto.is-open:not(.is-spot) .atuto__backdrop{opacity:1}
-  .atuto__ring{position:fixed;top:0;left:0;width:0;height:0;border-radius:12px;box-shadow:0 0 0 9999px rgba(13,19,48,.45),0 0 0 2px #fff;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:top .45s ease,left .45s ease,width .45s ease,height .45s ease,opacity .4s ease}
+  .atuto__ring{position:fixed;top:0;left:0;width:0;height:0;border-radius:12px;box-shadow:0 0 0 9999px rgba(13,19,48,.45),0 0 0 2px #fff;opacity:0;pointer-events:none;transition:top .45s ease,left .45s ease,width .45s ease,height .45s ease,opacity .4s ease}
   .atuto.is-open.is-spot .atuto__ring{opacity:1}
 
   .atuto__card{position:absolute;left:16px;right:16px;bottom:max(16px,env(safe-area-inset-bottom));margin:0 auto;max-width:400px;padding:32px 28px 24px;border-radius:16px;background:#ffffff;color:var(--atuto-ink);border:1px solid rgba(13,19,48,.08);box-shadow:0 12px 40px rgba(13,19,48,.12);transform:translateY(24px);opacity:0;transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .45s ease}
@@ -103,7 +103,7 @@
     readySelector: '#moona-hub-tracks',
     delay: 700,
     nextLabel: 'Suivant',
-    finishLabel: 'Commencer mon rituel',
+    finishLabel: 'Commencer',
     steps: [
       {
         icon: 'moon',
