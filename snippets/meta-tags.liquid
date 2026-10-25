@@ -65,10 +65,9 @@
     assign seo_description = page_title | append: ' – Andromeda Paris : informations sur vos commandes, livraisons, retours et données personnelles.'
 
   elsif request.page_type == 'article'
-    if article.handle == 'comment-laver-un-masque-en-soie'
-      assign seo_title = 'Laver la soie : guide pour un masque en soie sans l’abîmer — Andromeda'
-    elsif article.handle == 'organiser-sommeil-apres-decalage-horaire'
-      assign seo_title = 'Jet lag : retrouver le sommeil après un décalage horaire — Andromeda'
+    assign article_title_tag = article.metafields.global.title_tag.value
+    if article_title_tag != blank
+      assign seo_title = article_title_tag
     else
       assign seo_title = article.title | append: ' — Andromeda'
     endif
