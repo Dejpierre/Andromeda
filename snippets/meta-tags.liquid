@@ -26,10 +26,10 @@
       assign seo_title = 'Masque de sommeil en soie de mûrier 22 mommes 6A | Andromeda Paris'
       assign seo_description = "Masque de sommeil 100 % soie de mûrier 22 mommes, grade 6A, occultant, sangle ajustable. Livré en coffret cadeau + rituel sonore d'endormissement. Livraison offerte dès 55 €."
     elsif product.handle == 'bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus'
-      assign seo_title = 'Bandeau de sommeil en soie de mûrier 22 mommes – rituel inclus | Andromeda Paris'
+      assign seo_title = 'Bandeau de sommeil en soie de mûrier 22 mommes | Andromeda Paris'
       assign seo_description = "Bandeau de sommeil en soie de mûrier 22 mommes, doux pour la peau et les cheveux. Occultation douce, maintien sans pression, livré avec son rituel de sommeil."
     elsif product.handle == 'chouchou-pour-cheveux-en-soie-de-murier-22-mommes'
-      assign seo_title = 'Chouchous en soie de mûrier 22 mommes 6A | Andromeda Paris'
+      assign seo_title = 'Chouchou en soie de mûrier 22 mommes 6A (lot de 2) | Andromeda Paris'
       assign seo_description = 'Lot de 2 chouchous 100 % soie de mûrier 22 mommes, grade 6A, hypoallergénique, doux pour les cheveux. Packaging premium, livraison offerte dès 55 €.'
     else
       assign seo_title = product.title | append: ' — Andromeda'
@@ -41,7 +41,7 @@
     assign seo_description = 'Découvrez tous nos accessoires de sommeil en soie de mûrier 22 mommes : masques, bandeaux et chouchous imaginés à Paris.'
 
   elsif request.page_type == 'collection' and collection.handle == 'bandeau-de-sommeil-en-soie'
-    assign seo_title = 'Bandeaux de sommeil en soie de mûrier | Andromeda Paris'
+    assign seo_title = 'Bandeau pour dormir en soie de mûrier | Andromeda Paris'
     assign seo_description = "Nos bandeaux de sommeil en soie de mûrier 22 mommes pour des nuits plus douces : occultation légère, confort sans pression, bienfaits pour la peau et les cheveux."
 
   elsif request.page_type == 'collection'
@@ -65,11 +65,17 @@
     assign seo_description = page_title | append: ' – Andromeda Paris : informations sur vos commandes, livraisons, retours et données personnelles.'
 
   elsif request.page_type == 'article'
-    assign seo_title = article.title | append: ' — Andromeda'
+    if article.handle == 'comment-laver-un-masque-en-soie'
+      assign seo_title = 'Laver la soie : guide pour un masque en soie sans l’abîmer — Andromeda'
+    elsif article.handle == 'organiser-sommeil-apres-decalage-horaire'
+      assign seo_title = 'Jet lag : retrouver le sommeil après un décalage horaire — Andromeda'
+    else
+      assign seo_title = article.title | append: ' — Andromeda'
+    endif
     assign seo_description = article.excerpt_or_content | strip_html | truncate: 155
 
   elsif request.page_type == 'blog'
-    assign seo_title = 'Blog Sommeil & Bien-être — Andromeda Paris'
+    assign seo_title = 'Blog sommeil & soie : conseils pour mieux dormir | Andromeda Paris'
     assign seo_description = 'Conseils, rituels et inspirations pour mieux dormir par Andromeda. Soie de mûrier, bien-être nocturne, routines beauté : plongez dans un univers de douceur.'
 
   elsif request.page_type == 'page'
@@ -77,7 +83,7 @@
       assign seo_title = 'Contactez Andromeda — Service Client & Commandes'
       assign seo_description = 'Une question sur votre commande ou nos masques en soie ? Notre équipe vous répond sous 24h. Contactez Andromeda Paris par email ou formulaire.'
     elsif page.handle == 'faq'
-      assign seo_title = 'FAQ — Masque de Sommeil en Soie | Andromeda Paris'
+      assign seo_title = 'FAQ Andromeda Paris : soie, entretien, livraison et retours'
       assign seo_description = 'Toutes vos questions sur le masque Andromeda : soie de mûrier grade 6A, entretien, livraison, retours. Réponses claires et complètes.'
     elsif page.handle == 'rituels'
       assign seo_title = 'Rituels du Soir — Andromeda'

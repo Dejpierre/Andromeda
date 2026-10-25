@@ -73,3 +73,70 @@ Toutes les mutations ont renvoyé `userErrors: []`.
 - `/blogs/actualites/meilleur-masque-de-sommeil-en-soie` avait déjà `status: "draft-redirect"` depuis le brief n°6, rien à changer.
 
 Détail complet dans `SEO-FIXES-7.md`.
+
+## Brief n°7 bis — un mot-clé unique par page (2026-10-21, exécuté le 2026-10-25)
+
+### Tâche 0 — Écarts constatés vs changelog
+
+Les deux écarts signalés par l'inventaire du 21/10 se sont révélés **déjà corrects côté API** lors de la vérification (`collection.seo.title` = "Masques de nuit en soie de mûrier | Andromeda Paris", `article.title` = "Masque de sommeil contour des yeux ou intégral : comment choisir") — probablement un cache CDN pas encore propagé au moment de l'inventaire. Aucune réapplication nécessaire pour ces deux-là.
+
+**Découverte importante en creusant la tâche 0** : la mutation `collectionUpdate`/`productUpdate` sur le champ `seo { ... }` **remplace tout l'objet SEO**, elle ne fusionne pas. Passer uniquement `seo: { description: "..." }` sans `title` a effacé le titre SEO de la collection masque pendant ce brief (immédiatement détecté et recorrigé). C'est probablement la cause réelle d'un écart similaire dans un brief antérieur — toujours passer `title` ET `description` ensemble désormais.
+
+**Découverte sur le champ lu pour le `<title>` des articles** : `layout/theme.liquid` → `snippets/meta-tags.liquid` lit `article.title | append: ' — Andromeda'` pour les articles — **jamais** le metafield `global.title_tag`. Toutes les mutations sur ce metafield faites dans les briefs précédents (n°6, n°7 du 14/10) n'ont donc eu **aucun effet** sur le `<title>` réellement affiché. À partir de ce brief, le titre des articles est fixé via `article.title` uniquement (qui pilote aussi le H1). Pour 2 articles où le brief demande un title SEO différent du H1 (`comment-laver-un-masque-en-soie`, `organiser-sommeil-apres-decalage-horaire`), un override codé en dur a été ajouté dans `snippets/meta-tags.liquid`, même pattern que pour les produits.
+
+### Tâche 2 — Produits et collections
+
+| Ressource | Champ | Avant | Après |
+|---|---|---|---|
+| Produit bandeau | `seo.title` (admin) | `Bandeau de sommeil en soie de mûrier 22 mommes – rituel inclus \| Andromeda Paris` | `Bandeau de sommeil en soie de mûrier 22 mommes \| Andromeda Paris` |
+| Produit bandeau | `seo.title` codé en dur (`meta-tags.liquid`) | idem ancien | aligné sur la nouvelle valeur |
+| Produit chouchou | `title` (H1) | `Lot de 2 Chouchous en soie de mûrier 22 mommes` | `Chouchou en soie de mûrier 22 mommes — lot de 2` |
+| Produit chouchou | `seo.title` (admin) | *(vide)* | `Chouchou en soie de mûrier 22 mommes 6A (lot de 2) \| Andromeda Paris` |
+| Produit chouchou | `seo.title` codé en dur (`meta-tags.liquid`) | `Chouchous en soie de mûrier 22 mommes 6A \| Andromeda Paris` | `Chouchou en soie de mûrier 22 mommes 6A (lot de 2) \| Andromeda Paris` |
+| Collection masque | `seo.description` | `...occultation totale, douceur pour la peau...` | `...un masque pour dormir dans l'obscurité totale, doux pour la peau...` |
+| Collection bandeau | `title` (H1) | `Bandeaux de sommeil en soie` | `Bandeaux en soie pour dormir` |
+| Collection bandeau | `seo.title` (admin) | `Bandeaux de sommeil en soie de mûrier \| Andromeda Paris` | `Bandeau pour dormir en soie de mûrier \| Andromeda Paris` |
+| Collection bandeau | `seo.title` codé en dur (`meta-tags.liquid`) | idem ancien | aligné sur la nouvelle valeur |
+| Collection chouchou | `title` (H1) | `Chouchou en soie` | `Chouchous en soie pour les cheveux` |
+| Collection chouchou | `seo.title` | `Chouchous en soie de mûrier — Andromeda Paris` | `Chouchous en soie de mûrier pour les cheveux \| Andromeda Paris` |
+| Collection chouchou | `seo.description` | `Chouchous 100% soie de mûrier grade 6A...` | `Nos chouchous en soie de mûrier 22 mommes protègent vos cheveux de la casse et des frisottis, jour et nuit. Livrés prêts à offrir.` |
+| Collection chouchou | `descriptionHtml` | 3 paragraphes (~130 mots) | + 2 sections H2 ("Pourquoi un chouchou en soie pour les cheveux ?", "Jour et nuit") avec liens produit/article |
+| `templates/collection.bandeau-soie.json` | H2 (text_block) | `Un masque de nuit bandeau pour un sommeil profond` | `Un bandeau pour dormir et retrouver un sommeil profond` |
+
+**Collection masque — H1 non modifié (comme demandé)** : le H1 rendu (`Masque de nuit en soie de mûrier`) vient du setting `h1_override` dans `templates/collection.masque-soie.json`, distinct de `collection.title` (`Masques de nuit en soie`). Contient déjà le mot-clé, laissé tel quel.
+
+### Tâche 3 — Articles
+
+| Handle | `title` (= H1) avant | `title` (= H1) après | Title SEO affiché |
+|---|---|---|---|
+| `comment-choisir-son-masque-de-sommeil` | `Comment choisir son masque de sommeil` | `Meilleur masque de sommeil : comment bien le choisir ?` | = titre + « — Andromeda » (défaut thème) |
+| `masque-contour-yeux-versus-integral` | `Masque de sommeil contour des yeux ou intégral : comment choisir` | `Masque yeux sommeil : contour des yeux ou intégral ?` | = titre + « — Andromeda » |
+| `comment-laver-un-masque-en-soie` | `Comment laver un masque en soie sans l'abîmer` | `Comment laver la soie (et un masque en soie) sans l'abîmer` | override codé en dur : `Laver la soie : guide pour un masque en soie sans l'abîmer — Andromeda` |
+| `organiser-sommeil-apres-decalage-horaire` | `Organiser son sommeil après décalage horaire` | `Jet lag : comment retrouver le sommeil après un décalage horaire` | override codé en dur : `Jet lag : retrouver le sommeil après un décalage horaire — Andromeda` |
+| `chouchou-cheveux-en-soie-guide-simple` | `Comment porter un chouchou en soie ?` | `Comment porter un chouchou en soie : coiffures et conseils` | = titre + « — Andromeda » |
+| `mulberry-silk-vs-satin-sleep-mask` | déjà conforme | inchangé | titre sans suffixe « — Andromeda » demandé par le brief, mais le thème l'ajoute automatiquement pour tous les articles sans exception codée — écart mineur assumé (texte quasi identique), non codé en dur pour éviter une exception de plus |
+| `masque-de-sommeil-pour-meditation` | déjà conforme (« masque » + « méditation » présents) | non touché | — |
+
+Lien ancre « chouchou en soie » vers la fiche produit : déjà présent dans `chouchou-cheveux-en-soie-guide-simple` depuis le brief du 14/10, vérifié toujours en place.
+
+### Tâche 4 — Pages
+
+| Ressource | Champ | Avant | Après |
+|---|---|---|---|
+| `/pages/faq` | title SEO (codé en dur) | `FAQ — Masque de Sommeil en Soie \| Andromeda Paris` | `FAQ Andromeda Paris : soie, entretien, livraison et retours` |
+| `/pages/faq` | H1 (codé en dur, `sections/main-page.liquid`) | `FAQ — Questions fréquentes sur le masque de sommeil en soie Andromeda` | `Questions fréquentes Andromeda Paris` |
+| `/pages/qui-sommes-nous` | — | déjà appliqué au brief du 14/10 (vérifié dans le thème pullé), rien à refaire | — |
+| Blog `actualites` | `title` (objet Blog, pilote le H1 via `blog.title`) | `Actualités` | `Blog sommeil & soie` |
+| Blog `actualites` | title SEO (codé en dur) | `Blog Sommeil & Bien-être — Andromeda Paris` | `Blog sommeil & soie : conseils pour mieux dormir \| Andromeda Paris` |
+
+### Tâche 5 — Brouillons
+
+Redirection créée : `/blogs/actualites/comment-entretenir-un-masque-de-sommeil-en-soie` → `/blogs/actualites/comment-laver-un-masque-en-soie` (`gid://shopify/UrlRedirect/1877160198479`). Les 3 autres brouillons : aucune action, redirections existantes conservées.
+
+### Tâche 5 bis — Visibilité IA (chouchous cheveux fins)
+
+- Article `chouchou-cheveux-en-soie-guide-simple` : section « Quel chouchou en soie choisir pour des cheveux fins et sensibles ? » insérée juste après l'introduction, avant « Les différents types de chouchous en soie ». Reste du texte inchangé.
+- Produit chouchou : section « Caractéristiques » ajoutée en fin de `descriptionHtml`.
+- FAQ produit chouchou (accordéon existant, 6 questions) : **fusion au lieu de duplication**. Une question du brief (« Laisse-t-il une marque dans les cheveux ? ») faisait doublon avec une question déjà présente (« Les chouchous marquent-ils les cheveux ? », déjà bien répondue) — non ajoutée. Les 2 autres questions du brief (cheveux fins, dormir) ajoutées comme nouvelles lignes d'accordéon (7 et 8), même format que les 6 existantes, plutôt qu'en bloc FAQ statique séparé dans `descriptionHtml` — cohérence avec le pattern déjà établi sur cette page. Pas de JSON-LD `FAQPage` généré par ce bloc accordéon (vérifié dans `blocks/accordion.liquid`), donc rien à éviter de dupliquer sur ce point.
+
+Toutes les mutations ont renvoyé `userErrors: []`.

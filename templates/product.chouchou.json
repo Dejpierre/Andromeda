@@ -2215,6 +2215,96 @@
               "block_order": [
                 "text_andromeda_6"
               ]
+            },
+            "accordion_row_andromeda_7": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Ce chouchou convient-il aux cheveux fins ?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_andromeda_7": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Oui. Sa soie de mûrier 22 mommes glisse sur la fibre sans l'accrocher, et son diamètre de 10 cm tient les cheveux fins sans les alourdir ni tirer sur les racines.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "slidein_enabled": false,
+                    "slidein_link_label": "En savoir plus",
+                    "slidein_title": "",
+                    "slidein_content": "",
+                    "slidein_cta_label": "",
+                    "slidein_cta_url": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_andromeda_7"
+              ]
+            },
+            "accordion_row_andromeda_8": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Peut-on dormir avec un chouchou en soie ?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_andromeda_8": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Oui, c'est même son usage idéal : nouez une queue de cheval basse et lâche, la soie protège vos longueurs des frottements sur l'oreiller toute la nuit.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "slidein_enabled": false,
+                    "slidein_link_label": "En savoir plus",
+                    "slidein_title": "",
+                    "slidein_content": "",
+                    "slidein_cta_label": "",
+                    "slidein_cta_url": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_andromeda_8"
+              ]
             }
           },
           "block_order": [
@@ -2223,7 +2313,9 @@
             "accordion_row_andromeda_3",
             "accordion_row_andromeda_4",
             "accordion_row_andromeda_5",
-            "accordion_row_andromeda_6"
+            "accordion_row_andromeda_6",
+            "accordion_row_andromeda_7",
+            "accordion_row_andromeda_8"
           ]
         }
       },
