@@ -167,3 +167,21 @@ Pages et articles : vérifié que `Page` et `Article` **n'ont pas de champ `seo{
 **Bug trouvé sur la collection masque** : le `<title>` affichait le fallback générique (`Masques de nuit en soie — Andromeda`) au lieu de la valeur de `seo.title` pourtant correcte côté API (`Masques de nuit en soie de mûrier | Andromeda Paris`). Même défaut de propagation déjà documenté dans `SEO-FIXES-4.md` pour les collections (`collection.seo.title` pas fiable côté Liquid). Corrigé en ajoutant un override codé en dur dans `meta-tags.liquid` (même remède que pour la collection bandeau depuis le brief n°4), et par précaution la collection chouchou a reçu le même override avant de rencontrer le même bug.
 
 Toutes les autres pages vérifiées en ligne étaient déjà conformes du premier coup (voir le tableau dans `SEO-FIXES-7.md`).
+
+## Brief n°8a — Article "Idée cadeau femme enceinte" (2026-10-26)
+
+| Ressource | Champ | Avant | Après |
+|---|---|---|---|
+| Article (nouveau) | création | — | `idee-cadeau-femme-enceinte`, blog `actualites`, brouillon (`isPublished: false`), auteur "Andromeda Paris", tags `cadeaux, noël, grossesse`, id `gid://shopify/Article/1004503007567` |
+| Article `idee-cadeau-femme-enceinte` | `title` (H1) | — | `Idée cadeau femme enceinte : 9 cadeaux douceur pour Noël et au-delà` |
+| Article `idee-cadeau-femme-enceinte` | metafield `global.title_tag` | — | `Idée cadeau femme enceinte : 9 idées douceur pour Noël \| Andromeda` |
+| Article `idee-cadeau-femme-enceinte` | metafield `global.description_tag` | — | `Idée cadeau femme enceinte pour Noël : 9 cadeaux utiles et doux pour mieux dormir, se détendre et se sentir chouchoutée, de la soie de mûrier au coussin de grossesse.` |
+| Article `idee-cadeau-femme-enceinte` | `body` | — | Corps HTML fourni par Pierre (fichier `article-idee-cadeau-femme-enceinte.html`), intégré tel quel, liens absolus conservés, aucune image (manquantes, voir ci-dessous) |
+
+Mutation `articleCreate`, `userErrors: []`.
+
+**Images (tâche 2)** : aucune des 2 images (`idee-cadeau-femme-enceinte.jpg`, `coffret-future-maman.jpg`) n'était disponible — ni dans `seo/images-articles/` (dossier inexistant), ni déjà uploadée dans Shopify → Contenu → Fichiers (vérifié via l'API). **Article resté en brouillon, images à fournir par Pierre avant publication.**
+
+**Maillage interne (tâche 3)** : non fait, comme demandé — à faire uniquement une fois l'article publié par Pierre (sinon lien cassé depuis `guide-cadeaux-sommeil-premium`).
+
+**`seo/keyword-map.json`** : entrée ajoutée pour `/blogs/actualites/idee-cadeau-femme-enceinte`, `primary: "idée cadeau femme enceinte"`. Vérifié : aucune autre page du référentiel n'a ce mot-clé en primary ni en secondary conflictuel (le plus proche est `guide-cadeaux-sommeil-premium` → `idée cadeau noël femme`, suffisamment distinct).

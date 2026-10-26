@@ -43,5 +43,6 @@
   { "url": "/blogs/actualites/organiser-sommeil-apres-decalage-horaire", "type": "article", "primary": "jet lag", "secondary": ["décalage horaire"] },
   { "url": "/blogs/actualites/reduire-frottements-nocturnes-visage", "type": "article", "primary": null, "secondary": [], "status": "draft-redirect", "note": "brouillon non publié, 301 vers /blogs/actualites/decouvrez-les-bienfaits-de-la-soie-pour-votre-peau — exclu de l'audit tant que non publié (brief n°6, tâche 5 ; gardé en l'état au brief n°7 du 21/10)" },
   { "url": "/blogs/actualites/andromeda-dans-marie-claire-adresses-incontournables", "type": "article", "primary": null, "secondary": [], "note": "presse, volontairement sans mot-clé propre" },
-  { "url": "/blogs/actualites/chouchou-cheveux-en-soie-guide-simple", "type": "article", "primary": "comment porter un chouchou en soie", "secondary": ["coiffure chouchou soie"] }
+  { "url": "/blogs/actualites/chouchou-cheveux-en-soie-guide-simple", "type": "article", "primary": "comment porter un chouchou en soie", "secondary": ["coiffure chouchou soie"] },
+  { "url": "/blogs/actualites/idee-cadeau-femme-enceinte", "type": "article", "primary": "idée cadeau femme enceinte", "secondary": ["cadeau pour femme enceinte", "cadeau femme enceinte original", "cadeau noël femme enceinte", "cadeau future maman", "coffret future maman", "quel cadeau pour une femme enceinte"], "note": "brief n°8a — créé en brouillon le 2026-10-26, en attente des images avant publication par Pierre" }
 ]
