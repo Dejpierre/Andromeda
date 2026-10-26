@@ -1,56 +1,72 @@
-# SEO-FIXES-7 — Page qui-sommes-nous, articles soie/satin et chouchou
+# SEO-FIXES-7 — Un mot-clé unique par page
 
-## Ce qui a été appliqué
+Ce document couvre le brief du 21/10 (« un mot-clé unique par page ») et ses deux suites de correction du 25-26/10. Il remplace la version précédente du même nom (brief du 14/10, dont les éléments déjà exécutés — qui-sommes-nous — ont été vérifiés et conservés).
 
-### Page /pages/qui-sommes-nous (tâche 3)
+## Résultat final — vérification réelle en ligne
 
-a. **Où vit le contenu** : la page utilise `templates/page.a-propos.json` (section custom `section-a-propos.liquid`, pas de `{{ page.content }}` classique) ; le titre SEO est codé en dur par handle dans `snippets/meta-tags.liquid`, la meta description aussi (non touchée, comme demandé).
+Toutes les valeurs ci-dessous sont lues directement dans le HTML servi par `www.andromedaparis.com` (pas l'API), vérifiées le 26/10 via le navigateur de Pierre après que le site a bloqué mes propres requêtes automatisées pendant plus de 40 minutes (HTTP 429).
 
-b. Titre SEO → d'abord « Andromeda Paris : notre histoire et notre soie de mûrier grade 6A » (valeur demandée), puis reformulé en **« Notre histoire — Andromeda Paris : soie de mûrier grade 6A »** après que l'audit a signalé une cannibalisation avec le mot-clé de la home (le titre commençait par « Andromeda Paris », identique au mot-clé principal de `/`). Reformulation validée par Pierre.
+| # | URL | Mot-clé attendu | `<title>` | `<h1>` | ✅/❌ |
+|---|---|---|---|---|---|
+| 1 | `/` | andromeda paris | Andromeda Paris – Masques de sommeil en soie de mûrier | *(non relevé, déjà stable depuis le brief n°3)* | ✅ |
+| 2 | `/pages/qui-sommes-nous` | soie de mûrier | Notre histoire — Andromeda Paris : soie de mûrier grade 6A | Notre histoire : la soie de mûrier au service du sommeil | ✅ (+ H2 « La soie de mûrier, c'est quoi ? » confirmé) |
+| 3 | `/pages/faq` | — (pas de mot-clé propre) | FAQ Andromeda Paris : soie, entretien, livraison et retours | Questions fréquentes Andromeda Paris | ✅ |
+| 4 | `/blogs/actualites` | blog sommeil | Blog sommeil & soie : conseils pour mieux dormir \| Andromeda Paris | Blog sommeil & soie | ✅ |
+| 5 | `/collections/masque-de-sommeil-soie` | masque de nuit soie | Masques de nuit en soie de mûrier \| Andromeda Paris | Masque de nuit en soie de mûrier | ✅ (corrigé en cours de vérification, voir plus bas) |
+| 6 | `/collections/bandeau-de-sommeil-en-soie` | bandeau pour dormir | Bandeau pour dormir en soie de mûrier \| Andromeda Paris | Bandeaux en soie pour dormir | ✅ |
+| 7 | `/collections/chouchou-en-soie` | chouchous en soie | Chouchous en soie de mûrier pour les cheveux \| Andromeda Paris | Chouchous en soie pour les cheveux | ✅ |
+| 8 | `/products/masque-de-sommeil-en-soie-de-murier-22-mommes` | masque de sommeil en soie | Masque de sommeil en soie de mûrier 22 mommes 6A \| Andromeda Paris | Masque de sommeil en soie de mûrier 22 mommes — Rituel de sommeil inclus | ✅ |
+| 9 | `/products/bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus` | bandeau de sommeil soie | Bandeau de sommeil en soie de mûrier 22 mommes \| Andromeda Paris | Bandeau de sommeil en soie de mûrier 22 mommes | ✅ |
+| 10 | `/products/chouchou-pour-cheveux-en-soie-de-murier-22-mommes` | chouchou en soie | Chouchou en soie de mûrier 22 mommes 6A (lot de 2) \| Andromeda Paris | Chouchou en soie de mûrier 22 mommes — lot de 2 | ✅ |
+| 11 | `/blogs/actualites/comment-choisir-son-masque-de-sommeil` | meilleur masque de sommeil | Meilleur masque de sommeil : comment bien le choisir ? — Andromeda | Meilleur masque de sommeil : comment bien le choisir ? | ✅ |
+| 12 | `/blogs/actualites/masque-contour-yeux-versus-integral` | masque yeux sommeil | Masque yeux sommeil : contour des yeux ou intégral ? — Andromeda | Masque yeux sommeil : contour des yeux ou intégral ? | ✅ |
+| 13 | `/blogs/actualites/mulberry-silk-vs-satin-sleep-mask` | soie ou satin | Soie ou satin : quelle différence pour un masque de sommeil ? — Andromeda | Soie ou satin : quelle différence pour un masque de sommeil ? | ✅ |
+| 14 | `/blogs/actualites/comment-laver-un-masque-en-soie` | laver soie | Laver la soie : guide pour un masque en soie sans l'abîmer — Andromeda | Comment laver la soie (et un masque en soie) sans l'abîmer | ✅ |
+| 15 | `/blogs/actualites/organiser-sommeil-apres-decalage-horaire` | jet lag | Jet lag : retrouver le sommeil après un décalage horaire — Andromeda | Jet lag : comment retrouver le sommeil après un décalage horaire | ✅ |
+| 16 | `/blogs/actualites/chouchou-cheveux-en-soie-guide-simple` | comment porter un chouchou en soie | Comment porter un chouchou en soie : coiffures et conseils — Andromeda | Comment porter un chouchou en soie : coiffures et conseils | ✅ |
 
-c. H1 → « Notre histoire : la soie de mûrier au service du sommeil ». Un seul H1 sur la page, vérifié.
+**16/16 conformes. Aucune cannibalisation détectée entre les pages vérifiées.**
 
-d. Section « Une soie de mûrier grade 6A, hypoallergénique » remplacée par « La soie de mûrier, c'est quoi ? » avec les 3 paragraphes et les 6 liens internes demandés (soie-6a, 19-vs-22-mommes, soie-vs-satin, bienfaits peau, bienfaits cheveux, fiche masque). Tous vérifiés présents en prod.
+## Bugs trouvés et corrigés pendant la vérification
 
-e. Aucune autre section touchée (duo fondateurs, rituel, engagements).
+### 1. Mutation `seo{}` qui remplace tout l'objet au lieu de fusionner
 
-Déployé et vérifié en prod.
+`productUpdate`/`collectionUpdate` avec `seo: { title: "..." }` **efface** `description` si elle n'est pas repassée dans le même appel (et inversement). Deux incidents :
+- **Collection masque** : repéré et corrigé dans la foulée pendant le brief du 21/10 (title effacé par un appel description-only).
+- **Produit bandeau** : `seo.description` effacée par la mutation title-only de la tâche 2 (brief du 21/10), repérée le 25/10 lors de l'audit systématique de la tâche 1, restaurée avec la valeur du brief n°4.
 
-### Articles (tâche 4)
+**Règle désormais appliquée systématiquement** : toujours passer `title` ET `description` ensemble dans `seo: {...}`, même pour ne changer qu'un seul des deux.
 
-- **mulberry-silk-vs-satin-sleep-mask** : titre (= H1) et title SEO → « Soie ou satin : quelle différence pour un masque de sommeil ? ».
-- **chouchou-cheveux-en-soie-guide-simple** :
-  - L'article avait déjà un lien vers la fiche chouchou, mais avec l'ancre « chouchous en soie de mûrier » (pas « chouchou en soie » comme demandé) et une URL avec `?variant=`. Lié la première occurrence du texte exact « chouchou en soie » (dans un paragraphe, pas dans le H3 où l'expression apparaît une première fois — lier un fragment de titre aurait été une UX bancale) vers l'URL propre `/products/chouchou-pour-cheveux-en-soie-de-murier-22-mommes`.
-  - Titre + title SEO proposés à Pierre avant modification (2 options) → retenu « Comment porter un chouchou en soie ? ».
+### 2. Le thème ne lisait jamais le metafield `global.title_tag` pour les articles
 
-### seo/keyword-map.json (tâche 5)
+`layout/theme.liquid` → `meta-tags.liquid` utilisait uniquement `article.title | append: ' — Andromeda'`. Toutes les mutations sur ce metafield dans les briefs n°6 et n°7 du 14/10 étaient donc **sans aucun effet** sur le `<title>` réellement affiché.
 
-Tous les mots-clés demandés assignés (voir `seo/changelog-admin.md` pour le détail). Le handle de la fiche chouchou était déjà correct, aucune correction nécessaire.
+**Corrigé** : règle générique ajoutée (`article.metafields.global.title_tag.value` si présent, sinon `article.title + " — Andromeda"`). En vérifiant les autres articles avant d'activer cette règle, **3 metafields périmés** ont été trouvés (laissés par d'anciens briefs, jamais relus) — ils auraient fait resurgir un ancien titre dès l'activation : `comment-choisir-son-masque-de-sommeil`, `masque-contour-yeux-versus-integral`, `chouchou-cheveux-en-soie-guide-simple`. Resynchronisés avant déploiement.
 
-## Vérification (tâche 6)
+### 3. `collection.seo.title` pas fiable côté Liquid (bug déjà documenté au brief n°4, revu ici)
 
-**Difficulté rencontrée** : le site a rate-limité (HTTP 429) la majorité des requêtes de l'audit pendant une bonne partie de ce brief, probablement à cause du volume de requêtes automatisées cumulées sur les briefs précédents. Un délai de 350ms entre requêtes + un ré-essai avec backoff exponentiel ont été ajoutés au script (voir `seo/changelog-admin.md`), et plusieurs passages espacés de plusieurs minutes ont été nécessaires. Le dernier passage reste partiellement affecté par le 429 sur une quinzaine d'URLs, mais toutes les pages directement concernées par ce brief ont pu être vérifiées (soit via l'audit, soit via des requêtes ciblées isolées) :
+Pendant la vérification en ligne (point 5 du tableau), le `<title>` de la collection masque affichait le fallback générique au lieu de la valeur `seo.title` pourtant correcte côté API — exactement le même symptôme déjà rencontré et contourné pour la collection bandeau au brief n°4. Corrigé en ajoutant un override codé en dur dans `meta-tags.liquid` pour `masque-de-sommeil-soie`, et par précaution pour `chouchou-en-soie` avant de rencontrer le même bug (celle-ci s'est révélée déjà correcte une fois le hardcode en place — impossible de savoir si elle aurait été touchée sans l'override, mais le risque était identique).
 
-| | 🔴 | 🟠 |
-|---|---|---|
-| Avant ce brief | 0 | 37 |
-| Après ce brief | **1** (connu, voir ci-dessous) | 37 (inchangé, cache CDN du menu déjà documenté au brief n°6) |
+**Conséquence pratique à retenir** : pour cette boutique, `collection.seo.title`/`description` natifs ne doivent plus être utilisés seuls pour piloter le `<title>` affiché — toujours accompagner d'un override codé en dur par handle dans `meta-tags.liquid`, comme c'est déjà le cas pour les produits.
 
-**Le 1 🔴 restant** : `/blogs/actualites/comment-choisir-son-masque-de-sommeil` — C2, le mot-clé assigné « meilleur masque de sommeil » n'apparaît pas littéralement dans son titre/H1 actuels (« Comment choisir son masque de sommeil »). C'est attendu : ce mot-clé lui a été assigné car c'est la page qui reçoit actuellement le trafic du brouillon non publié `meilleur-masque-de-sommeil-en-soie` (redirection 301, voir brief n°6). Pas d'action prise sur le titre de cet article — à signaler à Pierre si un rapprochement du titre est souhaité, ou à ignorer si le brouillon sera un jour publié avec son propre contenu.
+## Diff du thème (fichiers modifiés)
 
-**Les deux points de cannibalisation signalés à surveiller** :
-- Article chouchou ↔ fiche chouchou : **aucun conflit détecté**.
-- qui-sommes-nous ↔ articles soie (soie-6a, 19-vs-22-mommes, soie-vs-satin, bienfaits peau/cheveux) : **aucun conflit détecté**. Le seul conflit trouvé était qui-sommes-nous vs la home (voir ci-dessus, résolu par reformulation du titre).
+- `snippets/meta-tags.liquid` : FAQ (title+H1), blog (title), bandeau/chouchou produits (title codé en dur aligné), règle générique articles + overrides title_tag pour 2 articles, hardcodes collections masque + chouchou (nouveau, suite au bug #3).
+- `sections/main-page.liquid` : H1 de la FAQ.
+- `templates/collection.bandeau-soie.json` : H2 renommé (« masque de nuit » → « bandeau pour dormir »).
+- `templates/product.chouchou.json` : 2 nouvelles questions FAQ (accordéon).
+- `seo/keyword-map.json` : réécrit avec le nouveau mapping (un mot-clé par page).
 
-## Fichiers touchés
+## Tâche 5 bis — Visibilité IA (chouchous cheveux fins) — rappel
 
-- `templates/page.a-propos.json`, `snippets/meta-tags.liquid` (code, déployés en prod)
-- `seo/audit-cannibalisation.mjs` (délai + retry 429)
-- `seo/keyword-map.json`, `seo/audit-report.md` (régénéré)
-- `seo/changelog-admin.md` (mutations admin : 1 page, 2 articles)
-- Admin Shopify : 2 articles (titre, title_tag, et pour le chouchou, un lien dans le corps)
+- Article chouchou : section « cheveux fins et sensibles » insérée après l'intro.
+- Produit chouchou : bloc « Caractéristiques » ajouté en fin de description + 2 nouvelles questions FAQ dans l'accordéon existant (la 3e proposée faisait doublon avec une question déjà là, non ajoutée).
 
-## À faire par Pierre
+## Tâche 5 — Brouillons
 
-- Rien de bloquant. Le seul 🔴 restant est un choix éditorial déjà expliqué ci-dessus, pas une erreur.
-- Si le 🟠 C8 (cache CDN du menu) persiste encore après plusieurs jours, resauvegarder le menu de navigation dans l'admin (Online Store → Navigation) pour forcer l'invalidation — déjà signalé au brief n°6.
+Redirection créée : `comment-entretenir-un-masque-de-sommeil-en-soie` → `comment-laver-un-masque-en-soie`. Les 3 autres brouillons : aucune action (redirections existantes conservées).
+
+## Ce qui reste en attente de Pierre
+
+- Le mot-clé « idée cadeau noël femme » a été assigné à `/blogs/actualites/guide-cadeaux-sommeil-premium` dans le référentiel (tâche 1), mais **l'article n'a pas été retitré** (pas demandé dans la tâche 3) — son title/H1 actuels ne contiennent pas ce mot-clé. L'audit le signale en ❌. À décider : retitrer l'article, ou ajuster le mot-clé du référentiel.
+- Décision sur le sort définitif des 3 brouillons encore redirigés (`meilleur-masque-de-sommeil-en-soie`, `masque-de-nuit-7-benefices-prouves-sommeil-profond`, `reduire-frottements-nocturnes-visage`) — inchangée depuis le brief n°6.

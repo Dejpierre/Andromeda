@@ -140,3 +140,30 @@ Redirection créée : `/blogs/actualites/comment-entretenir-un-masque-de-sommeil
 - FAQ produit chouchou (accordéon existant, 6 questions) : **fusion au lieu de duplication**. Une question du brief (« Laisse-t-il une marque dans les cheveux ? ») faisait doublon avec une question déjà présente (« Les chouchous marquent-ils les cheveux ? », déjà bien répondue) — non ajoutée. Les 2 autres questions du brief (cheveux fins, dormir) ajoutées comme nouvelles lignes d'accordéon (7 et 8), même format que les 6 existantes, plutôt qu'en bloc FAQ statique séparé dans `descriptionHtml` — cohérence avec le pattern déjà établi sur cette page. Pas de JSON-LD `FAQPage` généré par ce bloc accordéon (vérifié dans `blocks/accordion.liquid`), donc rien à éviter de dupliquer sur ce point.
 
 Toutes les mutations ont renvoyé `userErrors: []`.
+
+## Brief n°7 ter — corrections avant clôture (2026-10-26)
+
+### Tâche 1 — Dégâts du bug seo{} (remplacement de l'objet entier)
+
+Listé tous les produits/collections via l'API, comparé à l'historique du changelog :
+
+| Ressource | Champ | Dégât constaté | Restauré |
+|---|---|---|---|
+| Produit bandeau | `seo.description` | Effacé par la mutation title-only de la tâche 2 du brief n°7 bis (ce même jour) | `Bandeau de sommeil en soie de mûrier 22 mommes, doux pour la peau et les cheveux. Occultation douce, maintien sans pression, livré avec son rituel de sommeil.` (valeur du brief n°4) |
+
+Aucun autre dégât trouvé : le produit masque et le produit chouchou n'ont jamais eu de `seo.description` écrite via l'API dans l'historique (toujours `null`, pas une régression — ces deux fiches utilisent exclusivement le hardcode de `meta-tags.liquid` pour leur description, comme pour leur titre).
+
+Pages et articles : vérifié que `Page` et `Article` **n'ont pas de champ `seo{}`** dans le schéma Admin API (confirmé via introspection) — ce bug ne peut donc pas les affecter.
+
+### Tâche 2 — Règle générique pour le `<title>` des articles
+
+- `snippets/meta-tags.liquid` : les 2 overrides codés en dur (`comment-laver-un-masque-en-soie`, `organiser-sommeil-apres-decalage-horaire`) remplacés par une règle générique : `article.metafields.global.title_tag.value` si présent, sinon `article.title | append: ' — Andromeda'`.
+- Les 2 titles SEO prévus écrits dans le metafield `global.title_tag`.
+- **3 metafields `title_tag` périmés trouvés et resynchronisés** (laissés par les briefs n°6 et n°7 du 14/10, jamais relus jusqu'à l'activation de cette règle, auraient fait resurgir un ancien titre) : `comment-choisir-son-masque-de-sommeil`, `masque-contour-yeux-versus-integral`, `chouchou-cheveux-en-soie-guide-simple`.
+- Pages (`Page`) et collections (`Collection`) vérifiées : les collections ont un vrai champ `seo.title` natif (contrairement aux pages/articles) — voir le point suivant pour un problème distinct trouvé dessus.
+
+### Vérification en ligne (navigateur de Pierre, le site bloquait mes propres requêtes ce jour-là — HTTP 429 pendant plus de 40 minutes)
+
+**Bug trouvé sur la collection masque** : le `<title>` affichait le fallback générique (`Masques de nuit en soie — Andromeda`) au lieu de la valeur de `seo.title` pourtant correcte côté API (`Masques de nuit en soie de mûrier | Andromeda Paris`). Même défaut de propagation déjà documenté dans `SEO-FIXES-4.md` pour les collections (`collection.seo.title` pas fiable côté Liquid). Corrigé en ajoutant un override codé en dur dans `meta-tags.liquid` (même remède que pour la collection bandeau depuis le brief n°4), et par précaution la collection chouchou a reçu le même override avant de rencontrer le même bug.
+
+Toutes les autres pages vérifiées en ligne étaient déjà conformes du premier coup (voir le tableau dans `SEO-FIXES-7.md`).

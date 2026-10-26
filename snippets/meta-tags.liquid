@@ -44,6 +44,14 @@
     assign seo_title = 'Bandeau pour dormir en soie de mûrier | Andromeda Paris'
     assign seo_description = "Nos bandeaux de sommeil en soie de mûrier 22 mommes pour des nuits plus douces : occultation légère, confort sans pression, bienfaits pour la peau et les cheveux."
 
+  elsif request.page_type == 'collection' and collection.handle == 'masque-de-sommeil-soie'
+    assign seo_title = 'Masques de nuit en soie de mûrier | Andromeda Paris'
+    assign seo_description = "Nos masques de nuit en soie de mûrier 22 mommes : un masque pour dormir dans l'obscurité totale, doux pour la peau et les cheveux, rituel de sommeil inclus."
+
+  elsif request.page_type == 'collection' and collection.handle == 'chouchou-en-soie'
+    assign seo_title = 'Chouchous en soie de mûrier pour les cheveux | Andromeda Paris'
+    assign seo_description = 'Nos chouchous en soie de mûrier 22 mommes protègent vos cheveux de la casse et des frisottis, jour et nuit. Livrés prêts à offrir.'
+
   elsif request.page_type == 'collection'
     if collection.seo.title != blank
       assign seo_title = collection.seo.title
