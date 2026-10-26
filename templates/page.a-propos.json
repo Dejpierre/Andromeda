@@ -41,7 +41,14 @@
           "type": "prose_paragraph",
           "settings": {
             "placement": "manifesto",
-            "text": "<p>Andromeda imagine des accessoires en soie de mûrier et des ambiances sonores relaxantes qui font du coucher un moment de bien-être absolu.</p>"
+            "text": "<p>C'est pour cela que nous avons voulu créer des accessoires en soie de mûrier ainsi qu'un univers sonore relaxant pour faire du coucher un moment de bien-être absolu et ainsi penser à sa santé avec douceur. C'est ainsi qu'est née Andromeda.</p>"
+          }
+        },
+        "manifesto_4": {
+          "type": "prose_paragraph",
+          "settings": {
+            "placement": "manifesto",
+            "text": "<p>Plus qu'un simple masque de sommeil, c'est une expérience immersive pour faire du moment de se coucher, le meilleur moment de la journée.</p>"
           }
         },
         "matiere_1": {
@@ -62,7 +69,7 @@
           "type": "prose_paragraph",
           "settings": {
             "placement": "matiere",
-            "text": "<p>Ses bienfaits, nous les détaillons <a href=\"/blogs/actualites/decouvrez-les-bienfaits-de-la-soie-pour-votre-peau\">pour la peau</a> et <a href=\"/blogs/actualites/masque-en-soie-pour-proteger-les-cheveux\">pour les cheveux</a>. Découvrez notre <a href=\"/products/masque-de-sommeil-en-soie-de-murier-22-mommes\">masque de sommeil en soie</a>.</p>"
+            "text": "<p>Ses bienfaits, nous les détaillons <a href=\"/blogs/actualites/decouvrez-les-bienfaits-de-la-soie-pour-votre-peau\">pour la peau</a> et <a href=\"/blogs/actualites/masque-en-soie-pour-proteger-les-cheveux\">pour les cheveux</a>.</p><p>Découvrez notre <a href=\"/products/masque-de-sommeil-en-soie-de-murier-22-mommes\" target=\"_blank\" rel=\"noopener\">masque de sommeil en soie</a>.</p>"
           }
         },
         "stat_1": {
@@ -111,7 +118,7 @@
           "type": "prose_paragraph",
           "settings": {
             "placement": "founders",
-            "text": "<p>Une question sur un coloris, un cadeau ? <a href=\"mailto:contact@andromedaparis.com\">Écrivez-nous</a>.</p>"
+            "text": "<p>Chaque coffret Andromeda contient un QR code qui renvoie vers des sons exclusifs pour aider à se relaxer et à s'endormir plus facilement.</p>"
           }
         },
         "ritual_step_1": {
@@ -152,40 +159,13 @@
             "link_2_label": "Quatre coins du monde",
             "link_2_url": ""
           }
-        },
-        "commitment_1": {
-          "type": "commitment",
-          "settings": {
-            "icon_text": "6A",
-            "label": "Grade 6A hypoallergénique"
-          }
-        },
-        "commitment_2": {
-          "type": "commitment",
-          "settings": {
-            "icon_text": "30 j",
-            "label": "Retours sous 30 jours"
-          }
-        },
-        "commitment_3": {
-          "type": "commitment",
-          "settings": {
-            "icon_text": "55 €",
-            "label": "Livraison offerte dès 55 €"
-          }
-        },
-        "commitment_4": {
-          "type": "commitment",
-          "settings": {
-            "icon_text": "QR",
-            "label": "Espace sonore inclus"
-          }
         }
       },
       "block_order": [
         "manifesto_1",
         "manifesto_2",
         "manifesto_3",
+        "manifesto_4",
         "matiere_1",
         "matiere_2",
         "matiere_3",
@@ -198,17 +178,13 @@
         "founders_3",
         "ritual_step_1",
         "ritual_step_2",
-        "ritual_step_3",
-        "commitment_1",
-        "commitment_2",
-        "commitment_3",
-        "commitment_4"
+        "ritual_step_3"
       ],
       "settings": {
         "hero_title": "Notre histoire : la soie de mûrier au service du sommeil",
         "hero_overlay": false,
         "constellation_title": "Une soie choisie parmi les 5 % les plus rares au monde",
-        "matiere_heading": "La soie de mûrier, c'est quoi ?",
+        "matiere_heading": "Pourquoi avons-nous choisi la soie de mûrier 22 mommes ?",
         "founders_heading": "Derrière Andromeda, un duo",
         "founders_image": "shopify://shop_images/andromeda-fondateurs-duo.jpg",
         "founders_caption": "Marion & Pierre Dejonghe, cofondateurs, Paris.",

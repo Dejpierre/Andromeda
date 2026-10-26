@@ -149,25 +149,33 @@
   </div>
 
   <!-- Engagements -->
-  <div class="ap__block ap__block--commitments">
-    <h2 class="ap__h2 ap__tc" data-ap-reveal>{{ section.settings.commitments_heading }}</h2>
-    <div class="ap__commitments" data-ap-reveal>
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'commitment' -%}
-          <span class="ap__commitment" {{ block.shopify_attributes }}>
-            <span class="ap__commitment-icon">
-              {%- if block.settings.icon_image != blank -%}
-                {{ block.settings.icon_image | image_url: width: 88 | image_tag: loading: 'lazy', alt: '' }}
-              {%- else -%}
-                {{ block.settings.icon_text }}
-              {%- endif -%}
+  {%- assign has_commitments = false -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'commitment' -%}
+      {%- assign has_commitments = true -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if has_commitments -%}
+    <div class="ap__block ap__block--commitments">
+      <h2 class="ap__h2 ap__tc" data-ap-reveal>{{ section.settings.commitments_heading }}</h2>
+      <div class="ap__commitments" data-ap-reveal>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'commitment' -%}
+            <span class="ap__commitment" {{ block.shopify_attributes }}>
+              <span class="ap__commitment-icon">
+                {%- if block.settings.icon_image != blank -%}
+                  {{ block.settings.icon_image | image_url: width: 88 | image_tag: loading: 'lazy', alt: '' }}
+                {%- else -%}
+                  {{ block.settings.icon_text }}
+                {%- endif -%}
+              </span>
+              <span class="ap__commitment-label">{{ block.settings.label }}</span>
             </span>
-            <span class="ap__commitment-label">{{ block.settings.label }}</span>
-          </span>
-        {%- endif -%}
-      {%- endfor -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
     </div>
-  </div>
+  {%- endif -%}
 
 </div>
 
