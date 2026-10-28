@@ -118,8 +118,8 @@
         "home_color_scheme": "inverse",
         "enable_transparent_header_product": false,
         "product_color_scheme": "default",
-        "enable_transparent_header_collection": false,
-        "collection_color_scheme": "default"
+        "enable_transparent_header_collection": true,
+        "collection_color_scheme": "inverse"
       }
     },
     "header_announcements_NT6g9J": {
