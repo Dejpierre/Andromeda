@@ -35,7 +35,7 @@
   .cbs__banner {
     position: relative;
     width: 100%;
-    min-height: 400px;
+    min-height: 480px;
     overflow: hidden;
     display: flex;
     align-items: flex-end;
@@ -65,7 +65,9 @@
     width: 100%;
     max-width: 1200px;
     margin-inline: auto;
-    padding: 48px 24px;
+    /* Header transparent (absolute, hors du flux) : on pousse le contenu
+       sous sa hauteur réelle pour que le titre ne chevauche pas le logo/menu. */
+    padding: calc(var(--header-height, 80px) + 24px) 24px 48px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -134,7 +136,7 @@
   .cbs__toggle:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 2px; }
 
   @media screen and (min-width: 750px) {
-    .cbs__banner { min-height: 340px; align-items: center; }
+    .cbs__banner { min-height: 420px; align-items: center; }
 
     .cbs__overlay {
       background: linear-gradient(to right,
@@ -144,7 +146,7 @@
       );
     }
 
-    .cbs__content { padding: 40px 48px; }
+    .cbs__content { padding: calc(var(--header-height, 80px) + 24px) 48px 40px; }
     .cbs__title { font-size: 48px; }
     .cbs__text-wrap { max-width: 520px; }
     .cbs__text { max-height: 52px; }
