@@ -235,3 +235,35 @@ L'article `guide-cadeaux-sommeil-premium` avait été décidé à retitrer le 26
 | Article `guide-cadeaux-sommeil-premium` | metafield `global.title_tag` | `Guide cadeaux sommeil premium à offrir avec goût` | `Idées cadeaux de Noël pour femme — Andromeda` |
 
 Vérifié en live : `<title>` = `Idées cadeaux de Noël pour femme — Andromeda`, `<h1>` = `Idées cadeaux de Noël pour femme`. `userErrors: []` sur les deux mutations.
+
+## Brief n°10 — changement de cible de guide-cadeaux-sommeil-premium (décision de Pierre, 2026-10-29)
+
+Le titre précédent (« Idées cadeaux de Noël pour femme ») s'est révélé incohérent avec le contenu : l'article ne mentionne jamais Noël explicitement et ne cible la femme qu'en une seule phrase d'intro, le reste étant neutre. Décision de Pierre : repositionner l'article sur « cadeau bien-être femme » (plus fidèle au contenu réel) plutôt que de réécrire tout le corps pour coller à « Noël ». Handle inchangé.
+
+| Ressource | Champ | Avant | Après |
+|---|---|---|---|
+| Article `guide-cadeaux-sommeil-premium` | `title` (H1) | `Idées cadeaux de Noël pour femme` | `Cadeau bien-être femme : des idées douceur autour du sommeil` |
+| Article `guide-cadeaux-sommeil-premium` | metafield `global.title_tag` | `Idées cadeaux de Noël pour femme — Andromeda` | `Cadeau femme bien-être : idées douceur pour bien dormir \| Andromeda` |
+| Article `guide-cadeaux-sommeil-premium` | metafield `global.description_tag` | `Notre Guide cadeaux sommeil premium réunit des attentions en soie, lumière douce et rituels raffinés pour offrir des nuits plus calmes et réparatrices.` | `Idées de cadeau bien-être pour femme autour du sommeil : masque en soie, rituel du soir, cocooning. Des cadeaux douceur à offrir à Noël, pour un anniversaire ou la fête des mères.` |
+| Article `guide-cadeaux-sommeil-premium` | `body` | — | 3 insertions (voir ci-dessous), rien d'autre réécrit |
+
+**Insertions dans le corps :**
+1. Paragraphe d'intro ajouté en tout début (avant le 1er paragraphe existant) : « Quel cadeau bien-être offrir à une femme ? [...] »
+2. Nouveau H2 « Cadeau bien-être pour femme : nos idées pour Noël » inséré juste avant le H2 « Questions fréquentes », avec lien vers `idee-cadeau-femme-enceinte`. **Lien vers `cadeau-soie-homme` non ajouté** : cet article n'existe pas dans la boutique (vérifié via l'API, aucun résultat sur ce handle) — la dernière proposition de la phrase a donc été retirée, comme prévu par le brief si l'article n'est pas publié.
+3. Nouvelle question FAQ « Quel cadeau cocooning offrir à une femme ? » ajoutée après la dernière question existante, avant le paragraphe de clôture.
+
+**Article `idee-cadeau-femme-enceinte` (brouillon)** : ancre « guide des idées cadeaux de Noël pour femme » → « idées cadeaux bien-être pour femme » (même lien vers `guide-cadeaux-sommeil-premium`). **Pas de fichier local `article-idee-cadeau-femme-enceinte.html` trouvé dans le repo** (recherché, absent) — seul le corps Shopify a donc été mis à jour ; rien à synchroniser côté dépôt.
+
+**`seo/keyword-map.json`** : `guide-cadeaux-sommeil-premium` → `primary: "cadeau femme bien être"`, secondaires `["cadeaux bien être pour femme", "cadeau bien être pour femme", "bien être cadeaux", "cadeau cocooning femme", "idée cadeau cocooning femme", "cadeau sommeil"]`. Anciens `"idée cadeau noël femme"` et `"cadeau noël sœur"` retirés.
+
+**Vérification live :**
+
+| Élément | Valeur live |
+|---|---|
+| `<title>` | `Cadeau femme bien-être : idées douceur pour bien dormir \| Andromeda` |
+| `<h1>` | `Cadeau bien-être femme : des idées douceur autour du sommeil` |
+| Intro ajoutée | présente (« ...ralentir et à mieux dormir... ») |
+| H2 Noël ajouté | présent (« Cadeau bien-être pour femme : nos idées pour Noël ») |
+| FAQ cocooning ajoutée | présente (« Quel cadeau cocooning offrir à une femme ? ») |
+
+Toutes les mutations ont renvoyé `userErrors: []`.
