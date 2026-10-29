@@ -76,9 +76,6 @@ function containsKeyword(haystack, keyword) {
 // mais matche "masque, pour un sommeil...": utile pour C2 où la formulation
 // naturelle du contenu intercale souvent d'autres mots).
 const STOPWORDS = new Set(['de', 'en', 'et', 'la', 'le', 'les', 'un', 'une', 'des', 'du', 'pour', 'à', 'a']);
-// Mots équivalents dans le contenu réel mais absents l'un de l'autre littéralement
-// (ex. "soie 19 vs 22 mommes" doit matcher le mot-clé "soie 19 ou 22 mommes").
-const WORD_ALIASES = { ou: ['ou', 'vs'] };
 function containsAllWords(haystack, keyword) {
   if (!haystack) return false;
   const normHaystack = normalize(haystack);
@@ -86,12 +83,9 @@ function containsAllWords(haystack, keyword) {
     .split(' ')
     .filter((w) => w.length > 0 && !STOPWORDS.has(w));
   return words.every((w) => {
-    const candidates = WORD_ALIASES[w] || [w];
-    return candidates.some((c) => {
-      const singular = c.endsWith('s') && c.length > 3 ? c.slice(0, -1) : c;
-      const plural = c.endsWith('s') ? c : `${c}s`;
-      return normHaystack.includes(singular) || normHaystack.includes(plural);
-    });
+    const singular = w.endsWith('s') && w.length > 3 ? w.slice(0, -1) : w;
+    const plural = w.endsWith('s') ? w : `${w}s`;
+    return normHaystack.includes(singular) || normHaystack.includes(plural);
   });
 }
 

@@ -185,3 +185,34 @@ Mutation `articleCreate`, `userErrors: []`.
 **Maillage interne (tâche 3)** : non fait, comme demandé — à faire uniquement une fois l'article publié par Pierre (sinon lien cassé depuis `guide-cadeaux-sommeil-premium`).
 
 **`seo/keyword-map.json`** : entrée ajoutée pour `/blogs/actualites/idee-cadeau-femme-enceinte`, `primary: "idée cadeau femme enceinte"`. Vérifié : aucune autre page du référentiel n'a ce mot-clé en primary ni en secondary conflictuel (le plus proche est `guide-cadeaux-sommeil-premium` → `idée cadeau noël femme`, suffisamment distinct).
+
+## Brief n°9 — ajustements mots-clés bandeau / chouchou / momme (2026-10-29)
+
+`seo/keyword-map.json` mis à jour pour 9 URL (remplacement des entrées existantes) : accueil (secondaire retiré), masque produit (2 secondaires ajoutés), **bandeau produit (primary changé : `bandeau de sommeil soie` → `bandeau yeux nuit`)**, chouchou produit (secondaire ajouté), masque collection (primary affiné : `masque de nuit soie` → `masque de nuit en soie`), bandeau collection (1 secondaire retiré), **chouchou collection (primary/secondary inversés : `chouchou soie cheveux` devient primary)**, **article momme (primary changé : `soie 19 ou 22 mommes` → `momme soie`)**, article lavage (2 secondaires ajoutés).
+
+| Ressource | Champ | Avant | Après |
+|---|---|---|---|
+| Produit `bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus` | `title` (H1) | `Bandeau de sommeil en soie de mûrier 22 mommes` | `Bandeau yeux nuit en soie de mûrier 22 mommes — rituel de sommeil inclus` |
+| Produit `bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus` | `seo.title` | `Bandeau de sommeil en soie de mûrier 22 mommes \| Andromeda Paris` | `Bandeau yeux nuit en soie de mûrier 22 mommes \| Andromeda Paris` |
+| Produit `bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus` | `seo.description` | inchangé | inchangé (renvoyé avec le titre pour éviter le bug de remplacement du champ `seo{}`) |
+| Collection `chouchou-en-soie` | `seo.title` | `Chouchous en soie de mûrier pour les cheveux \| Andromeda Paris` | `Chouchou soie cheveux : chouchous en soie de mûrier \| Andromeda Paris` |
+| Collection `chouchou-en-soie` | `seo.description` | inchangé | inchangé (renvoyé avec le titre) |
+| Collection `chouchou-en-soie` | `title` (H1) | `Chouchous en soie pour les cheveux` | inchangé (brief : H1 non modifié) |
+| Article `soie-19-vs-22-mommes-guide` | `title` (H1) | `Soie 19 vs 22 mommes : quel grammage choisir ?` | `Momme soie : 19 ou 22 mommes, quel grammage choisir ?` |
+| Article `soie-19-vs-22-mommes-guide` | metafield `global.title_tag` | `Soie 19 vs 22 mommes : quel grammage choisir ?` | `Momme soie : 19 ou 22 mommes, quel grammage choisir ? — Andromeda` |
+
+Toutes les mutations ont renvoyé `userErrors: []`.
+
+**Code thème (`snippets/meta-tags.liquid`)** : les deux hardcodes existants (bug connu `collection.seo.title`/produit non lu en Liquid, cf. briefs précédents) mis à jour en miroir des champs API ci-dessus — bandeau produit ligne du bloc `product.handle == 'bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus'`, chouchou collection ligne du bloc `collection.handle == 'chouchou-en-soie'`. Poussé en live (`shopify theme push --only snippets/meta-tags.liquid`, thème `#199323648335`), `theme check` RAS (pas de nouvelle erreur/warning vs. baseline).
+
+**Script d'audit (`seo/audit-cannibalisation.mjs`)** : alias `WORD_ALIASES = { ou: ['ou', 'vs'] }` supprimé. Il ne servait qu'à faire matcher un `<title>`/`<h1>` contenant littéralement « vs » avec un mot-clé contenant « ou » — nécessaire tant que l'article momme avait `title_tag` = "Soie 19 **vs** 22 mommes..." et que l'article `mulberry-silk-vs-satin-sleep-mask` portait encore ce schéma. Vérifié que les deux pages ont désormais « ou » en toutes lettres dans leur H1 et leur `<title>` (le second l'avait déjà depuis un brief antérieur) → l'alias ne servait plus aucune page du référentiel, retiré avec sa logique de candidats.
+
+**Vérification live (tâche 5, partielle — 3 des 4 pages)** :
+
+| Page | `<title>` live | `<h1>` live |
+|---|---|---|
+| `/products/bandeau-de-sommeil-en-soie-rituel-de-sommeil-inclus` | `Bandeau yeux nuit en soie de mûrier 22 mommes \| Andromeda Paris` | `Bandeau yeux nuit en soie de mûrier 22 mommes — rituel de sommeil inclus` |
+| `/collections/chouchou-en-soie` | `Chouchou soie cheveux : chouchous en soie de mûrier \| Andromeda Paris` | `Chouchous en soie pour les cheveux` (inchangé, comme demandé) |
+| `/blogs/actualites/soie-19-vs-22-mommes-guide` | `Momme soie : 19 ou 22 mommes, quel grammage choisir ? — Andromeda` | `Momme soie : 19 ou 22 mommes, quel grammage choisir ?` |
+
+**Tâche 4 (H2 « Quelle lessive pour la soie ? » sur l'article lavage) : non faite.** Le texte de ce H2, fourni le 26/10, n'était pas présent dans ce message — redemandé à Pierre. La 4e vérification live (tâche 5) est donc en attente de cette insertion.
