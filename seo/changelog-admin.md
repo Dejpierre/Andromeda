@@ -267,3 +267,11 @@ Le titre précédent (« Idées cadeaux de Noël pour femme ») s'est révélé 
 | FAQ cocooning ajoutée | présente (« Quel cadeau cocooning offrir à une femme ? ») |
 
 Toutes les mutations ont renvoyé `userErrors: []`.
+
+## Correction mineure — article idee-cadeau-femme-enceinte (2026-10-29)
+
+| Ressource | Champ | Avant | Après |
+|---|---|---|---|
+| Article `idee-cadeau-femme-enceinte` | `body` (1 mot) | « Découvrez aussi **notre** idées cadeaux bien-être pour femme » | « Découvrez aussi **nos** idées cadeaux bien-être pour femme » |
+
+`userErrors: []`. **Vérification navigateur impossible** : l'article est toujours en brouillon (`isPublished: false`), l'URL live renvoie une 404 (comportement normal, sans lien avec cette correction). Vérifié à la place via une relecture du `body` par l'Admin API : la correction est bien en place, rien d'autre n'a changé.
