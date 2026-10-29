@@ -224,3 +224,14 @@ Toutes les mutations ont renvoyé `userErrors: []`.
 | `/blogs/actualites/comment-laver-un-masque-en-soie` | `Laver la soie : guide pour un masque en soie sans l'abîmer — Andromeda` (inchangé) | `Comment laver la soie (et un masque en soie) sans l'abîmer` (inchangé) — H2 « Quelle lessive pour la soie ? » confirmé présent dans le HTML live, juste avant « Les erreurs qui abîment la soie » |
 
 Les 4 pages du brief n°9 sont désormais vérifiées en live.
+
+## Point en attente du brief n°7 bis, traité le 2026-10-29
+
+L'article `guide-cadeaux-sommeil-premium` avait été décidé à retitrer le 26/10 pour matcher son mot-clé primary `idée cadeau noël femme` (cf. `SEO-FIXES-7.md`, point resté « en attente »), mais la décision n'avait jamais été exécutée : à cette date, `title`/`title_tag` live étaient toujours « Guide cadeaux sommeil premium à offrir avec goût ».
+
+| Ressource | Champ | Avant | Après |
+|---|---|---|---|
+| Article `guide-cadeaux-sommeil-premium` | `title` (H1) | `Guide cadeaux sommeil premium à offrir avec goût` | `Idées cadeaux de Noël pour femme` |
+| Article `guide-cadeaux-sommeil-premium` | metafield `global.title_tag` | `Guide cadeaux sommeil premium à offrir avec goût` | `Idées cadeaux de Noël pour femme — Andromeda` |
+
+Vérifié en live : `<title>` = `Idées cadeaux de Noël pour femme — Andromeda`, `<h1>` = `Idées cadeaux de Noël pour femme`. `userErrors: []` sur les deux mutations.
