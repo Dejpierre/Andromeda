@@ -215,4 +215,12 @@ Toutes les mutations ont renvoyé `userErrors: []`.
 | `/collections/chouchou-en-soie` | `Chouchou soie cheveux : chouchous en soie de mûrier \| Andromeda Paris` | `Chouchous en soie pour les cheveux` (inchangé, comme demandé) |
 | `/blogs/actualites/soie-19-vs-22-mommes-guide` | `Momme soie : 19 ou 22 mommes, quel grammage choisir ? — Andromeda` | `Momme soie : 19 ou 22 mommes, quel grammage choisir ?` |
 
-**Tâche 4 (H2 « Quelle lessive pour la soie ? » sur l'article lavage) : non faite.** Le texte de ce H2, fourni le 26/10, n'était pas présent dans ce message — redemandé à Pierre. La 4e vérification live (tâche 5) est donc en attente de cette insertion.
+| Article `comment-laver-un-masque-en-soie` | `body` (insertion d'un H2) | — | H2 « Quelle lessive pour la soie ? » + paragraphe (texte fourni par Pierre le 26/10), inséré juste avant « Les erreurs qui abîment la soie » |
+
+**Vérification live — 4e page (tâche 5, complétée) :**
+
+| Page | `<title>` live | `<h1>` live |
+|---|---|---|
+| `/blogs/actualites/comment-laver-un-masque-en-soie` | `Laver la soie : guide pour un masque en soie sans l'abîmer — Andromeda` (inchangé) | `Comment laver la soie (et un masque en soie) sans l'abîmer` (inchangé) — H2 « Quelle lessive pour la soie ? » confirmé présent dans le HTML live, juste avant « Les erreurs qui abîment la soie » |
+
+Les 4 pages du brief n°9 sont désormais vérifiées en live.
