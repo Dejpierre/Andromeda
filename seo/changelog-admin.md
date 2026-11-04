@@ -275,3 +275,31 @@ Toutes les mutations ont renvoyé `userErrors: []`.
 | Article `idee-cadeau-femme-enceinte` | `body` (1 mot) | « Découvrez aussi **notre** idées cadeaux bien-être pour femme » | « Découvrez aussi **nos** idées cadeaux bien-être pour femme » |
 
 `userErrors: []`. **Vérification navigateur impossible** : l'article est toujours en brouillon (`isPublished: false`), l'URL live renvoie une 404 (comportement normal, sans lien avec cette correction). Vérifié à la place via une relecture du `body` par l'Admin API : la correction est bien en place, rien d'autre n'a changé.
+
+## Ouverture Belgique & Suisse (2026-11-04)
+
+Avant ce changement, un seul Market actif existait (« France », FR uniquement) : même si les zones de livraison couvraient déjà la Belgique (zone « UE », 22 €) et la Suisse (zone « Internationale », 29 €), aucun client de ces pays ne pouvait finaliser un achat — l'absence de Market les concernant bloquait le checkout. Décision de Pierre (04/11) : ouvrir l'achat pour ces deux pays, tarif de livraison unique à 14,50 €, Suisse facturée en CHF.
+
+**Zones de livraison** (`DeliveryProfile` « Profil général », `gid://shopify/DeliveryProfile/137884762447`) :
+
+| Action | Détail |
+|---|---|
+| Retiré | Belgique retirée de la zone « UE (Union Européenne) » (reste à 22 € pour les 25 autres pays UE, inchangé) |
+| Retiré | Suisse retirée de la zone « International » (reste à 29 € pour les 13 autres pays, inchangé) |
+| Créé | Nouvelle zone « Belgique & Suisse » (`gid://shopify/DeliveryZone/712795455823`), méthode « Livraison standard » à **14,50 € EUR** |
+
+**Markets créés :**
+
+| Market | Pays | Devise | Statut |
+|---|---|---|---|
+| Belgique (`gid://shopify/Market/117776351567`) | BE | EUR (devise par défaut de la boutique, pas de réglage séparé) | ACTIVE |
+| Suisse (`gid://shopify/Market/117776384335`) | CH | CHF (conversion automatique au taux de change courant, pas de prix fixes locaux) | ACTIVE |
+
+Aucun catalogue restreint par Market n'existe sur cette boutique (vérifié : aucun `MarketCatalog`, seulement des catalogues de canaux de vente) → tous les produits déjà publiés sur la boutique en ligne sont automatiquement disponibles pour ces deux nouveaux Markets, sans action supplémentaire.
+
+**Vérifié via l'Admin API** : les 3 Markets (France, Belgique, Suisse) sont `ACTIVE`, la zone « Belgique & Suisse » contient bien BE + CH à 14,50 €, et les zones UE/International ne contiennent plus ces deux pays. `userErrors: []` sur toutes les mutations.
+
+**Non traité, à signaler à Pierre :**
+- **Taxes/TVA** : la boutique facture TTC (`taxesIncluded: true`), configuré pour la TVA française. Vendre vers la Belgique (UE) relève en principe du régime OSS (TVA du pays de destination) et vers la Suisse (hors UE) de la TVA à l'importation suisse — aucun réglage fiscal n'a été modifié ici, c'est un point de conformité à traiter séparément (déclaration OSS, immatriculation TVA suisse le cas échéant) avant un volume de ventes significatif dans ces pays.
+- **Paiement** : pas de vérification que Shopify Payments règle correctement en CHF pour la Suisse — à confirmer lors d'une première commande test.
+- Aucune vérification « navigateur réel » possible pour ce type de changement (pas de page HTML à charger) : confirmé uniquement via l'Admin API.
