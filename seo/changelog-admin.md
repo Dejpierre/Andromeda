@@ -303,3 +303,26 @@ Aucun catalogue restreint par Market n'existe sur cette boutique (vérifié : au
 - **Taxes/TVA** : la boutique facture TTC (`taxesIncluded: true`), configuré pour la TVA française. Vendre vers la Belgique (UE) relève en principe du régime OSS (TVA du pays de destination) et vers la Suisse (hors UE) de la TVA à l'importation suisse — aucun réglage fiscal n'a été modifié ici, c'est un point de conformité à traiter séparément (déclaration OSS, immatriculation TVA suisse le cas échéant) avant un volume de ventes significatif dans ces pays.
 - **Paiement** : pas de vérification que Shopify Payments règle correctement en CHF pour la Suisse — à confirmer lors d'une première commande test.
 - Aucune vérification « navigateur réel » possible pour ce type de changement (pas de page HTML à charger) : confirmé uniquement via l'Admin API.
+
+## Audit anglais désactivé + bandeau cookies/apps (2026-11-09)
+
+**Diagnostic anglais** : `shopLocales` confirme `en` présent mais `published: false` → `/en/*` renvoie 404 en live, confirmé. En creusant les `translatableResources`, le travail de traduction est en réalité substantiel mais incomplet :
+- Traduit : page FAQ, page Politique de retour, 6 articles de blog, le produit masque.
+- Non traduit : produits bandeau et chouchou, 2 des 3 collections (bandeau, chouchou).
+- Bug trouvé : la collection masque (`masque-de-sommeil-soie`) a une traduction de titre anglais erronée : « Home page » au lieu d'un vrai titre — à corriger si l'anglais est repris plus tard.
+
+Décision de Pierre (09/11) : **ne pas réactiver l'anglais maintenant**, rediriger `/en/*` vers l'équivalent français à la place.
+
+**Fix appliqué (`layout/theme.liquid`)** : script inline en tout début de `<head>`, exécuté sur CHAQUE page, qui détecte côté navigateur si `window.location.pathname` commence par `/en/` (ou vaut `/en`) et redirige (`location.replace`) vers le même chemin sans le préfixe, en conservant query string et hash.
+
+```js
+(function(){var p=window.location.pathname;if(p==='/en'||p.indexOf('/en/')===0){var n=p.replace(/^\/en\/?/,'/');if(n===''){n='/';}window.location.replace(n+window.location.search+window.location.hash);}})();
+```
+
+**Pourquoi côté navigateur et pas via `request.path` en Liquid** : première tentative basée sur `request.path` en Liquid (avec `<meta http-equiv="refresh">` généré côté serveur) — ne fonctionne pas : sur une page 404 issue d'une locale désactivée, `request.path` ne reflète pas l'URL réellement demandée côté serveur (vérifié : la balise `og:url` générée pour `/en/blogs/actualites/soie-6a-c-est-quoi` pointait vers `/404`, pas l'URL réelle). `window.location.pathname` côté navigateur, lui, reste fiable car c'est le navigateur qui connaît l'URL réellement tapée/cliquée, indépendamment de ce que Shopify expose en Liquid sur une 404. D'où le script JS inconditionnel, sans dépendance à Liquid.
+
+**Limite connue** : fonctionne pour tout visiteur humain (JS activé) et pour les crawlers qui exécutent le JavaScript (Googlebot le fait). Ne produit pas un vrai code HTTP 301 — Shopify ne permet pas de changer le code de statut d'une page 404 depuis le thème. Pas de solution serveur possible pour un préfixe générique `/en/*` : les redirections natives Shopify (`urlRedirectCreate`) n'acceptent que des chemins exacts, pas de wildcard.
+
+**Vérifié en live** : `shopify theme check` RAS, poussé sur le thème live (`#199323648335`, `layout/theme.liquid` seul). Script confirmé présent dans le HTML brut de `/`, `/en/` et `/en/blogs/actualites/soie-6a-c-est-quoi` (toutes avec statut 404 côté serveur pour les URL `/en/*`, comme attendu — seul le comportement JS côté navigateur change).
+
+**Bandeau cookies / app / thème autour du 3-4 novembre** : revue de l'historique `updatedAt` de l'intégralité des ~400 fichiers du thème live — aucun fichier modifié après le 29 octobre (mes propres commits SEO). Le bandeau cookies est le bandeau natif Shopify (`privacy-banner.js`), personnalisé en CSS/JS dans `layout/theme.liquid` (pas une app tierce), présent et chargé normalement en live. Pas pu vérifier la liste des apps installées ni le statut ON/OFF du bandeau via l'Admin API (scopes `read_apps`/`read_privacy_settings` manquants sur ce connecteur) — à vérifier manuellement par Pierre dans Admin > Apps et Admin > Paramètres > Confidentialité des clients si un doute persiste.
