@@ -326,3 +326,56 @@ Décision de Pierre (09/11) : **ne pas réactiver l'anglais maintenant**, rediri
 **Vérifié en live** : `shopify theme check` RAS, poussé sur le thème live (`#199323648335`, `layout/theme.liquid` seul). Script confirmé présent dans le HTML brut de `/`, `/en/` et `/en/blogs/actualites/soie-6a-c-est-quoi` (toutes avec statut 404 côté serveur pour les URL `/en/*`, comme attendu — seul le comportement JS côté navigateur change).
 
 **Bandeau cookies / app / thème autour du 3-4 novembre** : revue de l'historique `updatedAt` de l'intégralité des ~400 fichiers du thème live — aucun fichier modifié après le 29 octobre (mes propres commits SEO). Le bandeau cookies est le bandeau natif Shopify (`privacy-banner.js`), personnalisé en CSS/JS dans `layout/theme.liquid` (pas une app tierce), présent et chargé normalement en live. Pas pu vérifier la liste des apps installées ni le statut ON/OFF du bandeau via l'Admin API (scopes `read_apps`/`read_privacy_settings` manquants sur ce connecteur) — à vérifier manuellement par Pierre dans Admin > Apps et Admin > Paramètres > Confidentialité des clients si un doute persiste.
+
+## Meilleur masque de sommeil — amélioration de position (2026-11-10)
+
+Article `comment-choisir-son-masque-de-sommeil` (primaire : *meilleur masque de sommeil*, 10e position).
+
+**Doublons signalés avant insertion, tranchés par Pierre** :
+- BLOC B (nouveau H2 « Quel est le meilleur masque de sommeil en soie ? ») faisait doublon exact avec une question existante de la FAQ de l'article → **FAQ retirée**, BLOC B inséré à sa place en haut de l'article (meilleur emplacement SEO).
+- BLOC A (tableau par type de masque) chevauche partiellement le tableau existant en section 02 (comparatif par matière) → **gardé tel quel**, angle différent jugé complémentaire.
+
+**Contenu inséré** (`articleUpdate`) : `<p><em>Mis à jour en novembre 2026.</em></p>` en tête de corps, puis BLOC A (tableau comparatif 5 types de masques) + BLOC B (5 critères du meilleur masque en soie) juste après l'introduction, avant la section « 01 — Les fondements ». FAQ « Quel est le meilleur masque de sommeil en soie ? » supprimée (doublon).
+
+**`dateModified`** : déjà exposé par le thème (`layout/theme.liquid:169`, basé sur `article.updated_at`) — aucune modification de thème nécessaire, confirmé en live : `"dateModified":"2026-11-10T10:43:49+01:00"`.
+
+**Meta description** (`metafieldsSet`, `global.description_tag`) : *"Quel est le meilleur masque de sommeil ? Soie, satin, coton, 3D ou pondéré : notre comparatif, les 5 critères pour bien choisir et notre verdict. Mis à jour en novembre 2026."* — confirmé en live dans `<meta name="description">`.
+
+**Maillage entrant ajouté** (une phrase chacun, sans réécrire le reste) :
+- Fiche produit masque (`productUpdate`) et collection masque (`collectionUpdate`) : phrase "Vous hésitez ? Lisez notre guide du meilleur masque de sommeil." en fin de description.
+- Articles `masque-de-sommeil-en-soie-pour-avion`, `masque-contour-yeux-versus-integral`, `mulberry-silk-vs-satin-sleep-mask` (`articleUpdate`) : une phrase de lien chacun, insérée à un endroit naturel (sections "comment choisir" de chaque article). Confirmé en live via curl : présent sur les 3 articles.
+
+**`keyword-map.json`** : ajout de "meilleur masque de sommeil en soie" et "meilleur masque de nuit" aux secondaires de la page. Vérifié : aucune autre page du site ne porte ces 3 expressions en primaire/secondaire.
+
+**Vérification croisée (tâche 8)** : ancres "soie et satin" → `mulberry-silk-vs-satin-sleep-mask` et "contour des yeux" → `masque-contour-yeux-versus-integral` confirmées en live, aucune ne pointe vers `comment-choisir-son-masque-de-sommeil`.
+
+**Vérifié en live (curl)** : BLOC A présent (1 occurrence), FAQ doublon absent (0 occurrence), `dateModified`, meta description, ancres croisées, et les 3 liens entrants vers le guide — tout confirmé avant que le site ne commence à renvoyer des 429 (voir note rate-limit ci-dessous).
+
+## Nouvelle collection « Idées cadeaux en soie » + mise en avant coffret (2026-11-10)
+
+Décision de Pierre (10/11). Nouvelle collection manuelle + bloc coffret sur les 3 fiches produit pure soie.
+
+**Collection créée** (`collectionCreate` + `publishablePublish`) :
+- Handle `idees-cadeaux-soie`, titre H1 "Idées cadeaux en soie, livrées dans leur coffret", SEO title/description fournis par le brief, tri manuel (masque, bandeau, chouchou dans cet ordre), image = photo actuelle de la collection masque (pas de photo de coffret ouvert fournie par Pierre — **à signaler : image à remplacer dès que Pierre la fournit**).
+- Description (`descriptionHtml`) = BLOC COLLECTION du brief, **avec la phrase vers l'article `idee-cadeau-femme-enceinte` retirée** : cet article est toujours en brouillon (`isPublished: false`) → **à rajouter dès sa publication**.
+- Publiée sur le canal "Boutique en ligne" (`publishablePublish`, confirmé `publishedOnPublication: true`).
+
+**Bug trouvé et corrigé en cours de route** : la nouvelle collection n'avait pas de template dédié et retombait sur le template générique `templates/collection.json` (celui normalement utilisé par `/collections/all`), qui contient un H1 et une description codés en dur ("Tous nos accessoires en soie de mûrier") sans rapport avec la nouvelle collection — confirmé en live avant correction. Fix : nouveau fichier `templates/collection.idees-cadeaux-soie.json` (section `collection-banner-seo` sans override, pour que H1/image retombent sur les vraies valeurs de la collection, + `collection-variant-grid`), poussé en live (`shopify theme check` : 368 erreurs / 1415 warnings, identique à la référence), puis `templateSuffix` assigné à la collection via `collectionUpdate`.
+
+**3 fiches produit** (`productUpdate`) — bloc `<h2>Livré dans son coffret, prêt à offrir</h2>` + phrase avec lien vers `/collections/idees-cadeaux-soie` :
+- **Masque** et **chouchou** : un paragraphe "livré dans son coffret + QR code sons apaisants" existait déjà dans leur description → **fusionné** dans le nouveau bloc structuré plutôt que dupliqué, comme demandé.
+- **Bandeau** : aucun bloc existant → ajouté proprement en fin de description.
+- **Chouchou en coffret** : sa description (déjà en ligne avant ce brief) affirmait déjà "livrés dans leur coffret" → hypothèse retenue sur cette base, mais **non reconfirmée avec Pierre en direct** comme demandé par le brief — à confirmer.
+
+**Image coffret** : seule la fiche bandeau avait déjà une photo du produit dans son coffret, déjà en 2e position (`bandeau-glamour-avec-coffret-andromeda-paris.png`) → ALT text corrigé (`fileUpdate`) en "Bandeau yeux nuit en soie Andromeda Paris dans son coffret cadeau". Masque et chouchou : aucune photo coffret trouvée dans leur médias → rien ajouté/réordonné, aucune image supprimée.
+
+**Navigation** (`menuUpdate`) — "Idées cadeaux" → `/collections/idees-cadeaux-soie` ajouté après "Nos produits pure soie" dans le menu principal, et après "Rechercher" dans le footer.
+
+Menu principal avant : Accueil, Nos produits pure soie, FAQ, Blog, Contact.
+Menu principal après : Accueil, Nos produits pure soie, **Idées cadeaux**, FAQ, Blog, Contact.
+Footer avant : Rechercher.
+Footer après : Rechercher, **Idées cadeaux**.
+
+**`keyword-map.json`** : ajout de l'entrée collection (primaire "cadeau en soie"). Vérifié : aucune autre page n'a "cadeau en soie" ou "cadeau soie" en tête de title/H1. `cadeau-soie-homme` n'existe toujours pas (confirmé absent) — notée pour différenciation future.
+
+**Limite de vérification — rate-limit persistant** : après le fix du template, le site a commencé à renvoyer `HTTP 429` (header `retry-after: 60`) sur toutes les requêtes curl vers les pages concernées (collection, fiches produit), y compris après plusieurs minutes d'attente sans aucune requête — chaque nouvelle tentative semblait réinitialiser la fenêtre. Après plusieurs cycles d'attente (jusqu'à 2 min sans requête), le blocage persistait. **Toutes les modifications ci-dessus sont confirmées par les réponses des mutations Admin API elles-mêmes (`userErrors: []` partout, contenu final renvoyé par chaque mutation)**, mais la vérification visuelle finale en navigateur n'a pas pu être complétée pour la collection et les 3 fiches produit de ce brief — **à vérifier par Pierre en navigateur dès que le rate-limit se lève**.
