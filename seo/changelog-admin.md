@@ -379,3 +379,15 @@ Footer après : Rechercher, **Idées cadeaux**.
 **`keyword-map.json`** : ajout de l'entrée collection (primaire "cadeau en soie"). Vérifié : aucune autre page n'a "cadeau en soie" ou "cadeau soie" en tête de title/H1. `cadeau-soie-homme` n'existe toujours pas (confirmé absent) — notée pour différenciation future.
 
 **Limite de vérification — rate-limit persistant** : après le fix du template, le site a commencé à renvoyer `HTTP 429` (header `retry-after: 60`) sur toutes les requêtes curl vers les pages concernées (collection, fiches produit), y compris après plusieurs minutes d'attente sans aucune requête — chaque nouvelle tentative semblait réinitialiser la fenêtre. Après plusieurs cycles d'attente (jusqu'à 2 min sans requête), le blocage persistait. **Toutes les modifications ci-dessus sont confirmées par les réponses des mutations Admin API elles-mêmes (`userErrors: []` partout, contenu final renvoyé par chaque mutation)**, mais la vérification visuelle finale en navigateur n'a pas pu être complétée pour la collection et les 3 fiches produit de ce brief — **à vérifier par Pierre en navigateur dès que le rate-limit se lève**.
+
+## Fix contraste texte noir sur bannière collection (2026-11-10)
+
+Signalé par Pierre (capture d'écran) : dans la description de la collection `idees-cadeaux-soie`, le texte de la liste à puces (`<ul><li>`) s'affichait en noir sur le fond photo sombre de la bannière, donc illisible — alors que les paragraphes `<p>` et le `<h2>` juste au-dessus étaient bien en blanc.
+
+**Cause** : `sections/collection-banner-seo.liquid` ne définissait la couleur blanche que pour `.cbs__text p`, `.cbs__text h2` et `.cbs__text a` — aucune règle pour `ul`/`li`/`strong`, qui retombaient donc sur la couleur de texte par défaut du thème (noire). Bug latent dans la section : invisible jusqu'ici car aucune description de collection n'utilisait de liste à puces avant le BLOC COLLECTION de ce brief.
+
+**Fix** : ajout de `color: #FFFFFF` sur le conteneur `.cbs__text`, plus des règles explicites pour `.cbs__text li` et `.cbs__text strong/b` (et `ul/ol` pour la marge/indentation). `shopify theme check` : 368 erreurs / 1415 warnings, identique à la référence. Poussé en live (`sections/collection-banner-seo.liquid` seul).
+
+Affecte potentiellement d'autres collections si elles ajoutent une liste à puces dans leur description à l'avenir — corrigé une fois pour toutes au niveau de la section, pas seulement pour `idees-cadeaux-soie`.
+
+**Non vérifié en navigateur** : rate-limit toujours actif au moment du fix (voir note ci-dessus) — à confirmer visuellement par Pierre.
