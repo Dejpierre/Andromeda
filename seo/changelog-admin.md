@@ -391,3 +391,13 @@ Signalé par Pierre (capture d'écran) : dans la description de la collection `i
 Affecte potentiellement d'autres collections si elles ajoutent une liste à puces dans leur description à l'avenir — corrigé une fois pour toutes au niveau de la section, pas seulement pour `idees-cadeaux-soie`.
 
 **Non vérifié en navigateur** : rate-limit toujours actif au moment du fix (voir note ci-dessus) — à confirmer visuellement par Pierre.
+
+## Fix couleur des liens au survol sur bannière collection (2026-11-10)
+
+Signalé par Pierre : les liens de la description (bannière sombre) redevenaient noirs au survol, alors qu'ils étaient blancs au repos.
+
+**Cause** : la classe globale `.rte` du thème (présente sur `.cbs__text`) applique une règle `a:hover { color: var(--color-primary-hover) }` plus spécifique que la règle `.cbs__text a` ajoutée au fix précédent — elle l'emportait donc au survol.
+
+**Fix** : règle reciblée sur l'id unique de la section (`#cbs-text-{{ section.id }} a:hover`, `:focus` inclus), dont la spécificité (sélecteur ID) l'emporte sur la règle globale par classe, quel que soit l'ordre de chargement des CSS. `shopify theme check` : 368 erreurs / 1415 warnings, inchangé. Poussé en live (`sections/collection-banner-seo.liquid` seul).
+
+**Non vérifié en navigateur** : rate-limit toujours actif — à confirmer visuellement par Pierre.
