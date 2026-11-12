@@ -156,11 +156,17 @@
                     class="mega-menu__grid"
                     data-menu-grid-id="{{ list_id }}"
                   >
+                    {% liquid
+                      assign grid_columns_count = 8
+                      if menu_content_type == 'featured_collections' and link.links.size > 3
+                        assign grid_columns_count = 9
+                      endif
+                    %}
                     {% render 'mega-menu-list',
                       parent_link: link,
                       id: list_id,
                       section: section,
-                      grid_columns_count: 8,
+                      grid_columns_count: grid_columns_count,
                       grid_columns_count_tablet: 4,
                       grid_columns_count_collection_images: 8,
                       menu_content_type: menu_content_type,

@@ -412,3 +412,20 @@ Demande de Pierre : nouvelle image, nouveau titre et nouveau CTA sur la section 
 - Branche anglaise du hero (masquée depuis la redirection `/en/`) laissée inchangée, non demandée.
 
 `shopify theme check` : 365 erreurs / 1415 warnings (légèrement sous la référence de 368, aucune régression). Poussé en live (`templates/index.json` seul). **Vérifié en live** : titre, CTA et image confirmés présents dans le HTML de la page d'accueil.
+
+## Idées cadeaux dans le méga-menu (2026-11-12)
+
+Demande de Pierre : ajouter la collection « Idées cadeaux en soie » dans le méga-menu du header.
+
+**Découverte en cours de tâche** : le header (`sections/header-group.json`, bloc `header-menu`) n'utilise pas le linklist `main-menu` (sur lequel le brief précédent avait ajouté "Idées cadeaux" le 2026-11-10) mais un linklist distinct, `main-menu-test` (gid `334858551631`, "Main menu (test méga-menu)"). Vérifié par curl sur `https://www.andromedaparis.com/` : seuls "Accueil", "Nos produits", "FAQ", "Qui sommes-nous", "Blog", "Contact" apparaissaient — "Idées cadeaux" n'avait donc jamais été visible dans la barre de navigation du header malgré la mise à jour du 10/11 (le lien dans `main-menu` existe toujours, mais ce menu n'est affiché nulle part sur le site live à ce jour). Seul le footer (qui utilise bien le linklist `footer`) affichait correctement "Idées cadeaux" depuis le 10/11.
+
+**Fix navigation** (`menuUpdate` sur `main-menu-test`) : "Idées cadeaux" ajouté comme 4e lien enfant du menu "Nos produits" (type CATALOG, méga-menu `featured_collections`), aux côtés de "Masque de sommeil en soie", "Bandeau de sommeil en soie", "Chouchou en soie".
+
+Sous-menu "Nos produits" avant : Masque de sommeil en soie, Bandeau de sommeil en soie, Chouchou en soie.
+Sous-menu "Nos produits" après : Masque de sommeil en soie, Bandeau de sommeil en soie, Chouchou en soie, **Idées cadeaux**.
+
+**Fix layout** (`blocks/_header-menu.liquid`) : le calcul de grille du méga-menu (`snippets/mega-menu-list.liquid`) limitait l'affichage à 3 cartes de collection au maximum sur cette largeur de grille (8 colonnes) — la 4e carte était calculée mais jamais rendue. Grille élargie à 9 colonnes uniquement quand le sous-menu `featured_collections` a plus de 3 liens enfants (condition scoping le changement à ce cas précis, sans toucher les autres styles de méga-menu ni le tablette). `shopify theme check` : 365 erreurs / 1415 warnings, inchangé. Poussé en live (`blocks/_header-menu.liquid` seul).
+
+**Vérifié en live** : les 4 cartes ("Masques de nuit en soie", "Bandeaux en soie pour dormir", "Chouchous en soie pour les cheveux", "Idées cadeaux en soie, livrées dans leur coffret") s'affichent bien dans le méga-menu desktop.
+
+**Non vérifié** : affichage mobile/tablette (le méga-menu n'est de toute façon limité qu'à 1 collection vedette sur cette largeur, limite préexistante non liée à ce changement) — à confirmer par Pierre si besoin sur mobile.
