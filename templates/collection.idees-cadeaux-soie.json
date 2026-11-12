@@ -11,7 +11,9 @@
   "sections": {
     "section": {
       "type": "collection-banner-seo",
-      "settings": {}
+      "settings": {
+        "h1_override": "Idées cadeaux en soie, livrées dans leur coffret"
+      }
     },
     "main": {
       "type": "collection-variant-grid",
