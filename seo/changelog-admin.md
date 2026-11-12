@@ -401,3 +401,14 @@ Signalé par Pierre : les liens de la description (bannière sombre) redevenaien
 **Fix** : règle reciblée sur l'id unique de la section (`#cbs-text-{{ section.id }} a:hover`, `:focus` inclus), dont la spécificité (sélecteur ID) l'emporte sur la règle globale par classe, quel que soit l'ordre de chargement des CSS. `shopify theme check` : 368 erreurs / 1415 warnings, inchangé. Poussé en live (`sections/collection-banner-seo.liquid` seul).
 
 **Non vérifié en navigateur** : rate-limit toujours actif — à confirmer visuellement par Pierre.
+
+## Hero homepage — habillage Noël (2026-11-12)
+
+Demande de Pierre : nouvelle image, nouveau titre et nouveau CTA sur la section hero de la page d'accueil (`templates/index.json`, section `hero_jVaWmY`).
+
+- **Image** (desktop + mobile) : photo fournie par Pierre (femme avec masque de sommeil en soie devant un sapin de Noël illuminé), uploadée dans Shopify (`fileCreate`, `gid://shopify/MediaImage/76979855524175`) avec ALT "Femme portant un masque de sommeil en soie Andromeda Paris, blottie devant un sapin de Noël illuminé".
+- **Titre** : "Le bandeau de sommeil Dolce Vita est disponible dès maintenant." → **"Le masque en soie de mûrier qui fait de chaque nuit un cadeau"**.
+- **CTA** : "Découvrir notre bandeau" (lien vers le bandeau) → **"Offrir un masque pour Noël"** (lien repointé vers la fiche masque, cohérent avec le nouveau titre et l'image).
+- Branche anglaise du hero (masquée depuis la redirection `/en/`) laissée inchangée, non demandée.
+
+`shopify theme check` : 365 erreurs / 1415 warnings (légèrement sous la référence de 368, aucune régression). Poussé en live (`templates/index.json` seul). **Vérifié en live** : titre, CTA et image confirmés présents dans le HTML de la page d'accueil.
