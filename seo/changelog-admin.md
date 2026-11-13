@@ -452,3 +452,13 @@ Signalé par Pierre (capture d'écran d'une extension d'outline de titres) : sur
 **Fix** : `<h2>` remplacé par un `<span>` (élément non structurant, cohérent avec le pattern déjà utilisé pour un autre libellé caché du header) + texte codé en dur remplacé par `{{ 'accessibility.country_region' | t }}`. Corrige les deux occurrences (dropdown desktop et tiroir mobile) en un seul changement, car les deux rendent le même snippet partagé. Aucun impact fonctionnel : cet id n'étant référencé nulle part, aucune perte d'accessibilité réelle (l'élément reste visuellement masqué, avec son id et sa classe inchangés si un `aria-labelledby` venait à l'utiliser plus tard).
 
 `shopify theme check` : total combiné inchangé (365 erreurs / 1415 warnings). Poussé en live (`snippets/localization-form.liquid` seul). **Vérifié en live** : plus aucun `<h2>` avant le premier `<h1>` sur `/`, et le libellé caché affiche désormais "Pays/région" (au lieu de l'anglais).
+
+## Homepage : title/meta pilotés depuis l'admin (2026-11-13)
+
+Signalé par Pierre (capture d'écran Admin → Préférences) : le titre et la méta-description configurés dans Admin ("Andromeda Paris – Masque, bandeau et chouchou en soie de mûrier" / "Masques, bandeaux et chouchous en soie de mûrier 22 mommes, certifiée OEKO-TEX...") ne correspondaient pas à ce qui s'affichait réellement sur `/` ("Andromeda Paris – Masques de sommeil en soie de mûrier" / "Andromeda Paris crée des masques de sommeil...").
+
+**Cause** : `snippets/meta-tags.liquid` codait en dur le titre et la meta-description de la homepage (`if request.page_type == 'index'`), ignorant totalement `page_title`/`page_description` (les objets Liquid alimentés par Admin → Préférences). Ce n'est pas un bug généralisé : toutes les autres pages (produits, collections, articles) utilisent délibérément des title/meta codés en dur dans ce même fichier depuis les briefs SEO précédents — seule la homepage est concernée par ce changement, à la demande explicite de Pierre de piloter **cette page précise** depuis l'admin.
+
+**Fix** : la branche `index` utilise maintenant `page_title | default: shop.name` et `page_description | default: [description de secours existante]`, au lieu des chaînes codées en dur. Les title/meta de la homepage sont donc modifiables directement depuis Admin → Boutique en ligne → Préférences, sans intervention sur le thème.
+
+`shopify theme check` : total combiné inchangé (365 erreurs / 1415 warnings). Poussé en live (`snippets/meta-tags.liquid` seul). **Vérifié en live** : `<title>` et `<meta name="description">` de `/` correspondent désormais exactement aux valeurs saisies dans Admin → Préférences.
