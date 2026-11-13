@@ -102,12 +102,12 @@
         </div>
       {% endif %}
       <div class="country-selector-form__wrapper">
-        <h2
+        <span
           class="visually-hidden"
           id="{{ localization_style }}-CountryLabel"
         >
-          Country/Region
-        </h2>
+          {{ 'accessibility.country_region' | t }}
+        </span>
         {% if show_country_filter %}
           <div
             id="sr-country-search-results-{{ form_id }}"
