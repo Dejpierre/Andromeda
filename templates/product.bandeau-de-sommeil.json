@@ -285,7 +285,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<h4>Les plus d'Andromeda</h4>",
+                    "text": "<p>Les plus d'Andromeda</p>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
@@ -408,7 +408,7 @@
                         "text_1": {
                           "type": "text",
                           "settings": {
-                            "text": "<h6>Rituel de sommeil exclusif inclus</h6>",
+                            "text": "<p>Rituel de sommeil exclusif inclus</p>",
                             "width": "100%",
                             "max_width": "normal",
                             "alignment": "left",
@@ -497,7 +497,7 @@
                         "text_DQkxC8": {
                           "type": "text",
                           "settings": {
-                            "text": "<h6>Soie de mûrier 22 mommes</h6>",
+                            "text": "<p>Soie de mûrier 22 mommes</p>",
                             "width": "100%",
                             "max_width": "normal",
                             "alignment": "left",
@@ -586,7 +586,7 @@
                         "text_rDxmez": {
                           "type": "text",
                           "settings": {
-                            "text": "<h6>Packaging premium</h6>",
+                            "text": "<p>Packaging premium</p>",
                             "width": "100%",
                             "max_width": "normal",
                             "alignment": "left",
@@ -675,7 +675,7 @@
                         "text_B9wx97": {
                           "type": "text",
                           "settings": {
-                            "text": "<h6>Satisfaction client</h6>",
+                            "text": "<p>Satisfaction client</p>",
                             "width": "100%",
                             "max_width": "normal",
                             "alignment": "left",
@@ -1391,7 +1391,7 @@
                     "text_desc": {
                       "type": "text",
                       "settings": {
-                        "text": "{{ closest.product.description }}<h4>Un bandeau de sommeil hors du commun</h4><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux bandeaux synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h4>Obscurité totale pour un sommeil profond</h4><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre bandeau de sommeil offre une occultation totale grâce à la densité 22 mommes et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h4>Confort & élégance</h4><ul><li>Scratch qui permet de s'adapter à toutes les morphologies, sans pression sur les yeux</li><li>Thermorégulation naturelle — fraîche en été, douce en hiver</li><li>Hypoallergénique, idéal pour les peaux sensibles</li></ul><h4>Le rituel Andromeda</h4><p>Chaque bandeau est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement.</p>",
+                        "text": "{{ closest.product.description }}",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
@@ -1692,7 +1692,7 @@
           "type": "item",
           "settings": {
             "titre": "Description",
-            "contenu": "<h2>Un bandeau de sommeil hors du commun</h2><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux bandeaux synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h2>Obscurité totale pour un sommeil profond</h2><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre bandeau de sommeil offre une occultation totale grâce à la densité 22 mommes et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h2>Confort &amp; élégance</h2><ul>\n<li>Bande large et extensible pour s'adapter à toutes les morphologies, sans pression sur les yeux</li>\n<li>Thermorégulation naturelle — fraîche en été, douce en hiver</li>\n<li>Hypoallergénique, idéal pour les peaux sensibles</li>\n</ul><h2>Le rituel Andromeda</h2><p>Chaque bandeau est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement. Méditation, nature, ondes delta — une expérience sensorielle complète pour transformer chaque nuit en véritable <strong>rituel de sommeil de luxe</strong>.</p>"
+            "contenu": "<p>Le bandeau de sommeil en soie est un masque de nuit plus large que le modèle classique : il enveloppe le haut du visage sans comprimer les paupières. Une alternative plus légère pour celles et ceux qui préfèrent se sentir enveloppés plutôt qu'entièrement recouverts.</p>"
           }
         },
         "livraison": {
@@ -1787,7 +1787,7 @@
           "type": "text",
           "name": "t:names.header",
           "settings": {
-            "text": "<h3>Vous aimerez aussi...</h3>",
+            "text": "<h2>Vous aimerez aussi</h2>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -1978,7 +1978,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<h3>Foire aux questions</h3>",
+            "text": "<h2>Questions fréquentes</h2>",
             "width": "fit-content",
             "max_width": "narrow",
             "alignment": "left",
@@ -2037,7 +2037,7 @@
                 "text_andromeda_1": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Les mommes désignent le poids du tissu. À 22 mommes, notre soie est plus dense, plus opaque et plus durable : occultation totale grâce à la densité 22 mommes, et une douceur qui se conserve lavage après lavage.</p>",
+                    "text": "<p>Les mommes désignent le poids du tissu. À 22 mommes, notre soie est plus dense que les soies plus fines, courantes à 16 ou 19 mommes : plus opaque, plus durable, et une douceur qui se conserve lavage après lavage.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -2082,7 +2082,7 @@
                 "text_andromeda_2": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Le grade 6A est la classification la plus haute de la soie de mûrier. Moins de 5% de la production mondiale l'atteint. Les filaments extra-longs donnent une surface parfaitement lisse et douce.</p>",
+                    "text": "<p>Le grade 6A est la classification la plus haute de la soie de mûrier, réservée aux fibres les plus longues et les plus régulières. Les filaments extra-longs donnent une surface parfaitement lisse et douce.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",

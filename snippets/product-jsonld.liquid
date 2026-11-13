@@ -10,6 +10,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Product",
+  "@id": {{ product.url | append: '#product' | json }},
   "name": {{ product.title | json }},
   "description": {{ product.description | strip_html | strip_newlines | truncate: 5000 | json }},
   "url": {{ shop.url | append: product.url | json }},

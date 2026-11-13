@@ -218,7 +218,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<h4>Les plus d'Andromeda</h4>",
+                    "text": "<p>Les plus d'Andromeda</p>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
@@ -337,7 +337,7 @@
                         "text_1": {
                           "type": "text",
                           "settings": {
-                            "text": "<h6>Rituel de sommeil exclusif inclus</h6>",
+                            "text": "<p>Rituel de sommeil exclusif inclus</p>",
                             "width": "100%",
                             "max_width": "normal",
                             "alignment": "left",
@@ -424,7 +424,7 @@
                         "text_DQkxC8": {
                           "type": "text",
                           "settings": {
-                            "text": "<h6>Soie de mûrier 22 mommes</h6>",
+                            "text": "<p>Soie de mûrier 22 mommes</p>",
                             "width": "100%",
                             "max_width": "normal",
                             "alignment": "left",
@@ -511,7 +511,7 @@
                         "text_rDxmez": {
                           "type": "text",
                           "settings": {
-                            "text": "<h6>Packaging premium</h6>",
+                            "text": "<p>Packaging premium</p>",
                             "width": "100%",
                             "max_width": "normal",
                             "alignment": "left",
@@ -598,7 +598,7 @@
                         "text_B9wx97": {
                           "type": "text",
                           "settings": {
-                            "text": "<h6>Satisfaction client</h6>",
+                            "text": "<p>Satisfaction client</p>",
                             "width": "100%",
                             "max_width": "normal",
                             "alignment": "left",
@@ -1699,7 +1699,7 @@
           "type": "text",
           "name": "t:names.header",
           "settings": {
-            "text": "<h3>Vous aimerez aussi...</h3>",
+            "text": "<h2>Vous aimerez aussi</h2>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -1885,7 +1885,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<h3>Foire aux questions</h3>",
+            "text": "<h2>Questions fréquentes</h2>",
             "width": "fit-content",
             "max_width": "narrow",
             "alignment": "left",
