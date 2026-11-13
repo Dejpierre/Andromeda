@@ -22,7 +22,11 @@
         width: block_settings.width,
         class_name: 'details__icon'
       %}
-      {{ block_settings.heading }}
+      {% if block_settings.heading_tag %}
+        <h3 class="details__header-heading">{{ block_settings.heading }}</h3>
+      {% else %}
+        {{ block_settings.heading }}
+      {% endif %}
       <span class="svg-wrapper icon-caret icon-animated">
         {{- 'icon-caret.svg' | inline_asset_content -}}
       </span>
@@ -41,6 +45,15 @@
   .details__icon {
     height: auto;
     margin-inline-end: var(--margin-xs);
+  }
+
+  .details__header-heading {
+    display: contents;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
+    margin: 0;
   }
 {% endstylesheet %}
 
@@ -67,6 +80,12 @@
       "type": "checkbox",
       "id": "open_by_default",
       "label": "t:settings.open_row_by_default",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_tag",
+      "label": "Afficher le titre comme un titre H3 (SEO)",
       "default": false
     },
     {

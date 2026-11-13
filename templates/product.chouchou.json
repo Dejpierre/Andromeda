@@ -1859,9 +1859,42 @@
             "show_shop_reviews": false,
             "empty_state": "empty_widget"
           }
+        },
+        "text_avis_clients": {
+          "type": "text",
+          "name": "t:names.header",
+          "settings": {
+            "text": "<h2>Avis clients</h2>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h4",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "slidein_enabled": false,
+            "slidein_link_label": "En savoir plus",
+            "slidein_title": "",
+            "slidein_content": "",
+            "slidein_cta_label": "",
+            "slidein_cta_url": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         }
       },
       "block_order": [
+        "text_avis_clients",
         "judge_me_reviews_review_widget_JdwGek"
       ],
       "settings": {
@@ -1952,7 +1985,8 @@
                 "heading": "Quelle est la différence entre soie 22 mommes et 19 mommes ?",
                 "open_by_default": false,
                 "icon": "none",
-                "width": 20
+                "width": 20,
+                "heading_tag": true
               },
               "blocks": {
                 "text_andromeda_1": {
@@ -1997,7 +2031,8 @@
                 "heading": "Qu'est-ce que le grade 6A de la soie ?",
                 "open_by_default": false,
                 "icon": "none",
-                "width": 20
+                "width": 20,
+                "heading_tag": true
               },
               "blocks": {
                 "text_andromeda_2": {
@@ -2042,7 +2077,8 @@
                 "heading": "Comment laver mon chouchou Andromeda ?",
                 "open_by_default": false,
                 "icon": "none",
-                "width": 20
+                "width": 20,
+                "heading_tag": true
               },
               "blocks": {
                 "text_andromeda_3": {
@@ -2087,7 +2123,8 @@
                 "heading": "C'est quoi le QR code inclus dans ma commande ?",
                 "open_by_default": false,
                 "icon": "none",
-                "width": 20
+                "width": 20,
+                "heading_tag": true
               },
               "blocks": {
                 "text_andromeda_4": {
@@ -2132,7 +2169,8 @@
                 "heading": "Les chouchous marquent-ils les cheveux ?",
                 "open_by_default": false,
                 "icon": "none",
-                "width": 20
+                "width": 20,
+                "heading_tag": true
               },
               "blocks": {
                 "text_andromeda_5": {
@@ -2177,7 +2215,8 @@
                 "heading": "Sous combien de temps suis-je livré(e) ?",
                 "open_by_default": false,
                 "icon": "none",
-                "width": 20
+                "width": 20,
+                "heading_tag": true
               },
               "blocks": {
                 "text_andromeda_6": {
@@ -2222,7 +2261,8 @@
                 "heading": "Ce chouchou convient-il aux cheveux fins ?",
                 "open_by_default": false,
                 "icon": "none",
-                "width": 20
+                "width": 20,
+                "heading_tag": true
               },
               "blocks": {
                 "text_andromeda_7": {
@@ -2267,7 +2307,8 @@
                 "heading": "Peut-on dormir avec un chouchou en soie ?",
                 "open_by_default": false,
                 "icon": "none",
-                "width": 20
+                "width": 20,
+                "heading_tag": true
               },
               "blocks": {
                 "text_andromeda_8": {
@@ -2360,8 +2401,8 @@
     "1777960337a20780a9",
     "accordeon_produit",
     "section_comparatif",
-    "product_recommendations_qggXJq",
     "17772818659bf33857",
-    "section_pX6aLk"
+    "section_pX6aLk",
+    "product_recommendations_qggXJq"
   ]
 }
