@@ -134,27 +134,6 @@
     {%- render 'product-jsonld' -%}
   {%- endif -%}
 
-  {%- if request.page_type == 'product' and product.metafields.custom.faq.value.size > 0 -%}
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {%- for entry in product.metafields.custom.faq.value -%}
-      {
-        "@type": "Question",
-        "name": {{ entry.question.value | json }},
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": {{ entry.answer.value | json }}
-        }
-      }{% unless forloop.last %},{% endunless %}
-      {%- endfor -%}
-    ]
-  }
-  </script>
-  {%- endif -%}
-
   {%- if request.page_type == 'article' -%}
   <script type="application/ld+json">
   {

@@ -1,5 +1,43 @@
 
 
+{%- liquid
+  assign faq_entries = ''
+  assign faq_entry_count = 0
+  for faq_block in section.blocks
+    if faq_block.type == 'accordion'
+      for faq_row in faq_block.blocks
+        if faq_row.settings.heading_tag
+          assign faq_answer = ''
+          for faq_answer_block in faq_row.blocks
+            if faq_answer_block.type == 'text'
+              assign faq_answer = faq_answer_block.settings.text
+            endif
+          endfor
+          if faq_answer != blank
+            capture faq_entry
+              if faq_entry_count > 0
+                echo ','
+              endif
+              echo '{"@type":"Question","name":'
+              echo faq_row.settings.heading | json
+              echo ',"acceptedAnswer":{"@type":"Answer","text":'
+              echo faq_answer | strip_html | json
+              echo '}}'
+            endcapture
+            assign faq_entries = faq_entries | append: faq_entry
+            assign faq_entry_count = faq_entry_count | plus: 1
+          endif
+        endif
+      endfor
+    endif
+  endfor
+-%}
+{%- if faq_entry_count > 0 -%}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{{ faq_entries }}]}
+</script>
+{%- endif -%}
+
 {% capture children %}
   {% content_for 'blocks' %}
 {% endcapture %}

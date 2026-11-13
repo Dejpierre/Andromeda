@@ -1573,9 +1573,17 @@
             "feed_id": "",
             "html_area": ""
           }
+        },
+        "instafeed_tag_fix": {
+          "type": "custom-liquid",
+          "name": "t:names.custom_liquid",
+          "settings": {
+            "custom_liquid": "<script>(function(){function setup(){function applyFix(){document.querySelectorAll('#insta-feed h2').forEach(function(el){var p=document.createElement('p');for(var i=0;i<el.attributes.length;i++){var a=el.attributes[i];p.setAttribute(a.name,a.value);}p.innerHTML=el.innerHTML;el.parentNode.replaceChild(p,el);});}applyFix();var target=document.getElementById('insta-feed');if(target){new MutationObserver(applyFix).observe(target,{childList:true,subtree:true});}}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',setup);}else{setup();}})();</script>"
+          }
         }
       },
       "block_order": [
+        "instafeed_tag_fix",
         "instafeed_app_block_VyH76n"
       ],
       "settings": {
