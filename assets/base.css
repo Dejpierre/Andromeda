@@ -5210,7 +5210,8 @@ product-recommendations:has([data-has-recommendations='false']) {
 }
 
 /* ── H2 description accordéon produit ─────────────────── */
-[data-template="product"] accordion-custom .details-content h2 {
+[data-template="product"] accordion-custom .details-content h2,
+.details-content h2 {
   font-family: 'GC Amelie Promised', var(--font-heading--family, serif) !important;
   font-size: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem) !important; /* ≈ 22px → 28px */
   line-height: 1.2 !important;
@@ -5221,7 +5222,8 @@ product-recommendations:has([data-has-recommendations='false']) {
 }
 
 /* ── H3 description accordéon produit (même logique que H2) ── */
-[data-template="product"] accordion-custom .details-content h3 {
+[data-template="product"] accordion-custom .details-content h3,
+.details-content h3 {
   font-family: 'GC Amelie Promised', var(--font-heading--family, serif) !important;
   font-size: clamp(1.1875rem, 1rem + 0.6vw, 1.5rem) !important; /* ≈ 19px → 24px */
   line-height: 1.2 !important;
@@ -5236,7 +5238,8 @@ product-recommendations:has([data-has-recommendations='false']) {
 }
 
 /* ── Tableau comparatif dans la description produit ────── */
-[data-template="product"] accordion-custom .details-content table {
+[data-template="product"] accordion-custom .details-content table,
+.details-content table {
   display: block;
   overflow-x: auto;
   width: 100%;
@@ -5247,7 +5250,9 @@ product-recommendations:has([data-has-recommendations='false']) {
 }
 
 [data-template="product"] accordion-custom .details-content table th,
-[data-template="product"] accordion-custom .details-content table td {
+[data-template="product"] accordion-custom .details-content table td,
+.details-content table th,
+.details-content table td {
   border: 1px solid rgba(28, 26, 24, 0.12);
   padding: 8px 10px;
   text-align: left;
@@ -5255,7 +5260,8 @@ product-recommendations:has([data-has-recommendations='false']) {
   color: #1C1A18 !important;
 }
 
-[data-template="product"] accordion-custom .details-content table th {
+[data-template="product"] accordion-custom .details-content table th,
+.details-content table th {
   font-weight: 600 !important;
 }
 
