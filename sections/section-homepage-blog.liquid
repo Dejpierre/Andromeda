@@ -21,13 +21,12 @@
 
         <div class="hb__card-img-wrap">
           {% if article.image %}
-          <img
-            src="{{ article.image | image_url: width: 800 }}"
-            alt="{{ article.image.alt | default: article.title | escape }}"
-            title="{{ article.image.alt | default: article.title | escape }}"
-            class="hb__card-img"
-            loading="lazy"
-          >
+          {% assign article_image_alt = article.image.alt | default: article.title | escape %}
+          {{
+            article.image
+            | image_url: width: 800
+            | image_tag: alt: article_image_alt, title: article_image_alt, class: 'hb__card-img', loading: 'lazy'
+          }}
           {% else %}
           <div class="hb__card-img hb__card-img--placeholder"></div>
           {% endif %}

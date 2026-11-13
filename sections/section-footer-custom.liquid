@@ -62,7 +62,7 @@
 
     <div class="footer-hero__newsletter">
       <div class="footer-hero__newsletter-copy">
-        <h2 class="footer-hero__newsletter-heading">{{ newsletter_heading }}</h2>
+        <p class="footer-hero__newsletter-heading">{{ newsletter_heading }}</p>
         <p class="footer-hero__newsletter-text">{{ newsletter_text }}</p>
       </div>
 
@@ -109,7 +109,7 @@
 
     <div class="footer-hero__card">
       <div class="footer-hero__card-top">
-        <h2 class="footer-hero__cta-heading">{{ cta_heading }}</h2>
+        <p class="footer-hero__cta-heading">{{ cta_heading }}</p>
         <div class="footer-hero__brand">
           {%- if settings.logo != blank -%}
             {%- comment -%}
@@ -273,7 +273,10 @@
   .footer-hero__newsletter-heading {
     font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
     font-size: clamp(24px, 2.4vw, 32px);
+    font-weight: var(--font-h2--weight);
     line-height: 1.15;
+    letter-spacing: var(--font-h2--letter-spacing);
+    text-transform: var(--font-h2--case);
     color: var(--ftr-heading);
     margin: 0;
   }
@@ -392,7 +395,10 @@
   .footer-hero__cta-heading {
     font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
     font-size: clamp(28px, 3.2vw, 48px);
+    font-weight: var(--font-h2--weight);
     line-height: 1.1;
+    letter-spacing: var(--font-h2--letter-spacing);
+    text-transform: var(--font-h2--case);
     color: var(--ftr-heading);
     margin: 0;
     max-width: 520px;

@@ -462,3 +462,36 @@ Signalé par Pierre (capture d'écran Admin → Préférences) : le titre et la 
 **Fix** : la branche `index` utilise maintenant `page_title | default: shop.name` et `page_description | default: [description de secours existante]`, au lieu des chaînes codées en dur. Les title/meta de la homepage sont donc modifiables directement depuis Admin → Boutique en ligne → Préférences, sans intervention sur le thème.
 
 `shopify theme check` : total combiné inchangé (365 erreurs / 1415 warnings). Poussé en live (`snippets/meta-tags.liquid` seul). **Vérifié en live** : `<title>` et `<meta name="description">` de `/` correspondent désormais exactement aux valeurs saisies dans Admin → Préférences.
+
+## Refonte SEO de la page d'accueil (2026-11-13)
+
+Brief complet de Pierre : structure de titres H1→H4, textes SEO, images et JSON-LD de la homepage, sans changement visuel. 13 fichiers modifiés.
+
+**Structure de titres** (conforme au brief, vérifié en live via extraction de tous les `<h1>`–`<h6>` du HTML) :
+- H1 : "Masques de sommeil en soie de mûrier, imaginés à Paris" → **"Masques, bandeaux et chouchous en soie de mûrier"** (texte seul, toujours `visually-hidden` dans le bloc hero — position/style inchangés, hero visible non touché comme demandé).
+- Collections vedettes (`templates/index.json` + `sections/section-collections-vedettes.liquid`) : nouveau H2 "Nos accessoires en soie de mûrier 22 mommes" (réglage `heading`, mécanisme déjà prévu par la section) ; `<span class="collections-showcase__title">` → `<h3>` sur les 3 cartes ; titres → "Bandeau de sommeil en soie" / "Masque de sommeil en soie" / "Chouchou en soie" ; ordre changé en Bandeau → Masque → Chouchou.
+- `section_R7Vhzp` ("Le sommeil est un luxe...") : `<h2>` → `<p>` (FR + EN), texte remplacé par "Nos accessoires en soie de mûrier accompagnent vos nuits, vos siestes et vos voyages, avec élégance."
+- QR code (`sections/section-qr-rituel.liquid`) : texte réparti sur les 2 lignes stylées existantes → "Un espace sonore pour s'endormir," / "offert avec chaque commande".
+- Blog : H2 "Vous le saviez ?" → "Le journal Andromeda" (3 articles déjà corrects : Marie Claire, chouchou, masque yeux — vérifiés, aucun changement nécessaire).
+- Texte SEO bas de page (`sections/section-seo-text.liquid` + bloc dans `templates/index.json`) : nouveau H2 "Pourquoi la soie de mûrier 22 mommes ?" + texte intégralement remplacé (5 paragraphes), avec liens internes vers `/collections/bandeau-de-sommeil-en-soie`, `/collections/masque-de-sommeil-soie`, `/collections/chouchou-en-soie` et l'article `/blogs/actualites/soie-19-vs-22-mommes-guide`.
+- Interface dé-titrée (sitewide, voulu) : newsletter footer (`sections/section-footer-custom.liquid`), popup newsletter (`sections/footer-group.json` — **2e occurrence trouvée en cours de tâche**, pas dans le fichier initialement repéré), panier vide (`snippets/cart-drawer.liquid`), "Craquez aussi pour..." (`snippets/cart-upsell.liquid`), recherche (`snippets/search-modal.liquid`), "Récemment consulté(s)" et "Produits" (`snippets/predictive-search-products-list.liquid`).
+- **Point technique découvert en cours de tâche** : plusieurs éléments n'avaient pas de classe CSS propre et s'appuyaient entièrement sur la typographie native du thème liée à leur balise (`h2`/`h3`/`h4` stylés globalement via `var(--font-hN--*)`). Un simple changement de balise aurait changé le rendu visuel. Corrigé soit en ajoutant la classe utilitaire `.h4` déjà utilisée ailleurs dans le thème pour ce cas précis, soit en recopiant explicitement les propriétés manquantes (poids, interlignage, letter-spacing, casse, marge) via `var(--font-hN--*)` pour un rendu identique. Sens inverse pour `.collections-showcase__title` (span→h3) : neutralisation explicite du style H3 hérité pour revenir à l'apparence du span d'origine.
+
+**Performance** :
+- Hero : `fetchpriority="high"` + `width`/`height` déjà présents nativement dans `sections/hero.liquid` (aucune modification nécessaire).
+- 7 images sans `width`/`height` trouvées et corrigées en passant d'un `<img src="...">` manuel à `image_url | image_tag` (auto-calcul des dimensions) : carte QR + 3 pictos rituel (`section-qr-rituel.liquid`), 3 vignettes d'articles (`section-homepage-blog.liquid`).
+- `og:image` forcé en `https://` (`snippets/meta-tags.liquid`), `og:image:secure_url` l'était déjà.
+
+**JSON-LD** (`layout/theme.liquid`) : `potentialAction`/`SearchAction` retiré du bloc `WebSite`, Organization/WebSite conservés intacts. JSON validé après coup.
+
+**Écarts avec les chiffres du brief** :
+- Mon audit du DOM réellement rendu ne trouve ni 75/133 images sans dimensions, ni 12 images avec un ALT identique, ni 13 ALT vides (39 `<img>` au total, 0 manquant après fix). Le carrousel évoqué (§4.4) est très probablement le widget Instagram **Instafeed** (app nfcube) : chargé en JS asynchrone après le `load` de la page, ses images n'existent pas dans le HTML servi par Shopify — pas modifiable depuis le thème. À confirmer visuellement par Pierre, mais pas d'action possible côté code si c'est bien la source.
+- "H3 vide dans le tiroir recherche" (§3.7) : introuvable, ni dans le code ni dans le HTML rendu (aucun heading vide sur la page). Possible état dynamique JS non observable en navigateur statique — non traité faute de l'avoir localisé.
+
+**Scripts tiers homepage (§6, rapport uniquement, rien retiré)** : GTM (bloquant, snippet classique) + gtag.js (`async`) — `layout/theme.liquid`. Lucky Orange (`defer`, bloc d'app). Microsoft Clarity (async, snippet standard, bloc d'app) — **doublon fonctionnel avec Lucky Orange** (les deux font de l'enregistrement de session), à trancher par Pierre. Ecomsend (`defer`, extension d'app). Conversion Bear (trust badge) + Instafeed/nfcube : chargés ensemble via un loader JS asynchrone commun, déclenché après l'événement `load`. Affilae : async, auto-injecté juste après `<body>`. Pas de tag DoubleClick isolé — le remarketing passe par gtag/Google Ads.
+
+**Processus** : brief initialement traité sur le thème non publié "Preprod" (#200546517327) pour validation avant publication, conformément à la consigne "je valide et je publie moi-même". Sur confirmation explicite de Pierre ("pousse direct en prod"), poussé directement sur le thème live 'Prod' (#199323648335) à la place.
+
+`shopify theme check` : 362 erreurs / 1413 warnings (légèrement sous la référence 365/1415, aucune régression — écarts pré-existants sans lien avec les fichiers modifiés). **Vérifié en live** : structure de titres exacte au §2 du brief (un seul H1, extraction complète de tous les headings conforme), ordre des cartes, 4 liens internes, og:image https, SearchAction absent, 2 occurrences newsletter corrigées, 0 image sans dimensions.
+
+**Non vérifié** : captures desktop/mobile avant/après, test Lighthouse, Rich Results Test (pas d'outil navigateur disponible dans cette session pour les exécuter) — à faire par Pierre ou lors d'une prochaine session outillée pour ça.

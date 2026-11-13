@@ -25,7 +25,11 @@
       <!-- Image QR qui déborde -->
       <div class="qr-rituel__img-wrap">
         {% if qr_image != blank %}
-          <img src="{{ qr_image | img_url: '400x400' }}" alt="Carte QR code Andromeda" class="qr-rituel__img" loading="lazy">
+          {{
+            qr_image
+            | image_url: width: 400, height: 400, crop: 'center'
+            | image_tag: width: 400, height: 400, alt: 'Carte QR code Andromeda', class: 'qr-rituel__img', loading: 'lazy'
+          }}
         {% else %}
           <div class="qr-rituel__img-placeholder">
             <svg width="72" height="72" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -51,7 +55,12 @@
       {% for block in section.blocks %}
         <li class="qr-rituel__feature-item" {{ block.shopify_attributes }}>
           {% if block.settings.icon_image != blank %}
-            <img src="{{ block.settings.icon_image | img_url: '48x48' }}" alt="{{ block.settings.label | default: 'Icône rituel Andromeda' | escape }}" title="{{ block.settings.label | default: 'Icône rituel Andromeda' | escape }}" class="qr-rituel__feature-img" loading="lazy">
+            {% assign feature_icon_label = block.settings.label | default: 'Icône rituel Andromeda' | escape %}
+            {{
+              block.settings.icon_image
+              | image_url: width: 48, height: 48, crop: 'center'
+              | image_tag: width: 48, height: 48, alt: feature_icon_label, title: feature_icon_label, class: 'qr-rituel__feature-img', loading: 'lazy'
+            }}
           {% else %}
             <span class="qr-rituel__feature-dot"></span>
           {% endif %}

@@ -104,7 +104,7 @@
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
                   "settings": {
-                    "custom_liquid": "{%- if request.locale.iso_code == 'en' -%}\n<h1 class=\"visually-hidden\">Andromeda Paris – Silk Sleep Masks, Mulberry Silk 22 Momme</h1>\n<p class=\"hero-title hero-title--tagline\">Sleep in perfect <span class=\"title-accent\">darkness.</span> <br>Wake up <span class=\"title-accent\">transformed.</span></p>\n<a href=\"{{ all_products['masque-de-sommeil-en-soie-de-murier-22-mommes'].url }}\" class=\"button\" style=\"margin-top:1.25rem;display:inline-block;text-decoration:none;\">Shop our mask</a>\n{%- else -%}\n<h1 class=\"visually-hidden\">Masques de sommeil en soie de mûrier, imaginés à Paris</h1>\n<p class=\"hero-title hero-title--tagline\" style=\"font-family: 'GC Amelie Promised', serif !important;\">Le masque en soie de mûrier qui fait de chaque nuit un cadeau</p>\n<a href=\"{{ all_products['masque-de-sommeil-en-soie-de-murier-22-mommes'].url }}\" class=\"button\" style=\"margin-top:1.25rem;display:inline-block;text-decoration:none;\">Offrir un masque pour Noël</a>\n{%- endif -%}\n\n<style>\n@font-face { font-family:'GC Amelie Promised'; src:url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/GC_Amelie_Promised.woff2?v=1786960246') format('woff2'); font-display:swap; }\n.hero-title { font-weight:400 !important; margin-bottom:0.4rem; }\n.hero-title--seo { font-size:1rem; letter-spacing:0.12em; text-transform:uppercase; opacity:0.75; }\n.hero-title--tagline { font-size:3rem; margin-bottom:1rem; }\n@media(max-width:749px){.hero-title--tagline{font-size:2rem;}}\n.title-accent { font-family:'GC Amelie Promised',serif !important; font-weight:400; font-style:normal; font-display:swap; margin-bottom:0; }\n</style>"
+                    "custom_liquid": "{%- if request.locale.iso_code == 'en' -%}\n<h1 class=\"visually-hidden\">Andromeda Paris – Silk Sleep Masks, Mulberry Silk 22 Momme</h1>\n<p class=\"hero-title hero-title--tagline\">Sleep in perfect <span class=\"title-accent\">darkness.</span> <br>Wake up <span class=\"title-accent\">transformed.</span></p>\n<a href=\"{{ all_products['masque-de-sommeil-en-soie-de-murier-22-mommes'].url }}\" class=\"button\" style=\"margin-top:1.25rem;display:inline-block;text-decoration:none;\">Shop our mask</a>\n{%- else -%}\n<h1 class=\"visually-hidden\">Masques, bandeaux et chouchous en soie de mûrier</h1>\n<p class=\"hero-title hero-title--tagline\" style=\"font-family: 'GC Amelie Promised', serif !important;\">Le masque en soie de mûrier qui fait de chaque nuit un cadeau</p>\n<a href=\"{{ all_products['masque-de-sommeil-en-soie-de-murier-22-mommes'].url }}\" class=\"button\" style=\"margin-top:1.25rem;display:inline-block;text-decoration:none;\">Offrir un masque pour Noël</a>\n{%- endif -%}\n\n<style>\n@font-face { font-family:'GC Amelie Promised'; src:url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/GC_Amelie_Promised.woff2?v=1786960246') format('woff2'); font-display:swap; }\n.hero-title { font-weight:400 !important; margin-bottom:0.4rem; }\n.hero-title--seo { font-size:1rem; letter-spacing:0.12em; text-transform:uppercase; opacity:0.75; }\n.hero-title--tagline { font-size:3rem; margin-bottom:1rem; }\n@media(max-width:749px){.hero-title--tagline{font-size:2rem;}}\n.title-accent { font-family:'GC Amelie Promised',serif !important; font-weight:400; font-style:normal; font-display:swap; margin-bottom:0; }\n</style>"
                   },
                   "blocks": {}
                 }
@@ -218,7 +218,7 @@
           "type": "collection",
           "settings": {
             "collection": "masque-de-sommeil-soie",
-            "custom_title": "",
+            "custom_title": "Masque de sommeil en soie",
             "tagline": "Classique mais efficace !",
             "show_price": true,
             "image": "shopify://shop_images/Masque_de_sommeil_terracotta_en_16_9.png",
@@ -229,7 +229,7 @@
           "type": "collection",
           "settings": {
             "collection": "bandeau-de-sommeil-en-soie",
-            "custom_title": "",
+            "custom_title": "Bandeau de sommeil en soie",
             "tagline": "Un vrai nuage...",
             "show_price": true,
             "image": "shopify://shop_images/Masque_avec_motif_citrons_et_feuilles_bleues.png",
@@ -240,7 +240,7 @@
           "type": "collection",
           "settings": {
             "collection": "chouchou-en-soie",
-            "custom_title": "",
+            "custom_title": "Chouchou en soie",
             "tagline": "Ne marque pas les cheveux !",
             "show_price": true,
             "image": "shopify://shop_images/Scrunchie_Remplace_-_Photo_Editoriale.png",
@@ -258,14 +258,14 @@
         }
       },
       "block_order": [
-        "collection_WiDMqz",
         "collection_km6zD8",
+        "collection_WiDMqz",
         "collection_qkbMbM",
         "promo_UnLmFX"
       ],
       "name": "Collections vedettes",
       "settings": {
-        "heading": "",
+        "heading": "Nos accessoires en soie de mûrier 22 mommes",
         "image_ratio": "4 / 5",
         "section_width": "page-width",
         "color_scheme": ""
@@ -303,7 +303,7 @@
           "type": "custom-liquid",
           "name": "t:names.custom_liquid",
           "settings": {
-            "custom_liquid": "{%- if request.locale.iso_code == 'en' -%}\n<h2 class=\"hero-title\">Sleep is a <span class=\"title-accent\">luxury.</span><br>Make it <span class=\"title-accent\">yours.</span></h2>\n<p style=\"margin-bottom:0;opacity:0.85;font-size:1rem;line-height:1.6;max-width:440px;\">We help you sleep better and more sustainably. Our premium silk products accompany your everyday with elegance.</p>\n<a href=\"/products/masque-de-sommeil-en-soie-de-murier-22-mommes\" class=\"button\" style=\"margin-top:1.25rem;display:inline-block;text-decoration:none;\">Shop now</a>\n{%- else -%}\n<h2 class=\"hero-title\">Le sommeil est <span class=\"title-accent\">un luxe.</span><br>Offrez-vous <span class=\"title-accent\">le vôtre.</span></h2>\n<p style=\"margin-bottom:0;opacity:0.85;font-size:1rem;line-height:1.6;max-width:440px;\">Nous participons à un sommeil plus performant et plus durable. Nos produits à l'étoffe noble vous accompagnent dans votre quotidien avec élégance.</p>\n<a href=\"/products/masque-de-sommeil-en-soie-de-murier-22-mommes\" class=\"button\" style=\"margin-top:1.25rem;display:inline-block;text-decoration:none;\">Acheter maintenant</a>\n{%- endif -%}"
+            "custom_liquid": "{%- if request.locale.iso_code == 'en' -%}\n<p class=\"hero-title\">Sleep is a <span class=\"title-accent\">luxury.</span><br>Make it <span class=\"title-accent\">yours.</span></p>\n<p style=\"margin-bottom:0;opacity:0.85;font-size:1rem;line-height:1.6;max-width:440px;\">We help you sleep better and more sustainably. Our premium silk products accompany your everyday with elegance.</p>\n<a href=\"/products/masque-de-sommeil-en-soie-de-murier-22-mommes\" class=\"button\" style=\"margin-top:1.25rem;display:inline-block;text-decoration:none;\">Shop now</a>\n{%- else -%}\n<p class=\"hero-title\">Le sommeil est <span class=\"title-accent\">un luxe.</span><br>Offrez-vous <span class=\"title-accent\">le vôtre.</span></p>\n<p style=\"margin-bottom:0;opacity:0.85;font-size:1rem;line-height:1.6;max-width:440px;\">Nos accessoires en soie de mûrier accompagnent vos nuits, vos siestes et vos voyages, avec élégance.</p>\n<a href=\"/products/masque-de-sommeil-en-soie-de-murier-22-mommes\" class=\"button\" style=\"margin-top:1.25rem;display:inline-block;text-decoration:none;\">Acheter maintenant</a>\n{%- endif -%}"
           },
           "blocks": {}
         }
@@ -709,8 +709,8 @@
       ],
       "name": "QR Code Rituel",
       "settings": {
-        "title_line1": "Qr code espace rituel",
-        "title_line2": "inclus dans chaque commande",
+        "title_line1": "Un espace sonore pour s'endormir,",
+        "title_line2": "offert avec chaque commande",
         "description": "Sons exclusifs pour trouver le sommeil en toute sérénité.",
         "cta_label": "Découvrir les sons et ambiances",
         "cta_url": "",
@@ -729,7 +729,7 @@
       "settings": {
         "blog": "actualites",
         "eyebrow": "",
-        "title": "Vous le saviez ?",
+        "title": "Le journal Andromeda",
         "post_limit": 3,
         "columns": 3,
         "show_all_link": true,
@@ -744,7 +744,7 @@
         "seo_text": {
           "type": "text",
           "settings": {
-            "text": "<p style=\"max-width:720px;margin:0 auto 16px;text-align:center;font-size:0.95rem;line-height:1.8;color:#444;\">Andromeda crée des <strong>masques de sommeil en soie de mûrier</strong> grade 6A, 22 mommes — le standard le plus exigeant du marché. Notre masque offre une occultation totale grâce à la densité 22 mommes, respecte la peau et les cheveux, et s'adapte à toutes les morphologies grâce à son élastique. Conçu pour les dormeurs exigeants, il transforme chaque nuit en véritable <strong>rituel de sommeil de luxe</strong>. Livraison soignée en France et à l'international.</p><p style=\"max-width:720px;margin:0 auto 16px;text-align:center;font-size:0.95rem;line-height:1.8;color:#444;\">Le <strong>bandeau de nuit en soie de mûrier</strong> protège les cheveux des frottements de l'oreiller tout en maintenant le masque en place, pour un rituel du soir complet sans compromis sur le confort.</p><p style=\"max-width:720px;margin:0 auto 16px;text-align:center;font-size:0.95rem;line-height:1.8;color:#444;\">Les <strong>chouchous en soie de mûrier</strong> 22 mommes complètent la routine capillaire : moins de casse, moins de frisottis, une douceur qui dure lavage après lavage, de jour comme de nuit.</p><p style=\"max-width:720px;margin:0 auto;text-align:center;font-size:0.95rem;line-height:1.8;color:#444;\">Chaque pièce Andromeda est pensée à Paris, confectionnée en soie de mûrier grade 6A — une sélection parmi les 5 % les plus rares de la production mondiale — et livrée dans un coffret cadeau avec accès à un espace sonore dédié à l'endormissement.</p>"
+            "text": "<p style=\"max-width:720px;margin:0 auto 16px;text-align:center;font-size:0.95rem;line-height:1.8;color:#444;\">Andromeda crée des <strong>accessoires de nuit en soie de mûrier</strong> 22 mommes, grade 6A, certifiée OEKO-TEX. Chaque pièce est pensée à Paris et livrée dans un coffret cadeau, avec un accès à notre espace sonore pour accompagner l'endormissement.</p><p style=\"max-width:720px;margin:0 auto 16px;text-align:center;font-size:0.95rem;line-height:1.8;color:#444;\">Le <a href=\"/collections/bandeau-de-sommeil-en-soie\">bandeau de sommeil en soie</a> couvre les yeux et maintient les cheveux en place pendant la nuit. Sa largeur coupe la lumière sans serrer, et la soie limite les frottements sur l'oreiller.</p><p style=\"max-width:720px;margin:0 auto 16px;text-align:center;font-size:0.95rem;line-height:1.8;color:#444;\">Le <a href=\"/collections/masque-de-sommeil-soie\">masque de sommeil en soie de mûrier</a> est le plus léger de nos accessoires. Son élastique réglable s'adapte à la plupart des tours de tête, pour la nuit, la sieste ou le voyage.</p><p style=\"max-width:720px;margin:0 auto 16px;text-align:center;font-size:0.95rem;line-height:1.8;color:#444;\">Les <a href=\"/collections/chouchou-en-soie\">chouchous en soie</a> attachent les cheveux sans les marquer. La soie glisse au lieu d'accrocher, ce qui peut réduire la casse et les frisottis par rapport à un élastique classique.</p><p style=\"max-width:720px;margin:0 auto;text-align:center;font-size:0.95rem;line-height:1.8;color:#444;\">Le grammage de <a href=\"/blogs/actualites/soie-19-vs-22-mommes-guide\">22 mommes</a> donne une soie plus dense que les soies plus fines, fréquentes à 16 ou 19 mommes. Fabrication dans la région du Jiangsu, en Chine, berceau historique de la soie.</p>"
           }
         }
       },

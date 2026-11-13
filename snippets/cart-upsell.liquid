@@ -51,13 +51,13 @@
 
 {% if has_visible_upsell %}
 <div class="cart-upsell">
-  <h3 class="cart-upsell__heading">
+  <p class="cart-upsell__heading">
     {%- if request.locale.iso_code == 'en' -%}
       You might also like...
     {%- else -%}
       Craquez aussi pour...
     {%- endif -%}
-  </h3>
+  </p>
 
   <ul class="cart-upsell__list list-unstyled">
     {% for handle in upsell_handles %}

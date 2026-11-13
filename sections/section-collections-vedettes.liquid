@@ -70,7 +70,7 @@
             </span>
 
             <span class="collections-showcase__info">
-              <span class="collections-showcase__title">{{ display_title }}</span>
+              <h3 class="collections-showcase__title">{{ display_title }}</h3>
               {% if block.settings.tagline != blank %}
                 <span class="collections-showcase__tagline">{{ block.settings.tagline }}</span>
               {% endif %}
@@ -255,7 +255,12 @@
     font-family: 'GC Amelie Promised', var(--font-heading--family);
     font-style: italic;
     font-size: var(--font-size--lg);
+    font-weight: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-transform: none;
     color: var(--color-foreground);
+    margin: 0;
   }
 
   .collections-showcase__tagline {
