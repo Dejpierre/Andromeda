@@ -43,7 +43,8 @@
       "block_order": [
         "block_1"
       ],
-      "settings": {}
+      "settings": {},
+      "disabled": true
     },
     "faq": {
       "type": "collection-faq",
@@ -51,29 +52,29 @@
         "q_1": {
           "type": "question",
           "settings": {
-            "question": "Un bandeau de nuit en soie est-il vraiment plus efficace ?",
-            "answer": "<p>Oui. La soie de mûrier 22 mommes est dense et opaque : elle bloque efficacement la lumière tout en restant légère et respirante.</p>"
+            "question": "Est-il bon de dormir avec un bandeau sur les yeux ?",
+            "answer": "<p>La lumière peut gêner l'endormissement. Un bandeau sur les yeux aide à faire l'obscurité quand la chambre n'est pas totalement sombre : lampadaire, lever du jour, voyage. Choisissez-le souple et sans pression sur les paupières pour pouvoir le porter toute la nuit.</p>"
           }
         },
         "q_2": {
           "type": "question",
           "settings": {
-            "question": "Pourquoi du 22 mommes plutôt que du 19 ?",
-            "answer": "<p>Le 22 mommes est plus dense : meilleure occultation, toucher plus riche et durabilité accrue au lavage.</p>"
+            "question": "Comment choisir un bandeau pour dormir ?",
+            "answer": "<p>Regardez trois points : la matière, la largeur et la fermeture. La soie de mûrier est douce et respirante, un bandeau large bloque mieux la lumière sur les côtés, et une fermeture réglable par scratch évite de serrer la tête.</p>"
           }
         },
         "q_3": {
           "type": "question",
           "settings": {
-            "question": "La soie abîme-t-elle les cils ou le maquillage ?",
-            "answer": "<p>Non. Sa surface lisse limite les frottements, contrairement au coton ou au polyester.</p>"
+            "question": "Un bandeau en soie abîme-t-il les cils ou le maquillage ?",
+            "answer": "<p>La soie a une surface lisse qui glisse au lieu de frotter, ce qui limite l'accroche sur les cils. Notre bandeau est conçu pour ne pas appuyer sur les paupières. Pour des extensions de cils, vérifiez qu'il ne repose pas directement dessus.</p>"
           }
         },
         "q_4": {
           "type": "question",
           "settings": {
             "question": "Le bandeau convient-il aux peaux sensibles ?",
-            "answer": "<p>La soie de mûrier est naturellement douce et hypoallergénique, ce qui la rend adaptée au contour des yeux et aux peaux réactives.</p>"
+            "answer": "<p>Notre soie de mûrier est certifiée OEKO-TEX, c'est-à-dire testée sans substances nocives, et sa surface lisse limite les frottements sur la peau. Si votre peau est très réactive, portez-le d'abord sur de courtes durées.</p>"
           }
         }
       },

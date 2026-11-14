@@ -27,8 +27,8 @@
           {%- assign num = forloop.index | prepend: '00' | slice: -3, 3 -%}
           <details class="collection-faq__item" {{ block.shopify_attributes }}>
             <summary class="collection-faq__summary">
-              <span class="collection-faq__number">{{ num }}</span>
-              <span class="collection-faq__question">{{ block.settings.question }}</span>
+              <span class="collection-faq__number" aria-hidden="true">{{ num }}</span>
+              <h3 class="collection-faq__question">{{ block.settings.question }}</h3>
               <span class="collection-faq__icon">
                 <span class="collection-faq__icon-face collection-faq__icon-face--plus">
                   {{- 'icon-plus.svg' | inline_asset_content -}}
@@ -125,11 +125,13 @@
   }
 
   .collection-faq__question {
-    font-family: 'GC Amelie Promised', var(--font-heading--family, serif);
+    font-family: 'GC Amelie Promised', var(--font-heading--family, serif) !important;
     font-size: clamp(20px, 2vw, 24px);
+    font-weight: 400;
     line-height: 1.2;
     color: var(--cfaq-heading);
     flex: 1;
+    margin: 0;
   }
 
   .collection-faq__icon {
