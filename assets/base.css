@@ -5046,17 +5046,6 @@ product-recommendations:has([data-has-recommendations='false']) {
   border-bottom: 1px solid rgba(184,151,90,0.2);
 }
 
-[data-template="product"] accordion-custom .details summary {
-  padding-block: 18px;
-  font-family: 'afacad', var(--font-body--family), sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: none;
-  color: #1C1A18;
-  gap: 12px;
-}
-
 [data-template="product"] accordion-custom .details summary:hover {
   color: #1C1A18;
 }
@@ -5072,36 +5061,6 @@ product-recommendations:has([data-has-recommendations='false']) {
 [data-template="product"] accordion-custom .details summary .svg-wrapper {
   color: rgba(28,26,24,0.4);
   transition: color 0.2s ease, transform 0.25s ease;
-}
-
-[data-template="product"] accordion-custom .details-content {
-  padding-block-end: 20px;
-  font-family: 'afacad', var(--font-body--family), sans-serif;
-  font-size: 13.5px;
-  font-weight: 300;
-  line-height: 1.75;
-  color: #5A5450;
-}
-
-[data-template="product"] accordion-custom .details-content p {
-  font-family: 'afacad', sans-serif !important;
-  font-size: 14px;
-  line-height: 1.3;
-  color: #1C1A18 !important;
-  margin-top: 0;
-}
-
-[data-template="product"] accordion-custom .details-content li {
-  font-family: 'afacad', sans-serif !important;
-  font-size: 14px;
-  line-height: 1.1;
-  color: #1C1A18 !important;
-}
-
-[data-template="product"] accordion-custom .details-content strong,
-[data-template="product"] accordion-custom .details-content b {
-  font-weight: 600;
-  color: #1C1A18;
 }
 
 /* ── FAQ produit ("Foire aux questions", bloc accordion_RLpVzU) ──
@@ -5207,62 +5166,6 @@ product-recommendations:has([data-has-recommendations='false']) {
   margin-left: auto !important;
   margin-right: auto !important;
   padding-inline: 0 !important;
-}
-
-/* ── H2 description accordéon produit ─────────────────── */
-[data-template="product"] accordion-custom .details-content h2,
-.details-content h2 {
-  font-family: 'GC Amelie Promised', var(--font-heading--family, serif) !important;
-  font-size: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem) !important; /* ≈ 22px → 28px */
-  line-height: 1.2 !important;
-  font-weight: 400 !important;
-  color: #1C1A18 !important;
-  margin-top: 1.75em;
-  margin-bottom: 0.5em;
-}
-
-/* ── H3 description accordéon produit (même logique que H2) ── */
-[data-template="product"] accordion-custom .details-content h3,
-.details-content h3 {
-  font-family: 'GC Amelie Promised', var(--font-heading--family, serif) !important;
-  font-size: clamp(1.1875rem, 1rem + 0.6vw, 1.5rem) !important; /* ≈ 19px → 24px */
-  line-height: 1.2 !important;
-  font-weight: 400 !important;
-  color: #1C1A18 !important;
-  margin-top: 1.75em;
-  margin-bottom: 0.5em;
-}
-
-[data-template="product"] accordion-custom .details-content > :first-child {
-  margin-top: 0;
-}
-
-/* ── Tableau comparatif dans la description produit ────── */
-[data-template="product"] accordion-custom .details-content table,
-.details-content table {
-  display: block;
-  overflow-x: auto;
-  width: 100%;
-  border-collapse: collapse;
-  font-family: 'afacad', sans-serif !important;
-  font-size: 13px !important;
-  margin: 12px 0;
-}
-
-[data-template="product"] accordion-custom .details-content table th,
-[data-template="product"] accordion-custom .details-content table td,
-.details-content table th,
-.details-content table td {
-  border: 1px solid rgba(28, 26, 24, 0.12);
-  padding: 8px 10px;
-  text-align: left;
-  white-space: nowrap;
-  color: #1C1A18 !important;
-}
-
-[data-template="product"] accordion-custom .details-content table th,
-.details-content table th {
-  font-weight: 600 !important;
 }
 
 /* ── Prix produit (sous le titre) — police GC Amelie ──── */
