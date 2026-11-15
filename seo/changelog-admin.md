@@ -625,3 +625,45 @@ Brief complet de Pierre : structure de titres (FAQ en H3), texte d'introduction 
 `shopify theme check` : 362 erreurs / 1413 warnings (aucune régression, 1 erreur `AppBlockValidTags` sur `collection-faq.liquid` confirmée pré-existante/fausse-positive, même famille que celle déjà documentée sur `_accordion-row.liquid`). Fichiers poussés via `--only`, reconfirmés par lecture directe du thème live : `templates/collection.bandeau-soie.json`, `sections/collection-faq.liquid`.
 
 **Non vérifié** : rendu live (pas d'outil navigateur disponible dans cette session pour le script console du §5, ni pour les captures desktop/mobile) — à faire par Pierre.
+
+## Collection « Idées cadeaux en soie » (2026-11-15)
+
+Brief complet de Pierre : contenus SEO/description via Admin API, ordre des produits de la grille, textes alternatifs des images. Travail direct sur le thème live 'Prod' (#199323648335).
+
+**Sauvegarde préalable** : `shopify theme pull` dans `/Users/dejonghe/Documents/GitHub/andromeda-backups/20261115-005742/`.
+
+**Structure de titres** : H1 déjà correct (`h1_override` du gabarit, « Idées cadeaux en soie, livrées dans leur coffret »), non modifié. Collection sans section FAQ ni section SEO séparée — seulement bannière + grille, donc **pas de risque de description en double** sur cette page (contrairement à la collection bandeau) : confirmé, aucune action nécessaire sur ce point.
+
+**Contenus (Admin API, `collectionUpdate`, un seul appel titre+description SEO ensemble)** :
+- SEO titre : « Idées cadeaux en soie de mûrier, en coffret | Andromeda Paris »
+- SEO méta-description : « Idées cadeaux en soie de mûrier : masques, bandeaux et chouchous livrés en coffret. Pour Noël, un anniversaire ou des noces de soie (12 ans de mariage). »
+- Description complète remplacée par le texte du brief (4 blocs H2 : « Quel cadeau en soie offrir ? », « Un cadeau de Noël prêt à glisser sous le sapin », « Un cadeau pour des noces de soie (12 ans de mariage) », « Pour qui ? »).
+- Les 3 liens produits de la description vérifiés via Admin API : masque, bandeau et chouchou ont chacun une `onlineStoreUrl` valide (publiés, pas de 404).
+
+**Taille des H2 de la description** (`sections/collection-banner-seo.liquid`, règle `.cbs__text h2`) : alignée sur la même taille `clamp()` que les descriptions produit et collection bandeau (≈ 22px mobile → 28px desktop). Ajout de `!important` sur `font-family` pour résister à la règle globale du thème qui force Afacad sur tous les `h1`-`h6` (même point technique que pour la FAQ de la collection bandeau). Cette règle est dans un `<style>` inline du rendu de section (pas un asset séparé), donc pas de risque de cache CDN bloqué comme rencontré précédemment sur `assets/base.css`. Cette bannière étant partagée par toutes les collections, le changement de taille s'applique uniformément — cohérent avec le choix déjà fait pour la fiche produit et la collection bandeau.
+
+**Ordre des produits** (Admin API, `collectionReorderProducts`) : collection déjà en tri manuel (`sortOrder: MANUAL`) — seul l'ordre interne a été changé. Nouvel ordre confirmé : Bandeau, Masque, Chouchou.
+
+**Origine de l'affichage « 6 cartes masque »** (rapport, rien changé) : la section `main` de cette collection (et de toutes les autres) est de type `collection-variant-grid` (`sections/collection-variant-grid.liquid`), qui boucle nativement sur `product.variants` — **une carte par variante, pas par produit**. Ce n'est ni un réglage activable/désactivable ni une app : c'est le fonctionnement de base de cette section, utilisée par toutes les collections du thème. Le masque (6 coloris) affiche donc 6 cartes, le bandeau (2 coloris) 2 cartes, le chouchou (1 variante) 1 carte — comportement général, pas spécifique à cette collection.
+
+**Textes alternatifs des images de la grille** (Admin API, 9 fichiers mis à jour en un seul appel groupé) :
+
+| Produit | Coloris | Ancien ALT | Nouvel ALT |
+|---|---|---|---|
+| Masque | Crépuscule | « Masque de sommeil Andromeda Crépuscule » | « Masque de sommeil en soie de mûrier, coloris Crépuscule – Andromeda Paris » |
+| Masque | Nébuleuse | « Nébuleuse » (vide de sens, cité en exemple par Pierre) | « Masque de sommeil en soie de mûrier, coloris Nébuleuse – Andromeda Paris » |
+| Masque | Clair de lune | « Masque de nuit Clair de lune Andromeda Paris » | « Masque de sommeil en soie de mûrier, coloris Clair de lune – Andromeda Paris » |
+| Masque | Nuit céleste | « Masque de nuit en soie de mûrier Nuit céleste Andromeda Paris » | « Masque de sommeil en soie de mûrier, coloris Nuit céleste – Andromeda Paris » |
+| Masque | Douce lueur | « Masque de nuit en soie de mûrier Douce lueur Andromeda Paris » | « Masque de sommeil en soie de mûrier, coloris Douce lueur – Andromeda Paris » |
+| Masque | Poussière d'étoile | « Masque de nuit en soie Poussière d'étoile » | « Masque de sommeil en soie de mûrier, coloris Poussière d'étoile – Andromeda Paris » |
+| Bandeau | Dolce vita | « Bandeau de sommeil en soie motif Dolce vita » (déjà corrigé lors d'un brief précédent, reformulé ici pour suivre le format uniforme demandé) | « Bandeau de sommeil en soie de mûrier, coloris Dolce vita – Andromeda Paris » |
+| Bandeau | Glamour | « Bandeau yeux nuit en soie Andromeda Paris dans son coffret cadeau » | « Bandeau de sommeil en soie de mûrier, coloris Glamour – Andromeda Paris » |
+| Chouchou | (variante unique, pas de coloris) | « » (vide ; l'image utilisée est celle du produit, pas d'une variante — le chouchou n'a qu'une seule variante « Default Title ») | « Chouchou en soie de mûrier, lot de 2 – Andromeda Paris » (adapté : pas de coloris disponible pour ce produit, remplacé par « lot de 2 ») |
+
+Aucun ALT codé en dur dans le thème — tout appliqué via l'API Admin sur les médias produits.
+
+`shopify theme check` : 362 erreurs / 1413 warnings (aucune régression). Fichier poussé via `--only`, reconfirmé par lecture directe du thème live : `sections/collection-banner-seo.liquid`.
+
+**Autres collections** : non retouchées. Elles utilisent la même section `collection-banner-seo.liquid`, donc bénéficient automatiquement du même ajustement de taille des H2 de description (cohérent, pas une régression).
+
+**Non vérifié** : rendu live, script console du §5, captures desktop/mobile (pas d'outil navigateur dans cette session) — à faire par Pierre.

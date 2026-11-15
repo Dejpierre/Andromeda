@@ -110,7 +110,7 @@
   }
 
   .cbs__text p { margin: 0; font-size: 16px; font-weight: 300; line-height: 1.6; color: #FFFFFF; text-wrap: pretty; }
-  .cbs__text h2 { margin: 0; font-size: 18px; font-weight: 400; color: #FFFFFF; font-family: 'GC Amelie Promised', var(--font-heading--family, Georgia, serif); }
+  .cbs__text h2 { margin: 0; font-size: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem); font-weight: 400; color: #FFFFFF; font-family: 'GC Amelie Promised', var(--font-heading--family, Georgia, serif) !important; }
   #cbs-text-{{ section.id }} a,
   #cbs-text-{{ section.id }} a:hover,
   #cbs-text-{{ section.id }} a:focus { color: #FFFFFF; text-decoration-color: rgba(255,255,255,0.5); }
