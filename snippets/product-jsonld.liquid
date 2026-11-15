@@ -5,6 +5,7 @@
   (valeurs reprises telles quelles de l'ancien bloc : 30 jours, retour gratuit).
 {%- endcomment -%}
 {%- assign jm = product.metafields.judgeme.review_widget_data.value -%}
+{%- assign jm_jsonld = product.metafields.judgeme.review_widget_json_ld.value -%}
 {%- assign return_days = 30 -%}
 <script type="application/ld+json">
 {
@@ -24,6 +25,9 @@
     "bestRating": "5",
     "worstRating": "1"
   }
+  {%- endif -%}
+  {%- if jm_jsonld.review.size > 0 -%}
+  ,"review": {{ jm_jsonld.review | json }}
   {%- endif -%}
   ,"offers": [
     {%- for variant in product.variants %}
