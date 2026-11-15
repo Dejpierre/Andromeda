@@ -53,16 +53,10 @@
     assign seo_description = 'Nos chouchous en soie de mûrier 22 mommes protègent vos cheveux de la casse et des frisottis, jour et nuit. Livrés prêts à offrir.'
 
   elsif request.page_type == 'collection'
-    if collection.seo.title != blank
-      assign seo_title = collection.seo.title
-    else
-      assign seo_title = collection.title | append: ' — Andromeda'
-    endif
-    if collection.seo.description != blank
-      assign seo_description = collection.seo.description
-    else
-      assign seo_description = 'Explorez la collection ' | append: collection.title | append: " d'Andromeda. Accessoires de sommeil haut de gamme en soie de mûrier, pensés pour un rituel du soir élégant."
-    endif
+    assign collection_fallback_title = collection.title | append: ' — Andromeda'
+    assign seo_title = page_title | default: collection_fallback_title
+    assign collection_fallback_description = 'Explorez la collection ' | append: collection.title | append: " d'Andromeda. Accessoires de sommeil haut de gamme en soie de mûrier, pensés pour un rituel du soir élégant."
+    assign seo_description = page_description | default: collection_fallback_description
 
   elsif request.page_type == 'list-collections'
     assign seo_title = 'Toutes nos collections | Andromeda Paris'

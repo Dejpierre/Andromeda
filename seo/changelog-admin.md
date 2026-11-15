@@ -667,3 +667,17 @@ Aucun ALT codé en dur dans le thème — tout appliqué via l'API Admin sur les
 **Autres collections** : non retouchées. Elles utilisent la même section `collection-banner-seo.liquid`, donc bénéficient automatiquement du même ajustement de taille des H2 de description (cohérent, pas une régression).
 
 **Non vérifié** : rendu live, script console du §5, captures desktop/mobile (pas d'outil navigateur dans cette session) — à faire par Pierre.
+
+## Collection idées cadeaux — title/meta n'utilisaient pas les valeurs admin (2026-11-15)
+
+Pierre a signalé que le `<title>` et la meta description de `/collections/idees-cadeaux-soie` ne reprenaient pas les valeurs SEO saisies dans l'admin (confirmées correctes via Admin API dans le brief précédent). Investigation en 3 temps.
+
+**Fausse piste écartée** : un embed d'app `seoant-ai-seo` (bloc `seoant-core`) est bien actif sur le thème (`config/settings_data.json`, `"disabled": false`). Objet d'une vérification live (`curl`, après qu'un fetch distant ait confirmé un vrai rate-limit `Retry-After: 60` sur le domaine) : la chaîne `seoant` apparaît bien dans le HTML, mais seulement comme script d'app embarqué — pas de manipulation du `<title>`/`<meta description>` trouvée. Pas la cause.
+
+**Cause réelle trouvée** : `snippets/meta-tags.liquid`, branche générique `elsif request.page_type == 'collection'` (celle utilisée par toute collection sans branche dédiée à son handle — bandeau/masque/chouchou/« all » ont leur propre branche avec du texte en dur, celle-ci est la seule à utiliser cette branche actuellement). Le code lisait `collection.seo.title` / `collection.seo.description` — une propriété Liquid qui ne reflète pas les champs SEO natifs et qui est donc systématiquement vide (`!= blank` toujours faux), faisant retomber sur le texte de repli codé en dur à chaque fois, quoi que l'admin contienne. Confirmé en direct : titre affiché « Idées cadeaux en soie — Andromeda » et méta-description « Explorez la collection... » (le texte de repli exact du fichier), alors que `collection.seo.title`/`description` étaient bien corrects côté Admin API.
+
+**Fix** : remplacé par `page_title` / `page_description` — les objets Liquid contextuels que Shopify alimente automatiquement avec le SEO title/description réellement configuré dans l'admin pour la ressource affichée (même mécanisme déjà utilisé avec succès pour la homepage dans un brief précédent). Toujours avec repli sur le texte par défaut existant si rien n'est configuré dans l'admin.
+
+**Portée du bug** : cette branche générique est utilisée par **toute collection sans branche dédiée à son handle** dans ce fichier — donc le bug touchait potentiellement d'autres collections du catalogue au-delà de celle signalée, pas seulement « idées cadeaux ». Le correctif s'applique uniformément à toutes.
+
+`shopify theme check` : 362 erreurs / 1413 warnings (aucune régression). Fichier poussé via `--only` : `snippets/meta-tags.liquid`. **Vérifié en live** (`curl`, accès direct possible cette fois, pas de rate-limit) : `<title>` = « Idées cadeaux en soie de mûrier, en coffret | Andromeda Paris » et meta description = « Idées cadeaux en soie de mûrier : masques, bandeaux et chouchous livrés en coffret. Pour Noël, un anniversaire ou des noces de soie (12 ans de mariage). » — conformes exactement aux valeurs admin.
