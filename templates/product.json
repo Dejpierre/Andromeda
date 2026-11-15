@@ -1290,7 +1290,7 @@
                     "text_desc": {
                       "type": "text",
                       "settings": {
-                        "text": "{{ closest.product.description }}<h3>Un masque de sommeil hors du commun</h3><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux masques synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h3>Obscurité totale pour un sommeil profond</h3><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre masque de sommeil offre une occultation totale grâce à la densité 22 mommes et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h3>Confort & élégance</h3><ul><li>Élastique qui s'adapte à toutes les morphologies</li><li>Thermorégulation naturelle — fraîche en été, douce en hiver</li><li>Hypoallergénique, idéal pour les peaux sensibles</li></ul><h3>Le rituel Andromeda</h3><p>Chaque masque est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement.</p>",
+                        "text": "{{ closest.product.description }}",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
@@ -1596,7 +1596,7 @@
           "type": "item",
           "settings": {
             "titre": "Description",
-            "contenu": "<h2>Un masque de sommeil hors du commun</h2><p>La <strong>soie de mûrier grade 6A</strong> représente moins de 5% de la production mondiale. Ses filaments extra-longs offrent une douceur inégalée au contact de la peau et des cheveux. Contrairement au coton ou aux masques synthétiques, la soie ne froisse pas, ne tire pas et respecte l'hydratation naturelle de votre peau.</p><h2>Obscurité totale pour un sommeil profond</h2><p>Grâce à ses <strong>22 mommes d'épaisseur</strong>, notre masque de sommeil offre une occultation totale grâce à la densité 22 mommes et favorise la production naturelle de mélatonine. Résultat : un endormissement plus rapide, un sommeil plus profond et un réveil transformé.</p><h2>Confort &amp; élégance</h2><ul>\n<li>Élastique réglable pour s'adapter à toutes les morphologies</li>\n<li>Thermorégulation naturelle — fraîche en été, douce en hiver</li>\n<li>Hypoallergénique, idéal pour les peaux sensibles</li>\n</ul><h2>Le rituel Andromeda</h2><p>Chaque masque est livré avec un <strong>QR code exclusif</strong> donnant accès à une sélection de sons d'ambiance premium pour accompagner votre endormissement. Méditation, nature, ondes delta — une expérience sensorielle complète pour transformer chaque nuit en véritable <strong>rituel de sommeil de luxe</strong>.</p>"
+            "contenu": "<p>Le masque de nuit en soie de mûrier est le plus léger de nos accessoires : il se pose sur les yeux sans les comprimer et se fait presque oublier, la nuit comme pendant une sieste ou un voyage.</p>"
           }
         },
         "livraison": {

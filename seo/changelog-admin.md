@@ -700,3 +700,39 @@ Pierre a signalé 2 objets Product en JSON-LD sur la fiche bandeau (gabarit part
 **Non fait** : le test des résultats enrichis de Google (Rich Results Test, search.google.com/test/rich-results) demandé au point 3 — c'est un outil web public qui nécessite un navigateur, indisponible dans cette session. **À faire par Pierre** sur les 3 URLs (bandeau, masque, chouchou) pour confirmer définitivement qu'un seul Product est détecté et qu'il est éligible aux extraits enrichis.
 
 `shopify theme check` : 362 erreurs / 1413 warnings (aucune régression). Fichier poussé via `--only` : `snippets/product-jsonld.liquid` (partagé par toutes les fiches produit, donc les 3 bénéficient du même correctif sans modification supplémentaire).
+
+## Fiche « Masque de nuit en soie » + collection masque (2026-11-15)
+
+Pivot SEO : la fiche vise désormais « masque de nuit en soie » (requête la plus cherchée), la collection reste sur « masque de sommeil en soie » pour ne pas se concurrencer. Sauvegarde dans `/Users/dejonghe/Documents/GitHub/andromeda-backups/20261115-112642/`.
+
+**Produit (Admin API, `productUpdate`, un seul appel)** :
+- Titre (H1) : « Masque de nuit en soie de mûrier 22 mommes »
+- SEO titre/description : conformes au brief
+- Description complète remplacée (structure H2 du §1, table comparative masque/bandeau). Prix vérifiés avant application : masque 35,99 €, bandeau 39,99 € — identiques au brief, aucune correction nécessaire. 6 coloris confirmés (Crépuscule, Nébuleuse, Clair de lune, Nuit céleste, Douce lueur, Poussière d'étoile). Lien vers `/blogs/actualites/comment-choisir-son-masque-de-sommeil` vérifié en 200 — conservé.
+- Tags : « biologique » et « Soie biologique » retirés (allégation non prouvée), les 8 autres tags conservés.
+
+**Textes alternatifs des images** (Admin API, 34 fichiers mis à jour en un seul appel groupé) : les 3 images avec « biologique » dans l'ALT ont été **ouvertes et regardées** (pas juste devinées depuis le nom de fichier) pour écrire une description fidèle — coffret fermé, coffret ouvert (coloris Nébuleuse), détail du tissu du coffret. Les ALT ne portant que le nom du coloris (ou un format daté « sommeil ») sont passés au format `Masque de nuit en soie de mûrier, coloris [Coloris] – Andromeda Paris`, avec une précision (porté, vue à plat, gros plan, détail du tissu) quand plusieurs images partagent le même coloris — également déterminée en regardant chaque image, pas en extrapolant. Les 6 ALT de variante déjà corrects lors d'un brief précédent (format « sommeil ») ont été repassés en « nuit » pour suivre le nouveau mot-clé cible.
+
+**Structure de titres** (gabarit partagé `templates/product.json`, déjà conforme au §1 grâce aux correctifs faits sur la fiche bandeau — FAQ en H3, Avis clients, ordre des sections, Instagram en `<p>`, etc., puisque c'est le même fichier) : seul le nettoyage spécifique à ce produit restait à faire.
+
+**§2.5 — ancien texte hors description, trouvé et supprimé** : même mécanisme que pour le bandeau. `text_desc` (accordéon Description, **en direct**) contenait `{{ closest.product.description }}` suivi de 4 blocs H3 obsolètes (« Un masque de sommeil hors du commun », « Obscurité totale pour un sommeil profond », « Confort & élégance », « Le rituel Andromeda ») avec « moins de 5% », « occultation totale », « production naturelle de mélatonine », « toutes les morphologies », « Hypoallergénique ». Simplifié à `{{ closest.product.description }}` seul. Même contenu dupliqué (légèrement reformulé) dans la section `accordeon_produit`, **désactivée** donc sans effet live — nettoyée par précaution avec un paragraphe statique reprenant l'intro de la nouvelle description.
+
+**§2.8 — FAQ produit, signalement sans modification (consigne explicite)** : 2 des 6 réponses contiennent des formulations à risque, identiques à celles déjà corrigées sur la fiche bandeau dans un brief antérieur — mais jamais reportées sur le gabarit masque (fichier différent) :
+- « Quelle est la différence entre soie 22 mommes et 19 mommes ? » → *« ...plus dense, plus opaque et plus durable : **occultation totale grâce à la densité 22 mommes**, et une douceur... »*
+- « Qu'est-ce que le grade 6A de la soie ? » → *« Le grade 6A est la classification la plus haute de la soie de mûrier. **Moins de 5% de la production mondiale** l'atteint... »*
+
+**Collection masque** (Admin API pour SEO ; thème pour le H1) :
+- H1 (`h1_override` dans `templates/collection.masque-soie.json`) : « Masque de nuit en soie de mûrier » → « Masque de sommeil en soie »
+- SEO titre/description (Admin API, `collectionUpdate`) : conformes au brief
+- Description et FAQ de la collection **non modifiées**, comme demandé — listées pour Pierre :
+  - Description actuelle : 4 paragraphes reprenant occultation totale/hypoallergénique/toutes les morphologies (texte complet donné à Pierre séparément, identique à celui lu via l'API)
+  - FAQ actuelle (4 questions, section `collection-faq`, déjà avec JSON-LD auto-synchronisé par construction) : « Un masque de nuit en soie bloque-t-il vraiment la lumière ? », « Pourquoi du 22 mommes plutôt que du 19 ? », « Le masque convient-il aux peaux sensibles ? », « Le masque est-il adapté à toutes les morphologies ? » — contiennent aussi des formulations à risque (occultation totale, hypoallergénique, toutes les morphologies), à traiter dans un prochain brief sur demande de Pierre
+  - Bloc `seo_content` (4 blocs H2, sous la grille) également listé, non modifié : « Pourquoi choisir un masque en soie de mûrier ? », « Pourquoi 22 mommes ? », « 100% soie, jusqu'au rembourrage », « Entretien »
+
+**`snippets/meta-tags.liquid`** : branches codées en dur pour le produit et la collection masque mises à jour pour correspondre aux nouvelles valeurs cibles (même limitation architecturale déjà documentée : ces branches priment sur les champs Admin SEO, contrairement à la branche générique collection corrigée dans un brief précédent).
+
+`shopify theme check` : 362 erreurs / 1413 warnings (aucune régression). Fichiers poussés via `--only`, chacun reconfirmé par lecture directe du thème live : `templates/product.json`, `templates/collection.masque-soie.json`, `snippets/meta-tags.liquid`.
+
+**Vérifié en live** (`curl`, accès direct) : `<title>` et meta description conformes exactement aux valeurs cibles. Recherche des formulations interdites dans le texte de la page : 0 occurrence de « mélatonine », « toutes les morphologies », « biologique » ; 1 occurrence chacune de « occultation totale » et « moins de 5 » — confirmées comme étant **uniquement** dans les 2 réponses de FAQ signalées au §2.8, non modifiées sur consigne explicite. JSON-LD Product : name à jour, offers et aggregateRating présents. Fiche bandeau revérifiée : titre inchangé, aucune régression.
+
+**Non vérifié** : affichage du tableau sur mobile (390 px), captures desktop/mobile (pas d'outil navigateur dans cette session) — à faire par Pierre.
