@@ -1976,7 +1976,7 @@
                 "text_andromeda_1": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Les mommes désignent le poids du tissu. À 22 mommes, notre soie est plus dense, plus opaque et plus durable : occultation totale grâce à la densité 22 mommes, et une douceur qui se conserve lavage après lavage.</p>",
+                    "text": "<p>Les mommes désignent le poids du tissu. À 22 mommes, notre soie est plus dense que les soies plus fines, courantes à 16 ou 19 mommes : plus opaque, plus durable, et une douceur qui se conserve lavage après lavage.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -2022,7 +2022,7 @@
                 "text_andromeda_2": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Le grade 6A est la classification la plus haute de la soie de mûrier. Moins de 5% de la production mondiale l'atteint. Les filaments extra-longs donnent une surface parfaitement lisse et douce.</p>",
+                    "text": "<p>Le grade 6A est la qualité la plus élevée de la classification commerciale des fils de soie de mûrier : des filaments longs et réguliers, qui donnent une surface lisse et douce au toucher.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
