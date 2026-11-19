@@ -747,3 +747,25 @@ Pierre a fourni le texte des 2 réponses FAQ signalées au brief précédent. Re
 - **Chouchou — trouvaille annexe, hors réponse de FAQ** : en vérifiant, j'ai retrouvé exactement le même mécanisme que sur bandeau/masque — `text_desc` (accordéon Description, **en direct**, pas désactivé) contient `{{ closest.product.description }}` suivi de 4 blocs H2 obsolètes (« Un chouchou de soie hors du commun », « Douceur pour vos cheveux, jour et nuit », « Confort & élégance », « Le rituel Andromeda ») avec « moins de 5% » et « Hypoallergénique ». **Non modifié** — je ne l'ai pas touché, n'ayant pas reçu de brief dédié au chouchou pour cette fiche ; signalé pour une prochaine passe.
 
 **Vérifié en live** (`curl`) sur les 3 fiches : `templates/product.json` relu directement sur le thème confirme les 2 nouvelles réponses exactement conformes au texte fourni par Pierre.
+
+## Suivi audit GEO/IA — contenu homepage et schema WebPage (2026-11-19)
+
+Pierre a partagé 3 écrans d'un outil d'audit externe (GEO / visibilité IA), traités un par un.
+
+**1. « Add Knowledge Graph pillar links »** (warning, `sameAs` manquant vers Wikipédia/Wikidata/LinkedIn) — pas d'action théhème : le `sameAs` de l'`Organization` existe déjà (Instagram, Facebook, Pinterest, TikTok). Wikipédia/Wikidata demandent une notabilité hors de portée d'une jeune marque. Pierre n'a pas de page LinkedIn entreprise — rien d'actionnable pour l'instant, à revoir si une page LinkedIn est créée.
+
+**2. « Build topical authority with a consistent content cluster »** (warning) — pas un problème de code : le blog a déjà 16 articles publiés qui couvrent bien le sujet (soie, mommes, lavage, voyage, cadeaux, mélatonine...), mais la cadence s'était arrêtée depuis plus de 5 semaines (dernier article le 11 octobre) et **4 articles rédigés restaient en brouillon**, jamais publiés. Sur décision de Pierre, publication de l'article **« Idée cadeau femme enceinte : 9 cadeaux douceur pour Noël et au-delà »** (`idee-cadeau-femme-enceinte`, Admin API `articleUpdate isPublished: true`). Avant publication, relecture complète et signalement de 2 points à Pierre :
+- « hypoallergénique » apparaît 2 fois dans le texte (allégation retirée partout ailleurs sur le site) — **laissé tel quel sur décision explicite de Pierre**.
+- Aucune image de couverture définie sur l'article — **publié sans image, sur décision explicite de Pierre**.
+
+Vérifié en live : `https://www.andromedaparis.com/blogs/actualites/idee-cadeau-femme-enceinte` répond en 200. Les 3 autres brouillons (« Réduire les frottements nocturnes du visage », « Masque de nuit : 7 bénéfices prouvés pour le sommeil profond », « Meilleur masque de sommeil en soie ») restent en attente, proposés à Pierre pour une prochaine passe.
+
+**3. « Add date metadata / Show who created the content / Add a publication or update date »** (3 warnings, même origine) — confirmé dans le code : la homepage n'avait **aucune entité `WebPage`** dans son JSON-LD `@graph` (seulement `Organization` et `WebSite`), donc ni date de publication/modification ni auteur explicite pour le contenu de la page elle-même — contrairement aux articles de blog, qui ont déjà tout ça (JSON-LD `BlogPosting` + byline visible sur la page).
+
+**Fix** (`layout/theme.liquid`, bloc `@graph` de la homepage) : ajout d'une entité `WebPage` liée au `WebSite` (`isPartOf`) et à l'`Organization` (`about`, `author`) :
+- `datePublished`: **2026-05-01** (date de lancement du site, donnée par Pierre)
+- `dateModified`: **2026-11-13** (date de la grosse refonte SEO de la homepage) — **valeur écrite en dur**, pas de date de modification fiable/automatique disponible côté Shopify/Liquid pour la homepage. Sur accord explicite de Pierre, à mettre à jour manuellement à chaque futur changement de contenu significatif de la page d'accueil. ⚠️ Point de maintenance à ne pas oublier.
+
+`shopify theme check` : 362 erreurs / 1413 warnings (aucune régression). Fichier poussé via `--only` : `layout/theme.liquid`, reconfirmé par lecture directe du thème live et vérifié en direct sur la homepage (`curl`) : les 3 champs (`author`, `datePublished`, `dateModified`) sont bien présents.
+
+Sauvegarde préalable : `/Users/dejonghe/Documents/GitHub/andromeda-backups/20261119-161348/`.
