@@ -234,6 +234,33 @@
         "datePublished": "2026-05-01",
         "dateModified": "2026-11-13"
       }
+      {%- assign featured_blog = blogs['actualites'] -%}
+      {%- if featured_blog and featured_blog.articles_count > 0 -%}
+      ,{
+        "@type": "ItemList",
+        "@id": "https://www.andromedaparis.com/#journal",
+        "name": "Le journal Andromeda",
+        "itemListElement": [
+          {%- for article in featured_blog.articles limit: 3 -%}
+          {
+            "@type": "ListItem",
+            "position": {{ forloop.index }},
+            "item": {
+              "@type": "BlogPosting",
+              "headline": {{ article.title | json }},
+              "url": {{ shop.url | append: article.url | json }},
+              "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S+01:00' }}"
+              {%- if article.image -%}
+              ,"image": {{ article.image | image_url: width: 1200 | prepend: 'https:' | json }}
+              {%- endif -%}
+              ,"author": { "@id": "https://www.andromedaparis.com/#organization" }
+              ,"publisher": { "@id": "https://www.andromedaparis.com/#organization" }
+            }
+          }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      }
+      {%- endif -%}
     ]
   }
   </script>

@@ -769,3 +769,17 @@ Vérifié en live : `https://www.andromedaparis.com/blogs/actualites/idee-cadeau
 `shopify theme check` : 362 erreurs / 1413 warnings (aucune régression). Fichier poussé via `--only` : `layout/theme.liquid`, reconfirmé par lecture directe du thème live et vérifié en direct sur la homepage (`curl`) : les 3 champs (`author`, `datePublished`, `dateModified`) sont bien présents.
 
 Sauvegarde préalable : `/Users/dejonghe/Documents/GitHub/andromeda-backups/20261119-161348/`.
+
+## Suite audit GEO/IA — llms.txt, Article/FAQPage schema (2026-11-19)
+
+3 nouveaux points du même audit. Sauvegarde préalable : `/Users/dejonghe/Documents/GitHub/andromeda-backups/20261119-162111/`.
+
+**1. « Add a blockquote description to llms.txt »** — investigué, **pas d'action**. `/llms.txt` est aujourd'hui entièrement géré par Shopify (pas un fichier du thème), et mirrore le contenu de `/agents.md`. D'après la documentation officielle Shopify, y ajouter une description nécessite de créer `templates/agents.md.liquid` — mais ce template **remplace intégralement** le contenu géré par Shopify (découverte UCP, endpoint MCP, mention du Shop skill), il ne s'y ajoute pas : il aurait fallu recréer fidèlement tout le contenu par défaut à la main, et en assurer la maintenance en continu si Shopify fait évoluer ce mécanisme. Shopify déconseille d'ailleurs cette approche sauf besoin précis. **Sur décision explicite de Pierre, laissé géré par Shopify tel quel.**
+
+**2. « Add Article schema to your blog/content pages »** — confirmé réel sur la homepage (les vraies pages d'articles ont déjà `BlogPosting`, un sous-type d'`Article`, donc ce point ne les concernait pas). La section « Le journal Andromeda » de la homepage affiche 3 articles (image, titre, date) sans aucune structuration associée. **Fix** (`layout/theme.liquid`, `@graph` de la homepage) : ajout d'un nœud `ItemList` (« Le journal Andromeda ») contenant 3 `ListItem` → `BlogPosting` (headline, url, datePublished, image si présente, author/publisher renvoyant à l'Organization), générés dynamiquement par une boucle Liquid sur `blogs['actualites'].articles limit: 3` — reste donc automatiquement à jour si les articles mis en avant changent, sans dépendre d'une liste codée en dur.
+
+**3. « Add FAQPage schema to your FAQ content »** — vérifié, **pas d'action, probable faux positif de l'outil**. La homepage ne contient aucun contenu FAQ (confirmé lors de la refonte structurelle de la homepage faite au tout début de ce travail SEO : hero, collections vedettes, section QR, blog, texte SEO — pas de FAQ). Rien à corriger sans inventer du contenu qui n'existe pas sur la page.
+
+`shopify theme check` : 362 erreurs / 1413 warnings (aucune régression). Fichier poussé via `--only` : `layout/theme.liquid`. **Vérifié en live** (`curl`) : le nœud `ItemList` apparaît avec les 3 articles exacts actuellement affichés sur la homepage (dans le bon ordre chronologique), y compris l'article « Idée cadeau femme enceinte » publié plus tôt dans la session.
+
+`dateModified` de la `WebPage` **non modifié** pour ce correctif : c'est un ajout de balisage structuré, pas un changement de contenu visible — ne correspond pas à la règle convenue avec Pierre (mise à jour uniquement lors de changements de contenu/structure visibles de la homepage).
