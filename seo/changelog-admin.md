@@ -783,3 +783,19 @@ Sauvegarde préalable : `/Users/dejonghe/Documents/GitHub/andromeda-backups/2026
 `shopify theme check` : 362 erreurs / 1413 warnings (aucune régression). Fichier poussé via `--only` : `layout/theme.liquid`. **Vérifié en live** (`curl`) : le nœud `ItemList` apparaît avec les 3 articles exacts actuellement affichés sur la homepage (dans le bon ordre chronologique), y compris l'article « Idée cadeau femme enceinte » publié plus tôt dans la session.
 
 `dateModified` de la `WebPage` **non modifié** pour ce correctif : c'est un ajout de balisage structuré, pas un changement de contenu visible — ne correspond pas à la règle convenue avec Pierre (mise à jour uniquement lors de changements de contenu/structure visibles de la homepage).
+
+## Images de bannière des collections bandeau/masque/all (2026-11-23)
+
+Sauvegarde préalable : `/Users/dejonghe/Documents/GitHub/andromeda-backups/20261123-003511/`.
+
+**Bandeau et masque** : les deux utilisaient encore l'image de bannière générique partagée (`andromeda-collection-banniere.jpg`, déjà signalée dans un brief précédent). Remplacée par une vraie photo du produit de chaque collection, choisie après inspection visuelle de plusieurs candidats :
+- Bandeau (`templates/collection.bandeau-soie.json`) : `bandeau-glamour-avec-coffret-andromeda-paris.png` (bandeau Glamour posé sur son coffret, ambiance chevet).
+- Masque (`templates/collection.masque-soie.json`) : `Lifestyle_Masque_Andromeda_Champagne.png` (photo lifestyle, masque porté sur le front). Les deux fichiers avaient déjà un texte alternatif correct (travail d'un brief précédent), rien à changer de ce côté.
+
+**Collection « all »** : n'avait **aucune bannière** — sa section « section » était un bloc de texte générique (`type: "section"`), pas `collection-banner-seo` comme les autres collections. Changement de type de section, avec un point d'attention : l'ancien bloc contenait un H1 codé en dur (« Tous nos accessoires en soie de mûrier ») et un court paragraphe juste en dessous. Le H1 est préservé via `h1_override`. Pour le paragraphe, `collection.description` est vide pour "all" (ce n'est pas une vraie ressource Collection gérable depuis l'Admin — confirmé, `collectionByIdentifier` retourne `null`), donc le mécanisme existant de la bannière ne pouvait pas l'afficher automatiquement comme pour bandeau/masque.
+
+**Fix** (`sections/collection-banner-seo.liquid`) : ajout d'un réglage optionnel `description_override` (richtext), avec repli sur `collection.description` si non renseigné — n'affecte aucune autre collection existante (comportement inchangé si le réglage n'est pas défini). Utilisé pour "all" avec le texte original exact. Bannière réglée sur l'image générique partagée (choix neutre, cohérent pour un catalogue qui mélange les 3 gammes).
+
+`shopify theme check` : 362 erreurs / 1413 warnings (aucune régression). Fichiers poussés via `--only`, reconfirmés par lecture directe du thème live : `templates/collection.bandeau-soie.json`, `templates/collection.masque-soie.json`, `sections/collection-banner-seo.liquid`, `templates/collection.json`.
+
+**Non vérifié en live** : rendu visuel des 3 bannières (rate-limit persistant sur `/collections/*`, cohérent avec le reste de la session) — confirmé uniquement via relecture directe des fichiers sur le thème live.

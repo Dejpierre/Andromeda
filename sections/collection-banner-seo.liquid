@@ -1,5 +1,6 @@
 {%- liquid
   assign banner_image = section.settings.image | default: collection.image
+  assign banner_description = section.settings.description_override | default: collection.description
 -%}
 
 <div class="cbs" id="cbs-{{ section.id }}">
@@ -18,9 +19,9 @@
       </div>
       <h1 class="cbs__title">{{ section.settings.h1_override | default: collection.title }}</h1>
 
-      {%- if collection.description != blank -%}
+      {%- if banner_description != blank -%}
         <div class="cbs__text-wrap">
-          <div class="cbs__text rte" id="cbs-text-{{ section.id }}">{{ collection.description }}</div>
+          <div class="cbs__text rte" id="cbs-text-{{ section.id }}">{{ banner_description }}</div>
         </div>
         <button type="button" class="cbs__toggle" aria-expanded="false" aria-controls="cbs-text-{{ section.id }}">
           <span class="cbs__toggle-label" data-label-more="{{ section.settings.label_more | default: 'Lire la suite' }}" data-label-less="{{ section.settings.label_less | default: 'Réduire' }}">{{ section.settings.label_more | default: 'Lire la suite' }}</span>
@@ -187,6 +188,7 @@
   "name": "Bannière SEO collection",
   "settings": [
     { "type": "text", "id": "h1_override", "label": "Titre H1 personnalisé (sinon titre de la collection)" },
+    { "type": "richtext", "id": "description_override", "label": "Description personnalisée (sinon description de la collection)" },
     { "type": "image_picker", "id": "image", "label": "Image (sinon image de la collection)" },
     { "type": "range", "id": "overlay_opacity", "label": "Opacité du voile", "min": 0, "max": 100, "step": 1, "default": 82 },
     { "type": "text", "id": "label_more", "label": "Libellé \"déplier\"", "default": "Lire la suite" },
