@@ -799,3 +799,17 @@ Sauvegarde préalable : `/Users/dejonghe/Documents/GitHub/andromeda-backups/2026
 `shopify theme check` : 362 erreurs / 1413 warnings (aucune régression). Fichiers poussés via `--only`, reconfirmés par lecture directe du thème live : `templates/collection.bandeau-soie.json`, `templates/collection.masque-soie.json`, `sections/collection-banner-seo.liquid`, `templates/collection.json`.
 
 **Non vérifié en live** : rendu visuel des 3 bannières (rate-limit persistant sur `/collections/*`, cohérent avec le reste de la session) — confirmé uniquement via relecture directe des fichiers sur le thème live.
+
+## Retour image bandeau/masque, espacement « all », H1 collé au header (2026-11-23)
+
+Sauvegarde préalable : `/Users/dejonghe/Documents/GitHub/andromeda-backups/20261123-005020/`.
+
+**1. Bandeau et masque** : retour à l'image de bannière générique partagée (`andromeda-collection-banniere.jpg`), sur demande de Pierre — annule le changement du brief précédent.
+
+**2. Collection « all »** : la section grille (`main`) avait `padding-block-start: 0`, contrairement à bandeau/masque/chouchou qui ont tous `64` — c'était la cause du manque d'espace entre la bannière et la première rangée de produits. Remis à `64` pour correspondre aux autres collections.
+
+**3. H1 trop collé au header en dépliant le texte (« Lire la suite »)** : cause trouvée dans `sections/collection-banner-seo.liquid`. En desktop (≥750px), `.cbs__banner` utilise `align-items: center` — quand le texte se déplie et que le bloc grandit, la croissance se fait symétriquement depuis le centre, ce qui pousse le H1 vers le haut, dans la zone réservée au header. Corrigé en ajoutant une règle `.cbs__banner.is-open { align-items: flex-end; }` : pendant l'ouverture, l'alignement passe en bas, donc la croissance du bloc se fait entièrement vers le bas (le haut, où se trouve le H1, reste stable) — la classe `.is-open` existait déjà, posée par le JS du bouton « Lire la suite ». Par ailleurs, augmenté la marge de sécurité réservée au-dessus du header de `+24px` à `+56px` (mobile et desktop), pour plus de confort visuel dans tous les cas.
+
+**Non vérifié visuellement** : cette dernière correction est basée sur une analyse du CSS, pas sur un test en direct (rate-limit toujours bloquant sur `/collections/*`). **À confirmer par Pierre** une fois en ligne, notamment en cliquant sur « Lire la suite » sur une collection ayant une description assez longue pour forcer l'expansion (ex. bandeau ou masque).
+
+`shopify theme check` : 362 erreurs / 1413 warnings (aucune régression). Fichiers poussés via `--only`, reconfirmés par lecture directe du thème live : `templates/collection.bandeau-soie.json`, `templates/collection.masque-soie.json`, `templates/collection.json`, `sections/collection-banner-seo.liquid`.

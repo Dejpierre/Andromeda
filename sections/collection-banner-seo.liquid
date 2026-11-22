@@ -68,7 +68,7 @@
     margin-inline: auto;
     /* Header transparent (absolute, hors du flux) : on pousse le contenu
        sous sa hauteur réelle pour que le titre ne chevauche pas le logo/menu. */
-    padding: calc(var(--header-height, 80px) + 24px) 24px 48px;
+    padding: calc(var(--header-height, 80px) + 56px) 24px 48px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -145,6 +145,12 @@
   @media screen and (min-width: 750px) {
     .cbs__banner { min-height: 420px; align-items: center; }
 
+    /* Quand le texte est déplié, le contenu grandit — en restant centré,
+       ça pousse le H1 vers le haut, jusque sous le header. On passe en
+       alignement bas pendant l'ouverture pour que la croissance se fasse
+       vers le bas plutôt que de manger l'espace réservé au header. */
+    .cbs__banner.is-open { align-items: flex-end; }
+
     .cbs__overlay {
       background: linear-gradient(to right,
         rgba(20, 22, 31, calc(var(--cbs-overlay-opacity) * 1.0)) 0%,
@@ -153,7 +159,7 @@
       );
     }
 
-    .cbs__content { padding: calc(var(--header-height, 80px) + 24px) 48px 40px; }
+    .cbs__content { padding: calc(var(--header-height, 80px) + 56px) 48px 40px; }
     .cbs__title { font-size: 48px; }
     .cbs__text-wrap { max-width: 520px; }
     .cbs__text { max-height: 52px; }
