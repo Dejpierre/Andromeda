@@ -830,3 +830,13 @@ Fichiers modifiés :
 **Bug remonté par Pierre après test réel** : en changeant la quantité d'un article, le texte au-dessus de la barre restait bloqué (invisible) et ne réapparaissait plus. Cause : `assets/cart-shipping-bar.js` coupait les animations GSAP en cours avec `.kill()` sans jamais déclencher leur `onComplete` (qui remet le texte/montant en HTML simple) — si une animation de fondu du texte ou de défilement du montant était interrompue par un changement de quantité pendant qu'elle tournait, le texte restait coincé à mi-fondu (opacité partielle), de façon permanente. **Fix** : `st.letters.progress(1)` / `st.tween.progress(1)` juste avant chaque `.kill()` (4 emplacements), ce qui force l'exécution immédiate de l'`onComplete` en attente avant de couper l'animation. Commité (`565526d`), mis en ligne via l'éditeur de code admin (même contournement que ci-dessus). **Confirmé réglé par Pierre.**
 
 Point signalé en parallèle par Pierre et clarifié comme non lié à ce travail : le tiroir panier se ferme puis se rouvre brièvement lors d'un changement de quantité. Pierre confirme que ce comportement existait déjà avant l'ajout de la barre — pas une régression de cette fonctionnalité, aucune action de notre côté.
+
+## Tiroir panier qui se ferme/rouvre au changement de quantité (2026-11-25)
+
+Bug préexistant (antérieur à la barre « livraison offerte »). Cause : `CartAddEvent` et `CartUpdateEvent` partagent le même nom d'événement (`cart:update`, `assets/events.js`). Le tiroir écoute cet événement pour s'ouvrir automatiquement après un ajout (`auto_open_cart_drawer` actif) ; un changement de quantité le déclenchait donc aussi, et `open()` sur un tiroir déjà ouvert passe par `#bringToFront` (`assets/theme-drawer.js`), qui ferme/rouvre le dialog et rejoue l'animation d'entrée.
+
+**Fix** (`assets/cart-drawer.js`, `#handleCartAdd`) : ne plus appeler `open()` si le tiroir est déjà ouvert. Poussé via `shopify theme push --only assets/cart-drawer.js` (le fichier live était identique au repo avant modification, checksum vérifié), checksum live reconfirmé après push.
+
+**Non vérifié dans un navigateur** — à confirmer par Pierre : quantité modifiée sans fermeture, ouverture auto toujours active après un ajout depuis une fiche produit, ajout depuis « Craquez aussi pour… » sans fermeture.
+
+Note outillage : la CLI Shopify est disponible via `~/.nvm/versions/node/v22.16.0/bin` (absente du PATH par défaut de ce shell).

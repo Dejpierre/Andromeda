@@ -71,7 +71,10 @@ class CartDrawerComponent extends Component {
   };
 
   #handleCartAdd = () => {
-    if (this.hasAttribute('auto-open')) {
+    /* CartAddEvent et CartUpdateEvent partagent le même nom ('cart:update') :
+       un changement de quantité arrive donc ici aussi. Rappeler open() sur un
+       tiroir déjà ouvert le referme/rouvre et rejoue l'animation d'entrée. */
+    if (this.hasAttribute('auto-open') && !this.#drawer?.isOpen) {
       this.open();
     }
   };
