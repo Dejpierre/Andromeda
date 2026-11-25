@@ -852,3 +852,11 @@ Demandes de Pierre après test. Fichiers : `snippets/cart-shipping-bar.liquid`, 
 ## Barre « livraison offerte » : coche qui bougeait dans le rond (2026-11-25)
 
 Au seuil atteint, le rond faisait un effet de « pop » (animation d'échelle GSAP) pendant que la coche apparaissait en fondu : la coche se décalait légèrement dans le rond. Retirer le calque 3D n'a pas suffi (retour de Pierre). **Changement d'effet** : plus aucune transformation sur le rond — il se remplit (transition CSS déjà en place) et la coche se trace (`stroke-dashoffset`, 0,45 s), désactivé avec `prefers-reduced-motion`. Fichiers : `snippets/cart-shipping-bar.liquid`, `assets/cart-shipping-bar.js`, poussés via `shopify theme push --only`. **Non vérifié dans un navigateur**, à confirmer par Pierre.
+
+## Barre « livraison offerte » : précision « appliquée au paiement » (2026-11-25)
+
+Demande de Pierre : une fois le seuil atteint, rien ne change dans le tiroir (la livraison n'y est pas chiffrée). Ajout d'une ligne discrète sous la barre, affichée uniquement au seuil atteint : « Appliquée automatiquement à l'étape de paiement. » (EN : « Applied automatically at checkout. »). Fichier : `snippets/cart-shipping-bar.liquid`, poussé via `shopify theme push --only`.
+
+Vérifié avant d'écrire cette promesse : la remise automatique « Livraison offerte » est active, minimum 55 € de sous-total, tous pays, sans plafond de frais de port — cohérent avec le seuil de la barre (5500). Note : le commentaire d'en-tête du snippet dit encore qu'aucune règle correspondante n'est configurée, ce n'est plus vrai.
+
+**Non vérifié dans un navigateur**, à confirmer par Pierre.
