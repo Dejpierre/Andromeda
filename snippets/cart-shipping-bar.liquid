@@ -148,7 +148,16 @@
     width: 11px;
     height: 11px;
     opacity: 0;
-    transition: opacity 0.25s ease-out;
+  }
+
+  /* La coche se trace (longueur du tracé ≈ 10,2) au lieu d'apparaître en fondu */
+  .cart-shipping-bar__goal path {
+    stroke-dasharray: 12;
+    stroke-dashoffset: 12;
+  }
+
+  .cart-shipping-bar[data-reached='true'] .cart-shipping-bar__goal path {
+    stroke-dashoffset: 0;
   }
 
   .cart-shipping-bar[data-reached='true'] .cart-shipping-bar__goal {
@@ -166,6 +175,10 @@
   @media (prefers-reduced-motion: no-preference) {
     .cart-shipping-bar__track::before {
       animation: cart-shipping-bar-flow 2.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    }
+
+    .cart-shipping-bar[data-reached='true'] .cart-shipping-bar__goal path {
+      transition: stroke-dashoffset 0.45s cubic-bezier(0.65, 0, 0.35, 1) 0.15s;
     }
   }
 

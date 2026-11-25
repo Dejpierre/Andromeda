@@ -3,7 +3,7 @@
   - à l'ouverture du panier, la barre se remplit depuis zéro ;
   - quand le panier change, elle glisse vers sa nouvelle valeur et les chiffres du montant défilent ;
   - un reflet passe régulièrement sur la partie remplie ;
-  - au seuil, le rond du bout se remplit et la phrase entière apparaît en fondu.
+  - au seuil, le rond du bout se remplit, la coche se trace et la phrase entière apparaît en fondu.
   GSAP n'est chargé que si une barre est affichée (panier non vide et ouvert).
   Sans GSAP, ou si le visiteur a demandé à réduire les animations, la barre
   affiche directement son état final (rendu par Liquid).
@@ -308,11 +308,9 @@
         st.shown = target.progress;
         st.cents = target.remaining;
         if (willReach) {
+          /* Le rond se remplit et la coche se trace en CSS (aucun transform :
+             la coche ne peut pas se décaler dans le rond). */
           bar.dataset.reached = 'true';
-          if (!wasReached) {
-            var goal = bar.querySelector('.cart-shipping-bar__goal');
-            if (goal) gsap.fromTo(goal, { scale: 0.86 }, { scale: 1, duration: 0.7, ease: 'back.out(3)', force3D: false, clearProps: 'transform' });
-          }
         }
       },
     });
