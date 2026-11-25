@@ -813,3 +813,18 @@ Sauvegarde préalable : `/Users/dejonghe/Documents/GitHub/andromeda-backups/2026
 **Non vérifié visuellement** : cette dernière correction est basée sur une analyse du CSS, pas sur un test en direct (rate-limit toujours bloquant sur `/collections/*`). **À confirmer par Pierre** une fois en ligne, notamment en cliquant sur « Lire la suite » sur une collection ayant une description assez longue pour forcer l'expansion (ex. bandeau ou masque).
 
 `shopify theme check` : 362 erreurs / 1413 warnings (aucune régression). Fichiers poussés via `--only`, reconfirmés par lecture directe du thème live : `templates/collection.bandeau-soie.json`, `templates/collection.masque-soie.json`, `templates/collection.json`, `sections/collection-banner-seo.liquid`.
+
+## Barre « livraison offerte » animée en GSAP — panier (2026-11-25)
+
+Intégration du design déjà validé par Pierre (brief fourni) : remplissage, décompte du montant et reflet animés avec GSAP dans le tiroir panier, chargé uniquement quand la barre est affichée (panier non vide).
+
+Fichiers modifiés :
+- `snippets/cart-shipping-bar.liquid` : remplacement complet (ancienne version statique → nouvelle version animée, attributs `data-*` pour le JS, seuil toujours 5500 soit 55 €).
+- `snippets/cart-drawer.liquid` : ajout d'une ligne `<script src="{{ 'cart-shipping-bar.js' | asset_url }}" defer fetchpriority="low"></script>` juste après le script de `cart-drawer.js`.
+- `assets/cart-shipping-bar.js` (nouveau fichier) : animations GSAP, réutilise le contrat `window.__gsapReady` de `snippets/vendor-gsap.liquid`. Respecte `prefers-reduced-motion`.
+
+**Mise en ligne via l'éditeur de code de l'admin Shopify directement** (thème Prod), et non via l'outil de déploiement habituel : l'outil a bloqué la publication à plusieurs reprises (`theme_publish` refusait avec `changed_on_shopify` sur des fichiers non liés — `config/settings_data.json`, `sections/header-group.json`, `templates/index.json`, `templates/page.json`, `templates/page.rituels.json` — même après resynchronisation de leur contenu avec le live, ce qui suggère un blocage de l'outil plutôt qu'un vrai conflit). Pierre a collé les 3 fichiers lui-même dans l'admin pour contourner ce blocage.
+
+**Vérifié en live** : `curl` sur la homepage confirme `cart-shipping-bar.js` chargé (HTTP 200). Les 3 fichiers sont aussi commités dans le repo git (`ae107df`), le repo est donc synchronisé avec le live.
+
+**Non vérifié visuellement** : le rendu et les animations elles-mêmes (remplissage, décompte, seuil atteint) n'ont pas pu être testés en direct dans le navigateur. À confirmer par Pierre en ouvrant le panier avec des articles.
