@@ -3,79 +3,179 @@
   Seuil fixé en dur (pas de règle de remise automatique correspondante
   actuellement configurée sur la boutique) — modifiable via la variable
   `shipping_threshold` ci-dessous.
+
+  Barre fine bleu nuit sur fond crème, lueur qui file vers le but dans la
+  partie vide, rond au bout de la barre qui se remplit au seuil. Le
+  remplissage, le décompte du montant et le reflet sont animés avec GSAP
+  par assets/cart-shipping-bar.js (chargé depuis snippets/cart-drawer.liquid).
+  Sans JavaScript, ou si le visiteur a demandé à réduire les animations,
+  la barre affiche directement son état final.
 {% enddoc %}
 
 {% liquid
   assign shipping_threshold = 5500
   assign cart_total = cart.total_price
   assign remaining = shipping_threshold | minus: cart_total
+  if remaining < 0
+    assign remaining = 0
+  endif
 
-  assign progress_percent = cart_total | times: 100.0 | divided_by: shipping_threshold
+  assign progress_percent = cart_total | times: 100.0 | divided_by: shipping_threshold | round: 2
   if progress_percent > 100
     assign progress_percent = 100
   endif
 %}
 
-<div class="cart-shipping-bar">
+<div
+  class="cart-shipping-bar"
+  data-cart-shipping-bar
+  data-progress="{{ progress_percent }}"
+  data-remaining="{{ remaining }}"
+  data-threshold="{{ shipping_threshold }}"
+  data-reached="{% if remaining <= 0 %}true{% else %}false{% endif %}"
+  style="--csb-progress: {{ progress_percent }};"
+>
   <p class="cart-shipping-bar__message">
     {% if request.locale.iso_code == 'en' %}
       {% if remaining > 0 %}
-        Only <strong>{{ remaining | money }}</strong> away from free shipping.
+        Only <strong data-csb-amount>{{ remaining | money }}</strong> away from <em>free shipping</em>.
       {% else %}
-        Free shipping unlocked!
+        Your <em>shipping is on us</em>.
       {% endif %}
     {% else %}
       {% if remaining > 0 %}
-        Plus que <strong>{{ remaining | money }}</strong> pour la livraison offerte.
+        Plus que <strong data-csb-amount>{{ remaining | money }}</strong> pour la <em>livraison offerte</em>.
       {% else %}
-        Livraison offerte débloquée !
+        La <em>livraison vous est offerte</em>.
       {% endif %}
     {% endif %}
   </p>
 
-  <div class="cart-shipping-bar__track">
-    <div
-      class="cart-shipping-bar__fill"
-      style="width: {{ progress_percent }}%;"
-    ></div>
+  <div class="cart-shipping-bar__row">
+    <div class="cart-shipping-bar__track">
+      <div class="cart-shipping-bar__fill"></div>
+    </div>
+    <span class="cart-shipping-bar__goal">
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="M2.5 6.2l2.4 2.4 4.6-5"/>
+      </svg>
+    </span>
   </div>
-
-  <div class="cart-shipping-bar__threshold">{{ shipping_threshold | money }}</div>
 </div>
 
 {% stylesheet %}
   .cart-shipping-bar {
+    --csb-night: var(--color-foreground-heading, #191a2e);
+    --csb-pale: #efeae3;
     padding-bottom: var(--padding-lg);
     margin-bottom: var(--padding-lg);
     border-bottom: var(--style-border-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
   }
 
-  .cart-shipping-bar__track {
-    position: relative;
-    height: 6px;
-    border-radius: var(--style-border-radius-pills, 999px);
-    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
-    overflow: visible;
-  }
-
-  .cart-shipping-bar__fill {
-    height: 100%;
-    border-radius: var(--style-border-radius-pills, 999px);
-    background-color: var(--color-foreground);
-    transition: width 0.4s ease;
-  }
-
-  .cart-shipping-bar__threshold {
-    margin-top: var(--margin-3xs);
-    text-align: right;
-    font-size: var(--font-size--xs);
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
-  }
-
   .cart-shipping-bar__message {
-    margin: 0 0 var(--margin-xs);
+    margin: 0 0 var(--margin-sm, 12px);
     text-align: left;
     font-size: var(--font-size--sm);
     color: var(--color-foreground);
+  }
+
+  .cart-shipping-bar__message strong {
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cart-shipping-bar__message em {
+    font-family: 'GC Amelie Promised', var(--font-heading--family);
+    font-style: normal;
+    font-size: 1.12em;
+    color: var(--csb-night);
+  }
+
+  .cart-shipping-bar__row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cart-shipping-bar__track {
+    position: relative;
+    flex: 1 1 auto;
+    height: 6px;
+    border-radius: 999px;
+    background-color: var(--csb-pale);
+  }
+
+  /* Lueur qui part de la barre et file vers le but, dans la partie encore vide */
+  .cart-shipping-bar__track::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-image: linear-gradient(90deg, transparent, rgb(25 26 46 / 0.3), transparent);
+    background-size: 30% 100%;
+    background-repeat: no-repeat;
+    background-position: -45% 0;
+  }
+
+  .cart-shipping-bar__fill {
+    position: relative;
+    width: calc(var(--csb-shown, var(--csb-progress, 0)) * 1%);
+    min-width: 6px;
+    height: 100%;
+    border-radius: 999px;
+    background-color: var(--csb-night);
+    background-image: linear-gradient(100deg, transparent 35%, rgb(255 255 255 / 0.4) 50%, transparent 65%);
+    background-size: 260% 100%;
+    background-position: 130% 0;
+    background-repeat: no-repeat;
+  }
+
+  /* But : un rond au bout de la barre, qui se remplit quand le seuil est atteint */
+  .cart-shipping-bar__goal {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--csb-night);
+    border-radius: 50%;
+    color: var(--color-background, #fff);
+    transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cart-shipping-bar__goal svg {
+    width: 11px;
+    height: 11px;
+    opacity: 0;
+    transition: opacity 0.25s ease-out;
+  }
+
+  .cart-shipping-bar[data-reached='true'] .cart-shipping-bar__goal {
+    background-color: var(--csb-night);
+  }
+
+  .cart-shipping-bar[data-reached='true'] .cart-shipping-bar__goal svg {
+    opacity: 1;
+  }
+
+  .cart-shipping-bar[data-reached='true'] .cart-shipping-bar__track::before {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cart-shipping-bar__track::before {
+      animation: cart-shipping-bar-flow 2.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    }
+  }
+
+  @keyframes cart-shipping-bar-flow {
+    0% {
+      background-position: -45% 0;
+    }
+    70%,
+    100% {
+      background-position: 145% 0;
+    }
   }
 {% endstylesheet %}

@@ -22,6 +22,9 @@
     fetchpriority="low"
   ></script>
 
+  {%- comment -%} Animations GSAP de la barre « livraison offerte » (snippets/cart-shipping-bar.liquid) {%- endcomment -%}
+  <script src="{{ 'cart-shipping-bar.js' | asset_url }}" defer fetchpriority="low"></script>
+
   {% capture empty_cart_drawer_content %}
     <div
       class="cart-drawer__content"
