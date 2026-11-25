@@ -311,7 +311,7 @@
           bar.dataset.reached = 'true';
           if (!wasReached) {
             var goal = bar.querySelector('.cart-shipping-bar__goal');
-            if (goal) gsap.fromTo(goal, { scale: 0.86 }, { scale: 1, duration: 0.7, ease: 'back.out(3)', clearProps: 'transform' });
+            if (goal) gsap.fromTo(goal, { scale: 0.86 }, { scale: 1, duration: 0.7, ease: 'back.out(3)', force3D: false, clearProps: 'transform' });
           }
         }
       },
