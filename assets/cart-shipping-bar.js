@@ -80,7 +80,13 @@
      du bouton d'ajout au panier , en plus doux (fondu lent). Les mots restent entiers
      pour ne pas être coupés en fin de ligne. */
   function animateMessage(message, st) {
-    if (st.letters) st.letters.kill();
+    /* progress(1) avant kill : force l'exécution de l'onComplete en attente
+       (qui remet le HTML d'origine), pour ne jamais laisser le texte coincé
+       à mi-fondu si une animation précédente est interrompue en plein vol. */
+    if (st.letters) {
+      st.letters.progress(1);
+      st.letters.kill();
+    }
     if (!message || !window.gsap) return;
     var original = message.innerHTML;
     var walker = document.createTreeWalker(message, NodeFilter.SHOW_TEXT);
@@ -134,7 +140,10 @@
      une petite colonne qui glisse de l'ancien chiffre au nouveau par le chemin
      le plus court, de gauche à droite. Le reste (€, virgule) ne bouge pas. */
   function rollAmount(amount, st, intro) {
-    if (st.letters) st.letters.kill();
+    if (st.letters) {
+      st.letters.progress(1);
+      st.letters.kill();
+    }
     if (!amount || !window.gsap) return;
     var finalText = amount.textContent.trim();
     var previous = intro ? '' : (st.amountText || '').replace(/\D/g, '');
@@ -270,7 +279,10 @@
     st.tweening = true;
     paint(bar, st);
 
-    if (st.tween) st.tween.kill();
+    if (st.tween) {
+      st.tween.progress(1);
+      st.tween.kill();
+    }
     st.tween = gsap.to(st, {
       shown: target.progress,
       cents: target.remaining,
@@ -349,9 +361,17 @@
             })
             .catch(function () {});
         } else {
-          /* Panier refermé : l'ouverture suivante rejouera le remplissage. */
-          if (st.tween) st.tween.kill();
-          if (st.letters) st.letters.kill();
+          /* Panier refermé : l'ouverture suivante rejouera le remplissage.
+             progress(1) avant kill pour que l'onComplete en attente restaure
+             le texte/montant propre, même si l'animation est coupée en vol. */
+          if (st.tween) {
+            st.tween.progress(1);
+            st.tween.kill();
+          }
+          if (st.letters) {
+            st.letters.progress(1);
+            st.letters.kill();
+          }
           if (st.shine) {
             st.shine.kill();
             st.shine = null;
