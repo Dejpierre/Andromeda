@@ -96,6 +96,10 @@
     nodes.forEach(function (node) {
       var parts = node.textContent.split(/(\s+)/);
       var fragment = document.createDocumentFragment();
+      /* Dans <em> (police manuscrite), on anime le mot entier : découper en
+         lettres casserait les liaisons et le crénage, d'où un saut visible
+         quand le texte d'origine est remis en fin d'animation. */
+      var wholeWords = !!(node.parentElement && node.parentElement.closest('em'));
       parts.forEach(function (part) {
         if (!part) return;
         if (/^\s+$/.test(part)) {
@@ -104,9 +108,15 @@
         }
         var word = document.createElement('span');
         word.style.cssText = 'display:inline-block;white-space:nowrap';
+        if (wholeWords) {
+          word.textContent = part;
+          letters.push(word);
+          fragment.appendChild(word);
+          return;
+        }
         part.split('').forEach(function (ch) {
           var letter = document.createElement('span');
-          letter.style.cssText = 'display:inline-block;will-change:transform,opacity';
+          letter.style.cssText = 'display:inline-block';
           letter.textContent = ch;
           word.appendChild(letter);
           letters.push(letter);
@@ -126,6 +136,8 @@
         duration: 0.9,
         stagger: 0.022,
         ease: 'power2.out',
+        /* Pas de calque 3D : le texte garde le même rendu pendant et après l'animation. */
+        force3D: false,
         onComplete: function () {
           /* On remet le HTML d'origine, sauf si le panier a changé entre-temps. */
           if (document.contains(message) && message.innerHTML.replace(/ style="[^"]*"/g, '') === split.replace(/ style="[^"]*"/g, '')) {
@@ -166,7 +178,7 @@
       ghost.style.visibility = 'hidden';
       ghost.textContent = sizer;
       var column = document.createElement('span');
-      column.style.cssText = 'position:absolute;left:0;top:0.3em;white-space:nowrap;will-change:transform';
+      column.style.cssText = 'position:absolute;left:0;top:0.3em;white-space:nowrap';
       cells.forEach(function (text) {
         var cell = document.createElement('span');
         cell.style.display = 'block';
@@ -239,7 +251,7 @@
       timeline.fromTo(
         r.column,
         { yPercent: r.forward ? 0 : end },
-        { yPercent: r.forward ? end : 0, duration: 0.9, ease: 'power2.inOut' },
+        { yPercent: r.forward ? end : 0, duration: 0.9, ease: 'power2.inOut', force3D: false },
         at
       );
       if (r.resize) {

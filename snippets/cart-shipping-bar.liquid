@@ -40,13 +40,13 @@
       {% if remaining > 0 %}
         Only <strong data-csb-amount>{{ remaining | money }}</strong> away from <em>free shipping</em>.
       {% else %}
-        Your <em>shipping is on us</em>.
+        <em>Your shipping is on us</em>.
       {% endif %}
     {% else %}
       {% if remaining > 0 %}
         Plus que <strong data-csb-amount>{{ remaining | money }}</strong> pour la <em>livraison offerte</em>.
       {% else %}
-        La <em>livraison vous est offerte</em>.
+        <em>La livraison vous est offerte</em>.
       {% endif %}
     {% endif %}
   </p>
@@ -75,7 +75,7 @@
   .cart-shipping-bar__message {
     margin: 0 0 var(--margin-sm, 12px);
     text-align: left;
-    font-size: var(--font-size--sm);
+    font-size: var(--font-size--md, 1rem);
     color: var(--color-foreground);
   }
 

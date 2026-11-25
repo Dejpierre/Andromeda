@@ -840,3 +840,11 @@ Bug préexistant (antérieur à la barre « livraison offerte »). Cause : `Cart
 **Non vérifié dans un navigateur** — à confirmer par Pierre : quantité modifiée sans fermeture, ouverture auto toujours active après un ajout depuis une fiche produit, ajout depuis « Craquez aussi pour… » sans fermeture.
 
 Note outillage : la CLI Shopify est disponible via `~/.nvm/versions/node/v22.16.0/bin` (absente du PATH par défaut de ce shell).
+
+## Barre « livraison offerte » : taille du texte, saut en fin d'animation, « La » en GC Amelie (2026-11-25)
+
+Demandes de Pierre après test. Fichiers : `snippets/cart-shipping-bar.liquid`, `assets/cart-shipping-bar.js`, poussés via `shopify theme push --only` (fichiers live identiques au repo avant modification, checksums vérifiés).
+
+- **Texte trop petit** : `.cart-shipping-bar__message` passe de `--font-size--sm` (0,875rem) à `--font-size--md` (1rem).
+- **« La » en GC Amelie** : au seuil atteint, toute la phrase est dans le `<em>` (`<em>La livraison vous est offerte</em>.`). Même chose en anglais (`<em>Your shipping is on us</em>.`), par cohérence.
+- **Taille qui change en fin d'animation** : cause non reproduite dans un navigateur, correctif fondé sur l'analyse du code. Suppression de `will-change` et `force3D: false` sur les animations de texte (plus de calque 3D, donc même rendu du texte pendant et après), et dans le `<em>` l'apparition se fait par mot entier au lieu de lettre par lettre (le découpage en lettres cassait liaisons et crénage de la police manuscrite). **À confirmer par Pierre.**
