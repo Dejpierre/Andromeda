@@ -864,3 +864,7 @@ Vérifié avant d'écrire cette promesse : la remise automatique « Livraison of
 ## Barre « livraison offerte » : hauteur constante, précision sous la phrase (2026-11-25)
 
 Demande de Pierre : la ligne « Appliquée automatiquement à l'étape de paiement. » passe juste sous la phrase principale (au-dessus de la barre) et le bloc garde la même hauteur qu'elle soit affichée ou non. La ligne est désormais toujours rendue, masquée sous le seuil (`visibility: hidden` + `aria-hidden`), et apparaît en fondu quand `data-reached='true'`. Fichier : `snippets/cart-shipping-bar.liquid`, poussé via `shopify theme push --only`. **Non vérifié dans un navigateur.**
+
+## Barre « livraison offerte » : phrase calée près de la barre, précision grise seulement au seuil (2026-11-25)
+
+Itérations avec Pierre sur l'espacement. État final : la phrase et la précision grise sont dans un bloc de hauteur fixe (`.cart-shipping-bar__text`, contenu calé en bas). Sous le seuil, la précision n'est pas rendue et la phrase reste près de la barre, comme à l'origine ; au seuil, la phrase remonte d'une ligne (pendant son animation d'apparition) et la précision apparaît dessous en fondu. La hauteur du bloc ne change pas tant que la phrase tient sur une ligne. Fichier : `snippets/cart-shipping-bar.liquid`, poussé via `shopify theme push --only`. **Non vérifié dans un navigateur.**
