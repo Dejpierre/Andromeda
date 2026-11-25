@@ -860,3 +860,7 @@ Demande de Pierre : une fois le seuil atteint, rien ne change dans le tiroir (la
 Vérifié avant d'écrire cette promesse : la remise automatique « Livraison offerte » est active, minimum 55 € de sous-total, tous pays, sans plafond de frais de port — cohérent avec le seuil de la barre (5500). Note : le commentaire d'en-tête du snippet dit encore qu'aucune règle correspondante n'est configurée, ce n'est plus vrai.
 
 **Non vérifié dans un navigateur**, à confirmer par Pierre.
+
+## Barre « livraison offerte » : hauteur constante, précision sous la phrase (2026-11-25)
+
+Demande de Pierre : la ligne « Appliquée automatiquement à l'étape de paiement. » passe juste sous la phrase principale (au-dessus de la barre) et le bloc garde la même hauteur qu'elle soit affichée ou non. La ligne est désormais toujours rendue, masquée sous le seuil (`visibility: hidden` + `aria-hidden`), et apparaît en fondu quand `data-reached='true'`. Fichier : `snippets/cart-shipping-bar.liquid`, poussé via `shopify theme push --only`. **Non vérifié dans un navigateur.**

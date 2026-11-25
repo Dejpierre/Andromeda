@@ -51,6 +51,18 @@
     {% endif %}
   </p>
 
+  {% comment %}
+    La remise automatique « Livraison offerte » ne s'affiche qu'au paiement : on le dit ici.
+    Toujours rendue (masquée sous le seuil) pour que le bloc garde la même hauteur.
+  {% endcomment %}
+  <p class="cart-shipping-bar__note"{% if remaining > 0 %} aria-hidden="true"{% endif %}>
+    {% if request.locale.iso_code == 'en' %}
+      Applied automatically at checkout.
+    {% else %}
+      Appliquée automatiquement à l'étape de paiement.
+    {% endif %}
+  </p>
+
   <div class="cart-shipping-bar__row">
     <div class="cart-shipping-bar__track">
       <div class="cart-shipping-bar__fill"></div>
@@ -61,17 +73,6 @@
       </svg>
     </span>
   </div>
-
-  {% comment %} La remise automatique « Livraison offerte » ne s'affiche qu'au paiement : on le dit ici. {% endcomment %}
-  {% if remaining <= 0 %}
-    <p class="cart-shipping-bar__note">
-      {% if request.locale.iso_code == 'en' %}
-        Applied automatically at checkout.
-      {% else %}
-        Appliquée automatiquement à l'étape de paiement.
-      {% endif %}
-    </p>
-  {% endif %}
 </div>
 
 {% stylesheet %}
@@ -84,7 +85,7 @@
   }
 
   .cart-shipping-bar__message {
-    margin: 0 0 var(--margin-sm, 12px);
+    margin: 0 0 4px;
     text-align: left;
     font-size: var(--font-size--md, 1rem);
     color: var(--color-foreground);
@@ -103,10 +104,17 @@
   }
 
   .cart-shipping-bar__note {
-    margin: var(--margin-xs, 8px) 0 0;
+    margin: 0 0 var(--margin-sm, 12px);
     text-align: left;
     font-size: var(--font-size--xs);
     color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .cart-shipping-bar[data-reached='true'] .cart-shipping-bar__note {
+    visibility: visible;
+    opacity: 1;
   }
 
   .cart-shipping-bar__row {
@@ -195,18 +203,12 @@
       animation: cart-shipping-bar-flow 2.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
     }
 
-    .cart-shipping-bar__note {
-      animation: cart-shipping-bar-note 0.6s ease-out 0.5s backwards;
+    .cart-shipping-bar[data-reached='true'] .cart-shipping-bar__note {
+      transition: opacity 0.6s ease-out 0.2s;
     }
 
     .cart-shipping-bar[data-reached='true'] .cart-shipping-bar__goal path {
       transition: stroke-dashoffset 0.45s cubic-bezier(0.65, 0, 0.35, 1) 0.15s;
-    }
-  }
-
-  @keyframes cart-shipping-bar-note {
-    from {
-      opacity: 0;
     }
   }
 
