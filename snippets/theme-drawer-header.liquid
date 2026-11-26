@@ -10,7 +10,7 @@
 {%- enddoc -%}
 
 <div class="theme-drawer__header">
-  <h2
+  <p
     class="theme-drawer__title h4"
     {% if heading_id %}
       id="{{ heading_id }}"
@@ -18,7 +18,7 @@
   >
     {{ title }}
     {{ title_append }}
-  </h2>
+  </p>
   <button
     on:click="#{{ drawer_id }}/close"
     class="theme-drawer__close-button"

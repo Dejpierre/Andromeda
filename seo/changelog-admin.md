@@ -874,3 +874,22 @@ Itérations avec Pierre sur l'espacement. État final : la phrase et la précisi
 Brief de Pierre. Constat du 25/11/2026 : sans consentement cookies, une `page_view` partait quand même vers `G-CKWPR4BCBD` et `AW-18055667085`, et ces balises faisaient doublon avec l'appli Google & YouTube. Supprimé de `layout/theme.liquid` : le conteneur GTM `GTM-MKZJPWP2` (script du `<head>` + `<noscript>` après `<body>`), le `gtag.js` GA4 + Google Ads, et le script « Remarketing dynamique + add_to_cart » (`view_item`, écouteur `cart:update`). Conservés : redirection `/en`, script qui masque les badges d'applis, Affilae, bloc « Suivi GA4 des choix de consentement cookies » (protégé par `typeof gtag === 'function'`, désormais inactif : l'événement `cookie_consent` ne part plus).
 
 Fichier live identique au repo avant modification ; poussé via `shopify theme push --only layout/theme.liquid`, checksum live vérifié après envoi. Le suivi repose désormais uniquement sur le pixel de l'appli Google & YouTube. **Vérifications navigateur du brief (réseau sans consentement, `page_view` et `add_to_cart` uniques, console) à faire par Pierre.**
+
+## Articles de blog : guide mommes et guide chouchou (2026-11-26)
+
+Brief `Cerveau/andromeda/briefs/2026-11-26-seo-guides-mommes-chouchou.md`, appliqué via l'API Admin (`articleUpdate`), aucune URL modifiée.
+
+- **`soie-19-vs-22-mommes-guide`** : title SEO « Momme soie : c'est quoi ? 19 ou 22 mommes, le comparatif » (sans suffixe « — Andromeda », comme dans le brief), nouvelle meta, introduction remplacée (« Mis à jour le 26 novembre 2026 » + définition 4,34 g/m²), ligne « Poids au m² » en tête du tableau, lien vers `/collections/chouchou-en-soie` dans « Peau & cheveux ». Le paragraphe ne mentionnait pas les cheveux : phrase ajoutée (« Même logique pour les cheveux : les chouchous en soie de mûrier glissent sur la fibre au lieu de l'accrocher. »).
+- **`chouchou-cheveux-en-soie-guide-simple`** : H2 « Introduction » et « Conclusion » renommés, lien final repointé vers la collection (attribut `title` du produit retiré), trois liens internes ajoutés avec une courte phrase porteuse chacun (momme, soie vs satin, lavage). Meta : celle du brief faisait 164 caractères et le thème tronque à 160 ; version enregistrée raccourcie (« … plus nos conseils cheveux fins et entretien. », 157).
+- Non fait, en attente de Pierre (point 2.d) : formulation OEKO-TEX « sans substances irritantes », tableau « quel chouchou pour quel cheveu ».
+- Constat hors périmètre : `snippets/meta-tags.liquid` ré-échappe la meta description des articles, une apostrophe sort en `&amp;#39;` dans le code source.
+
+Vérifié sur les pages publiques : un seul H1, plus de H2 « Introduction »/« Conclusion », title et meta dans le source, seuls les passages prévus ont changé (comparaison avant/après). Liens vers les trois articles en 200 ; `/collections/chouchou-en-soie` renvoie 429 à curl (limitation des robots), existence confirmée côté admin seulement. Rendu mobile non vérifié.
+
+## Guide chouchou : plan des titres réorganisé (2026-11-26)
+
+Demande de Pierre après lecture du plan des titres. Via `articleUpdate`, aucun paragraphe réécrit (comparaison avant/après : seuls des titres changent). La section coiffures remonte en 2e position et devient « 9 idées de coiffures avec un chouchou en soie » (9 coiffures sont bien citées dans le texte). L'ancien H2 « Quel chouchou en soie choisir pour des cheveux fins et sensibles ? » devient un H3 de « Comment choisir le bon chouchou en soie ? », ses deux H3 passent en H4. H3 renommés : « Un élastique gainé de soie de mûrier », « Pourquoi tout le monde y revient ? », « Le gros chouchou en soie », « Un chouchou pour chaque moment », « Quelle taille de chouchou choisir ? », « Du matin au coucher, un seul accessoire », « Pourquoi en garder un sous la main ? ». Rendu (notamment style des H4) non vérifié dans un navigateur.
+
+## Tiroir panier : titre « Panier » en `<p>` au lieu de `<h2>` (2026-11-26)
+
+Le titre du tiroir panier (panier non vide) apparaissait comme H2 dans le plan de toutes les pages. `snippets/theme-drawer-header.liquid` : `<h2 class="theme-drawer__title h4">` devient `<p …>`, comme le panier vide. Mêmes classes, `aria-labelledby` conservé. Sans effet SEO (Google visite panier vide). Fichier live identique au repo avant modification, poussé via `shopify theme push --only`. Rendu non vérifié dans un navigateur.
