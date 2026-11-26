@@ -893,3 +893,7 @@ Demande de Pierre après lecture du plan des titres. Via `articleUpdate`, aucun 
 ## Tiroir panier : titre « Panier » en `<p>` au lieu de `<h2>` (2026-11-26)
 
 Le titre du tiroir panier (panier non vide) apparaissait comme H2 dans le plan de toutes les pages. `snippets/theme-drawer-header.liquid` : `<h2 class="theme-drawer__title h4">` devient `<p …>`, comme le panier vide. Mêmes classes, `aria-labelledby` conservé. Sans effet SEO (Google visite panier vide). Fichier live identique au repo avant modification, poussé via `shopify theme push --only`. Rendu non vérifié dans un navigateur.
+
+## Tiroir panier : titre « Panier » de nouveau en GC Amelie (2026-11-26)
+
+Régression du passage `<h2>` → `<p>` : la police GC Amelie venait de la règle globale sur `h1…h6`, et un `<p>` reçoit `afacad !important` (`assets/base.css`). Ajout dans `snippets/theme-drawer-styles.liquid` : `.theme-drawer__header .theme-drawer__title { font-family: 'GC Amelie Promised', … !important; }`. Le titre du panier vide (« Votre panier est vide », hors `.theme-drawer__header`) reste comme avant. Poussé via `shopify theme push --only`, fichier live identique au repo avant modification. Rendu non vérifié dans un navigateur.
