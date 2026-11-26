@@ -897,3 +897,26 @@ Le titre du tiroir panier (panier non vide) apparaissait comme H2 dans le plan d
 ## Tiroir panier : titre « Panier » de nouveau en GC Amelie (2026-11-26)
 
 Régression du passage `<h2>` → `<p>` : la police GC Amelie venait de la règle globale sur `h1…h6`, et un `<p>` reçoit `afacad !important` (`assets/base.css`). Ajout dans `snippets/theme-drawer-styles.liquid` : `.theme-drawer__header .theme-drawer__title { font-family: 'GC Amelie Promised', … !important; }`. Le titre du panier vide (« Votre panier est vide », hors `.theme-drawer__header`) reste comme avant. Poussé via `shopify theme push --only`, fichier live identique au repo avant modification. Rendu non vérifié dans un navigateur.
+
+## Fiche « Chouchou en soie » + footer (2026-11-26)
+
+Brief `Cerveau/andromeda/briefs/2026-11-15-seo-fiche-chouchou.md` (point 1 de l'audit SEO du 26/11). Sauvegarde préalable : `/Users/dejonghe/Documents/GitHub/andromeda-backups/20261126-112035/`.
+
+**Produit (Admin API, `productUpdate`)** : title SEO « Chouchou soie de mûrier 22 mommes, lot de 2 | Andromeda Paris », méta du brief (sans « hypoallergénique »), description remplacée intégralement (H2 « Pourquoi un chouchou en soie ? », « Chouchou en soie ou en satin ? » avec tableau, « Caractéristiques », « Livré dans son coffret, prêt à offrir »). Titre du produit (H1), handle et URL inchangés.
+
+**Textes alternatifs (Admin API, `fileUpdate`, 11 images)** : chaque image ouverte et regardée. Format `Chouchou en soie de mûrier, motif [Glamour|Summer][, précision] – Andromeda Paris` (porté sur une queue de cheval, tenu dans la main, porté au poignet, détail du tissu). Les 3 photos d'ambiance, dont l'ALT était vide, sont décrites aussi (lot avec coffret et carte QR code, coffret ouvert, les deux chouchous côte à côte).
+
+**Thème (`--only`, fichiers live identiques au repo avant modification, checksums vérifiés après envoi)** :
+- `templates/product.chouchou.json` : `text_desc` réduit à `{{ closest.product.description }}` (suppression des 4 blocs « Un chouchou de soie hors du commun », « Douceur pour vos cheveux, jour et nuit », « Confort & élégance », « Le rituel Andromeda », avec « moins de 5% » et « Hypoallergénique ») ; même contenu nettoyé dans la section désactivée `accordeon_produit` ; 2 réponses de FAQ remplacées (`text_andromeda_2` grade 6A, `text_andromeda_5` marques sur les cheveux), les 6 autres inchangées.
+- `snippets/meta-tags.liquid` : branche codée en dur du produit chouchou alignée sur le nouveau title et la nouvelle méta (elle prime sur les champs Admin).
+- `sections/section-footer-custom.liquid` : copyright « … 22 mommes, hypoallergénique. » → « … 22 mommes, certifiée OEKO-TEX. » ; version anglaise « hypoallergenic » → « OEKO-TEX certified ». Vérifié en ligne sur l'accueil.
+
+**Vérification transverse (§4), faite à la source** (templates du thème en ligne, blocs actifs seulement, + descriptions via l'API ; accueil lu en ligne). Occurrences restantes, non modifiées :
+- Collection masque, description : « parmi les 5 % les plus rares au monde », « s'adapte à toutes les morphologies », « occultation totale grâce à la densité 22 mommes », « Hypoallergénique et thermorégulatrice ».
+- Collection masque, gabarit `collection.masque-soie.json` : bloc `seo_content` (« toutes les morphologies »), FAQ q_1 (« occultation totale »), q_3 (« naturellement hypoallergénique »), q_4 (question « … toutes les morphologies ? »).
+- Collection chouchou, description : « Douce au toucher, hypoallergénique et certifiée OEKO-TEX® ».
+- Rien sur les 3 fiches, la collection bandeau, la page cadeaux et l'accueil. Hors périmètre mais vu : `templates/collection.json` (FAQ par défaut, « hypoallergénique »), méta de Qui sommes-nous dans `meta-tags.liquid`, et un bloc désactivé de la fiche chouchou (« Moins de 5 % de la production mondiale »).
+
+**Non vérifié** : la fiche et les collections renvoient un 429 à curl (limitation anti-robots), donc structure des titres rendue, title/méta dans le source, Product unique en JSON-LD, liens en 200 et tableau sur mobile sont à contrôler par Pierre dans un navigateur.
+
+**Constat** : le thème en ligne est en avance sur le repo pour `templates/index.json`, `sections/header-group.json` et `snippets/variant-grid-card.liquid` (modifications Black Week faites dans l'admin) ; `snippets/cart-drawer.liquid` ne diffère que par l'indentation. Ne pas pousser ces fichiers depuis le repo sans les récupérer d'abord.
