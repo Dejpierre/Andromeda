@@ -868,3 +868,9 @@ Demande de Pierre : la ligne « Appliquée automatiquement à l'étape de paieme
 ## Barre « livraison offerte » : phrase calée près de la barre, précision grise seulement au seuil (2026-11-25)
 
 Itérations avec Pierre sur l'espacement. État final : la phrase et la précision grise sont dans un bloc de hauteur fixe (`.cart-shipping-bar__text`, contenu calé en bas). Sous le seuil, la précision n'est pas rendue et la phrase reste près de la barre, comme à l'origine ; au seuil, la phrase remonte d'une ligne (pendant son animation d'apparition) et la précision apparaît dessous en fondu. La hauteur du bloc ne change pas tant que la phrase tient sur une ligne. Fichier : `snippets/cart-shipping-bar.liquid`, poussé via `shopify theme push --only`. **Non vérifié dans un navigateur.**
+
+## Retrait des balises Google codées en dur du thème (2026-11-26)
+
+Brief de Pierre. Constat du 25/11/2026 : sans consentement cookies, une `page_view` partait quand même vers `G-CKWPR4BCBD` et `AW-18055667085`, et ces balises faisaient doublon avec l'appli Google & YouTube. Supprimé de `layout/theme.liquid` : le conteneur GTM `GTM-MKZJPWP2` (script du `<head>` + `<noscript>` après `<body>`), le `gtag.js` GA4 + Google Ads, et le script « Remarketing dynamique + add_to_cart » (`view_item`, écouteur `cart:update`). Conservés : redirection `/en`, script qui masque les badges d'applis, Affilae, bloc « Suivi GA4 des choix de consentement cookies » (protégé par `typeof gtag === 'function'`, désormais inactif : l'événement `cookie_consent` ne part plus).
+
+Fichier live identique au repo avant modification ; poussé via `shopify theme push --only layout/theme.liquid`, checksum live vérifié après envoi. Le suivi repose désormais uniquement sur le pixel de l'appli Google & YouTube. **Vérifications navigateur du brief (réseau sans consentement, `page_view` et `add_to_cart` uniques, console) à faire par Pierre.**
