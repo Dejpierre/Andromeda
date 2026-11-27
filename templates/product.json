@@ -163,6 +163,7 @@
                 },
                 "review_highlight_aTk3Zp": {
                   "type": "andromeda-review-highlight",
+                  "disabled": true,
                   "settings": {
                     "max_reviews": 5
                   },

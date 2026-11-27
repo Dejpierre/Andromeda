@@ -104,7 +104,7 @@
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
                   "settings": {
-                    "custom_liquid": "{%- if request.locale.iso_code == 'en' -%}\n<h1 class=\"visually-hidden\">Andromeda Paris – Silk Sleep Masks, Mulberry Silk 22 Momme</h1>\n<p class=\"hero-title hero-title--tagline\">Sleep in perfect <span class=\"title-accent\">darkness.</span> <br>Wake up <span class=\"title-accent\">transformed.</span></p>\n<a href=\"{{ all_products['masque-de-sommeil-en-soie-de-murier-22-mommes'].url }}\" class=\"button\" style=\"margin-top:1.25rem;display:inline-block;text-decoration:none;\">Shop our mask</a>\n{%- else -%}\n<h1 class=\"visually-hidden\">Masques, bandeaux et chouchous en soie de mûrier</h1>\n<p class=\"hero-title hero-title--tagline\" style=\"font-family: 'GC Amelie Promised', serif !important;\">Le masque en soie de mûrier qui fait de chaque nuit un cadeau</p>\n<a href=\"{{ all_products['masque-de-sommeil-en-soie-de-murier-22-mommes'].url }}\" class=\"button\" style=\"margin-top:1.25rem;display:inline-block;text-decoration:none;\">Offrir un masque pour Noël</a>\n{%- endif -%}\n\n<style>\n@font-face { font-family:'GC Amelie Promised'; src:url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/GC_Amelie_Promised.woff2?v=1786960246') format('woff2'); font-display:swap; }\n.hero-title { font-weight:400 !important; margin-bottom:0.4rem; }\n.hero-title--seo { font-size:1rem; letter-spacing:0.12em; text-transform:uppercase; opacity:0.75; }\n.hero-title--tagline { font-size:3rem; margin-bottom:1rem; }\n@media(max-width:749px){.hero-title--tagline{font-size:2rem;}}\n.title-accent { font-family:'GC Amelie Promised',serif !important; font-weight:400; font-style:normal; font-display:swap; margin-bottom:0; }\n</style>"
+                    "custom_liquid": "{%- if request.locale.iso_code == 'en' -%}\n<h1 class=\"visually-hidden\">Andromeda Paris – Silk Sleep Masks, Mulberry Silk 22 Momme</h1>\n<p class=\"hero-title hero-title--tagline\">Sleep in perfect <span class=\"title-accent\">darkness.</span> <br>Wake up <span class=\"title-accent\">transformed.</span></p>\n<a href=\"{{ all_products['masque-de-sommeil-en-soie-de-murier-22-mommes'].url }}\" class=\"button\" style=\"margin-top:1.25rem;display:inline-block;text-decoration:none;\">Shop our mask</a>\n{%- else -%}\n<h1 class=\"visually-hidden\">Masques, bandeaux et chouchous en soie de mûrier</h1>\n<p class=\"hero-title hero-title--tagline\" style=\"font-family: 'GC Amelie Promised', serif !important;\">Black Friday : -30 % sur une sélection en soie de mûrier</p>\n<a href=\"/collections/all\" class=\"button\" style=\"margin-top:1.25rem;display:inline-block;text-decoration:none;\">Découvrir la sélection</a>\n{%- endif -%}\n\n<style>\n@font-face { font-family:'GC Amelie Promised'; src:url('https://cdn.shopify.com/s/files/1/1000/9375/5727/files/GC_Amelie_Promised.woff2?v=1786960246') format('woff2'); font-display:swap; }\n.hero-title { font-weight:400 !important; margin-bottom:0.4rem; }\n.hero-title--seo { font-size:1rem; letter-spacing:0.12em; text-transform:uppercase; opacity:0.75; }\n.hero-title--tagline { font-size:3rem; margin-bottom:1rem; }\n@media(max-width:749px){.hero-title--tagline{font-size:2rem;}}\n.title-accent { font-family:'GC Amelie Promised',serif !important; font-weight:400; font-style:normal; font-display:swap; margin-bottom:0; }\n</style>"
                   },
                   "blocks": {}
                 }
@@ -133,12 +133,12 @@
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/hero-masque-noel-sapin-andromeda-paris.png",
+        "image_1": "shopify://shop_images/hero-noel-andromeda-paris.png",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": true,
         "media_type_1_mobile": "image",
-        "image_1_mobile": "shopify://shop_images/hero-masque-noel-sapin-andromeda-paris.png",
+        "image_1_mobile": "shopify://shop_images/hero-noel-mobile-andromeda-paris.png",
         "media_type_2_mobile": "image",
         "link": "",
         "open_in_new_tab": false,
@@ -214,26 +214,28 @@
     "section_collections_vedettes_e4TYHn": {
       "type": "section-collections-vedettes",
       "blocks": {
-        "collection_WiDMqz": {
-          "type": "collection",
-          "settings": {
-            "collection": "masque-de-sommeil-soie",
-            "custom_title": "Masque de sommeil en soie",
-            "tagline": "Classique mais efficace !",
-            "show_price": true,
-            "image": "shopify://shop_images/Masque_de_sommeil_terracotta_en_16_9.png",
-            "hover_image": "shopify://shop_images/Masque-crepuscule-line-mobile.png"
-          }
-        },
         "collection_km6zD8": {
           "type": "collection",
           "settings": {
             "collection": "bandeau-de-sommeil-en-soie",
             "custom_title": "Bandeau de sommeil en soie",
+            "link_override": "",
             "tagline": "Un vrai nuage...",
             "show_price": true,
             "image": "shopify://shop_images/Masque_avec_motif_citrons_et_feuilles_bleues.png",
             "hover_video": "shopify://files/videos/hf_20260819_130618_9b12e6d5-acae-4162-bdff-f4668477d440.mp4"
+          }
+        },
+        "collection_WiDMqz": {
+          "type": "collection",
+          "settings": {
+            "collection": "masque-de-sommeil-soie",
+            "custom_title": "Masque de sommeil en soie",
+            "link_override": "",
+            "tagline": "Classique mais efficace !",
+            "show_price": true,
+            "image": "shopify://shop_images/Masque_de_sommeil_terracotta_en_16_9.png",
+            "hover_image": "shopify://shop_images/Masque-crepuscule-line-mobile.png"
           }
         },
         "collection_qkbMbM": {
@@ -241,6 +243,7 @@
           "settings": {
             "collection": "chouchou-en-soie",
             "custom_title": "Chouchou en soie",
+            "link_override": "",
             "tagline": "Ne marque pas les cheveux !",
             "show_price": true,
             "image": "shopify://shop_images/Scrunchie_Remplace_-_Photo_Editoriale.png",

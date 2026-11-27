@@ -16,7 +16,7 @@
     >
   {% endif %}
 
-  <script
+    <script
     type="module"
     src="{{ 'cart-drawer.js' | asset_url }}"
     fetchpriority="low"
@@ -26,6 +26,7 @@
   <script src="{{ 'cart-shipping-bar.js' | asset_url }}" defer fetchpriority="low"></script>
 
   {% capture empty_cart_drawer_content %}
+
     <div
       class="cart-drawer__content"
       aria-label="{{ 'accessibility.cart' | t }}"

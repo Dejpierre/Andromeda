@@ -17,8 +17,8 @@
         "announcement_BxgCk9": {
           "type": "_announcement",
           "settings": {
-            "text": "French days : <strong>-15% de sur tout le site</strong>",
-            "link": "",
+            "text": "<strong>Black Friday : -30 % sur une sélection</strong> en soie de mûrier, derniers jours",
+            "link": "/collections/all",
             "font": "var(--font-subheading--family)",
             "font_size": "1rem",
             "weight": "",
@@ -31,7 +31,6 @@
       "block_order": [
         "announcement_BxgCk9"
       ],
-      "disabled": true,
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,

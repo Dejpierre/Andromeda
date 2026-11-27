@@ -53,6 +53,37 @@
     show_sale_price_first: block_settings.show_sale_price_first
   %}
 
+  {%- liquid
+    assign promo_on_page = false
+    if request.page_type == 'product' and product_resource.id == product.id and block_settings.promo_end != blank
+      if selected_variant.compare_at_price > selected_variant.price
+        assign promo_on_page = true
+        assign promo_saving = selected_variant.compare_at_price | minus: selected_variant.price
+        assign promo_percent = promo_saving | times: 100.0 | divided_by: selected_variant.compare_at_price | round
+      endif
+    endif
+  -%}
+  {%- if promo_on_page -%}
+    <promo-countdown-line
+      class="promo-line"
+      data-start="{{ block_settings.promo_start | escape }}"
+      data-end="{{ block_settings.promo_end | escape }}"
+      data-last-day-text="{{ block_settings.promo_last_day_text | escape }}"
+      hidden
+    >
+      <span class="promo-line__row">
+        <span class="promo-line__saving">
+          <span class="promo-line__pill">−{{ promo_percent }} %</span>
+          {{ block_settings.promo_saving_text }}
+          <strong>{{ promo_saving | money }}</strong>
+        </span>
+        <span class="promo-line__urgency" data-urgency>{{ block_settings.promo_urgency_text }}</span>
+      </span>
+      <span class="promo-line__track" aria-hidden="true"><span class="promo-line__bar" data-bar></span></span>
+      <span class="promo-line__label">{{ block_settings.promo_label }}</span>
+    </promo-countdown-line>
+  {%- endif -%}
+
   {% if block_settings.show_tax_info %}
     <div class="tax-note">
       {%- if cart.duties_included and cart.taxes_included -%}
@@ -83,6 +114,130 @@
     </div>
   {%- endif -%}
 </product-price>
+
+<style>
+  .promo-line {
+    display: block;
+    margin-top: 12px;
+    font-family: var(--font-body--family);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: normal;
+    text-transform: none;
+    color: #3a2a22;
+    font-feature-settings: "lnum" 1;
+  }
+
+  .promo-line[hidden] {
+    display: none;
+  }
+
+  .promo-line__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px 12px;
+  }
+
+  .promo-line__saving {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+  }
+
+  .promo-line__saving strong {
+    font-weight: 600;
+    color: #7a2331;
+  }
+
+  .promo-line__pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: #7a2331;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .promo-line__urgency {
+    font-weight: 600;
+    color: #7a2331;
+    white-space: nowrap;
+  }
+
+  .promo-line__track {
+    display: block;
+    height: 2px;
+    margin: 10px 0 8px;
+    border-radius: 999px;
+    background: #eadfce;
+    overflow: hidden;
+  }
+
+  .promo-line__bar {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: #b5573a;
+    transition: width 0.6s ease;
+  }
+
+  .promo-line__label {
+    display: block;
+    font-size: 0.75rem;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .promo-line__bar {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  if (!customElements.get('promo-countdown-line')) {
+    customElements.define(
+      'promo-countdown-line',
+      class extends HTMLElement {
+        connectedCallback() {
+          this.end = new Date(this.dataset.end).getTime();
+          this.start = new Date(this.dataset.start).getTime();
+          this.bar = this.querySelector('[data-bar]');
+          this.urgency = this.querySelector('[data-urgency]');
+          if (isNaN(this.end)) return;
+          this.tick();
+          this.timer = setInterval(() => this.tick(), 30000);
+        }
+        disconnectedCallback() {
+          clearInterval(this.timer);
+        }
+        tick() {
+          const left = this.end - Date.now();
+          if (left <= 0) {
+            this.hidden = true;
+            clearInterval(this.timer);
+            return;
+          }
+          if (this.bar) {
+            const total = this.end - this.start;
+            const ratio = total > 0 ? left / total : 1;
+            this.bar.style.width = Math.min(100, Math.max(4, Math.round(ratio * 100))) + '%';
+          }
+          if (this.urgency && left < 86400000 && this.dataset.lastDayText) {
+            this.urgency.textContent = this.dataset.lastDayText;
+          }
+          this.hidden = false;
+        }
+      }
+    );
+  }
+</script>
 
 {% # theme-check-disable %}
 {% stylesheet %}
@@ -145,6 +300,48 @@
       "id": "show_tax_info",
       "label": "t:settings.show_tax_info",
       "default": false
+    },
+    {
+      "type": "header",
+      "content": "Promo : ligne d'urgence"
+    },
+    {
+      "type": "text",
+      "id": "promo_saving_text",
+      "label": "Texte avant le montant économisé",
+      "default": "Vous économisez"
+    },
+    {
+      "type": "text",
+      "id": "promo_urgency_text",
+      "label": "Message d'urgence",
+      "default": "Derniers jours"
+    },
+    {
+      "type": "text",
+      "id": "promo_last_day_text",
+      "label": "Message d'urgence, dernières 24 heures",
+      "default": "Dernières heures"
+    },
+    {
+      "type": "text",
+      "id": "promo_label",
+      "label": "Ligne sous le filet",
+      "default": "Offre Black Friday, bientôt terminée"
+    },
+    {
+      "type": "text",
+      "id": "promo_start",
+      "label": "Début de la promo",
+      "info": "Sert au filet qui se vide. Format : 2026-11-27T00:00:00+01:00",
+      "default": "2026-11-27T00:00:00+01:00"
+    },
+    {
+      "type": "text",
+      "id": "promo_end",
+      "label": "Fin de la promo",
+      "info": "Format : 2026-11-30T23:59:59+01:00 (heure de Paris). Laisser vide pour masquer la ligne. Affichée uniquement sur les variantes en promotion, masquée automatiquement après cette date.",
+      "default": "2026-11-30T23:59:59+01:00"
     },
     {
       "type": "header",

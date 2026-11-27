@@ -402,7 +402,7 @@
     {%- liquid
       assign _v = closest.product.selected_or_first_available_variant
       if _v.compare_at_price > _v.price
-        assign _discount = _v.compare_at_price | minus: _v.price | times: 100.0 | divided_by: _v.compare_at_price | ceil
+        assign _discount = _v.compare_at_price | minus: _v.price | times: 100.0 | divided_by: _v.compare_at_price | round
       else
         assign _discount = 0
       endif
